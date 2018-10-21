@@ -485,14 +485,15 @@ class XMLSecurityDSig
 
                     $xPath = new DOMXPath($refNode->ownerDocument);
                     if ($this->idNS && is_array($this->idNS)) {
-                        foreach ($this->idNS AS $nspf => $ns) {
+                        foreach ($this->idNS as $nspf => $ns) {
                             $xPath->registerNamespace($nspf, $ns);
                         }
                     }
                     $iDlist = '@Id="'.$identifier.'"';
                     if (is_array($this->idKeys)) {
-                        foreach ($this->idKeys AS $idKey) {
-                            $iDlist .= " or @$idKey='$identifier'";
+                        foreach ($this->idKeys as $idKey) {
+                            $iDlist .= " or @".XPath::filterAttrName($idKey).'="'.
+                                XPath::filterAttrValue($identifier, XPath::DOUBLE_QUOTE).'"';
                         }
                     }
                     $query = '//*['.$iDlist.']';
