@@ -464,9 +464,10 @@ class XMLSecurityDSig
                     $node = $transform->firstChild;
                     while ($node) {
                         if ($node->localName == 'XPath') {
-                            $arXPath = array();
+                            $arXPath = [];
                             $arXPath['query'] = '(.//. | .//@* | .//namespace::*)[' . $node->nodeValue . ']';
-                            $arXpath['namespaces'] = array();
+                            $arXpath['namespaces'] = [];
+
                             $nslist = $xpath->query('./namespace::*', $node);
                             foreach ($nslist as $nsnode) {
                                 if ($nsnode->localName != "xml") {
