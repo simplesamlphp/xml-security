@@ -187,7 +187,6 @@ class Signature
         $includeCommentNodes = false;
         if ($node instanceof DOMElement) {
             $uri = null;
-            /** @var \DOMElement $node */
             if (!$overwrite) {
                 $uri = $prefixNS ? $node->getAttributeNS($prefixNS, $idName) : $node->getAttribute($idName);
             }
