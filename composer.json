@@ -31,7 +31,9 @@
         "php": ">= 7.4 || ^8.0",
         "ext-openssl": "*",
         "ext-dom": "*",
-        "simplesamlphp/assert": "~0.0.13"
+
+        "simplesamlphp/assert": "~0.0.13",
+        "simplesamlphp/xml-common": "~0.0.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5",

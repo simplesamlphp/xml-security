@@ -5,6 +5,7 @@ namespace SimpleSAML\XMLSec;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
+use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSec\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSec\Backend\SignatureBackend;
 use SimpleSAML\XMLSec\Constants as C;
@@ -13,7 +14,6 @@ use SimpleSAML\XMLSec\Exception\NoSignatureFound;
 use SimpleSAML\XMLSec\Exception\RuntimeException;
 use SimpleSAML\XMLSec\Key\AbstractKey;
 use SimpleSAML\XMLSec\Key\X509Certificate;
-use SimpleSAML\XMLSec\Utils\DOMDocumentFactory;
 use SimpleSAML\XMLSec\Utils\Security as Sec;
 use SimpleSAML\XMLSec\Utils\XPath as XP;
 
