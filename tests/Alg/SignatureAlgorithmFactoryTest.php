@@ -81,8 +81,6 @@ class SignatureAlgorithmFactoryTest extends TestCase
 
     /**
      * Test for blacklisted algorithms.
-     *
-     * @expectedException InvalidArgumentException
      */
     public function testBlacklistedAlgorithm()
     {
