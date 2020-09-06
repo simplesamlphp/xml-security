@@ -14,7 +14,7 @@ use SimpleSAML\XMLSec\Key\SymmetricKey;
 class HMAC extends AbstractSigner implements SignatureAlgorithm
 {
     /** @var string */
-    protected $default_backend = '\SimpleSAML\XMLSec\Backend\HMAC';
+    protected string $default_backend = '\SimpleSAML\XMLSec\Backend\HMAC';
 
 
     /**

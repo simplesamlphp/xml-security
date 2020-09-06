@@ -22,9 +22,9 @@ class SignatureAlgorithmFactory
      *
      * Defaults to RSA-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
      *
-     * @var array
+     * @var string[]
      */
-    protected $blacklist = [
+    protected array $blacklist = [
         Constants::SIG_RSA_SHA1,
         Constants::SIG_HMAC_SHA1,
     ];

@@ -14,7 +14,7 @@ use SimpleSAML\XMLSec\Key\AsymmetricKey;
 class RSA extends AbstractSigner implements SignatureAlgorithm
 {
     /** @var string */
-    protected $default_backend = '\SimpleSAML\XMLSec\Backend\OpenSSL';
+    protected string $default_backend = '\SimpleSAML\XMLSec\Backend\OpenSSL';
 
 
     /**

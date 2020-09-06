@@ -25,58 +25,58 @@ use SimpleSAML\XMLSec\Utils\XPath as XP;
 class Signature
 {
     /** @var array */
-    public $idNS = [];
+    public array $idNS = [];
 
     /** @var array */
-    public $idKeys = [];
+    public array $idKeys = [];
 
-    /** @var SignatureBackend */
-    protected $backend;
-
-    /** @var \DOMElement */
-    protected $root;
+    /** @var \SimpleSAML\XMLSec\Backend\SignatureBackend|null */
+    protected ?SignatureBackend $backend = null;
 
     /** @var \DOMElement */
-    protected $sigNode;
+    protected DOMElement $root;
+
+    /** @var \DOMElement|null */
+    protected ?DOMElement $sigNode = null;
 
     /** @var \DOMElement */
-    protected $sigMethodNode;
+    protected DOMElement $sigMethodNode;
 
     /** @var \DOMElement */
-    protected $c14nMethodNode;
+    protected DOMElement $c14nMethodNode;
 
     /** @var \DOMElement */
-    protected $sigInfoNode;
+    protected DOMElement $sigInfoNode;
 
-    /** @var \DOMElement */
-    protected $objectNode;
+    /** @var \DOMElement|null */
+    protected ?DOMElement $objectNode = null;
 
     /** @var string */
-    protected $signfo;
+    protected string $signfo;
 
     /** @var string */
-    protected $sigAlg;
+    protected string $sigAlg;
 
     /** @var \DOMElement[] */
-    protected $verifiedElements = [];
+    protected array $verifiedElements = [];
 
     /** @var string */
-    protected $c14nMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
+    protected string $c14nMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
 
     /** @var string */
-    protected $nsPrefix = 'ds:';
+    protected string $nsPrefix = 'ds:';
 
     /** @var array */
-    protected $algBlacklist = [
+    protected array $algBlacklist = [
         C::SIG_RSA_SHA1,
         C::SIG_HMAC_SHA1,
     ];
 
     /** @var array */
-    protected $references = [];
+    protected array $references = [];
 
     /** @var bool */
-    protected $enveloping = false;
+    protected bool $enveloping = false;
 
 
     /**
@@ -88,10 +88,7 @@ class Signature
      */
     public function __construct($root, SignatureBackend $backend = null)
     {
-        if ($backend !== null) {
-            $this->backend = $backend;
-        }
-
+        $this->backend = $backend;
         $this->initSignature();
 
         if (is_string($root)) {
@@ -112,7 +109,7 @@ class Signature
      *
      * @return \DOMElement The resulting object element added to the signature.
      */
-    public function addObject($data, string $mimetype = null, string $encoding = null): DOMElement
+    public function addObject($data, ?string $mimetype = null, ?string $encoding = null): DOMElement
     {
         if ($this->objectNode === null) {
             $this->objectNode = $this->createElement('Object');
@@ -157,6 +154,7 @@ class Signature
      *
      *   - overwrite (boolean): Whether to overwrite the identifier existing in the element referenced with a new,
      *     random one, or not. Defaults to true.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $node is not
      *   an instance of DOMDocument or DOMElement.
@@ -264,6 +262,7 @@ class Signature
      *
      * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If any of the nodes in the $nodes
      *   array is not an instance of DOMDocument or DOMElement.
+     * @return void
      *
      * @see addReference()
      */
@@ -283,6 +282,7 @@ class Signature
      * @param string|false $digest A digest algorithm identifier if the digest of the certificate should be added. False
      * otherwise.
      * @param boolean $addIssuerSerial Whether to add the serial number of the issuer or not.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $certs is not a
      *   X509Certificate object or an array of them.
@@ -395,6 +395,7 @@ class Signature
      *
      * @param string|null $mimetype The mime type corresponding to the signed data.
      * @param string|null $encoding The encoding corresponding to the signed data.
+     * @return void
      */
     public function envelop(string $mimetype = null, string $encoding = null): void
     {
@@ -563,6 +564,7 @@ class Signature
      *
      * @param SignatureBackend $backend The SignatureBackend implementation to use. See individual algorithms for
      * details about the default backends used.
+     * @return void
      */
     public function setBackend(SignatureBackend $backend): void
     {
@@ -576,6 +578,7 @@ class Signature
      * Signatures using blacklisted algorithms cannot be created or verified.
      *
      * @param array $algs An array containing the identifiers of the algorithms to blacklist.
+     * @return void
      */
     public function setBlacklistedAlgorithms(array $algs): void
     {
@@ -590,6 +593,7 @@ class Signature
      * setCanonicalizationMethod() if that canonicalization method is desired.
      *
      * @param string $method The identifier of the canonicalization method to use.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $method is not a valid
      *   identifier of a supported canonicalization method.
@@ -631,8 +635,9 @@ class Signature
      * Set a list of attributes used as an ID.
      *
      * @param array $keys An array of strings with the attributes used as an ID.
+     * @return void
      */
-    public function setIdAttributes(array $keys)
+    public function setIdAttributes(array $keys): void
     {
         $this->idKeys = $keys;
     }
@@ -642,6 +647,7 @@ class Signature
      * Set the list of namespaces to designate ID attributes.
      *
      * @param array $namespaces An array of strings with the namespaces used in ID attributes.
+     * @return void
      */
     public function setIdNamespaces(array $namespaces): void
     {
@@ -653,6 +659,7 @@ class Signature
      * Set the mime type for the signed contents in an enveloping signature.
      *
      * @param string $mimetype The mime type of the signed contents.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If this is not an enveloping signature.
      */
@@ -669,6 +676,7 @@ class Signature
      * Set the prefix to designate the XML digital signature namespace currently configured.
      *
      * @param string|false $prefix The prefix to use in this signature, or false to not use any prefix.
+     * @return void
      */
     public function setPrefix($prefix): void
     {
@@ -690,6 +698,7 @@ class Signature
      * Set the signature element to a given one, and initialize the signature from there.
      *
      * @param \DOMElement $element A DOM element containing an XML signature.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If the element does not correspond to an XML
      *   signature or it is malformed (e.g. there are missing mandatory elements or attributes).
@@ -740,6 +749,7 @@ class Signature
      *   this key must be compatible with the types of key accepted by the algorithm specified in $alg.
      * @param string $alg The identifier of the signature algorithm to use. See \SimpleSAML\XMLSec\Constants.
      * @param bool $appendToNode Whether to append the signature as the last child of the root element or not.
+     * @return void
      *
      * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $appendToNode is true and
      *   this is an enveloping signature.
@@ -978,6 +988,8 @@ class Signature
 
     /**
      * Initialize the basic structure of a signature from scratch.
+     *
+     * @return void
      */
     protected function initSignature(): void
     {

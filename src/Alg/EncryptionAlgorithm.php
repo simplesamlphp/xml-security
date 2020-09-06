@@ -14,7 +14,7 @@ interface EncryptionAlgorithm
     /**
      * Set the backend to use for actual computations by this algorithm.
      *
-     * @param EncryptionBackend $backend The encryption backend to use.
+     * @param \SimpleSAML\XMLSec\Backend\EncryptionBackend $backend The encryption backend to use.
      *
      * @return void
      */

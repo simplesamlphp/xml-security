@@ -79,7 +79,7 @@ class PublicKey extends AsymmetricKey
      * @param string $modulus The modulus of the given key.
      * @param string $exponent The exponent of the given key.
      *
-     * @return PublicKey A new public key with the given modulus and exponent.
+     * @return \SimpleSAML\XMLSec\Key\PublicKey A new public key with the given modulus and exponent.
      */
     public static function fromDetails(string $modulus, string $exponent): PublicKey
     {

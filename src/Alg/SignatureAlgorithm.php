@@ -22,7 +22,7 @@ interface SignatureAlgorithm
     /**
      * Set the backend to use for actual computations by this algorithm.
      *
-     * @param SignatureBackend $backend The backend to use.
+     * @param \SimpleSAML\XMLSec\Backend\SignatureBackend $backend The backend to use.
      *
      * @return void
      */

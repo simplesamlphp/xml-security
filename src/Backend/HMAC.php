@@ -15,7 +15,7 @@ use SimpleSAML\XMLSec\Utils\Security;
 final class HMAC implements SignatureBackend
 {
     /** @var string */
-    protected $digest;
+    protected string $digest;
 
 
     /**

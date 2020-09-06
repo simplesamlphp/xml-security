@@ -19,21 +19,21 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 {
     // digital signature options
     /** @var string */
-    protected $digest;
+    protected string $digest;
 
     // asymmetric encryption options
     /** @var int */
-    protected $padding = Constants::PADDING_PKCS1;
+    protected int $padding = Constants::PADDING_PKCS1;
 
     // symmetric encryption options
     /** @var string */
-    protected $cipher;
+    protected string $cipher;
 
     /** @var int */
-    protected $blocksize;
+    protected int $blocksize;
 
     /** @var int */
-    protected $keysize;
+    protected int $keysize;
 
 
     /**

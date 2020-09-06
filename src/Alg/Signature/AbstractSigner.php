@@ -13,17 +13,17 @@ use SimpleSAML\XMLSec\Key\AbstractKey;
  */
 abstract class AbstractSigner implements SignatureAlgorithm
 {
-    /** @var AbstractKey */
-    protected $key;
+    /** @var \SimpleSAML\XMLSec\Key\AbstractKey */
+    protected AbstractKey $key;
 
-    /** @var SignatureBackend */
-    protected $backend;
-
-    /** @var string */
-    protected $default_backend;
+    /** @var \SimpleSAML\XMLSec\Backend\SignatureBackend */
+    protected SignatureBackend $backend;
 
     /** @var string */
-    protected $digest;
+    protected string $default_backend;
+
+    /** @var string */
+    protected string $digest;
 
 
     /**

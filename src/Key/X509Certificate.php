@@ -14,13 +14,13 @@ use SimpleSAML\XMLSec\Exception\RuntimeException;
 class X509Certificate extends PublicKey
 {
     /** @var string */
-    protected $certificate;
+    protected string $certificate;
 
     /** @var array */
-    protected $thumbprint = [];
+    protected array $thumbprint = [];
 
     /** @var array */
-    protected $parsed = [];
+    protected array $parsed = [];
 
 
     /**
@@ -38,9 +38,12 @@ class X509Certificate extends PublicKey
             throw new InvalidArgumentException('Cannot read certificate: ' . openssl_error_string());
         }
 
-        if (!openssl_x509_export($resource, $this->certificate)) {
+        $certificate = null;
+        if (!openssl_x509_export($resource, $certificate)) {
             throw new RuntimeException('Cannot export certificate to PEM: ' . openssl_error_string());
         }
+        $this->certificate = $certificate;
+
         parent::__construct(openssl_pkey_get_public($this->certificate));
         $this->thumbprint[Constants::DIGEST_SHA1] = $this->getRawThumbprint();
 
