@@ -10,10 +10,6 @@
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
-            <file name="src/XMLSecEnc.php" />
-            <file name="src/XMLSecurityDSig.php" />
-            <file name="src/XMLSecurityKey.php" />
-            <file name="src/Utils/XPath.php" />
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
