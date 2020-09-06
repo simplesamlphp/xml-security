@@ -2,8 +2,8 @@
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSecurity\\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSecurity\\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
