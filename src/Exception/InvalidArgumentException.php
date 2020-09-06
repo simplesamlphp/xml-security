@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\XMLSec\Exception;
 
+use Throwable;
+
 /**
  * Class InvalidArgumentException
  *

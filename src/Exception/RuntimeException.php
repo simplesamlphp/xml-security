@@ -2,6 +2,9 @@
 
 namespace SimpleSAML\XMLSec\Exception;
 
+use RuntimeException as BUILTIN_RuntimeException;
+use Throwable;
+
 /**
  * Class RuntimeException
  *
@@ -9,6 +12,6 @@ namespace SimpleSAML\XMLSec\Exception;
  *
  * @package SimpleSAML\XMLSec\Exception
  */
-class RuntimeException extends \RuntimeException implements Throwable
+class RuntimeException extends BUILTIN_RuntimeException implements Throwable
 {
 }
