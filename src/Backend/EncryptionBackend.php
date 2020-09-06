@@ -1,15 +1,15 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * Interface for backends implementing encryption.
  *
- * @package SimpleSAML\XMLSec\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 interface EncryptionBackend
 {
@@ -20,7 +20,7 @@ interface EncryptionBackend
      *
      * @throws InvalidArgumentException If the cipher is unknown or not supported.
      *
-     * @see \SimpleSAML\XMLSec\Constants
+     * @see \SimpleSAML\XMLSecurity\Constants
      */
     public function setCipher(string $cipher): void;
 
@@ -28,12 +28,12 @@ interface EncryptionBackend
     /**
      * Encrypt a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to encrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to encrypt.
      * @param string $plaintext The original text to encrypt.
      *
      * @return string The encrypted plaintext (ciphertext).
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while encrypting the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while encrypting the plaintext.
      */
     public function encrypt(AbstractKey $key, string $plaintext): string;
 
@@ -41,12 +41,12 @@ interface EncryptionBackend
     /**
      * Decrypt a given ciphertext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to decrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to decrypt.
      * @param string $ciphertext The encrypted text to decrypt.
      *
      * @return string The decrypted ciphertext (plaintext).
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while decrypting the ciphertext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while decrypting the ciphertext.
      */
     public function decrypt(AbstractKey $key, string $ciphertext): string;
 }

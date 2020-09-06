@@ -1,11 +1,11 @@
 <?php
 
-namespace SimpleSAML\XMLSec;
+namespace SimpleSAML\XMLSecurity;
 
 /**
  * A collection of constants used in this library, as defined by the XMLSec set of recommendations.
  *
- * @package SimpleSAML\XMLSec
+ * @package SimpleSAML\XMLSecurity
  */
 class Constants
 {

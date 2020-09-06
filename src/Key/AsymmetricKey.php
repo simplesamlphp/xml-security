@@ -1,15 +1,15 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * A class representing an asymmetric key.
  *
  * This class can be extended to implement public or private keys.
  *
- * @package SimpleSAML\XMLSec\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 abstract class AsymmetricKey extends AbstractKey
 {
@@ -24,7 +24,7 @@ abstract class AsymmetricKey extends AbstractKey
      *
      * @return string The key material.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the given file cannot be read.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given file cannot be read.
      */
     protected static function readFile(string $file): string
     {

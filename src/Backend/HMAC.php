@@ -1,16 +1,16 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Key\AbstractKey;
-use SimpleSAML\XMLSec\Utils\Security;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Utils\Security;
 
 /**
  * Backend for digital signatures based on hash-based message authentication codes.
  *
- * @package SimpleSAML\XMLSec\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 final class HMAC implements SignatureBackend
 {
@@ -32,7 +32,7 @@ final class HMAC implements SignatureBackend
      *
      * @param string $digest The identifier of the digest algorithm.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the given digest is not valid.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given digest is not valid.
      */
     public function setDigestAlg(string $digest): void
     {
@@ -46,7 +46,7 @@ final class HMAC implements SignatureBackend
     /**
      * Sign a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to sign.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to sign.
      * @param string $plaintext The original text to sign.
      *
      * @return string The (binary) signature corresponding to the given plaintext.
@@ -60,7 +60,7 @@ final class HMAC implements SignatureBackend
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *

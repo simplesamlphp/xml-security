@@ -1,19 +1,19 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\AbstractKey;
-use SimpleSAML\XMLSec\Key\AsymmetricKey;
-use SimpleSAML\XMLSec\Key\PrivateKey;
-use SimpleSAML\XMLSec\Utils\Random;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Utils\Random;
 
 /**
  * Backend for encryption and digital signatures based on the native openssl library.
  *
- * @package SimpleSAML\XMLSec\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 final class OpenSSL implements EncryptionBackend, SignatureBackend
 {
@@ -49,11 +49,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     /**
      * Encrypt a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to encrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to encrypt.
      * @param string $plaintext The original text to encrypt.
      *
      * @return string The encrypted plaintext (ciphertext).
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while encrypting the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while encrypting the plaintext.
      */
     public function encrypt(AbstractKey $key, string $plaintext): string
     {
@@ -93,12 +93,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     /**
      * Decrypt a given ciphertext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to decrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to decrypt.
      * @param string $ciphertext The encrypted text to decrypt.
      *
      * @return string The decrypted ciphertext (plaintext).
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while decrypting the ciphertext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while decrypting the ciphertext.
      */
     public function decrypt(AbstractKey $key, string $ciphertext): string
     {
@@ -139,12 +139,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     /**
      * Sign a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to sign.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to sign.
      * @param string $plaintext The original text to sign.
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while signing the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while signing the plaintext.
      */
     public function sign(AbstractKey $key, string $plaintext): string
     {
@@ -158,7 +158,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to verify.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *
@@ -176,7 +176,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * @param string $cipher The identifier of the cipher.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the cipher is unknown or not supported.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the cipher is unknown or not supported.
      */
     public function setCipher(string $cipher): void
     {
@@ -195,7 +195,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * @param string $digest The identifier of the digest algorithm.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the given digest is not valid.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given digest is not valid.
      */
     public function setDigestAlg(string $digest): void
     {

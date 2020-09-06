@@ -1,26 +1,26 @@
 <?php
 
-namespace SimpleSAML\XMLSec;
+namespace SimpleSAML\XMLSecurity;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSec\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSec\Backend\SignatureBackend;
-use SimpleSAML\XMLSec\Constants as C;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\NoSignatureFound;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\AbstractKey;
-use SimpleSAML\XMLSec\Key\X509Certificate;
-use SimpleSAML\XMLSec\Utils\Security as Sec;
-use SimpleSAML\XMLSec\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\NoSignatureFound;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\Utils\Security as Sec;
+use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 
 /**
  * Class implementing XML digital signatures.
  *
- * @package SimpleSAML\XMLSec
+ * @package SimpleSAML\XMLSecurity
  */
 class Signature
 {
@@ -30,7 +30,7 @@ class Signature
     /** @var array */
     public array $idKeys = [];
 
-    /** @var \SimpleSAML\XMLSec\Backend\SignatureBackend|null */
+    /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend|null */
     protected ?SignatureBackend $backend = null;
 
     /** @var \DOMElement */
@@ -83,7 +83,7 @@ class Signature
      * Signature constructor.
      *
      * @param \DOMElement|string $root The DOM element or a string of data we want to sign.
-     * @param \SimpleSAML\XMLSec\Backend\SignatureBackend|null $backend The backend to use to
+     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend|null $backend The backend to use to
      *   generate or verify signatures. See individual algorithms for defaults.
      */
     public function __construct($root, SignatureBackend $backend = null)
@@ -156,7 +156,7 @@ class Signature
      *     random one, or not. Defaults to true.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $node is not
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $node is not
      *   an instance of DOMDocument or DOMElement.
      */
     public function addReference(DOMNode $node, string $alg, array $transforms = [], array $options = []): void
@@ -260,7 +260,7 @@ class Signature
      * @param array $transforms An array of transforms to apply to each reference.
      * @param array $options An array of options.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If any of the nodes in the $nodes
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If any of the nodes in the $nodes
      *   array is not an instance of DOMDocument or DOMElement.
      * @return void
      *
@@ -284,7 +284,7 @@ class Signature
      * @param boolean $addIssuerSerial Whether to add the serial number of the issuer or not.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $certs is not a
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $certs is not a
      *   X509Certificate object or an array of them.
      */
     public function addX509Certificates(
@@ -410,9 +410,9 @@ class Signature
      *
      * @return Signature A Signature object corresponding to the signature present in the given DOM document or element.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $node is not
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $node is not
      *   an instance of DOMDocument or DOMElement.
-     * @throws \SimpleSAML\XMLSec\Exception\NoSignatureFound If there is no signature in the $node.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound If there is no signature in the $node.
      */
     public static function fromXML(DOMNode $node): Signature
     {
@@ -525,7 +525,7 @@ class Signature
      *
      * @return \DOMNode The inserted signature.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If this signature is in enveloping mode.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If this signature is in enveloping mode.
      */
     public function insert($before = false): DOMNode
     {
@@ -595,7 +595,7 @@ class Signature
      * @param string $method The identifier of the canonicalization method to use.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $method is not a valid
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $method is not a valid
      *   identifier of a supported canonicalization method.
      */
     public function setCanonicalizationMethod(string $method): void
@@ -620,7 +620,7 @@ class Signature
      *
      * @param string $encoding The encoding used in the signed contents.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If this is not an enveloping signature.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If this is not an enveloping signature.
      */
     public function setEncoding(string $encoding): void
     {
@@ -661,7 +661,7 @@ class Signature
      * @param string $mimetype The mime type of the signed contents.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If this is not an enveloping signature.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If this is not an enveloping signature.
      */
     public function setMimeType(string $mimetype): void
     {
@@ -700,7 +700,7 @@ class Signature
      * @param \DOMElement $element A DOM element containing an XML signature.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If the element does not correspond to an XML
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the element does not correspond to an XML
      *   signature or it is malformed (e.g. there are missing mandatory elements or attributes).
      */
     public function setSignatureElement(DOMElement $element): void
@@ -745,13 +745,13 @@ class Signature
      * to calling sign() (there are no references in the signature), the $root passed during construction of the
      * Signature object will be referenced automatically.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use for signing. Bear in mind that the type of
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use for signing. Bear in mind that the type of
      *   this key must be compatible with the types of key accepted by the algorithm specified in $alg.
-     * @param string $alg The identifier of the signature algorithm to use. See \SimpleSAML\XMLSec\Constants.
+     * @param string $alg The identifier of the signature algorithm to use. See \SimpleSAML\XMLSecurity\Constants.
      * @param bool $appendToNode Whether to append the signature as the last child of the root element or not.
      * @return void
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $appendToNode is true and
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $appendToNode is true and
      *   this is an enveloping signature.
      */
     public function sign(AbstractKey $key, string $alg, bool $appendToNode = false): void
@@ -810,11 +810,11 @@ class Signature
     /**
      * Verify this signature with a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to verify this signature.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify this signature.
      *
      * @return bool True if the signature can be verified with $key, false otherwise.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is no SignatureValue in
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is no SignatureValue in
      *   the signature, or we couldn't verify all the references.
      */
     public function verify(AbstractKey $key): bool
@@ -844,7 +844,7 @@ class Signature
      *
      * @param \DOMNode $node The DOM node that needs canonicalization.
      * @param string $c14nMethod The identifier of the canonicalization algorithm to use.
-     * See \SimpleSAML\XMLSec\Constants.
+     * See \SimpleSAML\XMLSecurity\Constants.
      * @param array|null $xpaths An array of xpaths to filter the nodes by. Defaults to null (no filters).
      * @param array|null $prefixes An array of namespace prefixes to filter the nodes by. Defaults to null (no filters).
      *
@@ -939,8 +939,8 @@ class Signature
      *
      * @return \DOMElement The signature element.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is no DOMDocument element available.
-     * @throws \SimpleSAML\XMLSec\Exception\NoSignatureFound If no signature is found.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is no DOMDocument element available.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound If no signature is found.
      */
     protected static function findSignature(DOMNode $node): DOMElement
     {
@@ -969,7 +969,7 @@ class Signature
      *
      * @return string The (binary or base64-encoded) digest corresponding to the given data.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $alg is not a valid
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $alg is not a valid
      *   identifier of a supported digest algorithm.
      */
     protected function hash(string $alg, string $data, bool $encode = true): string
@@ -1016,7 +1016,7 @@ class Signature
      *
      * @return bool True if the digest of the processed reference matches the one given, false otherwise.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If the referenced element is missing or
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the referenced element is missing or
      *   the reference points to an external document.
      *
      * @see http://www.w3.org/TR/xmldsig-core/#sec-ReferenceProcessingModel
@@ -1206,7 +1206,7 @@ class Signature
      *
      * @return boolean True if all references could be verified, false otherwise.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there are no references.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there are no references.
      */
     protected function validateReferences(): bool
     {

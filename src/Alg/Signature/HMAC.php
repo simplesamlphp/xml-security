@@ -1,26 +1,27 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Alg\Signature;
+namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSec\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Backend\HMAC;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
  * Class implementing the HMAC signature algorithm
  *
- * @package SimpleSAML\XMLSec\Alg\Signature
+ * @package SimpleSAML\XMLSecurity\Alg\Signature
  */
 class HMAC extends AbstractSigner implements SignatureAlgorithm
 {
     /** @var string */
-    protected string $default_backend = '\SimpleSAML\XMLSec\Backend\HMAC';
+    protected string $default_backend = HMAC::class;
 
 
     /**
      * HMAC constructor.
      *
-     * @param \SimpleSAML\XMLSec\Key\SymmetricKey $key The symmetric key to use.
+     * @param \SimpleSAML\XMLSecurity\Key\SymmetricKey $key The symmetric key to use.
      * @param string $digest The identifier of the digest algorithm to use.
      */
     public function __construct(SymmetricKey $key, string $digest = Constants::DIGEST_SHA1)

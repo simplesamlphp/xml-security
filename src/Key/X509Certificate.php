@@ -1,15 +1,15 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
 /**
  * A class modeling X509 certificates.
  *
- * @package SimpleSAML\XMLSec\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class X509Certificate extends PublicKey
 {
@@ -28,8 +28,8 @@ class X509Certificate extends PublicKey
      *
      * @param string $cert The PEM-encoded certificate or the path to a file containing it.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If the certificate cannot be exported to PEM format.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
     public function __construct(string $cert)
     {
@@ -85,7 +85,7 @@ class X509Certificate extends PublicKey
      *
      * @return string The thumbprint associated with the given certificate.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $alg is not a valid digest identifier.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $alg is not a valid digest identifier.
      */
     public function getRawThumbprint(string $alg = Constants::DIGEST_SHA1): string
     {
@@ -138,8 +138,8 @@ class X509Certificate extends PublicKey
      *
      * @param string $file The file where the PEM-encoded certificate is stored.
      *
-     * @return \SimpleSAML\XMLSec\Key\PublicKey A new X509Certificate key.
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the file cannot be read.
+     * @return \SimpleSAML\XMLSecurity\Key\PublicKey A new X509Certificate key.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
     public static function fromFile(string $file): PublicKey
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Alg;
+namespace SimpleSAML\XMLSecurity\Alg;
 
-use SimpleSAML\XMLSec\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 
 /**
  * An interface representing algorithms that can be used for digital signatures.
  *
- * @package SimpleSAML\XMLSec\Alg
+ * @package SimpleSAML\XMLSecurity\Alg
  */
 interface SignatureAlgorithm
 {
@@ -22,7 +22,7 @@ interface SignatureAlgorithm
     /**
      * Set the backend to use for actual computations by this algorithm.
      *
-     * @param \SimpleSAML\XMLSec\Backend\SignatureBackend $backend The backend to use.
+     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend The backend to use.
      *
      * @return void
      */

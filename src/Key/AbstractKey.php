@@ -1,13 +1,13 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
 /**
  * A class representing a key.
  *
  * This class can be extended in order to implement specific types of keys.
  *
- * @package SimpleSAML\XMLSec\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 abstract class AbstractKey
 {

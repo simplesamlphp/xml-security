@@ -1,13 +1,13 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *
- * @package SimpleSAML\XMLSec\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class PublicKey extends AsymmetricKey
 {
@@ -27,9 +27,9 @@ class PublicKey extends AsymmetricKey
      *
      * @param string $file The file where the PEM-encoded public key is stored.
      *
-     * @return \SimpleSAML\XMLSec\Key\PublicKey A new public key.
+     * @return \SimpleSAML\XMLSecurity\Key\PublicKey A new public key.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the file cannot be read.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
     public static function fromFile(string $file): PublicKey
     {
@@ -79,7 +79,7 @@ class PublicKey extends AsymmetricKey
      * @param string $modulus The modulus of the given key.
      * @param string $exponent The exponent of the given key.
      *
-     * @return \SimpleSAML\XMLSec\Key\PublicKey A new public key with the given modulus and exponent.
+     * @return \SimpleSAML\XMLSecurity\Key\PublicKey A new public key with the given modulus and exponent.
      */
     public static function fromDetails(string $modulus, string $exponent): PublicKey
     {

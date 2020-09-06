@@ -1,13 +1,13 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * A class modeling private keys for their use in asymmetric algorithms.
  *
- * @package SimpleSAML\XMLSec\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class PrivateKey extends AsymmetricKey
 {
@@ -29,9 +29,9 @@ class PrivateKey extends AsymmetricKey
      * @param string $file The file where the PEM-encoded private key is stored.
      * @param string $passphrase An optional passphrase used to decrypt the given key material.
      *
-     * @return \SimpleSAML\XMLSec\Key\PrivateKey A new private key.
+     * @return \SimpleSAML\XMLSecurity\Key\PrivateKey A new private key.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the file cannot be read.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
     public static function fromFile(string $file, string $passphrase = ""): PrivateKey
     {

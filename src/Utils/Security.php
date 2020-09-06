@@ -1,11 +1,11 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Utils;
+namespace SimpleSAML\XMLSecurity\Utils;
 
 /**
  * A collection of security-related functions.
  *
- * @package SimpleSAML\XMLSec\Utils
+ * @package SimpleSAML\XMLSecurity\Utils
  */
 class Security
 {

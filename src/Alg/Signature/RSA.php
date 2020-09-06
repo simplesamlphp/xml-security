@@ -1,26 +1,27 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Alg\Signature;
+namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSec\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Key\AsymmetricKey;
+use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Backend\OpenSSL;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 
 /**
  * Class implementing the RSA signature algorithm.
  *
- * @package SimpleSAML\XMLSec\Alg\Signature
+ * @package SimpleSAML\XMLSecurity\Alg\Signature
  */
 class RSA extends AbstractSigner implements SignatureAlgorithm
 {
     /** @var string */
-    protected string $default_backend = '\SimpleSAML\XMLSec\Backend\OpenSSL';
+    protected string $default_backend = OpenSSL::class;
 
 
     /**
      * RSA constructor.
      *
-     * @param \SimpleSAML\XMLSec\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
+     * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
      * @param string $digest The identifier of the digest algorithm to use.
      */
     public function __construct(AsymmetricKey $key, string $digest = Constants::DIGEST_SHA1)

@@ -1,14 +1,14 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Utils;
+namespace SimpleSAML\XMLSecurity\Utils;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
 /**
  * A collection of utilities to generate cryptographically-secure random data.
  *
- * @package SimpleSAML\XMLSec\Utils
+ * @package SimpleSAML\XMLSecurity\Utils
  */
 class Random
 {
@@ -19,8 +19,8 @@ class Random
      *
      * @return string A random string of $length length.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If $length is not an integer greater than zero.
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If no appropriate sources of cryptographically
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $length is not an integer greater than zero.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If no appropriate sources of cryptographically
      *   secure random generators are available.
      */
     public static function generateRandomBytes(int $length): string

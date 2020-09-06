@@ -1,20 +1,20 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Alg;
+namespace SimpleSAML\XMLSecurity\Alg;
 
-use SimpleSAML\XMLSec\Backend\EncryptionBackend;
+use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 
 /**
  * An interface representing algorithms that can be used for encryption.
  *
- * @package SimpleSAML\XMLSec\Alg
+ * @package SimpleSAML\XMLSecurity\Alg
  */
 interface EncryptionAlgorithm
 {
     /**
      * Set the backend to use for actual computations by this algorithm.
      *
-     * @param \SimpleSAML\XMLSec\Backend\EncryptionBackend $backend The encryption backend to use.
+     * @param \SimpleSAML\XMLSecurity\Backend\EncryptionBackend $backend The encryption backend to use.
      *
      * @return void
      */

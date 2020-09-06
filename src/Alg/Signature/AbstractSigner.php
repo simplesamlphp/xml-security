@@ -1,22 +1,22 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Alg\Signature;
+namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSec\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSec\Backend\SignatureBackend;
-use SimpleSAML\XMLSec\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * An abstract class that implements a generic digital signature algorithm.
  *
- * @package SimpleSAML\XMLSec\Alg\Signature
+ * @package SimpleSAML\XMLSecurity\\Alg\Signature
  */
 abstract class AbstractSigner implements SignatureAlgorithm
 {
-    /** @var \SimpleSAML\XMLSec\Key\AbstractKey */
+    /** @var \SimpleSAML\XMLSecurity\Key\AbstractKey */
     protected AbstractKey $key;
 
-    /** @var \SimpleSAML\XMLSec\Backend\SignatureBackend */
+    /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
 
     /** @var string */
@@ -29,7 +29,7 @@ abstract class AbstractSigner implements SignatureAlgorithm
     /**
      * Build a signature algorithm.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The signing key.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The signing key.
      * @param string $digest The identifier of the digest algorithm to use.
      */
     public function __construct(AbstractKey $key, string $digest)
@@ -51,7 +51,7 @@ abstract class AbstractSigner implements SignatureAlgorithm
 
 
     /**
-     * @param \SimpleSAML\XMLSec\Backend\SignatureBackend
+     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend
      *
      * @return void
      */

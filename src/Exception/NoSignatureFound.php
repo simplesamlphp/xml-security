@@ -1,13 +1,13 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Exception;
+namespace SimpleSAML\XMLSecurity\Exception;
 
 /**
  * Class NoSignatureFound
  *
  * This exception is thrown when we can't find a signature in a given DOM document or element.
  *
- * @package SimpleSAML\XMLSec\Exception
+ * @package SimpleSAML\XMLSecurity\Exception
  */
 class NoSignatureFound extends RuntimeException
 {

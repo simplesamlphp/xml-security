@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Exception;
+namespace SimpleSAML\XMLSecurity\Exception;
 
 use Throwable;
 
@@ -9,7 +9,7 @@ use Throwable;
  *
  * This exception is thrown when a parameter is passed to a method with the wrong type or contents.
  *
- * @package SimpleSAML\XMLSec\Exception
+ * @package SimpleSAML\XMLSecurity\Exception
  */
 class InvalidArgumentException extends \InvalidArgumentException implements Throwable
 {
@@ -17,7 +17,7 @@ class InvalidArgumentException extends \InvalidArgumentException implements Thro
      * @param string $expected description of expected type
      * @param mixed  $parameter the parameter that is not of the expected type.
      *
-     * @return \SimpleSAML\XMLSec\Exception\InvalidArgumentException
+     * @return \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
      */
     public static function invalidType(string $expected, $parameter): InvalidArgumentException
     {

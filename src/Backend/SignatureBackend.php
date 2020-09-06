@@ -1,15 +1,15 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * Interface for backends implementing digital signatures.
  *
- * @package SimpleSAML\XMLSec\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 interface SignatureBackend
 {
@@ -18,7 +18,7 @@ interface SignatureBackend
      *
      * @param string $digest The identifier of the digest algorithm.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\InvalidArgumentException If the given digest is not valid.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given digest is not valid.
      */
     public function setDigestAlg(string $digest): void;
 
@@ -31,7 +31,7 @@ interface SignatureBackend
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      *
-     * @throws \SimpleSAML\XMLSec\Exception\RuntimeException If there is an error while signing the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while signing the plaintext.
      */
     public function sign(AbstractKey $key, string $plaintext): string;
 
@@ -39,7 +39,7 @@ interface SignatureBackend
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSec\Key\AbstractKey $key The key to use to verify.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *
