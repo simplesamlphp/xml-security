@@ -21,9 +21,9 @@ class RandomTest extends TestCase
         $mainRegEx = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 
         // test with default prefix
-        $this->assertRegExp('/_'.$mainRegEx.'/', Random::generateGUID());
+        $this->assertMatchesRegularExpression('/_'.$mainRegEx.'/', Random::generateGUID());
 
         // test with different prefix
-        $this->assertRegExp('/pfx'.$mainRegEx.'/', Random::generateGUID('pfx'));
+        $this->assertMatchesRegularExpression('/pfx'.$mainRegEx.'/', Random::generateGUID('pfx'));
     }
 }
