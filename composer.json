@@ -1,6 +1,6 @@
 {
-    "name": "simplesamlphp/xmlsec",
-    "description": "A PHP library for XML Security",
+    "name": "simplesamlphp/xml-security",
+    "description": "SimpleSAMLphp library for XML Security",
     "license": "BSD-3-Clause",
     "keywords": [
         "xml",
@@ -8,17 +8,16 @@
         "signature",
         "security"
     ],
-    "homepage": "https://github.com/simplesamlphp/xmlsec",
+    "homepage": "https://github.com/simplesamlphp/xml-securitgy",
     "authors": [
-        {
-            "name": "Rob Richards",
-            "email": "rrichards@cdatazone.org",
-            "homepage": "https://www.cdatazone.org/",
-            "role": "Developer"
-        },
         {
             "name": "Jaime Perez Crespo",
             "email": "jaime.perez@uninett.no",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Tim van Dijen",
+            "email": "tvdijen@gmail.com",
             "role": "Maintainer"
         }
     ],
@@ -36,6 +35,6 @@
         "simplesamlphp/xml-common": "~0.0.9"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "~0.2.7"
+        "simplesamlphp/simplesamlphp-test-framework": "~0.2.8"
     }
 }
