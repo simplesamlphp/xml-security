@@ -1,17 +1,17 @@
 <?php
-namespace SimpleSAML\XMLSec\Test\Utils;
+
+namespace SimpleSAML\XMLSecurity\Utils;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Utils\Security;
+use SimpleSAML\XMLSecurity\Utils\Security;
 
 /**
- * A class to test SimpleSAML\XMLSec\Utils\Security.
+ * A class to test SimpleSAML\XMLSecurity\Utils\Security.
  *
- * @package SimpleSAML\XMLSec\Test\Utils
+ * @package SimpleSAML\XMLSecurity\Utils
  */
 class SecurityTest extends TestCase
 {
-
     /**
      * Test the constant-time comparison function.
      */

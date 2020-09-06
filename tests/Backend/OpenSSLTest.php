@@ -1,21 +1,21 @@
 <?php
 
-namespace SimpleSAML\Test\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSec\Backend\OpenSSL;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\PrivateKey;
-use SimpleSAML\XMLSec\Key\PublicKey;
-use SimpleSAML\XMLSec\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Backend\OpenSSL;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
- * Tests for SimpleSAML\XMLSec\Backend\OpenSSL.
+ * Tests for SimpleSAML\XMLSecurity\Backend\OpenSSL.
  *
- * @package SimpleSAML\Test\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 class OpenSSLTest extends TestCase
 {

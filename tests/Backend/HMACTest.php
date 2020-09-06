@@ -1,24 +1,25 @@
 <?php
 
-namespace SimpleSAML\Test\Backend;
+namespace SimpleSAML\XMLSecurity\Backend;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Backend\HMAC;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Backend\HMAC;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
- * Test for SimpleSAML\XMLSec\Backend\HMAC.
+ * Test for SimpleSAML\XMLSecurity\Backend\HMAC.
  *
- * @package SimpleSAML\Test\Backend
+ * @package SimpleSAML\XMLSecurity\Backend
  */
 class HMACTest extends TestCase
 {
+    public const PLAINTEXT = "plaintext";
 
-    const PLAINTEXT = "plaintext";
-    const SIGNATURE = "61b85d9e800ed0eca556a304cc9e1ac7ae8eecb3";
-    const SECRET = 'secret key';
+    public const SIGNATURE = "61b85d9e800ed0eca556a304cc9e1ac7ae8eecb3";
+
+    public const SECRET = 'secret key';
 
     /** @var SymmetricKey */
     protected $key;

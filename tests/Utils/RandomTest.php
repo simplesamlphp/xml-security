@@ -1,14 +1,14 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Utils;
+namespace SimpleSAML\XMLSecurity\Utils;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Utils\Random;
+use SimpleSAML\XMLSecurity\Utils\Random;
 
 /**
- * Tests for SimpleSAML\XMLSec\Utils\Random
+ * Tests for SimpleSAML\XMLSecurity\Utils\Random
  *
- * @package SimpleSAML\XMLSec\Test\Utils
+ * @package SimpleSAML\XMLSecurity\Utils
  */
 class RandomTest extends TestCase
 {

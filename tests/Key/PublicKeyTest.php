@@ -1,19 +1,18 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Key\PublicKey;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
 
 /**
- * Tests for SimpleSAML\XMLSec\Key\PublicKey.
+ * Tests for SimpleSAML\XMLSecurity\Key\PublicKey.
  *
- * @package SimpleSAML\XMLSec\Test\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class PublicKeyTest extends TestCase
 {
-
     /** @var resource */
     protected $pubKey;
 

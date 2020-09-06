@@ -1,16 +1,16 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Key\X509Certificate;
 
 /**
- * Test for SimpleSAML\XMLSec\Key\X509Certificate
+ * Test for SimpleSAML\XMLSecurity\Key\X509Certificate
  *
- * @package SimpleSAML\XMLSec\Test\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class X509CertificateTest extends TestCase
 {
@@ -76,7 +76,7 @@ class X509CertificateTest extends TestCase
         $f = openssl_x509_fingerprint($this->f);
         $this->assertEquals($f, $this->c->getRawThumbprint());
 
-        $m = new \ReflectionMethod('\SimpleSAML\XMLSec\Key\X509Certificate', 'manuallyComputeThumbprint');
+        $m = new \ReflectionMethod(X509Certificate::class, 'manuallyComputeThumbprint');
         $m->setAccessible(true);
         $this->assertEquals($f, $m->invokeArgs($this->c, [Constants::DIGEST_SHA1]));
     }

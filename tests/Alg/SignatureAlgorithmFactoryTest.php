@@ -1,20 +1,20 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Alg;
+namespace SimpleSAML\XMLSecurity\Alg;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Alg\Signature\HMAC;
-use SimpleSAML\XMLSec\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSec\Constants;
-use SimpleSAML\XMLSec\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSec\Exception\RuntimeException;
-use SimpleSAML\XMLSec\Key\PublicKey;
-use SimpleSAML\XMLSec\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
- * Tests for SimpleSAML\XMLSec\Alg\Signature\SignatureAlgorithmFactory
+ * Tests for SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory
  *
- * @package SimpleSAML\XMLSec\Test\Alg
+ * @package SimpleSAML\XMLSecurity\Alg
  */
 class SignatureAlgorithmFactoryTest extends TestCase
 {

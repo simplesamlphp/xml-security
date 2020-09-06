@@ -26,6 +26,11 @@
             "SimpleSAML\\XMLSec\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SimpleSAML\\XMLSec\\": "tests"
+        }
+    },
     "require": {
         "php": ">= 7.4 || ^8.0",
         "ext-openssl": "*",

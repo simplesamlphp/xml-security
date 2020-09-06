@@ -1,14 +1,14 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
 /**
- * Tests for SimpleSAML\XMLSec\Key\PrivateKey
+ * Tests for SimpleSAML\XMLSecurity\Key\PrivateKey
  *
- * @package SimpleSAML\XMLSec\Test\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class PrivateKeyTest extends TestCase
 {

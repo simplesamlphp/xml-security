@@ -1,14 +1,14 @@
 <?php
 
-namespace SimpleSAML\XMLSec\Test\Key;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSec\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
- * Class to test SimpleSAML\XMLSec\Key\SymmetricKey
+ * Class to test SimpleSAML\XMLSecurity\Key\SymmetricKey
  *
- * @package SimpleSAML\XMLSec\Test\Key
+ * @package SimpleSAML\XMLSecurity\Key
  */
 class SymmetricKeyTest extends TestCase
 {
