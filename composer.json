@@ -8,7 +8,7 @@
         "signature",
         "security"
     ],
-    "homepage": "https://github.com/simplesamlphp/xml-securitgy",
+    "homepage": "https://github.com/simplesamlphp/xml-security",
     "authors": [
         {
             "name": "Jaime Perez Crespo",
@@ -23,12 +23,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "SimpleSAML\\XMLSec\\": "src"
+            "SimpleSAML\\XMLSecurity\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SimpleSAML\\XMLSec\\": "tests"
+            "SimpleSAML\\XMLSecurity\\": "tests"
         }
     },
     "require": {
