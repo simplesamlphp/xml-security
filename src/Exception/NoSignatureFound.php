@@ -11,6 +11,8 @@ namespace SimpleSAML\XMLSecurity\Exception;
  */
 class NoSignatureFound extends RuntimeException
 {
-    /** @var string */
-    protected string $message = "There is no signature in the document or element.";
+    public function __construct()
+    {
+        parent::__construct("There is no signature in the document or element.");
+    }
 }
