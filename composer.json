@@ -36,6 +36,7 @@
         "ext-openssl": "*",
         "ext-dom": "*",
 
+        "robrichards/xmlseclibs": "^3.1.1",
         "simplesamlphp/assert": "~0.0.13",
         "simplesamlphp/xml-common": "~0.0.9"
     },
