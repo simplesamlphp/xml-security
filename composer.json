@@ -41,6 +41,6 @@
         "simplesamlphp/xml-common": "~0.0.9"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.0.1"
+        "simplesamlphp/simplesamlphp-test-framework": "^1.0.3"
     }
 }

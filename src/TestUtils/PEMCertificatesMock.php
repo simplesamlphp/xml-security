@@ -18,8 +18,8 @@ class PEMCertificatesMock
     public const PUBLIC_KEY_PATTERN = '/^-----BEGIN CERTIFICATE-----([^-]*)^-----END CERTIFICATE-----/m';
     public const PRIVATE_KEY_PATTERN = '/^-----BEGIN RSA PRIVATE KEY-----([^-]*)^-----END RSA PRIVATE KEY-----/m';
 
-    public const CERTIFICATE_DIR_RSA = '/resources/certificates/rsa-pem';
-    public const CERTIFICATE_DIR_DSA = '/resources/certificates/dsa-pem';
+    public const CERTIFICATE_DIR_RSA = '/tests/resources/certificates/rsa-pem';
+    public const CERTIFICATE_DIR_DSA = '/tests/resources/certificates/dsa-pem';
 
     public const PUBLIC_KEY = 'signed.simplesamlphp.org.crt';
     public const PRIVATE_KEY = 'signed.simplesamlphp.org_nopasswd.key';

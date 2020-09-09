@@ -43,7 +43,7 @@ class SignatureTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->basicDoc = DOMDocumentFactory::fromFile('tests/xml/basic-doc.xml');
+        $this->basicDoc = DOMDocumentFactory::fromFile('tests/resources/xml/basic-doc.xml');
     }
 
 
@@ -110,7 +110,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-basic-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-basic-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -127,7 +127,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-empty-uri.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-empty-uri.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -144,7 +144,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-no-uri.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-no-uri.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -161,7 +161,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert, true);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-subject.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-subject.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -179,7 +179,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/xml-sign-prefix-pfx.xml');
+        $expected = file_get_contents('tests/resources/xml/xml-sign-prefix-pfx.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -197,7 +197,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/xml-sign-prefix-none.xml');
+        $expected = file_get_contents('tests/resources/xml/xml-sign-prefix-none.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -232,7 +232,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->prepend();
 
-        $expected = file_get_contents('tests/xml/sign-with-comments.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-with-comments.xml');
         $this->assertEquals($expected, $doc->saveXML());
     }
 
@@ -250,7 +250,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-basic-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-basic-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -263,7 +263,7 @@ class SignatureTest extends TestCase
     public function testAutomaticallyAddingReferencesWithComments()
     {
         // now test without explicitly adding the reference
-        $doc = DOMDocumentFactory::fromFile('tests/xml/basic-doc-embedded-comments.xml');
+        $doc = DOMDocumentFactory::fromFile('tests/resources/xml/basic-doc-embedded-comments.xml');
         $signature = new Signature($doc->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $signature->setCanonicalizationMethod(C::C14N_EXCLUSIVE_WITH_COMMENTS);
@@ -271,7 +271,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->prepend();
 
-        $expected = file_get_contents('tests/xml/withcomment-xpointer-uri.xml');
+        $expected = file_get_contents('tests/resources/xml/withcomment-xpointer-uri.xml');
         $this->assertEquals($expected, $doc->saveXML());
     }
 
@@ -330,7 +330,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-sha224-rsa-sha224-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-sha224-rsa-sha224-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -346,7 +346,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-sha256-rsa-sha256-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-sha256-rsa-sha256-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -362,7 +362,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-sha384-rsa-sha384-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-sha384-rsa-sha384-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -378,7 +378,7 @@ class SignatureTest extends TestCase
         $signature->addX509Certificates($this->cert);
         $signature->append();
 
-        $expected = file_get_contents('tests/xml/sign-sha512-rsa-sha512-test.xml');
+        $expected = file_get_contents('tests/resources/xml/sign-sha512-rsa-sha512-test.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 
@@ -397,7 +397,7 @@ class SignatureTest extends TestCase
      */
     public function testReferenceWithCommentsRemovedWhenIDReferenced()
     {
-        $doc = DOMDocumentFactory::fromFile('tests/xml/withcomment-id-uri.xml');
+        $doc = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-id-uri.xml');
         $signature = Signature::fromXML($doc->documentElement);
         $signature->setIdAttributes(['xml:id']);
         $this->assertEquals(['xml:id'], $signature->getIdAttributes());
@@ -419,7 +419,7 @@ class SignatureTest extends TestCase
      */
     public function testReferenceWithCommentsRemovedWhenEmptyID()
     {
-        $doc = DOMDocumentFactory::fromFile('tests/xml/withcomment-empty-uri.xml');
+        $doc = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-empty-uri.xml');
         $signature = Signature::fromXML($doc->documentElement);
         $signature->setIdAttributes(['xml:id']);
         $validateReference = new \ReflectionMethod(Signature::class, 'validateReferences');
@@ -435,7 +435,7 @@ class SignatureTest extends TestCase
      */
     public function testReferenceWithCommentsRemovedWhenObjectID()
     {
-        $doc = DOMDocumentFactory::fromFile('tests/xml/withcomment-id-uri-object.xml');
+        $doc = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-id-uri-object.xml');
         $signature = Signature::fromXML($doc);
         $signature->setIdAttributes(['xml:id']);
         $validateReference = new \ReflectionMethod(Signature::class, 'validateReferences');
@@ -472,7 +472,7 @@ class SignatureTest extends TestCase
         $signature->envelop();
         $object = $signature->getRoot();
 
-        $expected = file_get_contents('tests/xml/enveloping-sig.xml');
+        $expected = file_get_contents('tests/resources/xml/enveloping-sig.xml');
         $this->assertEquals($expected, $object->ownerDocument->saveXML());
     }
 
@@ -485,7 +485,7 @@ class SignatureTest extends TestCase
      */
     public function testVerifySigWithAlgBlacklistedByDefault()
     {
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-basic-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-basic-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->expectException(InvalidArgumentException::class);
         $signature->verify($this->cert);
@@ -497,7 +497,7 @@ class SignatureTest extends TestCase
      */
     public function testVerifySigWithCustomBlacklistedAlg()
     {
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-sha256-rsa-sha256-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha256-rsa-sha256-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([C::SIG_RSA_SHA256]);
         $this->expectException(InvalidArgumentException::class);
@@ -511,50 +511,50 @@ class SignatureTest extends TestCase
     public function testVerifySignature()
     {
         // verify our own signature
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-basic-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-basic-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify our own signature.');
         $this->assertEquals(C::SIG_RSA_SHA1, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-sha224-rsa-sha224-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha224-rsa-sha224-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify our own RSA-SHA224 signature.');
         $this->assertEquals(C::SIG_RSA_SHA224, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-sha256-rsa-sha256-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha256-rsa-sha256-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify our own RSA-SHA256 signature.');
         $this->assertEquals(C::SIG_RSA_SHA256, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-sha384-rsa-sha384-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha384-rsa-sha384-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify our own RSA-SHA384 signature.');
         $this->assertEquals(C::SIG_RSA_SHA384, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/sign-sha512-rsa-sha512-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha512-rsa-sha512-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify our own RSA-SHA512 signature.');
         $this->assertEquals(C::SIG_RSA_SHA512, $signature->getSignatureMethod());
 
         // verify signatures made by other library
-        $xml = DOMDocumentFactory::fromFile('tests/xml/alt/sign-basic-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/alt/sign-basic-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify alternative signature.');
         $this->assertEquals(C::SIG_RSA_SHA1, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/alt/sign-sha256-rsa-sha256-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/alt/sign-sha256-rsa-sha256-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify alternative RSA-SHA256 signature.');
         $this->assertEquals(C::SIG_RSA_SHA256, $signature->getSignatureMethod());
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/alt/sign-formatted-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/alt/sign-formatted-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $this->assertTrue($signature->verify($this->cert), 'Failed to verify formatted signature.');
 
-        $xml = DOMDocumentFactory::fromFile('tests/xml/alt/sign-sha512-rsa-sha512-test.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/alt/sign-sha512-rsa-sha512-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $validateRef = new \ReflectionMethod(Signature::class, 'validateReferences');
         $validateRef->setAccessible(true);
@@ -567,7 +567,7 @@ class SignatureTest extends TestCase
      */
     public function testVerifyEnvelopingSignature()
     {
-        $signature = Signature::fromXML(DOMDocumentFactory::fromFile('tests/xml/enveloping-sig.xml'));
+        $signature = Signature::fromXML(DOMDocumentFactory::fromFile('tests/resources/xml/enveloping-sig.xml'));
         $signature->setBlacklistedAlgorithms([]);
         $this->assertTrue($signature->verify($this->cert));
     }
@@ -578,7 +578,7 @@ class SignatureTest extends TestCase
      */
     public function testVerificationFailure()
     {
-        $xml = DOMDocumentFactory::fromFile('tests/xml/invalid-sign.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/invalid-sign.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $this->assertFalse($signature->verify($this->cert), 'A signature was verified with the wrong public key.');
@@ -591,7 +591,7 @@ class SignatureTest extends TestCase
      */
     public function testVerifiedNode()
     {
-        $xml = DOMDocumentFactory::fromFile('tests/xml/withcomment-id-uri.xml');
+        $xml = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-id-uri.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $signature->setIdAttributes(['xml:id']);
@@ -600,7 +600,7 @@ class SignatureTest extends TestCase
         $verified = $signature->getVerifiedElements();
         $this->assertCount(1, $verified);
 
-        $expected = file_get_contents('tests/xml/withcomment-id-uri-verified.xml');
+        $expected = file_get_contents('tests/resources/xml/withcomment-id-uri-verified.xml');
         $node = array_pop($verified);
         $this->assertEquals($expected, $node->ownerDocument->saveXML());
     }
