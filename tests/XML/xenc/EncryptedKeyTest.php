@@ -19,7 +19,6 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
  *
- * @author Tim van Dijen, <tvdijen@gmail.com>
  * @package simplesamlphp/saml2
  */
 final class EncryptedKeyTest extends TestCase

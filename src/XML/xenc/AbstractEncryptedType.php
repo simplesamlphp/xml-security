@@ -16,7 +16,6 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
  *
  * Note: <xenc:EncryptionProperties> elements are not supported.
  *
- * @author Tim van Dijen, <tvdijen@gmail.com>
  * @package simplesamlphp/saml2
  */
 class AbstractEncryptedType extends AbstractXencElement

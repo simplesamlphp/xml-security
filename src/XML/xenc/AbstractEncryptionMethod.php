@@ -14,7 +14,6 @@ use SimpleSAML\XMLSecurity\Constants;
 /**
  * A class implementing the xenc:AbstractEncryptionMethod element.
  *
- * @author Tim van Dijen, <tvdijen@gmail.com>
  * @package simplesamlphp/saml2
  */
 abstract class AbstractEncryptionMethod extends AbstractXencElement

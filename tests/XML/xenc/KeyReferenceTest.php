@@ -17,7 +17,6 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\KeyReference
  *
- * @author Tim van Dijen, <tvdijen@gmail.com>
  * @package simplesamlphp/saml2
  */
 final class KeyReferenceTest extends TestCase

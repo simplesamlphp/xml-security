@@ -17,7 +17,6 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  * @covers \SimpleSAML\SAML2\XML\xenc\AbstractReference
  * @covers \SimpleSAML\SAML2\XML\xenc\CipherReference
  *
- * @author Tim van Dijen, <tvdijen@gmail.com>
  * @package simplesamlphp/saml2
  */
 final class CipherReferenceTest extends TestCase
