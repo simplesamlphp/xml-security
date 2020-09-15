@@ -33,7 +33,6 @@ final class KeyInfoTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function setUp(): void
     {
@@ -68,7 +67,6 @@ final class KeyInfoTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshalling(): void
     {
@@ -102,7 +100,6 @@ final class KeyInfoTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshallingEmpty(): void
     {
@@ -114,7 +111,6 @@ final class KeyInfoTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {
@@ -132,7 +128,6 @@ final class KeyInfoTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshallingEmpty(): void
     {

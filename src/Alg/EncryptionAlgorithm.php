@@ -16,7 +16,6 @@ interface EncryptionAlgorithm
      *
      * @param \SimpleSAML\XMLSecurity\Backend\EncryptionBackend $backend The encryption backend to use.
      *
-     * @return void
      */
     public function setBackend(EncryptionBackend $backend): void;
 

@@ -33,7 +33,6 @@ final class X509DataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function setUp(): void
     {
@@ -68,7 +67,6 @@ final class X509DataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshalling(): void
     {
@@ -95,7 +93,6 @@ final class X509DataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {

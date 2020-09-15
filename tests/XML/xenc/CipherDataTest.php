@@ -25,7 +25,6 @@ final class CipherDataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function setup(): void
     {
@@ -39,7 +38,6 @@ final class CipherDataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshallingCipherValue(): void
     {
@@ -58,7 +56,6 @@ final class CipherDataTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {

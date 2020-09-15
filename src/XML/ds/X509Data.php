@@ -62,7 +62,6 @@ final class X509Data extends AbstractDsElement
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException
      *     if $data contains anything other than X509Certificate or Chunk
      */

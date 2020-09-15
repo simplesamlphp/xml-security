@@ -115,7 +115,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Set the URI identifying the algorithm used by this encryption method.
      *
      * @param string $algorithm
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException
      */
     protected function setAlgorithm(string $algorithm): void
@@ -140,7 +139,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Set the size of the key used by this encryption method.
      *
      * @param int|null $keySize
-     * @return void
      */
     protected function setKeySize(?int $keySize): void
     {
@@ -163,7 +161,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Set the OAEP parameters.
      *
      * @param string|null $oaepParams The OAEP parameters, base64-encoded.
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException
      */
     protected function setOAEPParams(?string $oaepParams): void
@@ -195,7 +192,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Set an array of chunks as children of this encryption method.
      *
      * @param \SimpleSAML\XML\Chunk[] $children
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException
      */
     protected function setChildren(array $children): void

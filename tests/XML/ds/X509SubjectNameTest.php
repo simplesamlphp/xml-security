@@ -24,7 +24,6 @@ final class X509SubjectNameTest extends TestCase
 
 
     /**
-     * @return void
      */
     protected function setUp(): void
     {
@@ -35,7 +34,6 @@ final class X509SubjectNameTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshalling(): void
     {
@@ -48,7 +46,6 @@ final class X509SubjectNameTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {

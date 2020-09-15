@@ -72,7 +72,6 @@ abstract class AbstractReference extends AbstractXencElement
      * Set the value of the references-property
      *
      * @param \SimpleSAML\XML\Chunk[] $references
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException
      *   if the supplied array contains anything other than Chunk objects
      */

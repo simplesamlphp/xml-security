@@ -16,7 +16,6 @@ final class CertificateTest extends TestCase
     /**
      * @group utilities
      * @test
-     * @return void
      */
     public function testValidStructure(): void
     {
@@ -34,7 +33,6 @@ final class CertificateTest extends TestCase
     /**
      * @group utilities
      * @test
-     * @return void
      */
     public function testConvertToCertificate(): void
     {

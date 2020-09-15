@@ -49,7 +49,6 @@ final class X509Certificate extends AbstractDsElement
      * Set the value of the certificate-property
      *
      * @param string $certificate
-     * @return void
      */
     private function setCertificate(string $certificate): void
     {

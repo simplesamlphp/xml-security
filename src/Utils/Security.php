@@ -180,7 +180,6 @@ class Security
      * @param array $info The information returned by the validateElement() function.
      * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $key The publickey that should validate the Signature object.
      * @throws \Exception
-     * @return void
      *
      * @throws \SimpleSAML\Assert\AssertionFailedException if assertions are false
      */
@@ -223,7 +222,6 @@ class Security
      * @param array $certificates The certificates we should add to the signature node.
      * @param \DOMElement $root The XML node we should sign.
      * @param \DOMNode $insertBefore  The XML element we should insert the signature element before.
-     * @return void
      */
     public static function insertSignature(
         XMLSecurityKey $key,

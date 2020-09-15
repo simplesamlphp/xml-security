@@ -23,7 +23,6 @@ final class KeyNameTest extends TestCase
     private DOMDocument $document;
 
     /**
-     * @return void
      */
     protected function setUp(): void
     {
@@ -34,7 +33,6 @@ final class KeyNameTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testMarshalling(): void
     {
@@ -47,7 +45,6 @@ final class KeyNameTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {

@@ -24,7 +24,6 @@ interface SignatureAlgorithm
      *
      * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend The backend to use.
      *
-     * @return void
      */
     public function setBackend(SignatureBackend $backend): void;
 

@@ -49,7 +49,6 @@ final class X509SubjectName extends AbstractDsElement
      * Set the value of the name-property
      *
      * @param string $name
-     * @return void
      */
     private function setName(string $name): void
     {

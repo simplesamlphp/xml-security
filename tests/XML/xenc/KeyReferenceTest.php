@@ -29,7 +29,6 @@ final class KeyReferenceTest extends TestCase
 
 
     /**
-     * @return void
      */
     public function setup(): void
     {
@@ -56,7 +55,6 @@ XML
 
 
     /**
-     * @return void
      */
     public function testMarshalling(): void
     {
@@ -79,7 +77,6 @@ XML
 
 
     /**
-     * @return void
      */
     public function testUnmarshalling(): void
     {

@@ -174,7 +174,6 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * Set the cipher to be used by the backend.
      *
      * @param string $cipher The identifier of the cipher.
-     * @return void
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the cipher is unknown or not supported.
      */
@@ -193,7 +192,6 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * Set the digest algorithm to be used by this backend.
      *
      * @param string $digest The identifier of the digest algorithm.
-     * @return void
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given digest is not valid.
      */

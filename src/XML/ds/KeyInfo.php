@@ -71,7 +71,6 @@ final class KeyInfo extends AbstractDsElement
      * Set the value of the Id-property
      *
      * @param string|null $id
-     * @return void
      */
     private function setId(string $id = null): void
     {
@@ -100,7 +99,6 @@ final class KeyInfo extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\ds\KeyName|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
-     * @return void
      * @throws \SimpleSAML\Assert\AssertionFailedException  if $info contains
      *   anything other than KeyName, X509Data, EncryptedKey or Chunk
      */
