@@ -12,6 +12,7 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use TypeError;
 
 /**
  * Tests for SimpleSAML\XMLSecurity\Alg\Signature\RSA.
@@ -268,13 +269,8 @@ class RSASignatureTest extends TestCase
     public function testVerifyWithSymmetricKey()
     {
         $key = SymmetricKey::generate(16);
-        if (version_compare(phpversion(), '7.0', '>=')) {
-            $this->expectException(\TypeError::class);
-            new RSA($key);
-        } else {
-            // test via factory
-            $this->expectException(RuntimeException::class);
-            $this->factory->getAlgorithm(Constants::SIG_RSA_SHA1, $key);
-        }
+
+        $this->expectException(TypeError::class);
+        new RSA($key);
     }
 }
