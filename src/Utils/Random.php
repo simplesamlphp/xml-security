@@ -19,9 +19,10 @@ class Random
      *
      * @return string A random string of $length length.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $length is not an integer greater than zero.
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If no appropriate sources of cryptographically
-     *   secure random generators are available.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
+     *   If $length is not an integer greater than zero.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException
+     *   If no appropriate sources of cryptographically secure random generators are available.
      */
     public static function generateRandomBytes(int $length): string
     {

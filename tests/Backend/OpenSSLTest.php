@@ -44,12 +44,12 @@ class OpenSSLTest extends TestCase
         $this->backend->setDigestAlg(Constants::DIGEST_SHA256);
         $this->backend->setCipher(Constants::BLOCK_ENC_AES256_GCM);
         $this->validSig =
-            'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed05710' .
-            '4721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27e57d' .
-            '183ff08188b338f7975681ad67b1b6f8d174b57b666f787b801df9511d7a90e90e9af2386f4051669a4763ce5e9720fc8ae2b' .
-            'c90e7c33d92a4bcecefddb06599b1f3adf48cde42d442d76c4d938d1570379bf1ab45feae95f94f48a460a8894f90e0208ba9' .
-            '3d86b505f32942f53bdab8e506ba227cc813cd26a0ba9a93c46f27dd0c2b7452fd8c79c7aa72b885d95ef6d1dc810829b0832' .
-            'abe290d';
+            'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed057' .
+            '104721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27' .
+            'e57d183ff08188b338f7975681ad67b1b6f8d174b57b666f787b801df9511d7a90e90e9af2386f4051669a4763ce5e9720f' .
+            'c8ae2bc90e7c33d92a4bcecefddb06599b1f3adf48cde42d442d76c4d938d1570379bf1ab45feae95f94f48a460a8894f90' .
+            'e0208ba93d86b505f32942f53bdab8e506ba227cc813cd26a0ba9a93c46f27dd0c2b7452fd8c79c7aa72b885d95ef6d1dc8' .
+            '10829b0832abe290d';
     }
 
 
@@ -128,12 +128,12 @@ class OpenSSLTest extends TestCase
             $this->backend->decrypt(
                 $this->privKey,
                 hex2bin(
-                    'c2aa74a85de59daef76c4f4736680ff55503d1ce991a6b947ad5d269b93ef97acf761c1c1ccfedc1382d2c16ea52b7f6b' .
-                    '298d8a0f6dbf5e46c41df70804888758e2b95502d9b0849c8d670e4bb9f13bb9afa1d51a76a32625513599c4a2d841cb7' .
-                    '9beec171b9c0cf11466e90187e91377a7f7582f3eec3df6703a1abda89339d0f490bca61ceac743be401d861d50eb6aaa' .
-                    '2db63264cd2013e4008d82c4e7b3f8f13447cf136e52c9b9f06c062a3fe66d3b9f7fa78281d149e7756a97edb0b2a500f' .
-                    '110587f2d81790922def9061c4d8d500cd67ade406b61a20a8fe3b7db1ccc69095a20f556e5ed1f91ccaff1cb3f13065e' .
-                    'bee9e20064b0a75edb2b603af6c'
+                    'c2aa74a85de59daef76c4f4736680ff55503d1ce991a6b947ad5d269b93ef97acf761c1c1ccfedc1382d2c16ea52b7f' .
+                    '6b298d8a0f6dbf5e46c41df70804888758e2b95502d9b0849c8d670e4bb9f13bb9afa1d51a76a32625513599c4a2d84' .
+                    '1cb79beec171b9c0cf11466e90187e91377a7f7582f3eec3df6703a1abda89339d0f490bca61ceac743be401d861d50' .
+                    'eb6aaa2db63264cd2013e4008d82c4e7b3f8f13447cf136e52c9b9f06c062a3fe66d3b9f7fa78281d149e7756a97edb' .
+                    '0b2a500f110587f2d81790922def9061c4d8d500cd67ade406b61a20a8fe3b7db1ccc69095a20f556e5ed1f91ccaff1' .
+                    'cb3f13065ebee9e20064b0a75edb2b603af6c'
                 )
             )
         );
@@ -144,12 +144,12 @@ class OpenSSLTest extends TestCase
             $this->backend->decrypt(
                 $this->pubKey,
                 hex2bin(
-                    'd012f638b7814f63cce16d1938d34e1f82abcbe925cf579a4dd6e5b0d8f0c524b77a94423625c1cec7cc45e26f37188ff' .
-                    '18870cd4f8cd3e0de6084413c71c1f4f14f04858a655162e9332f4b26fe4523cebf7de51267290f8ae290c869fb324570' .
-                    'd9065b9604587111b116e8d15d8ef820f2ea2c1ae129ce27a20c4a7e4df815fb47a047cd11b06ada9f4ad8815452380a0' .
-                    '9fb6bff787ff167a20662740e1ac034e66612e2194d8b60a22341032d758fd94221314125dbb2d1432b4a3633b0857d8d' .
-                    '4938aabe1b53ab5f970fb4ad0ed0a554771cfa819cffba8ec5935a6d2f706dfcada355da34b994691c76a60d10c746a5b' .
-                    '683b2a0080d847ff208cf240a1c'
+                    'd012f638b7814f63cce16d1938d34e1f82abcbe925cf579a4dd6e5b0d8f0c524b77a94423625c1cec7cc45e26f37188' .
+                    'ff18870cd4f8cd3e0de6084413c71c1f4f14f04858a655162e9332f4b26fe4523cebf7de51267290f8ae290c869fb32' .
+                    '4570d9065b9604587111b116e8d15d8ef820f2ea2c1ae129ce27a20c4a7e4df815fb47a047cd11b06ada9f4ad881545' .
+                    '2380a09fb6bff787ff167a20662740e1ac034e66612e2194d8b60a22341032d758fd94221314125dbb2d1432b4a3633' .
+                    'b0857d8d4938aabe1b53ab5f970fb4ad0ed0a554771cfa819cffba8ec5935a6d2f706dfcada355da34b994691c76a60' .
+                    'd10c746a5b683b2a0080d847ff208cf240a1c'
                 )
             )
         );

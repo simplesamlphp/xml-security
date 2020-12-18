@@ -73,8 +73,8 @@ class HMACSignatureTest extends TestCase
         // test HMAC-SHA512
         $hmac = $this->factory->getAlgorithm(Constants::SIG_HMAC_SHA512, $key);
         $this->assertEquals(
-            '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f506776d88e' .
-            '2f47fff055fc51342b69cdc',
+            '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f506776d8' .
+            '8e2f47fff055fc51342b69cdc',
             bin2hex($hmac->sign($this->plaintext))
         );
 

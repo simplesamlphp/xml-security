@@ -61,10 +61,11 @@ class PEMCertificatesMock
      */
     public static function loadPlainCertificateFile(string $file, $sig_alg = self::ALG_SIG_RSA)
     {
+        $base = dirname(dirname(dirname(__FILE__)));
         if ($sig_alg === self::ALG_SIG_RSA) {
-            return file_get_contents(dirname(dirname(dirname(__FILE__))) . self::CERTIFICATE_DIR_RSA . DIRECTORY_SEPARATOR . $file);
+            return file_get_contents($base . self::CERTIFICATE_DIR_RSA . DIRECTORY_SEPARATOR . $file);
         } else {
-            return file_get_contents(dirname(dirname(dirname(__FILE__))) . self::CERTIFICATE_DIR_DSA . DIRECTORY_SEPARATOR . $file);
+            return file_get_contents($base . self::CERTIFICATE_DIR_DSA . DIRECTORY_SEPARATOR . $file);
         }
     }
 

@@ -37,9 +37,11 @@ class EncryptedKey extends AbstractEncryptedType
      * @param string|null $encoding The Encoding attribute of this object. Optional.
      * @param string|null $recipient The Recipient attribute of this object. Optional.
      * @param string|null $carriedKeyName The value of the CarriedKeyName element of this EncryptedData.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod The EncryptionMethod object of this EncryptedData. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
+     *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList The ReferenceList object of this EncryptedData. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
+     *   The ReferenceList object of this EncryptedData. Optional.
      */
     public function __construct(
         CipherData $cipherData,
@@ -123,7 +125,8 @@ class EncryptedKey extends AbstractEncryptedType
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException if the qualified name of the supplied element is wrong
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): object
     {

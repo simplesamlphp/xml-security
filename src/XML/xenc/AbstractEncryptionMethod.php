@@ -80,14 +80,22 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
                 continue;
             } elseif ($node->namespaceURI === Constants::XMLENCNS) {
                 if ($node->localName === 'KeySize') {
-                    Assert::null($keySize, $node->tagName . ' cannot be set more than once.', TooManyElementsException::class);
+                    Assert::null(
+                        $keySize,
+                        $node->tagName . ' cannot be set more than once.',
+                        TooManyElementsException::class
+                    );
                     Assert::numeric($node->textContent, $node->tagName . ' must be numerical.');
                     $keySize = intval($node->textContent);
                     continue;
                 }
 
                 if ($node->localName === 'OAEPParams') {
-                    Assert::null($oaepParams, $node->tagName . ' cannot be set more than once.', TooManyElementsException::class);
+                    Assert::null(
+                        $oaepParams,
+                        $node->tagName . ' cannot be set more than once.',
+                        TooManyElementsException::class
+                    );
                     $oaepParams = trim($node->textContent);
                     continue;
                 }

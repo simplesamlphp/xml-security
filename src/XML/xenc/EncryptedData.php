@@ -28,7 +28,8 @@ class EncryptedData extends AbstractEncryptedType
      * @param string|null $type The Type attribute of this object. Optional.
      * @param string|null $mimeType The MimeType attribute of this object. Optional.
      * @param string|null $encoding The Encoding attribute of this object. Optional.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod The EncryptionMethod object of this EncryptedData. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
+     *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
      */
     public function __construct(

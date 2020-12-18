@@ -50,7 +50,8 @@ class AbstractEncryptedType extends AbstractXencElement
      * @param string|null $type The Type attribute of this object. Optional.
      * @param string|null $mimeType The MimeType attribute of this object. Optional.
      * @param string|null $encoding The Encoding attribute of this object. Optional.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod The EncryptionMethod object of this EncryptedData. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
+     *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
      */
     protected function __construct(
@@ -218,9 +219,12 @@ class AbstractEncryptedType extends AbstractXencElement
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException if the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingElementException if one of the mandatory child-elements is missing
-     * @throws \SimpleSAML\XML\Exception\TooManyElementsException if too many child-elements of a type are specified
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   If the qualified name of the supplied element is wrong
+     * @throws \SimpleSAML\XML\Exception\MissingElementException
+     *   If one of the mandatory child-elements is missing
+     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
+     *   If too many child-elements of a type are specified
      */
     public static function fromXML(DOMElement $xml): object
     {
