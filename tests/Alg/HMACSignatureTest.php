@@ -72,7 +72,7 @@ class HMACSignatureTest extends TestCase
         // test HMAC-SHA512
         $hmac = $this->factory->getAlgorithm(Constants::SIG_HMAC_SHA512, $key);
         $this->assertEquals(
-            '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f506776d88e'.
+            '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f506776d88e' .
             '2f47fff055fc51342b69cdc',
             bin2hex($hmac->sign($this->plaintext))
         );
@@ -120,7 +120,7 @@ class HMACSignatureTest extends TestCase
         $this->assertTrue($hmac->verify(
             $this->plaintext,
             hex2bin(
-                '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f5067'.
+                '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f5067' .
                 '76d88e2f47fff055fc51342b69cdc'
             )
         ));
@@ -140,7 +140,7 @@ class HMACSignatureTest extends TestCase
 
         // test wrong plaintext
         $hmac = $this->factory->getAlgorithm(Constants::SIG_HMAC_SHA1, $key);
-        $this->assertFalse($hmac->verify($this->plaintext.'.', hex2bin('655c3b4277b39f31dedf5adc7f4cc9f07da7102c')));
+        $this->assertFalse($hmac->verify($this->plaintext . '.', hex2bin('655c3b4277b39f31dedf5adc7f4cc9f07da7102c')));
 
         // test wrong signature
         $this->assertFalse($hmac->verify($this->plaintext, hex2bin('655c3b4277b39f31dedf5adc7f4cc9f07da7102d')));

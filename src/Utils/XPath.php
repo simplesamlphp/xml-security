@@ -49,7 +49,7 @@ class XPath extends \RobRichards\XMLSecLibs\Utils\XPath
             throw new RuntimeException('Cannot search, no DOM document available');
         }
 
-        $nodeset = self::getXPath($doc)->query('./'.$name, $ref);
+        $nodeset = self::getXPath($doc)->query('./' . $name, $ref);
 
         if ($nodeset->length === 0) {
             return false;

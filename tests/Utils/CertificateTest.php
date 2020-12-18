@@ -41,4 +41,3 @@ final class CertificateTest extends TestCase
         $this->assertEquals(trim(PEMCertificatesMock::getPlainPublicKey()), $result);
     }
 }
-

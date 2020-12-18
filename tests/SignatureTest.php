@@ -208,15 +208,15 @@ class SignatureTest extends TestCase
     public function testSignatureWithComments()
     {
         $doc = DOMDocumentFactory::fromString(
-            '<ApplicationRequest xmlns:pfx="http://example.org/xmldata/" Id="SomeID">'.
-              '<!-- this is a comment -->'.
-              '<CustomerId>12345678</CustomerId>'.
-              '<Command>GetUserInfo</Command>'.
-              '<Timestamp>1317032524</Timestamp>'.
-              '<Status>ALL</Status>'.
-              '<Environment>DEVELOPMENT</Environment>'.
-              '<SoftwareId>ExampleApp 0.1\b</SoftwareId>'.
-              '<FileType>ABCDEFG</FileType>'.
+            '<ApplicationRequest xmlns:pfx="http://example.org/xmldata/" Id="SomeID">' .
+              '<!-- this is a comment -->' .
+              '<CustomerId>12345678</CustomerId>' .
+              '<Command>GetUserInfo</Command>' .
+              '<Timestamp>1317032524</Timestamp>' .
+              '<Status>ALL</Status>' .
+              '<Environment>DEVELOPMENT</Environment>' .
+              '<SoftwareId>ExampleApp 0.1\b</SoftwareId>' .
+              '<FileType>ABCDEFG</FileType>' .
             '</ApplicationRequest>'
         );
         $signature = new Signature($doc->documentElement);
@@ -282,15 +282,15 @@ class SignatureTest extends TestCase
     public function testSignatureWithRegeneratedId()
     {
         $doc = DOMDocumentFactory::fromString(
-            '<ApplicationRequest xmlns="http://example.org/xmldata/" ID="SomeID">'.
-            '<!-- this is a comment -->'.
-            '<CustomerId>12345678</CustomerId>'.
-            '<Command>GetUserInfo</Command>'.
-            '<Timestamp>1317032524</Timestamp>'.
-            '<Status>ALL</Status>'.
-            '<Environment>DEVELOPMENT</Environment>'.
-            '<SoftwareId>ExampleApp 0.1\b</SoftwareId>'.
-            '<FileType>ABCDEFG</FileType>'.
+            '<ApplicationRequest xmlns="http://example.org/xmldata/" ID="SomeID">' .
+            '<!-- this is a comment -->' .
+            '<CustomerId>12345678</CustomerId>' .
+            '<Command>GetUserInfo</Command>' .
+            '<Timestamp>1317032524</Timestamp>' .
+            '<Status>ALL</Status>' .
+            '<Environment>DEVELOPMENT</Environment>' .
+            '<SoftwareId>ExampleApp 0.1\b</SoftwareId>' .
+            '<FileType>ABCDEFG</FileType>' .
             '</ApplicationRequest>'
         );
         $signature = new Signature($doc->documentElement);
@@ -450,14 +450,14 @@ class SignatureTest extends TestCase
     public function testEnvelopingSignature()
     {
         $doc = DOMDocumentFactory::fromString(
-            '<root Id="SomeID">'.
-            '<!-- This comment should not be included in the digest. -->'.
-            '<!-- withcomment-id-uri ds:signature tag -->'.
-            '<!-- Neither should this comment be included. -->'.
-            '<childnode>'.
-            'sometext'.
-            '<!-- Nor this comment. -->'.
-            '</childnode>'.
+            '<root Id="SomeID">' .
+            '<!-- This comment should not be included in the digest. -->' .
+            '<!-- withcomment-id-uri ds:signature tag -->' .
+            '<!-- Neither should this comment be included. -->' .
+            '<childnode>' .
+            'sometext' .
+            '<!-- Nor this comment. -->' .
+            '</childnode>' .
             '</root>'
         );
         $signature = new Signature($doc->documentElement);
@@ -615,8 +615,8 @@ class SignatureTest extends TestCase
     public function testForCommentsInContents()
     {
         $doc = DOMDocumentFactory::fromString(
-            '<ApplicationRequest xmlns="http://example.org/xmldata/" Id="SomeID">'.
-            '<CustomerId>12345678<!--0-->9</CustomerId>'.
+            '<ApplicationRequest xmlns="http://example.org/xmldata/" Id="SomeID">' .
+            '<CustomerId>12345678<!--0-->9</CustomerId>' .
             '</ApplicationRequest>'
         );
         $signature = new Signature($doc->documentElement);
