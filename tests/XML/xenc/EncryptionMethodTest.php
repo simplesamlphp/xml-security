@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\xenc;
+namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +11,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
 use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\Constants;
 
 /**

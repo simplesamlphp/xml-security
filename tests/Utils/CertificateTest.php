@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Utils;
+namespace SimpleSAML\XMLSecurity\Test\Utils;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XMLSecurity\Utils\Certificate;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 /**

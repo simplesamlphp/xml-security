@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\xenc;
+namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 /**

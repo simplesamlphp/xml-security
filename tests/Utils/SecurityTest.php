@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Utils;
+namespace SimpleSAML\XMLSecurity\Test\Utils;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Utils\Security;

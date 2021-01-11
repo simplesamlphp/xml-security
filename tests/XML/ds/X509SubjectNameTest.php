@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
