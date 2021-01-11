@@ -7,10 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use DOMNode;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Utils\Security as XMLSecurityUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
-use SimpleSAML\XML\Utils as XMLUtils;
 
 /**
  * Helper trait for processing signed elements.
@@ -34,7 +34,6 @@ trait SignableElementTrait
 
         if ($insertBefore !== null) {
             XMLSecurityUtils::insertSignature($signingKey, $certificates, $root, $insertBefore);
-            $doc = clone $root->ownerDocument;
         } else {
             $signature = new Signature($signingKey->getAlgorithm(), $certificates, $signingKey);
             $signature->toXML($root);

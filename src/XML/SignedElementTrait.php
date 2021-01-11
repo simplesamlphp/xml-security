@@ -63,7 +63,6 @@ trait SignedElementTrait
             return false;
         }
 
-        $signer = $this->signature->getSigner();
         Assert::eq(
             $key->getAlgorithm(),
             $this->signature->getAlgorithm(),
@@ -71,6 +70,7 @@ trait SignedElementTrait
         );
 
         // check the signature
+        $signer = $this->signature->getSigner();
         if ($signer->verify($key) === 1) {
             return true;
         }
