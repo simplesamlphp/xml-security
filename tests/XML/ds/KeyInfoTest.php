@@ -18,7 +18,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\KeyInfo
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class KeyInfoTest extends TestCase
 {

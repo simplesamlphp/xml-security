@@ -18,7 +18,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\X509Certificate
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class X509CertificateTest extends TestCase
 {

@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 /**
  * Class representing a ds:KeyInfo element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class KeyInfo extends AbstractDsElement
 {
@@ -30,7 +30,7 @@ final class KeyInfo extends AbstractDsElement
      * The various key information elements.
      *
      * Array with various elements describing this key.
-     * Unknown elements will be represented by \SAML2\XML\Chunk.
+     * Unknown elements will be represented by \SimpleSAML\XML\Chunk.
      *
      * @var (\SimpleSAML\XML\Chunk|
      *       \SimpleSAML\XMLSecurity\XML\ds\KeyName|

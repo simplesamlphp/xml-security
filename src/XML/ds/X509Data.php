@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 /**
  * Class representing a ds:X509Data element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class X509Data extends AbstractDsElement
 {
@@ -21,7 +21,7 @@ final class X509Data extends AbstractDsElement
      * The various X509 data elements.
      *
      * Array with various elements describing this certificate.
-     * Unknown elements will be represented by \SAML2\XML\Chunk.
+     * Unknown elements will be represented by \SimpleSAML\XML\Chunk.
      *
      * @var (\SimpleSAML\XML\Chunk|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|

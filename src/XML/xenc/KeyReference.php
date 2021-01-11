@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 /**
  * Class representing the <xenc:KeyReference> element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 class KeyReference extends AbstractReference
 {

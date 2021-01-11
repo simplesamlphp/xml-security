@@ -9,7 +9,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 /**
  * @covers \SimpleSAML\XMLSecurity\Utils\Certificate
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class CertificateTest extends TestCase
 {

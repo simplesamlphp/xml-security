@@ -12,7 +12,7 @@ use SimpleSAML\XML\Utils as XMLUtils;
 /**
  * Class representing <xenc:CipherData>.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 class CipherData extends AbstractXencElement
 {

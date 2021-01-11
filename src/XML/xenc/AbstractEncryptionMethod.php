@@ -14,7 +14,7 @@ use SimpleSAML\XMLSecurity\Constants;
 /**
  * A class implementing the xenc:AbstractEncryptionMethod element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractEncryptionMethod extends AbstractXencElement
 {
@@ -207,7 +207,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::allIsInstanceOf(
             $children,
             Chunk::class,
-            'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SAML2\XML\Chunk.'
+            'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SimpleSAML\XML\Chunk.'
         );
         $this->children = $children;
     }

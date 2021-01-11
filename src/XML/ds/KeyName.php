@@ -11,7 +11,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 /**
  * Class representing a ds:KeyName element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class KeyName extends AbstractDsElement
 {

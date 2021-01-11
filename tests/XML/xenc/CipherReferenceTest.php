@@ -11,20 +11,20 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\SAML2\XML\xenc\CipherReferenceTest
+ * Class \SimpleSAML\XMLSecurity\XML\xenc\CipherReferenceTest
  *
- * @covers \SimpleSAML\SAML2\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\SAML2\XML\xenc\AbstractReference
- * @covers \SimpleSAML\SAML2\XML\xenc\CipherReference
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\CipherReference
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class CipherReferenceTest extends TestCase
 {
     /** @var \DOMDocument $document */
     private DOMDocument $document;
 
-    /** @var \SAML2\XML\Chunk $reference */
+    /** @var \SimpleSAML\XML\Chunk $reference */
     private Chunk $reference;
 
 

@@ -18,7 +18,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class EncryptedDataTest extends TestCase
 {

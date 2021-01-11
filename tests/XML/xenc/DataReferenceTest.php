@@ -17,14 +17,14 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\DataReference
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class DataReferenceTest extends TestCase
 {
     /** @var \DOMDocument $document */
     private DOMDocument $document;
 
-    /** @var \SAML2\XML\Chunk $reference */
+    /** @var \SimpleSAML\XML\Chunk $reference */
     private Chunk $reference;
 
 

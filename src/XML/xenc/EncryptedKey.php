@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 /**
  * Class representing an encrypted key.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 class EncryptedKey extends AbstractEncryptedType
 {

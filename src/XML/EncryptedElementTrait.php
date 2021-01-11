@@ -16,7 +16,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 /**
  * Trait aggregating functionality for encrypted elements.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 trait EncryptedElementTrait
 {

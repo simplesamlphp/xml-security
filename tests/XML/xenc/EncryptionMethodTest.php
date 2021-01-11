@@ -19,7 +19,7 @@ use SimpleSAML\XMLSecurity\Constants;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionMethod
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class EncryptionMethodTest extends TestCase
 {

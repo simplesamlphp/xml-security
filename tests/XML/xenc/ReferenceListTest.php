@@ -16,17 +16,17 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class ReferenceListTest extends TestCase
 {
     /** @var \DOMDocument $document */
     private DOMDocument $document;
 
-    /** @var \SAML2\XML\Chunk $dataReference */
+    /** @var \SimpleSAML\XML\Chunk $dataReference */
     private Chunk $dataReference;
 
-    /** @var \SAML2\XML\Chunk $keyReference */
+    /** @var \SimpleSAML\XML\Chunk $keyReference */
     private Chunk $keyReference;
 
 

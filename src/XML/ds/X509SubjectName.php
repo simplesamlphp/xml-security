@@ -11,7 +11,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 /**
  * Class representing a ds:X509SubjectName element.
  *
- * @package simplesaml/saml2
+ * @package simplesaml/xml-security
  */
 final class X509SubjectName extends AbstractDsElement
 {

@@ -11,7 +11,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 /**
  * Class representing a ds:X509Certificate element.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class X509Certificate extends AbstractDsElement
 {

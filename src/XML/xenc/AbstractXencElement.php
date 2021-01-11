@@ -10,7 +10,7 @@ use SimpleSAML\XMLSecurity\Constants;
 /**
  * Abstract class to be implemented by all the classes in this namespace
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractXencElement extends AbstractXMLElement
 {

@@ -19,7 +19,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 /**
  * Wrapper class for XML signatures
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class Signature extends AbstractDsElement
 {

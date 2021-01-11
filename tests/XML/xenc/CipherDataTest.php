@@ -16,7 +16,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\CipherData
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class CipherDataTest extends TestCase
 {

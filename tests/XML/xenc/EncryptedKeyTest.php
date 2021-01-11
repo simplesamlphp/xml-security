@@ -19,7 +19,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class EncryptedKeyTest extends TestCase
 {

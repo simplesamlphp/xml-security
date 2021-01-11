@@ -11,7 +11,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 /**
  * A class containing a list of references to either encrypted data or encryption keys.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 class ReferenceList extends AbstractXencElement
 {

@@ -10,7 +10,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 /**
  * Abstract class to be implemented by all the classes in this namespace
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractDsElement extends AbstractXMLElement
 {

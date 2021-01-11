@@ -11,7 +11,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 /**
  * Interface for encrypted elements.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 interface EncryptedElementInterface
 {

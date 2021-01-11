@@ -12,7 +12,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 /**
  * Abstract class representing references. No custom elements are allowed.
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractReference extends AbstractXencElement
 {
