@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\SAML2\XML;
 
+use SimpleSAML\XMLSecurity\SignedElementInterface;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
 /**
@@ -12,38 +13,11 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 interface SignableElementInterface
 {
     /**
-     * Retrieve the certificates that are included in the message.
+     * Sign the 'Element' and return a 'SignedElement'
      *
-     * @return string[] An array of certificates
+     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $signingKey  The private key we should use to sign the message
+     * @param string[] $certificates  The certificates should be strings with the PEM encoded data
+     * @return \SimpleSAML\XMLSecurity\SignedElementInterface
      */
-    public function getCertificates(): array;
-
-
-    /**
-     * Set the certificates that should be included in the element.
-     * The certificates should be strings with the PEM encoded data.
-     *
-     * @param string[] $certificates An array of certificates.
-     */
-    public function setCertificates(array $certificates): void;
-
-
-    /**
-     * Get the private key we should use to sign the message.
-     *
-     * If the key is null, the message will be sent unsigned.
-     *
-     * @return \SimpleSAML\XMLSecurity\XMLSecurityKey|null
-     */
-    public function getSigningKey(): ?XMLSecurityKey;
-
-
-    /**
-     * Set the private key we should use to sign the message.
-     *
-     * If the key is null, the message will be sent unsigned.
-     *
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey|null $signingKey
-     */
-    public function setSigningKey(XMLSecurityKey $signingKey = null): void;
+    public function sign(XMLSecurityKey $signingKey, array $certificates): SignedElementInterface;
 }
