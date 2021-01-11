@@ -27,7 +27,7 @@ trait SignableElementTrait
     /**
      * Get the signature element of this object.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\ds\Signature|null
+     * @return \SimpleSAML\XMLSecurity\XML\ds\Signature
      */
     public function getSignature(): ?Signature
     {
@@ -38,13 +38,11 @@ trait SignableElementTrait
     /**
      * Initialize a signed element from XML.
      *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Signature|null $signature The ds:Signature object
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Signature $signature The ds:Signature object
      */
-    protected function setSignature(?Signature $signature): void
+    protected function setSignature(Signature $signature): void
     {
-        if ($signature) {
-            $this->signature = $signature;
-        }
+        $this->signature = $signature;
     }
 
 
@@ -89,9 +87,6 @@ trait SignableElementTrait
      */
     public function getValidatingCertificates(): array
     {
-        if ($this->signature === null) {
-            return [];
-        }
         $ret = [];
         foreach ($this->signature->getCertificates() as $cert) {
             // extract the public key from the certificate for validation.
