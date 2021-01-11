@@ -1,8 +1,9 @@
 <?php
 
-namespace SimpleSAML\SAML2\XML;
+declare(strict_types=1);
 
-use SimpleSAML\XMLSecurity\SignedElementInterface;
+namespace SimpleSAML\XMLSecurity\XML;
+
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
 /**
@@ -17,7 +18,7 @@ interface SignableElementInterface
      *
      * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $signingKey  The private key we should use to sign the message
      * @param string[] $certificates  The certificates should be strings with the PEM encoded data
-     * @return \SimpleSAML\XMLSecurity\SignedElementInterface
+     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface
      */
     public function sign(XMLSecurityKey $signingKey, array $certificates): SignedElementInterface;
 }

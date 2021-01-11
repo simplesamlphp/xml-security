@@ -1,6 +1,8 @@
 <?php
 
-namespace SimpleSAML\SAML2\XML;
+declare(strict_types=1);
+
+namespace SimpleSAML\XMLSecurity\XML;
 
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
