@@ -38,11 +38,22 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
      * @param \SimpleSAML\XMLSecurity\XML\SignableElementInterface $elt
      * @param \SimpleSAML\XMLSecurity\XML\ds\Signature $signature
      */
-    private function __construct(DOMElement $xml, SignableElementInterface $elt, Signature $signature)
+    protected function __construct(DOMElement $xml, SignableElementInterface $elt, Signature $signature)
     {
         $this->setStructure($xml);
         $this->setElement($elt);
         $this->setSignature($signature);
+    }
+
+
+    /**
+     * Output the class as an XML-formatted string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->structure->ownerDocument->saveXML();
     }
 
 
