@@ -22,21 +22,21 @@ trait SignableElementTrait
     /**
      * Sign the given XML element.
      *
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $signKey The private key used for signing.
+     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $signingKey The private key used for signing.
      * @param array $certificates  Any public key to be added to the ds:Signature
      * @param \DOMNode|null $insertBefore  A specific node in the DOM structure where the ds:Signature should be put in front.
      * @return \DOMElement The signed element.
      * @throws \Exception If an error occurs while trying to sign.
      */
-    private function toSignedXML(XMLSecurityKey $signKey, array $certificates, DOMNode $insertBefore = null): DOMElement
+    private function toSignedXML(XMLSecurityKey $signingKey, array $certificates, DOMNode $insertBefore = null): DOMElement
     {
         $root = $this->toXML();
 
         if ($insertBefore !== null) {
-            XMLSecurityUtils::insertSignature($this->signingKey, $this->certificates, $root, $insertBefore);
+            XMLSecurityUtils::insertSignature($signingKey, $certificates, $root, $insertBefore);
             $doc = clone $root->ownerDocument;
         } else {
-            $signature = new Signature($this->signingKey->getAlgorithm(), $this->certificates, $this->signingKey);
+            $signature = new Signature($signingKey->getAlgorithm(), $certificates, $signingKey);
             $signature->toXML($root);
         }
 

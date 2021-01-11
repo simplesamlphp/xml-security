@@ -14,7 +14,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
  *
  * @package simplesamlphp/xml-security
  */
-trait SignableElementTrait
+trait SignedElementTrait
 {
     /**
      * The signature of this element.
