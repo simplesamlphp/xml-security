@@ -12,10 +12,10 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFound;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
-use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 /**
@@ -292,12 +292,12 @@ class Signature
         $digest = false,
         bool $addIssuerSerial = false
     ): void {
-        if (is_array($certs) && !($certs instanceof X509Certificate)) {
+        if (is_array($certs) && !($certs instanceof Key\X509Certificate)) {
             throw new InvalidArgumentException(
                 'Passed certificates must be either an X509Certificate or a list of them'
             );
         }
-        if ($certs instanceof X509Certificate) {
+        if ($certs instanceof Key\X509Certificate) {
             $certs = [$certs];
         }
 
@@ -312,7 +312,7 @@ class Signature
         }
 
         foreach ($certs as $cert) {
-            if (!$cert instanceof X509Certificate) {
+            if (!$cert instanceof Key\X509Certificate) {
                 throw new InvalidArgumentException(
                     'The $certs array can only contain X509Certificate objects'
                 );
@@ -372,8 +372,9 @@ class Signature
             array_shift($pem_lines);
             array_pop($pem_lines);
             $pem = join($pem_lines);
-            $x509CertNode = $this->createElement('X509Certificate', $pem);
-            $certDataNode->appendChild($x509CertNode);
+
+            $x509CertNode = new X509Certificate($pem);
+            $x509CertNode->toXML($certDataNode);
         }
     }
 
@@ -743,7 +744,7 @@ class Signature
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $appendToNode is true and
      *   this is an enveloping signature.
      */
-    public function sign(AbstractKey $key, string $alg, bool $appendToNode = false): void
+    public function sign(Key\AbstractKey $key, string $alg, bool $appendToNode = false): void
     {
         if ($this->enveloping && $appendToNode) {
             throw new InvalidArgumentException(
@@ -806,7 +807,7 @@ class Signature
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is no SignatureValue in
      *   the signature, or we couldn't verify all the references.
      */
-    public function verify(AbstractKey $key): bool
+    public function verify(Key\AbstractKey $key): bool
     {
         $xp = XP::getXPath($this->sigNode->ownerDocument);
         $sigval = $xp->evaluate('string(./ds:SignatureValue)', $this->sigNode);
