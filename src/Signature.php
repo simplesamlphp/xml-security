@@ -16,6 +16,7 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 /**
  * Class implementing XML digital signatures.
@@ -334,8 +335,8 @@ class Signature
                     }
                     $subjectNameValue = implode(',', $parts);
                 }
-                $x509SubjectNode = $this->createElement('X509SubjectName', $subjectNameValue);
-                $certDataNode->appendChild($x509SubjectNode);
+                $x509SubjectNode = new X509SubjectName($subjectNameValue);
+                $x509SubjectNode->toXML($certDataNode);
             }
 
             if ($digest !== false) {
