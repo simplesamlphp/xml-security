@@ -17,6 +17,11 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 /**
  * Class implementing XML digital signatures.
@@ -294,15 +299,7 @@ class Signature
     ): void {
         Assert::allIsInstanceOf($certs, Key\X509Certificate::class);
 
-        $keyInfoNode = $this->createElement('KeyInfo');
-        $certDataNode = $this->createElement('X509Data');
-        $keyInfoNode->appendChild($certDataNode);
-
-        if ($this->objectNode === null) {
-            $this->sigNode->appendChild($keyInfoNode);
-        } else {
-            $this->sigNode->insertBefore($keyInfoNode, $this->objectNode);
-        }
+        $certData = [];
 
         foreach ($certs as $cert) {
             $details = $cert->getCertificateDetails();
@@ -323,16 +320,13 @@ class Signature
                     }
                     $subjectNameValue = implode(',', $parts);
                 }
-                $x509SubjectNode = $this->createElement('X509SubjectName', $subjectNameValue);
-                $certDataNode->appendChild($x509SubjectNode);
+                $certData[] = new X509SubjectName($subjectNameValue);
             }
 
             if ($digest !== false) {
                 // add certificate digest
                 $fingerprint = base64_encode(hex2bin($cert->getRawThumbprint($digest)));
-                $x509DigestNode = $this->createElement('X509Digest', $fingerprint, C::XMLDSIG11NS, 'dsig11');
-                $x509DigestNode->setAttribute('Algorithm', $digest);
-                $certDataNode->appendChild($x509DigestNode);
+                $certData[] = new X509Digest($fingerprint, $digest);
             }
 
             if ($addIssuerSerial && isset($details['issuer']) && isset($details['serialNumber'])) {
@@ -346,22 +340,26 @@ class Signature
                     $issuerName = $details['issuer'];
                 }
 
-                $x509IssuerNode = $this->createElement('X509IssuerSerial');
-                $certDataNode->appendChild($x509IssuerNode);
-
-                $x509IssuerNameNode = $this->createElement('X509IssuerName', $issuerName);
-                $x509IssuerNode->appendChild($x509IssuerNameNode);
-
-                $x509SerialNumberNode = $this->createElement('X509SerialNumber', $details['serialNumber']);
-                $x509IssuerNode->appendChild($x509SerialNumberNode);
+                $certData[] = new X509IssuerSerial($issuerName, $details['serialNumber']);
             }
 
             $pem_lines = explode("\n", trim($cert->getCertificate()));
             array_shift($pem_lines);
             array_pop($pem_lines);
             $pem = join($pem_lines);
-            $x509CertNode = $this->createElement('X509Certificate', $pem);
-            $certDataNode->appendChild($x509CertNode);
+
+            $certData[] = new X509Certificate($pem);
+        }
+
+        $keyInfoNode = $this->createElement('KeyInfo');
+
+        $certDataNode = new X509Data($certData);
+        $certDataNode->toXML($keyInfoNode);
+
+        if ($this->objectNode === null) {
+            $this->sigNode->appendChild($keyInfoNode);
+        } else {
+            $this->sigNode->insertBefore($keyInfoNode, $this->objectNode);
         }
     }
 
