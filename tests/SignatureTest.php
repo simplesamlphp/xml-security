@@ -80,7 +80,7 @@ final class SignatureTest extends TestCase
         $signature->addReferences([$this->basicDoc], C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
         $signature->setBlacklistedAlgorithms([]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-basic-test.xml');
@@ -97,7 +97,7 @@ final class SignatureTest extends TestCase
         $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
         $signature->setBlacklistedAlgorithms([]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-empty-uri.xml');
@@ -114,7 +114,7 @@ final class SignatureTest extends TestCase
         $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED], ['force_uri' => false]);
         $signature->setBlacklistedAlgorithms([]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-no-uri.xml');
@@ -131,7 +131,7 @@ final class SignatureTest extends TestCase
         $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
         $signature->setBlacklistedAlgorithms([]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert, true);
+        $signature->addX509Certificates([$this->cert], true);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-subject.xml');
@@ -166,7 +166,7 @@ final class SignatureTest extends TestCase
             ['overwrite' => false]//, 'prefix' => 'pfx', 'prefix_ns' => 'http://example.org/xmldata/']
         );
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->prepend();
 
         $expected = file_get_contents('tests/resources/xml/sign-with-comments.xml');
@@ -184,7 +184,7 @@ final class SignatureTest extends TestCase
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->setBlacklistedAlgorithms([]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-basic-test.xml');
@@ -205,7 +205,7 @@ final class SignatureTest extends TestCase
         $signature->setBlacklistedAlgorithms([]);
         $signature->setCanonicalizationMethod(C::C14N_EXCLUSIVE_WITH_COMMENTS);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->prepend();
 
         $expected = file_get_contents('tests/resources/xml/withcomment-xpointer-uri.xml');
@@ -264,7 +264,7 @@ final class SignatureTest extends TestCase
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->addReference($this->basicDoc, C::DIGEST_SHA224, [C::XMLDSIG_ENVELOPED]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA224);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-sha224-rsa-sha224-test.xml');
@@ -280,7 +280,7 @@ final class SignatureTest extends TestCase
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->addReference($this->basicDoc, C::DIGEST_SHA256, [C::XMLDSIG_ENVELOPED]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA256);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-sha256-rsa-sha256-test.xml');
@@ -296,7 +296,7 @@ final class SignatureTest extends TestCase
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->addReference($this->basicDoc, C::DIGEST_SHA384, [C::XMLDSIG_ENVELOPED]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA384);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-sha384-rsa-sha384-test.xml');
@@ -312,7 +312,7 @@ final class SignatureTest extends TestCase
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->addReference($this->basicDoc, C::DIGEST_SHA512, [C::XMLDSIG_ENVELOPED]);
         $signature->sign($this->privKey, C::SIG_RSA_SHA512);
-        $signature->addX509Certificates($this->cert);
+        $signature->addX509Certificates([$this->cert]);
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-sha512-rsa-sha512-test.xml');

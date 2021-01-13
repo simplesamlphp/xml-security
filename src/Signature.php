@@ -5,6 +5,7 @@ namespace SimpleSAML\XMLSecurity;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
@@ -299,7 +300,7 @@ class Signature
     /**
      * Attach one or more X509 certificates to the signature.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\X509Certificate|\SimpleSAML\XMLSecurity\Key\X509Certificate[] $certs
+     * @param \SimpleSAML\XMLSecurity\Key\X509Certificate[] $certs
      *   An X509Certificate object or an array of them.
      * @param boolean $addSubject Whether to add the subject of the certificate or not.
      * @param string|false $digest A digest algorithm identifier if the digest of the certificate should be added. False
@@ -310,19 +311,12 @@ class Signature
      *   X509Certificate object or an array of them.
      */
     public function addX509Certificates(
-        $certs,
+        array $certs,
         bool $addSubject = false,
         $digest = false,
         bool $addIssuerSerial = false
     ): void {
-        if (is_array($certs) && !($certs instanceof Key\X509Certificate)) {
-            throw new InvalidArgumentException(
-                'Passed certificates must be either an X509Certificate or a list of them'
-            );
-        }
-        if ($certs instanceof Key\X509Certificate) {
-            $certs = [$certs];
-        }
+        Assert::allIsInstanceOf($certs, Key\X509Certificate::class);
 
         $keyInfoNode = $this->createElement('KeyInfo');
         $certDataNode = $this->createElement('X509Data');
@@ -335,11 +329,6 @@ class Signature
         }
 
         foreach ($certs as $cert) {
-            if (!$cert instanceof Key\X509Certificate) {
-                throw new InvalidArgumentException(
-                    'The $certs array can only contain X509Certificate objects'
-                );
-            }
             $details = $cert->getCertificateDetails();
 
             if ($addSubject && isset($details['subject'])) {
