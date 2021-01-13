@@ -343,12 +343,7 @@ class Signature
                 $certData[] = new X509IssuerSerial($issuerName, $details['serialNumber']);
             }
 
-            $pem_lines = explode("\n", trim($cert->getCertificate()));
-            array_shift($pem_lines);
-            array_pop($pem_lines);
-            $pem = join($pem_lines);
-
-            $certData[] = new X509Certificate($pem);
+            $certData[] = new X509Certificate(CertificateUtils::stripHeaders($cert->getCertificate()));
         }
 
         $keyInfoNode = $this->createElement('KeyInfo');
