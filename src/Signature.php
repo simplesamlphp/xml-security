@@ -13,10 +13,12 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key;
+use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 use function array_key_exists;
@@ -369,24 +371,10 @@ class Signature
             }
 
             if ($addIssuerSerial && isset($details['issuer']) && isset($details['serialNumber'])) {
-                if (is_array($details['issuer'])) {
-                    $parts = [];
-                    foreach ($details['issuer'] as $key => $value) {
-                        array_unshift($parts, $key . '=' . $value);
-                    }
-                    $issuerName = implode(',', $parts);
-                } else {
-                    $issuerName = $details['issuer'];
-                }
+                $issuerName = CertificateUtils::parseIssuer($details['issuer']);
 
-                $x509IssuerNode = $this->createElement('X509IssuerSerial');
-                $certDataNode->appendChild($x509IssuerNode);
-
-                $x509IssuerNameNode = $this->createElement('X509IssuerName', $issuerName);
-                $x509IssuerNode->appendChild($x509IssuerNameNode);
-
-                $x509SerialNumberNode = $this->createElement('X509SerialNumber', $details['serialNumber']);
-                $x509IssuerNode->appendChild($x509SerialNumberNode);
+                $x509IssuerNode = new X509IssuerSerial($issuerName, $details['serialNumber']);
+                $x509IssuerNode->toXML($certDataNode);
             }
 
             $pem_lines = explode("\n", trim($cert->getCertificate()));
