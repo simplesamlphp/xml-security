@@ -72,38 +72,6 @@ final class SignatureTest extends TestCase
 
 
     /**
-     * Basic test for setting and getting the prefix for XML elements.
-     */
-    public function testSetPrefix()
-    {
-        $signature = new Signature($this->basicDoc->documentElement);
-
-        // test default
-        $this->assertEquals('ds', $signature->getPrefix());
-
-        // test setting a prefix
-        $signature->setPrefix('pfx');
-        $this->assertEquals('pfx', $signature->getPrefix());
-
-        // test clearing the prefix with an empty string
-        $signature->setPrefix('');
-        $this->assertEquals('', $signature->getPrefix());
-
-        // test clearing the prefix with null
-        $signature->setPrefix(null);
-        $this->assertEquals('', $signature->getPrefix());
-
-        // test clearing the prefix with false
-        $signature->setPrefix(false);
-        $this->assertEquals('', $signature->getPrefix());
-
-        // test restoring the default prefix
-        $signature->setPrefix('ds');
-        $this->assertEquals('ds', $signature->getPrefix());
-    }
-
-
-    /**
      * Basic test for signatures.
      */
     public function testBasicSignature()
@@ -167,42 +135,6 @@ final class SignatureTest extends TestCase
         $signature->append();
 
         $expected = file_get_contents('tests/resources/xml/sign-subject.xml');
-        $this->assertEquals($expected, $this->basicDoc->saveXML());
-    }
-
-
-    /**
-     * Test signing with a user-provided prefix for the XML elements of the signature.
-     */
-    public function testSignatureWithGivenPrefix()
-    {
-        $signature = new Signature($this->basicDoc->documentElement);
-        $signature->setPrefix('pfx');
-        $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
-        $signature->setBlacklistedAlgorithms([]);
-        $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
-        $signature->append();
-
-        $expected = file_get_contents('tests/resources/xml/xml-sign-prefix-pfx.xml');
-        $this->assertEquals($expected, $this->basicDoc->saveXML());
-    }
-
-
-    /**
-     * Test signing with no prefix used for the XML elements of the signature.
-     */
-    public function testSignatureWithNoPrefix()
-    {
-        $signature = new Signature($this->basicDoc->documentElement);
-        $signature->setPrefix(false);
-        $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
-        $signature->setBlacklistedAlgorithms([]);
-        $signature->sign($this->privKey, C::SIG_RSA_SHA1);
-        $signature->addX509Certificates($this->cert);
-        $signature->append();
-
-        $expected = file_get_contents('tests/resources/xml/xml-sign-prefix-none.xml');
         $this->assertEquals($expected, $this->basicDoc->saveXML());
     }
 

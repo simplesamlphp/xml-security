@@ -476,17 +476,6 @@ class Signature
 
 
     /**
-     * Get the prefix to designate the XML digital signature namespace currently configured.
-     *
-     * @return string The prefix used in this signature.
-     */
-    public function getPrefix(): string
-    {
-        return rtrim($this->nsPrefix, ':');
-    }
-
-
-    /**
      * Get a list of attributes used as an ID.
      *
      * @return array An array of strings with the attributes used as an ID.
@@ -684,27 +673,6 @@ class Signature
             throw new RuntimeException('Cannot set the mime type for non-enveloping signatures.');
         }
         $this->root->setAttribute('MimeType', $mimetype);
-    }
-
-
-    /**
-     * Set the prefix to designate the XML digital signature namespace currently configured.
-     *
-     * @param string|false $prefix The prefix to use in this signature, or false to not use any prefix.
-     */
-    public function setPrefix($prefix): void
-    {
-        if (!is_string($prefix) || empty($prefix)) {
-            $this->nsPrefix = '';
-        } else {
-            if ($this->nsPrefix === $prefix . ':') {
-                return;
-            }
-            $this->nsPrefix = $prefix . ':';
-        }
-
-        $this->sigNode->ownerDocument->removeChild($this->sigNode);
-        $this->initSignature();
     }
 
 
@@ -914,15 +882,13 @@ class Signature
      * contents. Defaults to null.
      * @param string $ns The namespace the new element must be created under. Defaults to the standard XMLDSIG
      * namespace.
-     * @param string|null $nsPrefix The prefix to use for the elements's name.
      *
      * @return \DOMElement A new DOM element with the given name.
      */
     protected function createElement(
         string $name,
         string $content = null,
-        string $ns = C::NS_XDSIG,
-        string $nsPrefix = null
+        string $ns = C::NS_XDSIG
     ): DOMElement {
         if ($this->sigNode === null) {
             // initialize signature
@@ -931,15 +897,11 @@ class Signature
             $doc = $this->sigNode->ownerDocument;
         }
 
-        if ($nsPrefix === null) {
-            $nsPrefix = $this->nsPrefix;
-        }
-
         if ($content !== null) {
-            return $doc->createElementNS($ns, $nsPrefix . $name, $content);
+            return $doc->createElementNS($ns, $this->nsPrefix . $name, $content);
         }
 
-        return $doc->createElementNS($ns, $nsPrefix . $name);
+        return $doc->createElementNS($ns, $this->nsPrefix . $name);
     }
 
 
