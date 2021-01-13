@@ -26,6 +26,7 @@ final class X509Data extends AbstractDsElement
      * @var (\SimpleSAML\XML\Chunk|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *       \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     protected array $data = [];
@@ -37,6 +38,7 @@ final class X509Data extends AbstractDsElement
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
      */
     public function __construct(array $data)
@@ -51,6 +53,7 @@ final class X509Data extends AbstractDsElement
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     public function getData(): array
@@ -65,6 +68,7 @@ final class X509Data extends AbstractDsElement
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
      * @throws \SimpleSAML\Assert\AssertionFailedException
      *     if $data contains anything other than X509Certificate or Chunk
