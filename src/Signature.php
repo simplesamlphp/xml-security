@@ -7,6 +7,7 @@ use DOMElement;
 use DOMNode;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -17,6 +18,7 @@ use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\XML\ds\Signature as Sig;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
@@ -186,9 +188,11 @@ class Signature
      */
     public function addReference(DOMNode $node, string $alg, array $transforms = [], array $options = []): void
     {
-        if (!in_array(get_class($node), ['DOMDocument', 'DOMElement'])) {
-            throw new InvalidArgumentException('Only references to the DOM document or elements are allowed.');
-        }
+        Assert::isInstanceOfAny(
+            $node,
+            [DOMDocument::class, DOMElement::class],
+            'Only references to the DOM document or elements are allowed.'
+        );
 
         $prefix = @$options['prefix'] ?: null;
         $prefixNS = @$options['prefix_ns'] ?: null;
@@ -407,9 +411,11 @@ class Signature
      */
     public static function fromXML(DOMNode $node): Signature
     {
-        if (!in_array(get_class($node), ['DOMElement', 'DOMDocument'])) {
-            throw new InvalidArgumentException('Signatures can only be created from DOM documents or elements');
-        }
+        Assert::isInstanceOfAny(
+            $node,
+            [DOMDocument::class, DOMElement::class],
+            'Signatures can only be created from DOM documents or elements'
+        );
 
         $signature = self::findSignature($node);
         if ($node instanceof DOMDocument) {
@@ -509,9 +515,11 @@ class Signature
      */
     public function insert($before = false): DOMNode
     {
-        if ($this->enveloping) {
-            throw new RuntimeException('Cannot insert the signature in the object it is enveloping.');
-        }
+        Assert::false(
+            $this->enveloping,
+            'Cannot insert the signature in the object it is enveloping.',
+            RuntimeException::class
+        );
 
         $signature = $this->root->ownerDocument->importNode($this->sigNode, true);
 
@@ -577,16 +585,18 @@ class Signature
      */
     public function setCanonicalizationMethod(string $method): void
     {
-        if (
-            !in_array($method, [
+        Assert::oneOf(
+            $method,
+            [
                 C::C14N_EXCLUSIVE_WITH_COMMENTS,
                 C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
                 C::C14N_INCLUSIVE_WITH_COMMENTS,
                 C::C14N_INCLUSIVE_WITHOUT_COMMENTS
-            ])
-        ) {
-            throw new InvalidArgumentException('Invalid canonicalization method');
-        }
+            ],
+            'Invalid canonicalization method',
+            InvalidArgumentException::class
+        );
+
         $this->c14nMethod = $method;
         $this->c14nMethodNode->setAttribute('Algorithm', $method);
     }
@@ -601,9 +611,12 @@ class Signature
      */
     public function setEncoding(string $encoding): void
     {
-        if (!$this->$this->enveloping) {
-            throw new RuntimeException('Cannot set the encoding for non-enveloping signatures.');
-        }
+        Assert::true(
+            $this->enveloping,
+            'Cannot set the encoding for non-enveloping signatures.',
+            RuntimeException::class
+        );
+
         $this->root->setAttribute('Encoding', $encoding);
     }
 
@@ -639,9 +652,12 @@ class Signature
      */
     public function setMimeType(string $mimetype): void
     {
-        if (!$this->enveloping) {
-            throw new RuntimeException('Cannot set the mime type for non-enveloping signatures.');
-        }
+        Assert::true(
+            $this->enveloping,
+            'Cannot set the mime type for non-enveloping signatures.',
+            RuntimeException::class
+        );
+
         $this->root->setAttribute('MimeType', $mimetype);
     }
 
@@ -651,34 +667,39 @@ class Signature
      *
      * @param \DOMElement $element A DOM element containing an XML signature.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the element does not correspond to an XML
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException If the element does not correspond to an XML
      *   signature or it is malformed (e.g. there are missing mandatory elements or attributes).
      */
     public function setSignatureElement(DOMElement $element): void
     {
-        if ($element->localName !== 'Signature' || $element->namespaceURI !== C::NS_XDSIG) {
-            throw new RuntimeException('Node is not an XML signature');
-        }
+        Assert::same($element->localName, 'Signature', InvalidDOMElementException::class);
+        Assert::same($element->namespaceURI, Sig::NS, InvalidDOMElementException::class);
+
         $this->sigNode = $element;
 
         $xp = XP::getXPath($this->sigNode->ownerDocument);
 
         $signedInfoNodes = $xp->query('./ds:SignedInfo', $this->sigNode);
-        if (count($signedInfoNodes) < 1) {
-            throw new RuntimeException('There is no SignedInfo element in the signature');
-        }
+
+        Assert::minCount(
+            $signedInfoNodes,
+            1,
+            'There is no SignedInfo element in the signature',
+            RuntimeException::class
+        );
         $this->sigInfoNode = $signedInfoNodes->item(0);
 
 
         $this->sigAlg = $xp->evaluate('string(./ds:SignedInfo/ds:SignatureMethod/@Algorithm)', $this->sigNode);
-        if (empty($this->sigAlg)) {
-            throw new RuntimeException('Unable to determine SignatureMethod');
-        }
+        Assert::stringNotEmpty($this->sigAlg, 'Unable to determine SignatureMethod', RuntimeException::class);
 
         $c14nMethodNodes = $xp->query('./ds:CanonicalizationMethod', $this->sigInfoNode);
-        if (count($c14nMethodNodes) < 1) {
-            throw new RuntimeException('There is no CanonicalizationMethod in the signature');
-        }
+        Assert::minCount(
+            $c14nMethodNodes,
+            1,
+            'There is no CanonicalizationMethod in the signature',
+            RuntimeException::class
+        );
 
         $this->c14nMethodNode = $c14nMethodNodes->item(0);
         if (!$this->c14nMethodNode->hasAttribute('Algorithm')) {
@@ -706,11 +727,11 @@ class Signature
      */
     public function sign(Key\AbstractKey $key, string $alg, bool $appendToNode = false): void
     {
-        if ($this->enveloping && $appendToNode) {
-            throw new InvalidArgumentException(
-                'Cannot append the signature, we are in enveloping mode.'
-            );
-        }
+        Assert::false(
+            ($this->enveloping && $appendToNode),
+            'Cannot append the signature, we are in enveloping mode.',
+            InvalidArgumentException::class
+        );
 
         $this->sigMethodNode->setAttribute('Algorithm', $alg);
         $factory = new SignatureAlgorithmFactory($this->algBlacklist);
@@ -890,9 +911,7 @@ class Signature
     {
         $doc = $node instanceof DOMDocument ? $node : $node->ownerDocument;
 
-        if ($doc === null) {
-            throw new RuntimeException('Cannot search for signatures, no DOM document available');
-        }
+        Assert::notNull($doc, 'Cannot search for signatures, no DOM document available', RuntimeException::class);
 
         $xp = XP::getXPath($doc);
         $nodeset = $xp->query('./ds:Signature', $node);
@@ -918,15 +937,15 @@ class Signature
      */
     protected function hash(string $alg, string $data, bool $encode = true): string
     {
-        if (!array_key_exists($alg, C::$DIGEST_ALGORITHMS)) {
-            throw new InvalidArgumentException('Unsupported digest method "' . $alg . '"');
-        }
+        Assert::keyExists(
+            C::$DIGEST_ALGORITHMS,
+            $alg,
+            'Unsupported digest method "%s"',
+            InvalidArgumentException::class
+        );
 
         $digest = hash(C::$DIGEST_ALGORITHMS[$alg], $data, true);
-        if ($encode) {
-            $digest = base64_encode($digest);
-        }
-        return $digest;
+        return $encode ? base64_encode($digest) : $digest;
     }
 
 
@@ -1158,9 +1177,7 @@ class Signature
 
         $xp = XP::getXPath($doc);
         $refNodes = $xp->query('./ds:SignedInfo/ds:Reference', $this->sigNode);
-        if ($refNodes->length < 1) {
-            throw new RuntimeException('There are no Reference nodes');
-        }
+        Assert::minCount($refNodes, 1, 'There are no Reference nodes', RuntimeException::class);
 
         $verified = true;
         foreach ($refNodes as $refNode) {
