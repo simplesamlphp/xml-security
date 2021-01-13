@@ -16,6 +16,7 @@ use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 /**
@@ -342,9 +343,8 @@ class Signature
             if ($digest !== false) {
                 // add certificate digest
                 $fingerprint = base64_encode(hex2bin($cert->getRawThumbprint($digest)));
-                $x509DigestNode = $this->createElement('X509Digest', $fingerprint, C::XMLDSIG11NS, 'dsig11');
-                $x509DigestNode->setAttribute('Algorithm', $digest);
-                $certDataNode->appendChild($x509DigestNode);
+                $x509DigestNode = new X509Digest($fingerprint, $digest);
+                $x509DigestNode->toXML($certDataNode);
             }
 
             if ($addIssuerSerial && isset($details['issuer']) && isset($details['serialNumber'])) {
