@@ -2,6 +2,9 @@
 
 namespace SimpleSAML\XMLSecurity;
 
+use DOMXPath;
+use Exception;
+
 /**
  * xmlseclibs.php
  *
@@ -43,6 +46,10 @@ namespace SimpleSAML\XMLSecurity;
 
 class XMLSecurityDSig extends \RobRichards\XMLSecLibs\XMLSecurityDSig
 {
+    /** @var DomXPath|null */
+    private $xPathCtx = null;
+
+
     /**
      * @return bool
      * @throws Exception
@@ -76,5 +83,30 @@ class XMLSecurityDSig extends \RobRichards\XMLSecLibs\XMLSecurityDSig
             }
         }
         return true;
+    }
+
+
+    /**
+     * Returns the XPathObj or null if xPathCtx is set and sigNode is empty.
+     *
+     * @return DOMXPath|null
+     */
+    private function getXPathObj()
+    {
+        if (empty($this->xPathCtx) && ! empty($this->sigNode)) {
+            $xpath = new DOMXPath($this->sigNode->ownerDocument);
+            $xpath->registerNamespace('secdsig', self::XMLDSIGNS);
+            $this->xPathCtx = $xpath;
+        }
+        return $this->xPathCtx;
+    }
+
+
+    /**
+     * Reset the XPathObj to null
+     */
+    private function resetXPathObj()
+    {
+        $this->xPathCtx = null;
     }
 }
