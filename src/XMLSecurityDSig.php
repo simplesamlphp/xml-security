@@ -43,4 +43,38 @@ namespace SimpleSAML\XMLSecurity;
 
 class XMLSecurityDSig extends \RobRichards\XMLSecLibs\XMLSecurityDSig
 {
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function validateReference()
+    {
+        $sigNode = $this->sigNode;
+        $docElem = $sigNode->ownerDocument->documentElement;
+
+        // enveloped signature, remove it
+        if (!$docElem->isSameNode($sigNode)) {
+            if ($sigNode->parentNode !== null) {
+                $sigNode->parentNode->removeChild($sigNode);
+            }
+        }
+        $xpath = $this->getXPathObj();
+        $query = "./secdsig:SignedInfo[1]/secdsig:Reference";
+        $nodeset = $xpath->query($query, $sigNode);
+        if ($nodeset->length < 1) {
+            throw new Exception("Reference nodes not found");
+        }
+
+        /* Initialize/reset the list of validated nodes. */
+        $this->validatedNodes = [];
+
+        foreach ($nodeset as $refNode) {
+            if (!$this->processRefNode($refNode)) {
+                /* Clear the list of validated nodes. */
+                $this->validatedNodes = null;
+                throw new Exception("Reference validation failed");
+            }
+        }
+        return true;
+    }
 }
