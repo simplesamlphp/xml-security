@@ -34,9 +34,16 @@ final class CustomSigned extends AbstractSignedXMLElement
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CustomSignable::NS, InvalidDOMElementException::class);
 
+var_dump($xml->ownerDocument->saveXML());
+//        $signatureElement = XMLUtils::xpQuery($xml, './ds:Signature');
+//        Assert::minCount($signatureElement, 1, MissingElementException::class);
+//        Assert::minCount($signatureElement, 1, TooManyElementsException::class);
         $signature = Signature::getChildrenOfClass($xml);
         Assert::minCount($signature, 1, MissingElementException::class);
         Assert::minCount($signature, 1, TooManyElementsException::class);
+
+//        $clone = clone $signatureElement[0];
+//        $signature = Signature::fromXML($clone);
 
         return new self(
             $xml,
