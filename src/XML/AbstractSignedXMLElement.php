@@ -40,8 +40,8 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
      */
     protected function __construct(DOMElement $xml, SignableElementInterface $elt, Signature $signature)
     {
+        $this->element = $elt;
         $this->setStructure($xml);
-        $this->setElement($elt);
         $this->setSignature($signature);
     }
 
@@ -54,28 +54,6 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
     public function __toString(): string
     {
         return $this->structure->ownerDocument->saveXML();
-    }
-
-
-    /**
-     * Collect the value of the unsigned element
-     *
-     * @return \SimpleSAML\XMLSecurity\XML\SignableElementInterface
-     */
-    public function getElement(): SignableElementInterface
-    {
-        return $this->element;
-    }
-
-
-    /**
-     * Set the value of the elment-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\SignableElementInterface $elt
-     */
-    private function setElement(SignableElementInterface $elt): void
-    {
-        $this->element = $elt;
     }
 
 
