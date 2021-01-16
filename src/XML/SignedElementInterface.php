@@ -29,7 +29,7 @@ interface SignedElementInterface
      * but cannot be verified, an exception will be thrown.
      *
      * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $key The key we should check against.
-     * @return bool True if successful, false if we don't have a signature that can be verified.
+     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The signed element if we can verify the signature.
      */
-    public function validate(XMLSecurityKey $key): bool;
+    public function validate(XMLSecurityKey $key): SignedElementInterface;
 }
