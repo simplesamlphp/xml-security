@@ -35,12 +35,11 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
      * Create/parse an alg:SigningMethod element.
      *
      * @param \DOMElement $xml
-     * @param \SimpleSAML\XMLSecurity\XML\SignableElementInterface $elt
      * @param \SimpleSAML\XMLSecurity\XML\ds\Signature $signature
      */
-    protected function __construct(DOMElement $xml, SignableElementInterface $elt, Signature $signature)
+    protected function __construct(DOMElement $xml, Signature $signature)
     {
-        $this->element = $elt;
+//        $this->element = $elt;
         $this->setStructure($xml);
         $this->setSignature($signature);
     }
