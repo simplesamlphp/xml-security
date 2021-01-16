@@ -14,4 +14,3 @@ $signable = new CustomSignable($chunk);
 $privateKey = PEMCertificatesMock::getPrivateKey(XMLSecurityKey::RSA_SHA256, PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
 $x = $signable->sign($privateKey);
 echo $x;
-//var_dump($x);

@@ -24,10 +24,10 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     use SignableElementTrait;
 
     /** @var string */
-    public const NS = 'urn:simplesamlphp:test';
+    public const NS = 'urn:oasis:names:tc:SAML:2.0:assertion';
 
     /** @var string */
-    public const NS_PREFIX = 'ssp';
+    public const NS_PREFIX = 'saml';
 
     /** @var \SimpleSAML\XML\Chunk $element */
     protected $element;
