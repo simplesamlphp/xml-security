@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use Exception;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
 /**
@@ -54,13 +55,13 @@ trait SignedElementTrait
      * validation fails.
      *
      * @param  \SimpleSAML\XMLSecurity\XMLSecurityKey $key The key we should check against.
-     * @return bool True on success, false when we don't have a signature.
+     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The Signed element if it was validated.
      * @throws \Exception
      */
-    public function validate(XMLSecurityKey $key): bool
+    public function validate(XMLSecurityKey $key): SignedElementInterface
     {
         if ($this->signature === null) {
-            return false;
+            throw new Exception("Unsigned element");
         }
 
         Assert::eq(
@@ -72,7 +73,7 @@ trait SignedElementTrait
         // check the signature
         $signer = $this->signature->getSigner();
         if ($signer->verify($key) === 1) {
-            return true;
+            return /* This should return the signed element */;
         }
 
         throw new Exception("Unable to validate Signature");
