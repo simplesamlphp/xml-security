@@ -12,7 +12,6 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
-use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
 use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
@@ -21,8 +20,6 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
  */
 final class CustomSignable extends AbstractXMLElement implements SignableElementInterface
 {
-    use SignableElementTrait;
-
     /** @var string */
     public const NS = 'urn:oasis:names:tc:SAML:2.0:assertion';
 
@@ -95,7 +92,12 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
      */
     public function sign(XMLSecurityKey $signingKey, array $certificates = []): SignedElementInterface
     {
-        return CustomSigned::fromXML($this->toSignedXML($signingKey, $certificates));
+        $unsigned = $this->toXML();
+
+        $signature = new Signature($signingKey->getAlgorithm(), $certificates, $signingKey);
+        $signature->toXML($unsigned);
+
+        return $unsigned;
     }
 
 

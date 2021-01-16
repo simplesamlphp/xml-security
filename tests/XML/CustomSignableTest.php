@@ -13,7 +13,6 @@ use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 /**
  * Class \SimpleSAML\XMLSecurity\XML\CustomSignableTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\SignableElementTrait
  * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
  *
  * @package simplesamlphp/xml-security
