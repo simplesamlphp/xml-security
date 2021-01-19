@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
  *
  * @package SimpleSAML\XMLSecurity\Backend
  */
-class HMACTest extends TestCase
+final class HMACTest extends TestCase
 {
     public const PLAINTEXT = "plaintext";
 
@@ -21,8 +21,8 @@ class HMACTest extends TestCase
 
     public const SECRET = 'secret key';
 
-    /** @var SymmetricKey */
-    protected $key;
+    /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
+    protected SymmetricKey $key;
 
 
     /**
@@ -37,7 +37,7 @@ class HMACTest extends TestCase
     /**
      * Test signing of messages.
      */
-    public function testSign()
+    public function testSign(): void
     {
         $backend = new HMAC();
         $backend->setDigestAlg(Constants::DIGEST_SHA1);
@@ -48,7 +48,7 @@ class HMACTest extends TestCase
     /**
      * Test for wrong digests.
      */
-    public function testSetUnknownDigest()
+    public function testSetUnknownDigest(): void
     {
         $backend = new HMAC();
         $this->expectException(InvalidArgumentException::class);
@@ -59,7 +59,7 @@ class HMACTest extends TestCase
     /**
      * Test verification of signatures.
      */
-    public function testVerify()
+    public function testVerify(): void
     {
         // test successful verification
         $backend = new HMAC();

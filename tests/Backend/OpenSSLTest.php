@@ -17,23 +17,24 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
  *
  * @package SimpleSAML\XMLSecurity\Backend
  */
-class OpenSSLTest extends TestCase
+final class OpenSSLTest extends TestCase
 {
 
-    /** @var PrivateKey */
-    protected $privKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
+    protected PrivateKey $privKey;
 
-    /** @var PublicKey */
-    protected $pubKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
+    protected PublicKey $pubKey;
 
-    /** @var OpenSSL */
-    protected $backend;
+    /** @var \SimpleSAML\XMLSecurity\Backend\OpenSSL */
+    protected OpenSSL $backend;
 
     /** @var string */
-    protected $validSig;
+    protected string $validSig;
 
-    /** @var SymmetricKey */
-    protected $sharedKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
+    protected SymmetricKey $sharedKey;
+
 
     protected function setUp(): void
     {
@@ -56,7 +57,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test that signing works.
      */
-    public function testSign()
+    public function testSign(): void
     {
         $this->assertEquals($this->validSig, bin2hex($this->backend->sign($this->privKey, 'Signed text')));
     }
@@ -65,7 +66,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test signing with something that's not a private key.
      */
-    public function testSignFailure()
+    public function testSignFailure(): void
     {
         $k = SymmetricKey::generate(10);
         $this->expectException(RuntimeException::class);
@@ -76,7 +77,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test the verification of signatures.
      */
-    public function testVerify()
+    public function testVerify(): void
     {
         // test successful verification
         $this->assertTrue($this->backend->verify($this->pubKey, 'Signed text', hex2bin($this->validSig)));
@@ -91,7 +92,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test encryption.
      */
-    public function testEncrypt()
+    public function testEncrypt(): void
     {
         // test symmetric encryption
         $this->backend->setCipher(Constants::BLOCK_ENC_AES128);
@@ -109,7 +110,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test decryption.
      */
-    public function testDecrypt()
+    public function testDecrypt(): void
     {
         // test decryption with symmetric key
         $this->backend->setCipher(Constants::BLOCK_ENC_AES128);
@@ -159,7 +160,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test for wrong digests.
      */
-    public function testSetUnknownDigest()
+    public function testSetUnknownDigest(): void
     {
         $backend = new OpenSSL();
         $this->expectException(InvalidArgumentException::class);
@@ -171,7 +172,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test ISO 10126 padding.
      */
-    public function testPad()
+    public function testPad(): void
     {
         $this->assertEquals('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d', bin2hex($this->backend->pad('foo')));
         $this->assertEquals(
@@ -184,7 +185,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test ISO 10126 unpadding.
      */
-    public function testUnpad()
+    public function testUnpad(): void
     {
         $this->assertEquals('foo', $this->backend->unpad(hex2bin('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d')));
         $this->assertEquals(
@@ -197,7 +198,7 @@ class OpenSSLTest extends TestCase
     /**
      * Test for wrong ciphers.
      */
-    public function testSetUnknownCipher()
+    public function testSetUnknownCipher(): void
     {
         $backend = new OpenSSL();
         $this->expectException(InvalidArgumentException::class);

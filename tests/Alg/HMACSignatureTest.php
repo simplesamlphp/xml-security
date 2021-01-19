@@ -19,17 +19,16 @@ use TypeError;
  *
  * @package SimpleSAML\Signature
  */
-class HMACSignatureTest extends TestCase
+final class HMACSignatureTest extends TestCase
 {
+    /** @var string */
+    protected string $plaintext = 'plaintext';
 
     /** @var string */
-    protected $plaintext = 'plaintext';
+    protected string $secret = 'de54fbd0f10c34df6e800b11043024fa';
 
-    /** @var string */
-    protected $secret = 'de54fbd0f10c34df6e800b11043024fa';
-
-    /** @var SignatureAlgorithmFactory */
-    protected $factory;
+    /** @var \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory */
+    protected SignatureAlgorithmFactory $factory;
 
 
     public function setUp(): void
@@ -41,7 +40,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that signing works.
      */
-    public function testSign()
+    public function testSign(): void
     {
         $key = new SymmetricKey($this->secret);
 
@@ -87,7 +86,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that signature verification works.
      */
-    public function testVerify()
+    public function testVerify(): void
     {
         $key = new SymmetricKey($this->secret);
 
@@ -135,7 +134,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that signature verification fails properly.
      */
-    public function testVerificationFailure()
+    public function testVerificationFailure(): void
     {
         $key = new SymmetricKey($this->secret);
 
@@ -156,7 +155,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that verification fails when the wrong type of key is passed.
      */
-    public function testVerifyWithCertificate()
+    public function testVerifyWithCertificate(): void
     {
         $cert = X509Certificate::fromFile('tests/mycert.pem');
 
@@ -169,7 +168,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that verification fails when the wrong type of key is passed.
      */
-    public function testVerifyWithPublicKey()
+    public function testVerifyWithPublicKey(): void
     {
         $key = PublicKey::fromFile('tests/pubkey.pem');
 
@@ -182,7 +181,7 @@ class HMACSignatureTest extends TestCase
     /**
      * Test that verification fails when the wrong type of key is passed.
      */
-    public function testVerifyWithPrivateKey()
+    public function testVerifyWithPrivateKey(): void
     {
         $key = PrivateKey::fromFile('tests/privkey.pem');
 

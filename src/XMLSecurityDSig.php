@@ -47,7 +47,7 @@ use Exception;
 class XMLSecurityDSig extends \RobRichards\XMLSecLibs\XMLSecurityDSig
 {
     /** @var DomXPath|null */
-    private $xPathCtx = null;
+    private ?DOMXPath $xPathCtx = null;
 
 
     /**

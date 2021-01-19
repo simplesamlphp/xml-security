@@ -11,13 +11,13 @@ use SimpleSAML\XMLSecurity\Key\PublicKey;
  *
  * @package SimpleSAML\XMLSecurity\Key
  */
-class PublicKeyTest extends TestCase
+final class PublicKeyTest extends TestCase
 {
     /** @var resource */
     protected $pubKey;
 
     /** @var string */
-    protected $f;
+    protected string $f;
 
 
     /**
@@ -32,7 +32,7 @@ class PublicKeyTest extends TestCase
     /**
      * Cover basic creation and retrieval.
      */
-    public function testCreation()
+    public function testCreation(): void
     {
         $k = new PublicKey($this->f);
         $keyDetails = openssl_pkey_get_details($k->get());
@@ -43,7 +43,7 @@ class PublicKeyTest extends TestCase
     /**
      * Test creation from a file containing the PEM-encoded public key.
      */
-    public function testFromFile()
+    public function testFromFile(): void
     {
         $k = PublicKey::fromFile('tests/pubkey.pem');
         $keyDetails = openssl_pkey_get_details($k->get());
@@ -54,7 +54,7 @@ class PublicKeyTest extends TestCase
     /**
      * Test failure to create key from missing file.
      */
-    public function testFromMissingFile()
+    public function testFromMissingFile(): void
     {
         $this->expectException(InvalidArgumentException::class);
         @PublicKey::fromFile('foo/bar');
@@ -64,7 +64,7 @@ class PublicKeyTest extends TestCase
     /**
      * Test creation from the RSA public key details (modulus and exponent).
      */
-    public function testFromDetails()
+    public function testFromDetails(): void
     {
         $k = PublicKey::fromDetails($this->pubKey['rsa']['n'], $this->pubKey['rsa']['e']);
         $keyDetails = openssl_pkey_get_details($k->get());

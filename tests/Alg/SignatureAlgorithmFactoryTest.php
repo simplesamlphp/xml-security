@@ -16,13 +16,13 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
  *
  * @package SimpleSAML\XMLSecurity\Alg
  */
-class SignatureAlgorithmFactoryTest extends TestCase
+final class SignatureAlgorithmFactoryTest extends TestCase
 {
-    /** @var SymmetricKey */
-    protected $skey;
+    /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
+    protected SymmetricKey $skey;
 
-    /** @var PublicKey */
-    protected $pkey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
+    protected PublicKey $pkey;
 
 
     public function setUp(): void
@@ -35,7 +35,7 @@ class SignatureAlgorithmFactoryTest extends TestCase
     /**
      * Test obtaining the digest algorithm from a signature algorithm.
      */
-    public function testGetDigestAlgorithm()
+    public function testGetDigestAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
         $hmac = [
@@ -71,7 +71,7 @@ class SignatureAlgorithmFactoryTest extends TestCase
     /**
      * Test for unsupported algorithms.
      */
-    public function testGetUnknownAlgorithm()
+    public function testGetUnknownAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
         $this->expectException(RuntimeException::class);
@@ -82,7 +82,7 @@ class SignatureAlgorithmFactoryTest extends TestCase
     /**
      * Test for blacklisted algorithms.
      */
-    public function testBlacklistedAlgorithm()
+    public function testBlacklistedAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([Constants::SIG_RSA_SHA1]);
         $this->assertInstanceOf(

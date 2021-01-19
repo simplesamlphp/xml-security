@@ -10,14 +10,13 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
  *
  * @package SimpleSAML\XMLSecurity\Key
  */
-class PrivateKeyTest extends TestCase
+final class PrivateKeyTest extends TestCase
 {
-
     /** @var resource */
     protected $privKey;
 
     /** @var string */
-    protected $f;
+    protected string $f;
 
 
     /**
@@ -33,7 +32,7 @@ class PrivateKeyTest extends TestCase
     /**
      * Cover basic creation and retrieval.
      */
-    public function testCreation()
+    public function testCreation(): void
     {
         $k = new PrivateKey($this->f);
         $keyDetails = openssl_pkey_get_details($k->get());
@@ -44,7 +43,7 @@ class PrivateKeyTest extends TestCase
     /**
      * Test creation from a file containing the PEM-encoded private key.
      */
-    public function testFromFile()
+    public function testFromFile(): void
     {
         $k = PrivateKey::fromFile('tests/privkey.pem');
         $keyDetails = openssl_pkey_get_details($k->get());

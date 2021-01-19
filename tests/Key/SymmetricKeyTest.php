@@ -10,13 +10,12 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
  *
  * @package SimpleSAML\XMLSecurity\Key
  */
-class SymmetricKeyTest extends TestCase
+final class SymmetricKeyTest extends TestCase
 {
-
     /**
      * Cover basic creation, retrieval and length computation.
      */
-    public function testCreation()
+    public function testCreation(): void
     {
         $k = new SymmetricKey('secret_key_material');
         $this->assertEquals('secret_key_material', $k->get());
@@ -27,7 +26,7 @@ class SymmetricKeyTest extends TestCase
     /**
      * Cover random generation of secrets.
      */
-    public function testGeneration()
+    public function testGeneration(): void
     {
         $k1 = SymmetricKey::generate(24, true);
         $k2 = SymmetricKey::generate(24, true);

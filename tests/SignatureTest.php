@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity;
 
+use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -15,16 +16,16 @@ use SimpleSAML\XMLSecurity\Signature;
  *
  * @package SimpleSAML\XMLSecurity\Test
  */
-class SignatureTest extends TestCase
+final class SignatureTest extends TestCase
 {
     /** @var \DOMDocument */
-    protected $basicDoc;
+    protected DOMDocument $basicDoc;
 
     /** @var PrivateKey */
-    protected $privKey;
+    protected PrivateKey $privKey;
 
     /** @var X509Certificate */
-    protected $cert;
+    protected X509Certificate $cert;
 
 
     /**

@@ -10,12 +10,12 @@ use SimpleSAML\XMLSecurity\Utils\Security;
  *
  * @package SimpleSAML\XMLSecurity\Utils
  */
-class SecurityTest extends TestCase
+final class SecurityTest extends TestCase
 {
     /**
      * Test the constant-time comparison function.
      */
-    public function testCompareStrings()
+    public function testCompareStrings(): void
     {
         // test that two equal strings compare successfully
         $this->assertTrue(Security::compareStrings('random string', 'random string'));

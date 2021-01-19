@@ -10,13 +10,12 @@ use SimpleSAML\XMLSecurity\Utils\Random;
  *
  * @package SimpleSAML\XMLSecurity\Utils
  */
-class RandomTest extends TestCase
+final class RandomTest extends TestCase
 {
-
     /**
      * Test generation of random GUIDs.
      */
-    public function testGenerateGUID()
+    public function testGenerateGUID(): void
     {
         $mainRegEx = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 

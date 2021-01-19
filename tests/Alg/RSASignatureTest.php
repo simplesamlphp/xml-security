@@ -19,20 +19,19 @@ use TypeError;
  *
  * @package SimpleSAML\XMLSecurity\Alg
  */
-class RSASignatureTest extends TestCase
+final class RSASignatureTest extends TestCase
 {
+    /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
+    protected PrivateKey $privateKey;
 
-    /** @var PrivateKey */
-    protected $privateKey;
-
-    /** @var PublicKey */
-    protected $publicKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
+    protected PublicKey $publicKey;
 
     /** @var string */
-    protected $plaintext = 'plaintext';
+    protected string $plaintext = 'plaintext';
 
-    /** @var SignatureAlgorithmFactory */
-    protected $factory;
+    /** @var \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory */
+    protected SignatureAlgorithmFactory $factory;
 
 
     public function setUp(): void
@@ -46,7 +45,7 @@ class RSASignatureTest extends TestCase
     /**
      * Test RSA signing.
      */
-    public function testSign()
+    public function testSign(): void
     {
         // test RSA-SHA1
         $rsa = $this->factory->getAlgorithm(Constants::SIG_RSA_SHA1, $this->privateKey);
@@ -119,7 +118,7 @@ class RSASignatureTest extends TestCase
     /**
      * Test RSA signature verification.
      */
-    public function testVerify()
+    public function testVerify(): void
     {
         // test RSA-SHA1
         $rsa = $this->factory->getAlgorithm(Constants::SIG_RSA_SHA1, $this->publicKey);
@@ -224,7 +223,7 @@ class RSASignatureTest extends TestCase
     /**
      * Test that verification fails properly.
      */
-    public function testVerificationFailure()
+    public function testVerificationFailure(): void
     {
         // test wrong plaintext
         $rsa = $this->factory->getAlgorithm(Constants::SIG_RSA_SHA1, $this->publicKey);
@@ -266,7 +265,7 @@ class RSASignatureTest extends TestCase
     /**
      * Test that verification fails when the wrong type of key is passed.
      */
-    public function testVerifyWithSymmetricKey()
+    public function testVerifyWithSymmetricKey(): void
     {
         $key = SymmetricKey::generate(16);
 

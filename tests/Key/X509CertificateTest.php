@@ -12,17 +12,16 @@ use SimpleSAML\XMLSecurity\Key\X509Certificate;
  *
  * @package SimpleSAML\XMLSecurity\Key
  */
-class X509CertificateTest extends TestCase
+final class X509CertificateTest extends TestCase
 {
-
     /** @var resource */
     protected $cert;
 
     /** @var string */
-    protected $f;
+    protected string $f;
 
-    /** @var X509Certificate */
-    protected $c;
+    /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
+    protected X509Certificate $c;
 
 
     /**
@@ -39,7 +38,7 @@ class X509CertificateTest extends TestCase
     /**
      * Cover basic creation and retrieval.
      */
-    public function testCreation()
+    public function testCreation(): void
     {
         $pubDetails = openssl_pkey_get_details($this->c->get());
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
@@ -49,7 +48,7 @@ class X509CertificateTest extends TestCase
     /**
      * Test for retrieval of the PEM-encoded certificate.
      */
-    public function testGetCertificate()
+    public function testGetCertificate(): void
     {
         $this->assertEquals($this->f, $this->c->getCertificate());
     }
@@ -58,7 +57,7 @@ class X509CertificateTest extends TestCase
     /**
      * Test for retrieval of the certificate's details.
      */
-    public function testGetCertificateDetails()
+    public function testGetCertificateDetails(): void
     {
         $this->assertEquals(openssl_x509_parse($this->f), $this->c->getCertificateDetails());
     }
@@ -67,7 +66,7 @@ class X509CertificateTest extends TestCase
     /**
      * Test thumbprint generation from a certificate.
      */
-    public function testGetRawThumbprint()
+    public function testGetRawThumbprint(): void
     {
         if (!function_exists('openssl_x509_fingerprint')) {
             $this->markTestSkipped();
@@ -85,7 +84,7 @@ class X509CertificateTest extends TestCase
     /**
      * Test thumbprint generation with an invalid digest algorithm.
      */
-    public function testGetRawThumbprintWithWrongAlg()
+    public function testGetRawThumbprintWithWrongAlg(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->c->getRawThumbprint('invalid');
@@ -95,7 +94,7 @@ class X509CertificateTest extends TestCase
     /**
      * Test creation from a file containing the PEM-encoded certificate.
      */
-    public function testFromFile()
+    public function testFromFile(): void
     {
         $c = X509Certificate::fromFile('tests/mycert.pem');
         $pubDetails = openssl_pkey_get_details($c->get());
