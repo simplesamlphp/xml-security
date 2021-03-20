@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
@@ -19,17 +19,15 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  *
  * @package simplesamlphp/xml-security
  */
-final class CipherDataTest extends TestCase
+final class CipherDataTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument $document */
-    private DOMDocument $document;
-
-
     /**
      */
     public function setup(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$element = CipherData::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherData.xml'
         );
     }
@@ -47,7 +45,7 @@ final class CipherDataTest extends TestCase
         $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($cipherData)
         );
     }
@@ -60,20 +58,8 @@ final class CipherDataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $cipherData = CipherData::fromXML($this->document->documentElement);
+        $cipherData = CipherData::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(CipherData::fromXML($this->document->documentElement))))
-        );
     }
 }

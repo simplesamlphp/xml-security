@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
@@ -20,11 +20,8 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class DataReferenceTest extends TestCase
+final class DataReferenceTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument $document */
-    private DOMDocument $document;
-
     /** @var \SimpleSAML\XML\Chunk $reference */
     private Chunk $reference;
 
@@ -33,11 +30,13 @@ final class DataReferenceTest extends TestCase
      */
     public function setup(): void
     {
-        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
+        self::$element = DataReference::class;
 
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_DataReference.xml'
         );
+
+        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
 
         $this->reference = new Chunk(DOMDocumentFactory::fromString(<<<XML
  <ds:Transforms xmlns:ds="{$dsNamespace}">
@@ -67,7 +66,7 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($dataReference)
         );
     }
@@ -80,7 +79,7 @@ XML
      */
     public function testUnmarshalling(): void
     {
-        $dataReference = DataReference::fromXML($this->document->documentElement);
+        $dataReference = DataReference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals('#Encrypted_DATA_ID', $dataReference->getURI());
 
@@ -89,20 +88,8 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($dataReference)
-        );
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(DataReference::fromXML($this->document->documentElement))))
         );
     }
 }
