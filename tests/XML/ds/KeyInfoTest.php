@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
@@ -25,7 +25,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfoTest extends TestCase
+final class KeyInfoTest extends SerializableXMLTest
 {
     /** @var string */
     private string $certificate;
@@ -33,14 +33,17 @@ final class KeyInfoTest extends TestCase
     /** @var string[] */
     private array $certData;
 
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
 
     /**
      */
     public function setUp(): void
     {
+        self::$element = KeyInfo::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml'
+        );
+
         $this->certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
@@ -63,10 +66,6 @@ final class KeyInfoTest extends TestCase
 
         $this->certData = openssl_x509_parse(
             PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
-        );
-
-        $this->document = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml'
         );
     }
 
@@ -100,7 +99,7 @@ final class KeyInfoTest extends TestCase
         $this->assertInstanceOf(Chunk::class, $info[3]);
         $this->assertEquals('abc123', $keyInfo->getId());
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($keyInfo));
+        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($keyInfo));
     }
 
 
@@ -119,7 +118,7 @@ final class KeyInfoTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyInfo = KeyInfo::fromXML($this->document->documentElement);
+        $keyInfo = KeyInfo::fromXML(self::$xmlRepresentation->documentElement);
         $this->assertEquals('abc123', $keyInfo->getId());
 
         $info = $keyInfo->getInfo();
@@ -142,17 +141,5 @@ final class KeyInfoTest extends TestCase
         $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
 
         $keyInfo = KeyInfo::fromXML($document->documentElement);
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(KeyInfo::fromXML($this->document->documentElement))))
-        );
     }
 }

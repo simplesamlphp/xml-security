@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -18,17 +19,15 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509SubjectNameTest extends TestCase
+final class X509SubjectNameTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
-
     /**
      */
     protected function setUp(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$element = X509SubjectName::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SubjectName.xml'
         );
     }
@@ -42,7 +41,7 @@ final class X509SubjectNameTest extends TestCase
 
         $this->assertEquals('some name', $subjectName->getName());
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($subjectName));
+        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($subjectName));
     }
 
 
@@ -50,20 +49,8 @@ final class X509SubjectNameTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $subjectName = X509SubjectName::fromXML($this->document->documentElement);
+        $subjectName = X509SubjectName::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals('some name', $subjectName->getName());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(X509SubjectName::fromXML($this->document->documentElement))))
-        );
     }
 }

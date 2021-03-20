@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -22,17 +22,15 @@ use SimpleSAML\XMLSecurity\Constants;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod
  * @package simplesamlphp/xml-security
  */
-final class EncryptionMethodTest extends TestCase
+final class EncryptionMethodTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument */
-    protected DOMDocument $document;
-
-
     /**
      */
     protected function setUp(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$element = EncryptionMethod::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptionMethod.xml'
         );
     }
@@ -58,7 +56,7 @@ final class EncryptionMethodTest extends TestCase
         $this->assertInstanceOf(Chunk::class, $em->getChildren()[0]);
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($em)
         );
     }
@@ -118,7 +116,7 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $em = EncryptionMethod::fromXML($this->document->documentElement);
+        $em = EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
         $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
         $this->assertEquals($alg, $em->getAlgorithm());
@@ -136,8 +134,8 @@ final class EncryptionMethodTest extends TestCase
     {
         $this->expectException(MissingAttributeException::class);
         $this->expectExceptionMessage('Missing \'Algorithm\' attribute on xenc:EncryptionMethod.');
-        $this->document->documentElement->removeAttribute('Algorithm');
-        EncryptionMethod::fromXML($this->document->documentElement);
+        self::$xmlRepresentation->documentElement->removeAttribute('Algorithm');
+        EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
     }
 
 
@@ -159,18 +157,6 @@ XML
         $this->assertEquals(
             $document->saveXML($document->documentElement),
             strval($em)
-        );
-    }
-
-
-    /**
-     * Test that serialization / unserialization works.
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(EncryptionMethod::fromXML($this->document->documentElement))))
         );
     }
 }

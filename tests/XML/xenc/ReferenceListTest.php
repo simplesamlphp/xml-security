@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
@@ -21,11 +21,8 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class ReferenceListTest extends TestCase
+final class ReferenceListTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument $document */
-    private DOMDocument $document;
-
     /** @var \SimpleSAML\XML\Chunk $dataReference */
     private Chunk $dataReference;
 
@@ -37,11 +34,13 @@ final class ReferenceListTest extends TestCase
      */
     public function setup(): void
     {
-        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
+        self::$element = ReferenceList::class;
 
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_ReferenceList.xml'
         );
+
+        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
 
         $this->dataReference = new Chunk(DOMDocumentFactory::fromString(<<<XML
     <ds:Transforms xmlns:ds="{$dsNamespace}">
@@ -89,7 +88,7 @@ XML
         $this->assertEquals([$this->keyReference], $keyReferences[0]->getReferences());
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($referenceList)
         );
     }
@@ -102,7 +101,7 @@ XML
      */
     public function testUnmarshalling(): void
     {
-        $referenceList = ReferenceList::fromXML($this->document->documentElement);
+        $referenceList = ReferenceList::fromXML(self::$xmlRepresentation->documentElement);
 
         $dataReferences = $referenceList->getDataReferences();
         $this->assertCount(1, $dataReferences);
@@ -114,20 +113,8 @@ XML
         $this->assertEquals([$this->keyReference], $keyReferences[0]->getReferences());
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($referenceList)
-        );
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(ReferenceList::fromXML($this->document->documentElement))))
         );
     }
 }

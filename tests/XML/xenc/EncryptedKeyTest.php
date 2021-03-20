@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Utils as XMLUtils;
@@ -26,17 +26,15 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  *
  * @package simplesamlphp/xml-security
  */
-final class EncryptedKeyTest extends TestCase
+final class EncryptedKeyTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument $document */
-    private DOMDocument $document;
-
-
     /**
      */
     public function setup(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        self::$element = EncryptedKey::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedKey.xml'
         );
     }
@@ -102,7 +100,7 @@ final class EncryptedKeyTest extends TestCase
         $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName());
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedKey)
         );
     }
@@ -162,7 +160,7 @@ final class EncryptedKeyTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $encryptedKey = EncryptedKey::fromXML($this->document->documentElement);
+        $encryptedKey = EncryptedKey::fromXML(self::$xmlRepresentation->documentElement);
 
         $cipherData = $encryptedKey->getCipherData();
         $this->assertEquals('PzA5X...', $cipherData->getCipherValue());
@@ -191,20 +189,8 @@ final class EncryptedKeyTest extends TestCase
         $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName());
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedKey)
-        );
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(EncryptedKey::fromXML($this->document->documentElement))))
         );
     }
 }
