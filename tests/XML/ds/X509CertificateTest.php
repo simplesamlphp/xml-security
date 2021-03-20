@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -18,11 +18,8 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509CertificateTest extends TestCase
+final class X509CertificateTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
     /** @var string */
     private string $certificate;
 
@@ -31,6 +28,12 @@ final class X509CertificateTest extends TestCase
      */
     public function setUp(): void
     {
+        self::$element = X509Certificate::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml'
+        );
+
         $this->certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
@@ -50,10 +53,6 @@ final class X509CertificateTest extends TestCase
             ],
             PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
         );
-
-        $this->document = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml'
-        );
     }
 
 
@@ -65,7 +64,7 @@ final class X509CertificateTest extends TestCase
 
         $this->assertEquals($this->certificate, $X509cert->getCertificate());
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($X509cert));
+        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($X509cert));
     }
 
 
@@ -73,20 +72,8 @@ final class X509CertificateTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509cert = X509Certificate::fromXML($this->document->documentElement);
+        $X509cert = X509Certificate::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals($this->certificate, $X509cert->getCertificate());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(X509Certificate::fromXML($this->document->documentElement))))
-        );
     }
 }

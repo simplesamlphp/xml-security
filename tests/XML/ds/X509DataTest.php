@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
+use SimpleSAML\Test\XML\SerializableXMLTest;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -23,11 +23,8 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509DataTest extends TestCase
+final class X509DataTest extends SerializableXMLTest
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
     /** @var string */
     private string $certificate;
 
@@ -39,6 +36,12 @@ final class X509DataTest extends TestCase
      */
     public function setUp(): void
     {
+        self::$element = X509Data::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml'
+        );
+
         $this->certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
@@ -61,10 +64,6 @@ final class X509DataTest extends TestCase
 
         $this->certData = openssl_x509_parse(
             PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
-        );
-
-        $this->document = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml'
         );
     }
 
@@ -91,7 +90,7 @@ final class X509DataTest extends TestCase
         $this->assertInstanceOf(X509SubjectName::class, $data[2]);
         $this->assertInstanceOf(Chunk::class, $data[3]);
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($X509data));
+        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($X509data));
     }
 
 
@@ -99,24 +98,12 @@ final class X509DataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509data = X509Data::fromXML($this->document->documentElement);
+        $X509data = X509Data::fromXML(self::$xmlRepresentation->documentElement);
 
         $data = $X509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
         $this->assertInstanceOf(X509SubjectName::class, $data[2]);
         $this->assertInstanceOf(Chunk::class, $data[3]);
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(X509Data::fromXML($this->document->documentElement))))
-        );
     }
 }
