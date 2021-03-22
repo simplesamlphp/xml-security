@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -18,15 +19,17 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyNameTest extends SerializableXMLTest
+final class KeyNameTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /**
      */
     protected function setUp(): void
     {
-        self::$element = KeyName::class;
+        $this->testedClass = KeyName::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyName.xml'
         );
     }
@@ -40,7 +43,7 @@ final class KeyNameTest extends SerializableXMLTest
 
         $this->assertEquals('testkey', $keyName->getName());
 
-        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($keyName));
+        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($keyName));
     }
 
 
@@ -48,7 +51,7 @@ final class KeyNameTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $keyName = KeyName::fromXML(self::$xmlRepresentation->documentElement);
+        $keyName = KeyName::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals('testkey', $keyName->getName());
     }

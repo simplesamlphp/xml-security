@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
@@ -24,15 +25,17 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  *
  * @package simplesamlphp/xml-security
  */
-final class EncryptedDataTest extends SerializableXMLTest
+final class EncryptedDataTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /**
      */
     public function setup(): void
     {
-        self::$element = EncryptedData::class;
+        $this->testedClass = EncryptedData::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedData.xml'
         );
     }
@@ -87,7 +90,7 @@ final class EncryptedDataTest extends SerializableXMLTest
         $this->assertEquals('SomeEncoding', $encryptedData->getEncoding());
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedData)
         );
     }
@@ -100,7 +103,7 @@ final class EncryptedDataTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $encryptedData = EncryptedData::fromXML(self::$xmlRepresentation->documentElement);
+        $encryptedData = EncryptedData::fromXML($this->xmlRepresentation->documentElement);
 
         $cipherData = $encryptedData->getCipherData();
         $this->assertEquals('iaDc7...', $cipherData->getCipherValue());
@@ -121,7 +124,7 @@ final class EncryptedDataTest extends SerializableXMLTest
         $this->assertEquals('SomeEncoding', $encryptedData->getEncoding());
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedData)
         );
     }

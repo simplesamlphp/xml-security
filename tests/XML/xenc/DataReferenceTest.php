@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
@@ -20,8 +21,10 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class DataReferenceTest extends SerializableXMLTest
+final class DataReferenceTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var \SimpleSAML\XML\Chunk $reference */
     private Chunk $reference;
 
@@ -30,9 +33,9 @@ final class DataReferenceTest extends SerializableXMLTest
      */
     public function setup(): void
     {
-        self::$element = DataReference::class;
+        $this->testedClass = DataReference::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_DataReference.xml'
         );
 
@@ -66,7 +69,7 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($dataReference)
         );
     }
@@ -79,7 +82,7 @@ XML
      */
     public function testUnmarshalling(): void
     {
-        $dataReference = DataReference::fromXML(self::$xmlRepresentation->documentElement);
+        $dataReference = DataReference::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals('#Encrypted_DATA_ID', $dataReference->getURI());
 
@@ -88,7 +91,7 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($dataReference)
         );
     }

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
+use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -23,8 +24,10 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509DataTest extends SerializableXMLTest
+final class X509DataTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var string */
     private string $certificate;
 
@@ -36,9 +39,9 @@ final class X509DataTest extends SerializableXMLTest
      */
     public function setUp(): void
     {
-        self::$element = X509Data::class;
+        $this->testedClass = X509Data::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml'
         );
 
@@ -90,7 +93,7 @@ final class X509DataTest extends SerializableXMLTest
         $this->assertInstanceOf(X509SubjectName::class, $data[2]);
         $this->assertInstanceOf(Chunk::class, $data[3]);
 
-        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($X509data));
+        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($X509data));
     }
 
 
@@ -98,7 +101,7 @@ final class X509DataTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $X509data = X509Data::fromXML(self::$xmlRepresentation->documentElement);
+        $X509data = X509Data::fromXML($this->xmlRepresentation->documentElement);
 
         $data = $X509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);

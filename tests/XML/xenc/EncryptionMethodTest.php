@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -22,15 +23,17 @@ use SimpleSAML\XMLSecurity\Constants;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod
  * @package simplesamlphp/xml-security
  */
-final class EncryptionMethodTest extends SerializableXMLTest
+final class EncryptionMethodTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /**
      */
     protected function setUp(): void
     {
-        self::$element = EncryptionMethod::class;
+        $this->testedClass = EncryptionMethod::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptionMethod.xml'
         );
     }
@@ -56,7 +59,7 @@ final class EncryptionMethodTest extends SerializableXMLTest
         $this->assertInstanceOf(Chunk::class, $em->getChildren()[0]);
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($em)
         );
     }
@@ -116,7 +119,7 @@ final class EncryptionMethodTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $em = EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
+        $em = EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
         $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
         $this->assertEquals($alg, $em->getAlgorithm());
@@ -134,8 +137,8 @@ final class EncryptionMethodTest extends SerializableXMLTest
     {
         $this->expectException(MissingAttributeException::class);
         $this->expectExceptionMessage('Missing \'Algorithm\' attribute on xenc:EncryptionMethod.');
-        self::$xmlRepresentation->documentElement->removeAttribute('Algorithm');
-        EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
+        $this->xmlRepresentation->documentElement->removeAttribute('Algorithm');
+        EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
     }
 
 

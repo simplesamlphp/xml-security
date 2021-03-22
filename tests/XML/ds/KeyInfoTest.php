@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
+use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
@@ -25,8 +26,10 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfoTest extends SerializableXMLTest
+final class KeyInfoTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var string */
     private string $certificate;
 
@@ -38,9 +41,9 @@ final class KeyInfoTest extends SerializableXMLTest
      */
     public function setUp(): void
     {
-        self::$element = KeyInfo::class;
+        $this->testedClass = KeyInfo::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml'
         );
 
@@ -99,7 +102,7 @@ final class KeyInfoTest extends SerializableXMLTest
         $this->assertInstanceOf(Chunk::class, $info[3]);
         $this->assertEquals('abc123', $keyInfo->getId());
 
-        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($keyInfo));
+        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($keyInfo));
     }
 
 
@@ -118,7 +121,7 @@ final class KeyInfoTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $keyInfo = KeyInfo::fromXML(self::$xmlRepresentation->documentElement);
+        $keyInfo = KeyInfo::fromXML($this->xmlRepresentation->documentElement);
         $this->assertEquals('abc123', $keyInfo->getId());
 
         $info = $keyInfo->getInfo();
