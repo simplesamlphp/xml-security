@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
@@ -19,15 +20,17 @@ use SimpleSAML\XMLSecurity\XMLSecurityDsig;
  *
  * @package simplesamlphp/xml-security
  */
-final class CipherDataTest extends SerializableXMLTest
+final class CipherDataTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /**
      */
     public function setup(): void
     {
-        self::$element = CipherData::class;
+        $this->testedClass = CipherData::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherData.xml'
         );
     }
@@ -45,7 +48,7 @@ final class CipherDataTest extends SerializableXMLTest
         $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($cipherData)
         );
     }
@@ -58,7 +61,7 @@ final class CipherDataTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $cipherData = CipherData::fromXML(self::$xmlRepresentation->documentElement);
+        $cipherData = CipherData::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
     }

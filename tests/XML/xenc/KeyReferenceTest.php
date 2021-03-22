@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
@@ -20,8 +21,10 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyReferenceTest extends SerializableXMLTest
+final class KeyReferenceTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var \SimpleSAML\XML\Chunk $document */
     private Chunk $reference;
 
@@ -30,9 +33,9 @@ final class KeyReferenceTest extends SerializableXMLTest
      */
     public function setup(): void
     {
-        self::$element = KeyReference::class;
+        $this->testedClass = KeyReference::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_KeyReference.xml'
         );
 
@@ -67,7 +70,7 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($keyReference)
         );
     }
@@ -80,7 +83,7 @@ XML
      */
     public function testUnmarshalling(): void
     {
-        $keyReference = KeyReference::fromXML(self::$xmlRepresentation->documentElement);
+        $keyReference = KeyReference::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals('#Encrypted_KEY_ID', $keyReference->getURI());
 
@@ -89,7 +92,7 @@ XML
         $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($keyReference)
         );
     }

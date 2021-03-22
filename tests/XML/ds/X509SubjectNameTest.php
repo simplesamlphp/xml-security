@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -19,15 +19,17 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509SubjectNameTest extends SerializableXMLTest
+final class X509SubjectNameTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /**
      */
     protected function setUp(): void
     {
-        self::$element = X509SubjectName::class;
+        $this->testedClass = X509SubjectName::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SubjectName.xml'
         );
     }
@@ -41,7 +43,7 @@ final class X509SubjectNameTest extends SerializableXMLTest
 
         $this->assertEquals('some name', $subjectName->getName());
 
-        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($subjectName));
+        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($subjectName));
     }
 
 
@@ -49,7 +51,7 @@ final class X509SubjectNameTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $subjectName = X509SubjectName::fromXML(self::$xmlRepresentation->documentElement);
+        $subjectName = X509SubjectName::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals('some name', $subjectName->getName());
     }

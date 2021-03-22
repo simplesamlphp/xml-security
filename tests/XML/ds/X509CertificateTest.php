@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use SimpleSAML\Test\XML\SerializableXMLTest;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -18,8 +19,10 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
  *
  * @package simplesamlphp/xml-security
  */
-final class X509CertificateTest extends SerializableXMLTest
+final class X509CertificateTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var string */
     private string $certificate;
 
@@ -28,9 +31,9 @@ final class X509CertificateTest extends SerializableXMLTest
      */
     public function setUp(): void
     {
-        self::$element = X509Certificate::class;
+        $this->testedClass = X509Certificate::class;
 
-        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml'
         );
 
@@ -64,7 +67,7 @@ final class X509CertificateTest extends SerializableXMLTest
 
         $this->assertEquals($this->certificate, $X509cert->getCertificate());
 
-        $this->assertEquals(self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement), strval($X509cert));
+        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($X509cert));
     }
 
 
@@ -72,8 +75,7 @@ final class X509CertificateTest extends SerializableXMLTest
      */
     public function testUnmarshalling(): void
     {
-        $X509cert = X509Certificate::fromXML(self::$xmlRepresentation->documentElement);
-
+        $X509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
         $this->assertEquals($this->certificate, $X509cert->getCertificate());
     }
 }
