@@ -18,7 +18,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 /**
  * @package simplesamlphp\saml2
  */
-final class CustomSignable extends AbstractXMLElement implements SignableElementInterface
+final class CustomSignable extends AbstractSerializableXMLElement implements SignableElementInterface
 {
     /** @var string */
     public const NS = 'urn:oasis:names:tc:SAML:2.0:assertion';
