@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
 /**
@@ -39,7 +42,6 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
      */
     protected function __construct(DOMElement $xml, Signature $signature)
     {
-//        $this->element = $elt;
         $this->setStructure($xml);
         $this->setSignature($signature);
     }
@@ -96,5 +98,12 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
      * @param \DOMElement $xml
      * @return self
      */
-    abstract public static function fromXML(DOMElement $xml): object;
+    public static function fromXML(DOMElement $xml): object
+    {
+        $signature = Signature::getChildrenOfClass($xml);
+        Assert::minCount($signature, 1, MissingElementException::class);
+        Assert::maxCount($signature, 1, TooManyElementsException::class);
+
+        return new self($xml, array_pop($signature));
+    }
 }
