@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
@@ -19,15 +20,16 @@ use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
  */
 final class SignableElementTest extends TestCase
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
+    use SerializableXMLTestTrait;
 
 
     /**
      */
     public function setUp(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        $this->testedClass = CustomSignable::class;
+
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignable.xml'
         );
     }
@@ -44,7 +46,7 @@ final class SignableElementTest extends TestCase
         $customSignable = new CustomSignable(new Chunk($document->documentElement));
         $this->assertFalse($customSignable->isEmptyElement());
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($customSignable)
         );
     }
@@ -54,7 +56,7 @@ final class SignableElementTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $customSignable = CustomSignable::fromXML($this->document->documentElement);
+        $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
 
         $customSignableElement = $customSignable->getElement();
         $customSignableElement = $customSignableElement->getXML();
@@ -63,18 +65,6 @@ final class SignableElementTest extends TestCase
         $this->assertEquals(
             'Chunk',
             $customSignableElement->textContent
-        );
-   }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(CustomSignable::fromXML($this->document->documentElement))))
         );
     }
 }
