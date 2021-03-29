@@ -21,15 +21,11 @@ use SimpleSAML\XMLSecurity\Test\XML\CustomSigned;
  */
 final class SignedElementTest extends TestCase
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
-
     /**
      */
     public function setUp(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml'
         );
     }
@@ -67,17 +63,5 @@ final class SignedElementTest extends TestCase
         );
    }
      */
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(CustomSigned::fromXML($this->document->documentElement))))
-        );
-    }
 }
 
