@@ -94,11 +94,10 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     public function sign(XMLSecurityKey $signingKey, array $certificates = []): SignedElementInterface
     {
         $unsigned = $this->toXML();
-
         $signature = new Signature($signingKey->getAlgorithm(), $certificates, $signingKey);
-        $signature->toXML($unsigned);
+        $signed = new CustomSigned($unsigned, $signature);
 
-        return $unsigned;
+        return $signed;
     }
 
 
