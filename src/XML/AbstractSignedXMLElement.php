@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
@@ -15,7 +16,7 @@ use SimpleSAML\XMLSecurity\XML\ds\Signature;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractSignedXMLElement implements SignedElementInterface
+abstract class AbstractSignedXMLElement extends AbstractXMLElement implements SignedElementInterface
 {
     use SignedElementTrait;
 
