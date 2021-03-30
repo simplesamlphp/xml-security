@@ -59,17 +59,6 @@ abstract class AbstractSignedXMLElement implements SignedElementInterface
 
 
     /**
-     * Collect the value of the structure-property
-     *
-     * @return \DOMElement
-     */
-    public function getStructure(): DOMElement
-    {
-        return $this->structure;
-    }
-
-
-    /**
      * Set the value of the structure-property
      *
      * @param \DOMElement $structure
