@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
@@ -27,15 +26,15 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     /** @var string */
     public const NS_PREFIX = 'saml';
 
-    /** @var \SimpleSAML\XML\Chunk $element */
+    /** @var \DOMElement $element */
     protected $element;
 
     /**
      * Constructor
      *
-     * @param \SimpleSAML\XML\Chunk $elt
+     * @param \DOMElement $elt
      */
-    public function __construct(Chunk $elt) {
+    public function __construct(DOMElement $elt) {
         $this->setElement($elt);
     }
 
@@ -65,9 +64,9 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     /**
      * Collect the value of the $element property
      *
-     * @return \SimpleSAML\XML\XML\Chunk
+     * @return \DOMElement
      */
-    public function getElement(): Chunk
+    public function getElement(): DOMElement
     {
         return $this->element;
     }
@@ -76,9 +75,9 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     /**
      * Set the value of the elment-property
      *
-     * @param \SimpleSAML\XML\Chunk $elt
+     * @param \DOMElement $elt
      */
-    private function setElement(Chunk $elt): void
+    private function setElement(DOMElement $elt): void
     {
         $this->element = $elt;
     }
@@ -121,7 +120,7 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
         // Remove the signature
         Signature::getChildrenOfClass($xml);
 
-        $element = new Chunk($xml->childNodes[0]);
+        $element = $xml->childNodes[0];
 
         return new self($element);
     }
@@ -138,7 +137,7 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
 
-        $e->appendChild($e->ownerDocument->importNode($this->element->getXML(), true));
+        $e->appendChild($e->ownerDocument->importNode($this->element, true));
         return $e;
     }
 }
