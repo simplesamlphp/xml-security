@@ -32,6 +32,7 @@ final class SignedElementTest extends TestCase
 
 
     /**
+     */
     public function testMarshalling(): void
     {
         $document = DOMDocumentFactory::fromString(
@@ -41,17 +42,17 @@ final class SignedElementTest extends TestCase
         $customSignable = new CustomSignable(new Chunk($document->documentElement));
         $this->assertFalse($customSignable->isEmptyElement());
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($customSignable)
         );
     }
-     */
 
 
     /**
+     */
     public function testUnmarshalling(): void
     {
-        $customSignable = CustomSignable::fromXML($this->document->documentElement);
+        $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
 
         $customSignableElement = $customSignable->getElement();
         $customSignableElement = $customSignableElement->getXML();
@@ -62,6 +63,5 @@ final class SignedElementTest extends TestCase
             $customSignableElement->textContent
         );
    }
-     */
 }
 

@@ -14,6 +14,7 @@ use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
 use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
+use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
 /**
  * @package simplesamlphp\saml2
@@ -116,6 +117,10 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
 
         Assert::minCount($xml->childNodes, 1, MissingElementException::class);
         Assert::maxCount($xml->childNodes, 2, TooManyElementsException::class);
+
+        // Remove the signature
+        Signature::getChildrenOfClass($xml);
+
         $element = new Chunk($xml->childNodes[0]);
 
         return new self($element);
