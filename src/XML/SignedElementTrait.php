@@ -73,7 +73,7 @@ trait SignedElementTrait
         // check the signature
         $signer = $this->signature->getSigner();
         if ($signer->verify($key) === 1) {
-            return /* This should return the signed element */;
+            return $this->getElement();
         }
 
         throw new Exception("Unable to validate Signature");
