@@ -8,7 +8,6 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 
 /**
@@ -43,7 +42,7 @@ final class SignableElementTest extends TestCase
             '<some>Chunk</some>'
         );
 
-        $customSignable = new CustomSignable(new Chunk($document->documentElement));
+        $customSignable = new CustomSignable($document->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -59,7 +58,7 @@ final class SignableElementTest extends TestCase
         $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
 
         $customSignableElement = $customSignable->getElement();
-        $customSignableElement = $customSignableElement->getXML();
+        $customSignableElement = $customSignableElement->ownerDocument->saveXML();
 
         $this->assertEquals('some', $customSignableElement->tagName);
         $this->assertEquals(

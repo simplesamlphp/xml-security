@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSigned;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
@@ -41,7 +40,7 @@ final class SignedElementTest extends TestCase
             '<some>Chunk</some>'
         );
 
-        $customSignable = new CustomSignable(new Chunk($document->documentElement));
+        $customSignable = new CustomSignable($document->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
 
         $privateKey = PEMCertificatesMock::getPrivateKey(XMLSecurityKey::RSA_SHA256, PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
@@ -61,7 +60,6 @@ final class SignedElementTest extends TestCase
         $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
 
         $customSignableElement = $customSignable->getElement();
-        $customSignableElement = $customSignableElement->getXML();
 
         $this->assertEquals('some', $customSignableElement->tagName);
         $this->assertEquals(
