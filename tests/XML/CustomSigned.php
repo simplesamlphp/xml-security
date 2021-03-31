@@ -16,7 +16,7 @@ final class CustomSigned extends AbstractSignedXMLElement
     public const NS = 'urn:ssp:custom';
 
     /** @var string */
-    public const NS_PREFIX = 'custom';
+    public const NS_PREFIX = 'ssp';
 
 
     /**

@@ -21,10 +21,10 @@ use SimpleSAML\XMLSecurity\XML\ds\Signature;
 final class CustomSignable extends AbstractXMLElement implements SignableElementInterface
 {
     /** @var string */
-    public const NS = 'urn:oasis:names:tc:SAML:2.0:assertion';
+    public const NS = 'urn:ssp:custom';
 
     /** @var string */
-    public const NS_PREFIX = 'saml';
+    public const NS_PREFIX = 'ssp';
 
     /** @var \DOMElement $element */
     protected $element;
