@@ -94,6 +94,6 @@ abstract class AbstractSignedXMLElement extends AbstractXMLElement implements Si
         Assert::minCount($signature, 1, MissingElementException::class);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 
-        return new self($xml, array_pop($signature));
+        return new static($xml, array_pop($signature));
     }
 }
