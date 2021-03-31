@@ -39,7 +39,7 @@ final class SignableElementTest extends TestCase
     public function testMarshalling(): void
     {
         $document = DOMDocumentFactory::fromString(
-            '<some>Chunk</some>'
+            '<ssp:Some>Chunk</ssp:Some>'
         );
 
         $customSignable = new CustomSignable($document->documentElement);
@@ -58,13 +58,8 @@ final class SignableElementTest extends TestCase
         $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
 
         $customSignableElement = $customSignable->getElement();
-        $customSignableElement = $customSignableElement->ownerDocument->saveXML();
 
-        $this->assertEquals('some', $customSignableElement->tagName);
-        $this->assertEquals(
-            'Chunk',
-            $customSignableElement->textContent
-        );
+        $this->assertEqualXmlStructure($this->xmlRepresentation->documentElement,  $customSignableElement);
     }
 }
 

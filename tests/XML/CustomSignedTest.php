@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSigned;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -22,10 +23,15 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
  */
 final class SignedElementTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
+
     /**
      */
     public function setUp(): void
     {
+        $this->testedClass = CustomSigned::class;
+
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml'
         );
@@ -37,7 +43,7 @@ final class SignedElementTest extends TestCase
     public function testMarshalling(): void
     {
         $document = DOMDocumentFactory::fromString(
-            '<some>Chunk</some>'
+            '<ssp:Some>Chunk</ssp:Some>'
         );
 
         $customSignable = new CustomSignable($document->documentElement);
@@ -46,9 +52,9 @@ final class SignedElementTest extends TestCase
         $privateKey = PEMCertificatesMock::getPrivateKey(XMLSecurityKey::RSA_SHA256, PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
         $customSigned = $customSignable->sign($privateKey);
 
-        $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($customSigned)
+        $this->assertEqualXMLStructure(
+            $this->xmlRepresentation->documentElement,
+            $customSigned->toXML()->ownerDocument->documentElement
         );
     }
 
@@ -61,11 +67,7 @@ final class SignedElementTest extends TestCase
 
         $customSignableElement = $customSignable->getElement();
 
-        $this->assertEquals('some', $customSignableElement->tagName);
-        $this->assertEquals(
-            'Chunk',
-            $customSignableElement->textContent
-        );
+        $this->assertEqualXMLStructure($this->xmlRepresentation->documentElement, $customSignableElement->ownerDocument->documentElement);
    }
 }
 

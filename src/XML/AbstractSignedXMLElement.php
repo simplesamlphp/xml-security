@@ -90,10 +90,12 @@ abstract class AbstractSignedXMLElement extends AbstractXMLElement implements Si
      */
     public static function fromXML(DOMElement $xml): object
     {
+        $original = $xml->ownerDocument->cloneNode(true);
+
         $signature = Signature::getChildrenOfClass($xml);
         Assert::minCount($signature, 1, MissingElementException::class);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 
-        return new static($xml, array_pop($signature));
+        return new static($original->documentElement, array_pop($signature));
     }
 }
