@@ -275,7 +275,8 @@ class Signature
     /**
      * Attach one or more X509 certificates to the signature.
      *
-     * @param X509Certificate|X509Certificate[] $certs An X509Certificate object or an array of them.
+     * @param \SimpleSAML\XMLSecurity\Key\X509Certificate|\SimpleSAML\XMLSecurity\Key\X509Certificate[] $certs
+     *   An X509Certificate object or an array of them.
      * @param boolean $addSubject Whether to add the subject of the certificate or not.
      * @param string|false $digest A digest algorithm identifier if the digest of the certificate should be added. False
      * otherwise.
