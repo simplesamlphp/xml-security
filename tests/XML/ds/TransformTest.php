@@ -46,14 +46,16 @@ final class TransformTest extends TestCase
             [
                 new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<ds:XPath>count(//. | //@* | //namespace::*)</ds:XPath>')->documentElement)
-            ]
+            ],
         );
 
         $document = DOMDocumentFactory::fromString('<root />');
         /** @psalm-var \DOMElement $document->firstChild */
         $transformElement = $transform->toXML($document->firstChild);
 
+        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transformElement->getAttribute('Algorithm'));
         $this->assertCount(2, $transformElement->childNodes);
+
         $this->assertEquals('some:Chunk', $transformElement->childNodes[0]->localName);
         $this->assertEquals('Random', $transformElement->childNodes[0]->textContent);
         $this->assertEquals('ds:XPath', $transformElement->childNodes[1]->localName);
@@ -71,6 +73,7 @@ final class TransformTest extends TestCase
     public function testUnmarshalling(): void
     {
         $transform = Transform::fromXML($this->xmlRepresentation->documentElement);
+        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transform->getAlgorithm());
 
         $elements = $transform->getElements();
         $this->assertCount(2, $elements);
@@ -82,5 +85,20 @@ final class TransformTest extends TestCase
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($transform)
         );
+    }
+
+
+    /**
+     * Adding an empty StatusDetail element should yield an empty element.
+     */
+    public function testMarshallingEmptyElement(): void
+    {
+        $ds_ns = Transform::NS;
+        $transform = new Transform([]);
+        $this->assertEquals(
+            "<ds:Transform xmlns:ds=\"$ds_ns\" Algorithm=\"http://www.w3.org/TR/1999/REC-xpath-19991116\"/>",
+            strval($transform)
+        );
+        $this->assertTrue($transform->isEmptyElement());
     }
 }
