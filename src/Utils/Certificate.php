@@ -37,4 +37,23 @@ class Certificate
                 . chunk_split($X509CertificateContents, 64, "\n")
                 . "-----END CERTIFICATE-----";
     }
+
+
+    /**
+     * @param array|string $issuer
+     *
+     * @return string
+     */
+    public static function parseIssuer($issuer): string
+    {
+        if (is_array($issuer)) {
+            $parts = [];
+            foreach ($issuer as $key => $value) {
+                array_unshift($parts, $key . '=' . $value);
+            }
+            return implode(',', $parts);
+        }
+
+        return $issuer;
+    }
 }
