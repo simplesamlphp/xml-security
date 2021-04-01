@@ -24,6 +24,7 @@ final class CertificateTest extends TestCase
             PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY)
         );
         $this->assertTrue($result);
+
         $result = Certificate::hasValidStructure(
             PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::BROKEN_PUBLIC_KEY)
         );
@@ -40,5 +41,27 @@ final class CertificateTest extends TestCase
         $result = Certificate::convertToCertificate(PEMCertificatesMock::getPlainPublicKeyContents());
         // the formatted public key in PEMCertificatesMock is stored with unix newlines
         $this->assertEquals(trim(PEMCertificatesMock::getPlainPublicKey()), $result);
+    }
+
+
+    /**
+     */
+    public function testParseIssuer(): void
+    {
+        // Test string input
+        $result = Certificate::parseIssuer('test');
+        $this->assertEquals('test', $result);
+
+        // Test array input
+        $result = Certificate::parseIssuer(
+            [
+                'C' => 'US',
+                'S' => 'Hawaii',
+                'L' => 'Honolulu',
+                'O' => 'SimpleSAMLphp HQ',
+                'CN' => 'SimpleSAMLphp Testing CA',
+            ]
+        );
+        $this->assertEquals('CN=SimpleSAMLphp Testing CA,O=SimpleSAMLphp HQ,L=Honolulu,S=Hawaii,C=US', $result);
     }
 }
