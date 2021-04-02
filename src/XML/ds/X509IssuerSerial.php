@@ -111,10 +111,10 @@ final class X509IssuerSerial extends AbstractDsElement
         $serial = XMLUtils::extractStrings($xml, AbstractDsElement::NS, 'X509SerialNumber');
 
         Assert::minCount($issuer, 1, MissingElementException::class);
-        Assert::minCount($issuer, 1, TooManyElementsException::class);
+        Assert::maxCount($issuer, 1, TooManyElementsException::class);
 
         Assert::minCount($serial, 1, MissingElementException::class);
-        Assert::minCount($serial, 1, TooManyElementsException::class);
+        Assert::maxCount($serial, 1, TooManyElementsException::class);
 
         return new self(
             array_pop($issuer),
