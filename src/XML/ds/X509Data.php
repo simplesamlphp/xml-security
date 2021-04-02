@@ -25,6 +25,7 @@ final class X509Data extends AbstractDsElement
      *
      * @var (\SimpleSAML\XML\Chunk|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *       \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     protected array $data = [];
@@ -35,6 +36,7 @@ final class X509Data extends AbstractDsElement
      *
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *         \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
      */
     public function __construct(array $data)
@@ -48,6 +50,7 @@ final class X509Data extends AbstractDsElement
      *
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *          \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     public function getData(): array
@@ -61,13 +64,17 @@ final class X509Data extends AbstractDsElement
      *
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *         \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
      * @throws \SimpleSAML\Assert\AssertionFailedException
      *     if $data contains anything other than X509Certificate or Chunk
      */
     private function setData(array $data): void
     {
-        Assert::allIsInstanceOfAny($data, [Chunk::class, X509Certificate::class, X509SubjectName::class]);
+        Assert::allIsInstanceOfAny(
+            $data,
+            [Chunk::class, X509Certificate::class, X509Digest::class, X509SubjectName::class]
+        );
 
         $this->data = $data;
     }
@@ -100,6 +107,9 @@ final class X509Data extends AbstractDsElement
             switch ($n->localName) {
                 case 'X509Certificate':
                     $data[] = X509Certificate::fromXML($n);
+                    break;
+                case 'X509Digest':
+                    $data[] = X509Digest::fromXML($n);
                     break;
                 case 'X509SubjectName':
                     $data[] = X509SubjectName::fromXML($n);

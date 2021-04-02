@@ -10,8 +10,11 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -34,6 +37,12 @@ final class X509DataTest extends TestCase
     /** @var string[] */
     private array $certData;
 
+    /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
+    private Key\X509Certificate $key;
+
+    /** @var string */
+    private string $digest;
+
 
     /**
      */
@@ -44,6 +53,12 @@ final class X509DataTest extends TestCase
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml'
         );
+
+        $this->key = new Key\X509Certificate(
+            PEMCertificatesMock::getPlainPublicKey()
+        );
+
+        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(Constants::DIGEST_SHA256)));
 
         $this->certificate = str_replace(
             [
@@ -81,6 +96,7 @@ final class X509DataTest extends TestCase
                     DOMDocumentFactory::fromString('<ds:X509UnknownTag>somevalue</ds:X509UnknownTag>')->documentElement
                 ),
                 new X509Certificate($this->certificate),
+                new X509Digest($this->digest, Constants::DIGEST_SHA256),
                 new X509SubjectName($this->certData['name']),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
             ]
@@ -90,8 +106,9 @@ final class X509DataTest extends TestCase
 
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509SubjectName::class, $data[2]);
-        $this->assertInstanceOf(Chunk::class, $data[3]);
+        $this->assertInstanceOf(X509Digest::class, $data[2]);
+        $this->assertInstanceOf(X509SubjectName::class, $data[3]);
+        $this->assertInstanceOf(Chunk::class, $data[4]);
 
         $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($X509data));
     }
@@ -106,7 +123,8 @@ final class X509DataTest extends TestCase
         $data = $X509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509SubjectName::class, $data[2]);
-        $this->assertInstanceOf(Chunk::class, $data[3]);
+        $this->assertInstanceOf(X509Digest::class, $data[2]);
+        $this->assertInstanceOf(X509SubjectName::class, $data[3]);
+        $this->assertInstanceOf(Chunk::class, $data[4]);
     }
 }
