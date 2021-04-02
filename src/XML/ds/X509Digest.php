@@ -119,26 +119,11 @@ final class X509Digest extends AbstractDsElement
         Assert::same($xml->localName, 'X509Digest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Digest::NS, InvalidDOMElementException::class);
 
-        $digest = $xml->textContent;
         $algorithm = self::getAttribute($xml, 'Algorithm');
 
-        Assert::stringNotEmpty($xml->textContent, 'Missing value digest.');
-        /**
-         * Note: This test is not watertight but prevents a string containing illegal characters
-         * from being passed and ensures the string roughly follows the correct format for a Base64 encoded string
-         */
-        Assert::string(
-            filter_var(
-                $digest,
-                FILTER_VALIDATE_REGEXP,
-                [
-                    'options' => [
-                        'regexp' => '/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/'
-                    ]
-                ]
-            ),
-            'Digest is not a valid Base64 encoded string'
-        );
+        $digest = $xml->textContent;
+        Assert::stringPlausibleBase64($digest);
+
         return new self($digest, $algorithm);
     }
 
