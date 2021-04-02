@@ -65,6 +65,8 @@ final class X509Digest extends AbstractDsElement
     private function setDigest(string $digest): void
     {
         Assert::notEmpty($digest, 'X509Digest cannot be empty');
+        Assert::stringPlausibleBase64($digest, 'ds:X509Digest is not a valid Base64 encoded string');
+
         $this->digest = $digest;
     }
 
