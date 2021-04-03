@@ -21,6 +21,7 @@ use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Signature as Sig;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -363,10 +364,8 @@ class Signature
             $certData[] = new X509Certificate(CertificateUtils::stripHeaders($cert->getCertificate()));
         }
 
-        $keyInfoNode = $this->createElement('KeyInfo');
-
-        $certDataNode = new X509Data($certData);
-        $certDataNode->toXML($keyInfoNode);
+        $keyInfo = new KeyInfo($certData);
+        $keyInfoNode = $keyInfo->toXML();
 
         if ($this->objectNode === null) {
             $this->sigNode->appendChild($keyInfoNode);
