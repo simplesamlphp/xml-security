@@ -90,7 +90,7 @@ final class TransformTest extends TestCase
 
 
     /**
-     * Adding an empty StatusDetail element should yield an empty element.
+     * Adding an empty Transform element should yield an empty element.
      */
     public function testMarshallingEmptyElement(): void
     {
