@@ -354,7 +354,10 @@ class Signature
             if ($addIssuerSerial && isset($details['issuer']) && isset($details['serialNumber'])) {
                 $issuerName = CertificateUtils::parseIssuer($details['issuer']);
 
-                $certData[] = new X509IssuerSerial($issuerName, $details['serialNumber']);
+                $certData[] = new X509IssuerSerial(
+                    new X509IssuerName($issuerName),
+                    new X509SerialNumber($details['serialNumber'])
+                );
             }
 
             $certData[] = new X509Certificate(CertificateUtils::stripHeaders($cert->getCertificate()));
