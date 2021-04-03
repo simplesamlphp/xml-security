@@ -43,6 +43,7 @@ final class TransformTest extends TestCase
     public function testMarshalling(): void
     {
         $transform = new Transform(
+            'http://www.w3.org/TR/1999/REC-xpath-19991116',
             [
                 new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<ds:XPath>count(//. | //@* | //namespace::*)</ds:XPath>')->documentElement)
@@ -94,7 +95,7 @@ final class TransformTest extends TestCase
     public function testMarshallingEmptyElement(): void
     {
         $ds_ns = Transform::NS;
-        $transform = new Transform([]);
+        $transform = new Transform('http://www.w3.org/TR/1999/REC-xpath-19991116', []);
         $this->assertEquals(
             "<ds:Transform xmlns:ds=\"$ds_ns\" Algorithm=\"http://www.w3.org/TR/1999/REC-xpath-19991116\"/>",
             strval($transform)

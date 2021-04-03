@@ -16,21 +16,23 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class Transform extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XML\Chunk[] */
-    protected array $elements = [];
-
     /** @var string */
     protected string $Algorithm;
+
+    /** @var \SimpleSAML\XML\Chunk[] */
+    protected array $elements = [];
 
 
     /**
      * Initialize a ds:Transform
      *
-     * @param \SimpleSAML\XML\Chunk[] $elements
      * @param string $Algorithm
+     * @param \SimpleSAML\XML\Chunk[] $elements
      */
-    public function __construct(array $elements = [], string $Algorithm = 'http://www.w3.org/TR/1999/REC-xpath-19991116')
-    {
+    public function __construct(
+        string $Algorithm,
+        array $elements = []
+    ) {
         $this->setElements($elements);
         $this->setAlgorithm($Algorithm);
     }
@@ -117,7 +119,7 @@ final class Transform extends AbstractDsElement
             $elements[] = new Chunk($element);
         }
 
-        return new self($elements, $Algorithm);
+        return new self($Algorithm, $elements);
     }
 
 
