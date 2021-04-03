@@ -46,6 +46,7 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms(
             [
                 new Transform(
+                    'http://www.w3.org/TR/1999/REC-xpath-19991116',
                     [
                         new Chunk(
                             DOMDocumentFactory::fromString(
