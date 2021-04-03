@@ -573,36 +573,6 @@ class Signature
 
 
     /**
-     * Set the canonicalization method used in this signature.
-     *
-     * Note that exclusive canonicalization without comments is used by default, so it's not necessary to call
-     * setCanonicalizationMethod() if that canonicalization method is desired.
-     *
-     * @param string $method The identifier of the canonicalization method to use.
-     *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $method is not a valid
-     *   identifier of a supported canonicalization method.
-     */
-    public function setCanonicalizationMethod(string $method): void
-    {
-        Assert::oneOf(
-            $method,
-            [
-                C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-                C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_INCLUSIVE_WITHOUT_COMMENTS
-            ],
-            'Invalid canonicalization method',
-            InvalidArgumentException::class
-        );
-
-        $this->c14nMethod = $method;
-        $this->c14nMethodNode->setAttribute('Algorithm', $method);
-    }
-
-
-    /**
      * Set the encoding for the signed contents in an enveloping signature.
      *
      * @param string $encoding The encoding used in the signed contents.
