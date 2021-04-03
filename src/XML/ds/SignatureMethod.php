@@ -101,7 +101,7 @@ final class SignatureMethod extends AbstractDsElement
     /**
      * Convert this SignatureMethod element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this KeyName element to.
+     * @param \DOMElement|null $parent The element we should append this SignatureMethod element to.
      * @return \DOMElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
