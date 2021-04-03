@@ -39,13 +39,14 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $SignatureMethod = new SignatureMethod(Constants::SIG_RSA_SHA256);
+        $signatureMethod = new SignatureMethod(Constants::SIG_RSA_SHA256);
 
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $SignatureMethod->getAlgorithm());
+        $signatureMethodElement = $signatureMethod->toXML();
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $signatureMethodElement->getAttribute('Algorithm'));
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($SignatureMethod)
+            strval($signatureMethod)
         );
     }
 
@@ -54,8 +55,8 @@ final class SignatureMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $SignatureMethod = SignatureMethod::fromXML($this->xmlRepresentation->documentElement);
+        $signatureMethod = SignatureMethod::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $SignatureMethod->getAlgorithm());
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $signatureMethod->getAlgorithm());
     }
 }

@@ -10,6 +10,7 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -90,7 +91,7 @@ final class X509DataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $X509data = new X509Data(
+        $x509data = new X509Data(
             [
                 new Chunk(
                     DOMDocumentFactory::fromString('<ds:X509UnknownTag>somevalue</ds:X509UnknownTag>')->documentElement
@@ -102,15 +103,25 @@ final class X509DataTest extends TestCase
             ]
         );
 
-        $data = $X509data->getData();
+        $x509dataElement = $x509data->toXML();
+        $this->assertCount(5, $x509dataElement->childNodes);
 
-        $this->assertInstanceOf(Chunk::class, $data[0]);
-        $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509Digest::class, $data[2]);
-        $this->assertInstanceOf(X509SubjectName::class, $data[3]);
-        $this->assertInstanceOf(Chunk::class, $data[4]);
+        $x509Certificate = XMLUtils::xpQuery($x509dataElement, './ds:X509Certificate');
+        $this->assertCount(1, $x509Certificate);
+        $this->assertEquals($this->certificate, $x509Certificate[0]->textContent);
 
-        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($X509data));
+        $x509Digest = XMLUtils::xpQuery($x509dataElement, './ds:X509Digest');
+        $this->assertCount(1, $x509Digest);
+        $this->assertEquals($this->digest, $x509Digest[0]->textContent);
+
+        $x509SubjectName = XMLUtils::xpQuery($x509dataElement, './ds:X509SubjectName');
+        $this->assertCount(1, $x509SubjectName);
+        $this->assertEquals($this->certData['name'], $x509SubjectName[0]->textContent);
+
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($x509data)
+        );
     }
 
 
@@ -118,9 +129,9 @@ final class X509DataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509data = X509Data::fromXML($this->xmlRepresentation->documentElement);
+        $x509data = X509Data::fromXML($this->xmlRepresentation->documentElement);
 
-        $data = $X509data->getData();
+        $data = $x509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
         $this->assertInstanceOf(X509Digest::class, $data[2]);

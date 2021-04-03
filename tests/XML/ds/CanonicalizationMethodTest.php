@@ -39,13 +39,14 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $CanonicalizationMethod = new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
+        $canonicalizationMethod = new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
 
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $CanonicalizationMethod->getAlgorithm());
+        $canonicalizationMethodElement = $canonicalizationMethod->toXML();
+        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethodElement->getAttribute('Algorithm'));
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($CanonicalizationMethod)
+            strval($canonicalizationMethod)
         );
     }
 

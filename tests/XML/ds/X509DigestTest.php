@@ -53,14 +53,15 @@ final class X509DigestTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $X509digest = new X509Digest($this->digest, Constants::DIGEST_SHA256);
+        $x509digest = new X509Digest($this->digest, Constants::DIGEST_SHA256);
 
-        $this->assertEquals($this->digest, $X509digest->getDigest());
-        $this->assertEquals(Constants::DIGEST_SHA256, $X509digest->getAlgorithm());
+        $x509digestElement = $x509digest->toXML();
+        $this->assertEquals($this->digest, $x509digestElement->textContent);
+        $this->assertEquals(Constants::DIGEST_SHA256, $x509digestElement->getAttribute('Algorithm'));
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($X509digest)
+            strval($x509digest)
         );
     }
 
@@ -69,9 +70,9 @@ final class X509DigestTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
+        $x509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals($this->digest, $X509digest->getDigest());
-        $this->assertEquals(Constants::DIGEST_SHA256, $X509digest->getAlgorithm());
+        $this->assertEquals($this->digest, $x509digest->getDigest());
+        $this->assertEquals(Constants::DIGEST_SHA256, $x509digest->getAlgorithm());
     }
 }

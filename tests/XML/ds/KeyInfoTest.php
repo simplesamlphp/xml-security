@@ -10,6 +10,7 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
@@ -94,15 +95,20 @@ final class KeyInfoTest extends TestCase
             'abc123'
         );
 
-        $info = $keyInfo->getInfo();
-        $this->assertCount(4, $info);
-        $this->assertInstanceOf(KeyName::class, $info[0]);
-        $this->assertInstanceOf(X509Data::class, $info[1]);
-        $this->assertInstanceOf(Chunk::class, $info[2]);
-        $this->assertInstanceOf(Chunk::class, $info[3]);
-        $this->assertEquals('abc123', $keyInfo->getId());
+        $keyInfoElement = $keyInfo->toXML();
+        $this->assertCount(4, $keyInfoElement->childNodes);
+        $this->assertEquals('abc123', $keyInfoElement->getAttribute('Id'));
 
-        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($keyInfo));
+        $keyNameElement = XMLUtils::xpQuery($keyInfoElement, './ds:KeyName');
+        $this->assertCount(1, $keyNameElement);
+
+        $x509DataElement = XMLUtils::xpQuery($keyInfoElement, './ds:X509Data');
+        $this->assertCount(1, $x509DataElement);
+
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($keyInfo)
+        );
     }
 
 
