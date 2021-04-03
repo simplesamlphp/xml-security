@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
@@ -44,6 +45,17 @@ final class X509IssuerNameTest extends TestCase
         $this->assertEquals('some name', $issuerName->getName());
 
         $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($issuerName));
+    }
+
+
+    /**
+     */
+    public function testMarshallingEmptyThrowsException(): void
+    {
+        $this->expectException(AssertionFailedException::class);
+        $this->expectExceptionMessage('ds:X509IssuerName cannot be empty.');
+
+        new X509IssuerName('');
     }
 
 

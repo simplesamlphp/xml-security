@@ -52,6 +52,7 @@ final class X509IssuerName extends AbstractDsElement
      */
     private function setName(string $name): void
     {
+        Assert::notEmpty($name, 'ds:X509IssuerName cannot be empty.');
         $this->name = $name;
     }
 
