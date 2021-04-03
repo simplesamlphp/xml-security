@@ -52,6 +52,7 @@ final class DigestValue extends AbstractDsElement
      */
     private function setDigest(string $digest): void
     {
+        Assert::notEmpty($digest, 'DigestValue cannot be empty');
         Assert::stringPlausibleBase64($digest, 'ds:DigestValue is not a valid Base64 encoded string');
         $this->digest = $digest;
     }
