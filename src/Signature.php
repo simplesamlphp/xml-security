@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -19,6 +20,7 @@ use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 use SimpleSAML\XMLSecurity\XML\ds\Signature as Sig;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
@@ -248,21 +250,16 @@ class Signature
 
         if (!empty($transforms)) {
             foreach ($transforms as $transform) {
-                $transformNode = $this->createElement('Transform');
-                $transformList->appendChild($transformNode);
-
                 if (is_array($transform) && !empty($transform[C::XPATH_URI]['query'])) {
-                    $transformNode->setAttribute('Algorithm', C::XPATH_URI);
-                    $xpNode = $this->createElement('XPath', $transform[C::XPATH_URI]['query']);
-                    $transformNode->appendChild($xpNode);
+                    $t = new Transform(C::XPATH_URI, [new Chunk($transform[C::XPATH_URI]['query'])]);
                 } else {
-                    $transformNode->setAttribute('Algorithm', $transform);
+                    $t = new Transform($transform);
                 }
+                $t->toXML($transformList);
             }
         } elseif (!empty($this->c14nMethod)) {
-            $transformNode = $this->createElement('Transform');
-            $transformList->appendChild($transformNode);
-            $transformNode->setAttribute('Algorithm', $this->c14nMethod);
+            $t = new Transform($this->c14nMethod);
+            $t->toXML($transformList);
         }
 
         $canonicalData = $this->processTransforms($reference, $node, $includeCommentNodes);
