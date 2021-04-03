@@ -265,9 +265,8 @@ class Signature
         $canonicalData = $this->processTransforms($reference, $node, $includeCommentNodes);
         $digest = $this->hash($alg, $canonicalData);
 
-        $digestMethod = $this->createElement('DigestMethod');
-        $reference->appendChild($digestMethod);
-        $digestMethod->setAttribute('Algorithm', $alg);
+        $digestMethod = new DigestMethod($alg);
+        $digestMethod->toXML($reference);
 
         $digestValue = $this->createElement('DigestValue', $digest);
         $reference->appendChild($digestValue);
