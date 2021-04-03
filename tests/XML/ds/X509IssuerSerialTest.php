@@ -13,6 +13,7 @@ use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 
 /**
@@ -31,8 +32,8 @@ final class X509IssuerSerialTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
     private Key\X509Certificate $key;
 
-    /** @var string */
-    private string $issuer;
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName */
+    private X509IssuerName $issuer;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber */
     private X509SerialNumber $serial;
@@ -51,7 +52,7 @@ final class X509IssuerSerialTest extends TestCase
         );
 
         $details = $this->key->getCertificateDetails();
-        $this->issuer = CertificateUtils::parseIssuer($details['issuer']);
+        $this->issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
         $this->serial = new X509SerialNumber(intval($details['serialNumber']));
     }
 

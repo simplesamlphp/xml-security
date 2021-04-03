@@ -22,9 +22,9 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * The Issuer's name.
      *
-     * @var string
+     * @var \SimpleSAML\XMLSecurity\XML\ds\IssuerName
      */
-    protected string $X509IssuerName;
+    protected X509IssuerName $X509IssuerName;
 
     /**
      * The serial number.
@@ -37,10 +37,10 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * Initialize a X509SubjectName element.
      *
-     * @param string $name
-     * @param X509SerialNumber $serial
+     * @param \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName $name
+     * @param \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber $serial
      */
-    public function __construct(string $name, X509SerialNumber $serial)
+    public function __construct(X509IssuerName $name, X509SerialNumber $serial)
     {
         $this->setIssuerName($name);
         $this->setSerialNumber($serial);
@@ -50,9 +50,9 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * Collect the value of the X509IssuerName-property
      *
-     * @return string
+     * @return \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName
      */
-    public function getIssuerName(): string
+    public function getIssuerName(): X509IssuerName
     {
         return $this->X509IssuerName;
     }
@@ -61,11 +61,10 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * Set the value of the X509IssuerName-property
      *
-     * @param string $name
+     * @param \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName $name
      */
-    private function setIssuerName(string $name): void
+    private function setIssuerName(X509IssuerName $name): void
     {
-        Assert::notEmpty($name, 'X509IssuerName cannot be empty');
         $this->X509IssuerName = $name;
     }
 
@@ -106,7 +105,7 @@ final class X509IssuerSerial extends AbstractDsElement
         Assert::same($xml->localName, 'X509IssuerSerial', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509IssuerSerial::NS, InvalidDOMElementException::class);
 
-        $issuer = XMLUtils::extractStrings($xml, AbstractDsElement::NS, 'X509IssuerName');
+        $issuer = X509IssuerName::getChildrenOfClass($xml);
         $serial = X509SerialNumber::getChildrenOfClass($xml);
 
         Assert::minCount($issuer, 1, MissingElementException::class);
@@ -132,8 +131,7 @@ final class X509IssuerSerial extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        XMLUtils::addString($e, AbstractDsElement::NS, 'X509IssuerName', $this->X509IssuerName);
-
+        $this->X509IssuerName->toXML($e);
         $this->X509SerialNumber->toXML($e);
 
         return $e;
