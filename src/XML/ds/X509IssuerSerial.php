@@ -22,7 +22,7 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * The Issuer's name.
      *
-     * @var \SimpleSAML\XMLSecurity\XML\ds\IssuerName
+     * @var \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName
      */
     protected X509IssuerName $X509IssuerName;
 
