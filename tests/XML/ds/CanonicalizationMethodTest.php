@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
@@ -20,14 +21,15 @@ use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
  */
 final class CanonicalizationMethodTest extends TestCase
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
+    use SerializableXMLTestTrait;
 
     /**
      */
     protected function setUp(): void
     {
-        $this->document = DOMDocumentFactory::fromFile(
+        $this->testedClass = CanonicalizationMethod::class;
+
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_CanonicalizationMethod.xml'
         );
     }
@@ -41,7 +43,10 @@ final class CanonicalizationMethodTest extends TestCase
 
         $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $CanonicalizationMethod->getAlgorithm());
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($CanonicalizationMethod));
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($CanonicalizationMethod)
+        );
     }
 
 
@@ -49,20 +54,8 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $CanonicalizationMethod = CanonicalizationMethod::fromXML($this->document->documentElement);
+        $CanonicalizationMethod = CanonicalizationMethod::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $CanonicalizationMethod->getAlgorithm());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(CanonicalizationMethod::fromXML($this->document->documentElement))))
-        );
     }
 }

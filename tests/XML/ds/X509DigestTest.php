@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key;
@@ -22,8 +23,7 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
  */
 final class X509DigestTest extends TestCase
 {
-    /** @var \DOMDocument */
-    private DOMDocument $document;
+    use SerializableXMLTestTrait;
 
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
     private Key\X509Certificate $key;
@@ -36,14 +36,16 @@ final class X509DigestTest extends TestCase
      */
     public function setUp(): void
     {
+        $this->testedClass = X509Digest::class;
+
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Digest.xml'
+        );
         $this->key = new Key\X509Certificate(
             PEMCertificatesMock::getPlainPublicKey()
         );
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(Constants::DIGEST_SHA256)));
 
-        $this->document = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Digest.xml'
-        );
+        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(Constants::DIGEST_SHA256)));
     }
 
 
@@ -56,7 +58,10 @@ final class X509DigestTest extends TestCase
         $this->assertEquals($this->digest, $X509digest->getDigest());
         $this->assertEquals(Constants::DIGEST_SHA256, $X509digest->getAlgorithm());
 
-        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($X509digest));
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($X509digest)
+        );
     }
 
 
@@ -64,21 +69,9 @@ final class X509DigestTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509digest = X509Digest::fromXML($this->document->documentElement);
+        $X509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals($this->digest, $X509digest->getDigest());
         $this->assertEquals(Constants::DIGEST_SHA256, $X509digest->getAlgorithm());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(X509Digest::fromXML($this->document->documentElement))))
-        );
     }
 }
