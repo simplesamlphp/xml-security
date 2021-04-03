@@ -19,6 +19,8 @@ use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
+use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
+use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XML\ds\Signature as Sig;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -268,8 +270,8 @@ class Signature
         $digestMethod = new DigestMethod($alg);
         $digestMethod->toXML($reference);
 
-        $digestValue = $this->createElement('DigestValue', $digest);
-        $reference->appendChild($digestValue);
+        $digestValue = new DigestValue($digest);
+        $digestValue->toXML($reference);
 
         if (!in_array($node, $this->references)) {
             $this->references[] = $node;
