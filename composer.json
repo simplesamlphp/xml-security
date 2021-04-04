@@ -40,7 +40,7 @@
 
         "robrichards/xmlseclibs": "^3.1.1",
         "simplesamlphp/assert": "~0.2.1",
-        "simplesamlphp/xml-common": "~0.3.1"
+        "simplesamlphp/xml-common": "~0.3.2"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "^1.0.5"
