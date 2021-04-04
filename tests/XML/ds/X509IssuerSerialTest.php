@@ -62,9 +62,20 @@ final class X509IssuerSerialTest extends TestCase
     public function testMarshalling(): void
     {
         $X509IssuerSerial = new X509IssuerSerial($this->issuer, $this->serial);
+        $details = $this->key->getCertificateDetails();
 
-        $this->assertEquals($this->issuer, $X509IssuerSerial->getIssuerName());
-        $this->assertEquals($this->serial, $X509IssuerSerial->getSerialNumber());
+        $X509IssuerSerialElement = $X509IssuerSerial->toXML();
+        $this->assertCount(2, $X509IssuerSerialElement->childNodes);
+
+        $X509IssuerNameElements = XMLUtils::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName');
+        $this->assertCount(1, $X509IssuerNameElements);
+        $this->assertEquals(
+            CertificateUtils::parseIssuer($details['issuer']),
+            $X509IssuerNameElements[0]->textContent
+        );
+
+        $X509SerialNumberElements = XMLUtils::xpQuery($X509IssuerSerialElement, './ds:X509SerialNumber');
+        $this->assertEquals($details['serialNumber'], $X509SerialNumberElements[0]->textContent);
 
         $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($X509IssuerSerial));
     }

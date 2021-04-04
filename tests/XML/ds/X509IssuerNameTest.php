@@ -42,9 +42,13 @@ final class X509IssuerNameTest extends TestCase
     {
         $issuerName = new X509IssuerName('some name');
 
-        $this->assertEquals('some name', $issuerName->getName());
+        $issuerNameElement = $issuerName->toXML();
+        $this->assertEquals('some name', $issuerNameElement->textContent);
 
-        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($issuerName));
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($issuerName)
+        );
     }
 
 

@@ -43,7 +43,8 @@ final class X509SerialNumberTest extends TestCase
     {
         $serialNumber = new X509SerialNumber(123456);
 
-        $this->assertEquals(123456, $serialNumber->getSerial());
+        $serialNumberElement = $serialNumber->toXML();
+        $this->assertEquals('123456', $serialNumberElement->textContent);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
