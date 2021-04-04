@@ -65,7 +65,7 @@ XML
 
         $this->assertEquals('#Encrypted_KEY_ID', $keyReference->getURI());
 
-        $references = $keyReference->getReferences();
+        $references = $keyReference->getElements();
         $this->assertCount(1, $references);
         $this->assertEquals($this->reference, $references[0]);
 
@@ -87,7 +87,7 @@ XML
 
         $this->assertEquals('#Encrypted_KEY_ID', $keyReference->getURI());
 
-        $references = $keyReference->getReferences();
+        $references = $keyReference->getElements();
         $this->assertCount(1, $references);
         $this->assertEquals($this->reference, $references[0]);
 

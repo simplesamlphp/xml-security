@@ -87,8 +87,8 @@ XML
         $keyReferences = $referenceList->getKeyReferences();
         $this->assertCount(1, $keyReferences);
 
-        $this->assertEquals([$this->dataReference], $dataReferences[0]->getReferences());
-        $this->assertEquals([$this->keyReference], $keyReferences[0]->getReferences());
+        $this->assertEquals([$this->dataReference], $dataReferences[0]->getElements());
+        $this->assertEquals([$this->keyReference], $keyReferences[0]->getElements());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -112,8 +112,8 @@ XML
         $keyReferences = $referenceList->getKeyReferences();
         $this->assertCount(1, $keyReferences);
 
-        $this->assertEquals([$this->dataReference], $dataReferences[0]->getReferences());
-        $this->assertEquals([$this->keyReference], $keyReferences[0]->getReferences());
+        $this->assertEquals([$this->dataReference], $dataReferences[0]->getElements());
+        $this->assertEquals([$this->keyReference], $keyReferences[0]->getElements());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

@@ -7,8 +7,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
@@ -25,8 +25,8 @@ final class CipherReferenceTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-    /** @var \SimpleSAML\XML\Chunk $reference */
-    private Chunk $reference;
+    /** @var \DOMDocument $transforms */
+    private DOMDocument $transforms;
 
 
     /**
@@ -41,16 +41,9 @@ final class CipherReferenceTest extends TestCase
 
         $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
 
-        $this->reference = new Chunk(DOMDocumentFactory::fromString(<<<XML
- <ds:Transforms xmlns:ds="{$dsNamespace}">
-    <ds:Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116">
-      <ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-        self::xenc:CipherValue[@Id="example1"]
-      </ds:XPath>
-    </ds:Transform>
-  </ds:Transforms>
-XML
-        )->documentElement);
+        $this->transforms = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Transforms.xml'
+        );
     }
 
 
@@ -61,13 +54,16 @@ XML
      */
     public function testMarshalling(): void
     {
-        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [$this->reference]);
+        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [Transforms::fromXML($this->transforms)]);
 
-        $this->assertEquals('#Cipher_VALUE_ID', $cipherReference->getURI());
+        $cipherReferenceElement = $cipherReference->toXML();
+        $this->assertEquals('#Cipher_VALUE_ID', $cipherReferenceElement->getAttribute('URI'));
 
-        $references = $cipherReference->getReferences();
-        $this->assertCount(1, $references);
-        $this->assertEquals($this->reference, $references[0]);
+        $transformsElement = XMLUtils::xpQuery($cipherReferenceElement, './ds:Transforms');
+        $this->assertCount(1, $transformsElement);
+
+        $transformElement = XMLUtils::xpQuery($transformsElement, './ds:Transform');
+        $this->assertCount(1, $transformsElement);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -87,9 +83,9 @@ XML
 
         $this->assertEquals('#Cipher_VALUE_ID', $cipherReference->getURI());
 
-        $references = $cipherReference->getReferences();
+        $references = $cipherReference->getElements();
         $this->assertCount(1, $references);
-        $this->assertEquals($this->reference, $references[0]);
+        $this->assertEquals($this->transforms, $references[0]->toXML());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

@@ -6,8 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 /**
  * Abstract class representing references. No custom elements are allowed.
@@ -19,20 +21,20 @@ abstract class AbstractReference extends AbstractXencElement
     /** @var string */
     protected string $uri;
 
-    /** @var \SimpleSAML\XML\Chunk[] */
-    protected array $references = [];
+    /** @var \SimpleSAML\XML\XMLElementInterface[] */
+    protected array $elements;
 
 
     /**
      * AbstractReference constructor.
      *
      * @param string $uri
-     * @param \SimpleSAML\XML\Chunk[] $references
+     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
      */
-    protected function __construct(string $uri, array $references = [])
+    protected function __construct(string $uri, array $elements = [])
     {
         $this->setURI($uri);
-        $this->setReferences($references);
+        $this->setElements($elements);
     }
 
 
@@ -58,27 +60,27 @@ abstract class AbstractReference extends AbstractXencElement
 
 
     /**
-     * Collect the references
+     * Collect the embedded elements
      *
-     * @return \SimpleSAML\XML\Chunk[]
+     * @return \SimpleSAML\XML\XMLElementInterface[]
      */
-    public function getReferences(): array
+    public function getElements(): array
     {
-        return $this->references;
+        return $this->elements;
     }
 
 
     /**
-     * Set the value of the references-property
+     * Set the value of the elements-property
      *
-     * @param \SimpleSAML\XML\Chunk[] $references
+     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
      * @throws \SimpleSAML\Assert\AssertionFailedException
-     *   if the supplied array contains anything other than Chunk objects
+     *   if the supplied array contains anything other than XMLElementInterface objects
      */
-    private function setReferences(array $references): void
+    private function setElements(array $elements): void
     {
-        Assert::allIsInstanceOf($references, Chunk::class);
-        $this->references = $references;
+        Assert::allIsInstanceOf($elements, XMLElementInterface::class);
+        $this->elements = $elements;
     }
 
 
@@ -97,16 +99,18 @@ abstract class AbstractReference extends AbstractXencElement
 
         $URI = self::getAttribute($xml, 'URI');
 
-        $references = [];
-        foreach ($xml->childNodes as $reference) {
-            if (!($reference instanceof DOMElement)) {
+        $elements = [];
+        foreach ($xml->childNodes as $element) {
+            if (!($element instanceof DOMElement)) {
                 continue;
+            } elseif ($element->namespaceURI === Transforms::NS && $element->localName === 'Transforms') {
+                $elements[] = new Transforms($element);
+            } else {
+                $elements[] = new Chunk($element);
             }
-
-            $references[] = new Chunk($reference);
         }
 
-        return new static($URI, $references);
+        return new static($URI, $elements);
     }
 
 
@@ -118,8 +122,8 @@ abstract class AbstractReference extends AbstractXencElement
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('URI', $this->uri);
 
-        foreach ($this->references as $reference) {
-            $e->appendChild($e->ownerDocument->importNode($reference->getXML(), true));
+        foreach ($this->elements as $element) {
+            $element->toXML($e);
         }
 
         return $e;

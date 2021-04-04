@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\XMLElementInterface;
+
 /**
  * Class representing the <xenc:CipherReference> element.
  *
@@ -15,10 +18,11 @@ class CipherReference extends AbstractReference
      * CipherReference constructor.
      *
      * @param string $uri
-     * @param \SimpleSAML\XML\Chunk[] $references
+     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
      */
-    public function __construct(string $uri, array $references = [])
+    public function __construct(string $uri, array $elements = [])
     {
-        parent::__construct($uri, $references);
+        Assert::allIsInstanceOf($elements, XMLElementInterface::class);
+        parent::__construct($uri, $elements);
     }
 }

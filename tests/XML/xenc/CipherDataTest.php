@@ -41,11 +41,12 @@ final class CipherDataTest extends TestCase
 
     /**
      */
-    public function testMarshallingCipherValue(): void
+    public function testMarshalling(): void
     {
         $cipherData = new CipherData('c29tZSB0ZXh0');
 
-        $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
+        $cipherDataElement = $cipherData->toXML();
+        $this->assertEquals('c29tZSB0ZXh0', $cipherDataElement->textContent);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
