@@ -103,24 +103,9 @@ final class X509DataTest extends TestCase
             ]
         );
 
-        $x509dataElement = $x509data->toXML();
-        $this->assertCount(5, $x509dataElement->childNodes);
-
-        $x509Certificate = XMLUtils::xpQuery($x509dataElement, './ds:X509Certificate');
-        $this->assertCount(1, $x509Certificate);
-        $this->assertEquals($this->certificate, $x509Certificate[0]->textContent);
-
-        $x509Digest = XMLUtils::xpQuery($x509dataElement, './ds:X509Digest');
-        $this->assertCount(1, $x509Digest);
-        $this->assertEquals($this->digest, $x509Digest[0]->textContent);
-
-        $x509SubjectName = XMLUtils::xpQuery($x509dataElement, './ds:X509SubjectName');
-        $this->assertCount(1, $x509SubjectName);
-        $this->assertEquals($this->certData['name'], $x509SubjectName[0]->textContent);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($x509data)
+            strval($X509data)
         );
     }
 

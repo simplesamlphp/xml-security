@@ -71,24 +71,6 @@ final class EncryptedDataTest extends TestCase
             )
         );
 
-        $cipherData = $encryptedData->getCipherData();
-        $this->assertEquals('iaDc7...', $cipherData->getCipherValue());
-
-        $encryptionMethod = $encryptedData->getEncryptionMethod();
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#aes128-cbc', $encryptionMethod->getAlgorithm());
-
-        $keyInfo = $encryptedData->getKeyInfo();
-        $info = $keyInfo->getInfo();
-        $this->assertCount(1, $info);
-
-        $encKey = $info[0];
-        $this->assertInstanceOf(EncryptedKey::class, $encKey);
-
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#Element', $encryptedData->getType());
-        $this->assertEquals('text/plain', $encryptedData->getMimeType());
-        $this->assertEquals('MyID', $encryptedData->getID());
-        $this->assertEquals('SomeEncoding', $encryptedData->getEncoding());
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedData)

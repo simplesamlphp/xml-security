@@ -55,14 +55,7 @@ final class X509DigestTest extends TestCase
     {
         $x509digest = new X509Digest($this->digest, Constants::DIGEST_SHA256);
 
-        $x509digestElement = $x509digest->toXML();
-        $this->assertEquals($this->digest, $x509digestElement->textContent);
-        $this->assertEquals(Constants::DIGEST_SHA256, $x509digestElement->getAttribute('Algorithm'));
-
-        $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($x509digest)
-        );
+        $this->assertEquals($this->document->saveXML($this->document->documentElement), strval($X509digest));
     }
 
 

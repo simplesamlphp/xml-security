@@ -59,29 +59,6 @@ final class ReferenceTest extends TestCase
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
         );
 
-        $referenceElement = $reference->toXML();
-        $this->assertEquals('abc123', $referenceElement->getAttribute('Id'));
-        $this->assertEquals('someType', $referenceElement->getAttribute('Type'));
-        $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $referenceElement->getAttribute('URI'));
-
-        $transformsElement = XMLUtils::xpQuery($referenceElement, './ds:Transforms');
-        $this->assertCount(1, $transformsElement->childNodes);
-
-        $transformElement = XMLUtils::xpQuery($transformsElement, './ds:Transform');
-        $this->assertCount(2, $transformElement->childNodes);
-
-        $this->assertEquals(Constants::XMLDSIG_ENVELOPED, $transformElement[0]->getAttribute('Algorithm'));
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $transformElement[1]->getAttribute('Algorithm'));
-
-        $digestMethodElement = XMLUtils::xpQuery($transformsElement, './ds:DigestMethod');
-        $this->assertCount(1, $digestMethodElement->childNodes);
-        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethodElement[0]->getAttribute('Algorithm'));
-
-        $digestValueElement = XMLUtils::xpQuery($transformsElement, './ds:DigestValue');
-        $this->assertCount(1, $digestValueElement->childNodes);
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValueElement[0]->textContent);
-
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($reference)

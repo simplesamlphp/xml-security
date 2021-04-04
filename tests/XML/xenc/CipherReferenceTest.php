@@ -57,15 +57,6 @@ final class CipherReferenceTest extends TestCase
     {
         $cipherReference = new CipherReference('#Cipher_VALUE_ID', [Transforms::fromXML($this->transforms->documentElement)]);
 
-        $cipherReferenceElement = $cipherReference->toXML();
-        $this->assertEquals('#Cipher_VALUE_ID', $cipherReferenceElement->getAttribute('URI'));
-
-        $transformsElement = XMLUtils::xpQuery($cipherReferenceElement, './ds:Transforms');
-        $this->assertCount(1, $transformsElement);
-
-        $transformElement = XMLUtils::xpQuery($transformsElement[0], './ds:Transform');
-        $this->assertCount(1, $transformElement);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($cipherReference)

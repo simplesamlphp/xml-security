@@ -41,12 +41,9 @@ final class CanonicalizationMethodTest extends TestCase
     {
         $canonicalizationMethod = new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
 
-        $canonicalizationMethodElement = $canonicalizationMethod->toXML();
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethodElement->getAttribute('Algorithm'));
-
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($canonicalizationMethod)
+            $this->document->saveXML($this->document->documentElement),
+            strval($CanonicalizationMethod)
         );
     }
 
