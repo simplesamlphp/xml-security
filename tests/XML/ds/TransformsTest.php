@@ -58,16 +58,6 @@ final class TransformsTest extends TestCase
             ]
         );
 
-        $transformsElement = $transforms->toXML();
-
-        $this->assertCount(1, $transformsElement->childNodes);
-
-        $transformElement = $transformsElement->childNodes[0];
-        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transformElement->getAttribute('Algorithm'));
-
-        $this->assertEquals('ds:XPath', $transformElement->childNodes[0]->localName);
-        $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $transformElement->childNodes[0]->textContent);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($transforms)
