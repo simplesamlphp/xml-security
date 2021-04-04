@@ -59,10 +59,7 @@ final class ReferenceTest extends TestCase
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
         );
 
-        $document = DOMDocumentFactory::fromString('<root />');
-        /** @psalm-var \DOMElement $document->firstChild */
-        $referenceElement = $reference->toXML($document->firstChild);
-
+        $referenceElement = $reference->toXML();
         $this->assertEquals('abc123', $referenceElement->getAttribute('Id'));
         $this->assertEquals('someType', $referenceElement->getAttribute('Type'));
         $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $referenceElement->getAttribute('URI'));
