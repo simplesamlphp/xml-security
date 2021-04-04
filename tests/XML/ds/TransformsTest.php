@@ -58,9 +58,7 @@ final class TransformsTest extends TestCase
             ]
         );
 
-        $document = DOMDocumentFactory::fromString('<root />');
-        /** @psalm-var \DOMElement $document->firstChild */
-        $transformsElement = $transforms->toXML($document->firstChild);
+        $transformsElement = $transforms->toXML();
 
         $this->assertCount(1, $transformsElement->childNodes);
 
