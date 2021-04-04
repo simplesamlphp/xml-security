@@ -46,15 +46,13 @@ final class DigestMethodTest extends TestCase
             [new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement)]
         );
 
-        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod->getAlgorithm());
+        $digestMethodElement = $digestMethod->toXML();
+        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethodElement->getAttribute('Algorithm'));
 
-        $elements = $digestMethod->getElements();
-        $this->assertCount(1, $elements);
+        $this->assertCount(1, $digestMethodElement->childNodes);
 
-        $element = array_pop($elements);
-        $this->assertInstanceOf(Chunk::class, $element);
-        $this->assertEquals('some:Chunk', $element->getXML()->localName);
-        $this->assertEquals('Random', $element->getXML()->textContent);
+        $this->assertEquals('some:Chunk', $digestMethodElement->childNodes[0]->localName);
+        $this->assertEquals('Random', $digestMethodElement->childNodes[0]->textContent);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
