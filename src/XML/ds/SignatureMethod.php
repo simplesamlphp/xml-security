@@ -70,7 +70,7 @@ final class SignatureMethod extends AbstractDsElement
                 Constants::SIG_HMAC_SHA512,
                 Constants::SIG_HMAC_RIPEMD160,
             ],
-            'Invalid canonicalization method',
+            'Invalid signature method',
             InvalidArgumentException::class
         );
 
