@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity;
  *
  * @package SimpleSAML\XMLSecurity
  */
-class Constants
+class Constants extends \SimpleSAML\XML\Constants
 {
     /**
      * Digest algorithms
