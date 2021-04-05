@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
  * Class \SimpleSAML\XMLSecurity\XML\ds\KeyNameTest
