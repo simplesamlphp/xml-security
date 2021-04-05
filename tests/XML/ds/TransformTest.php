@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\SAML2\XML\ds;
+namespace SimpleSAML\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\SAML2\Constants;
+use SimpleSAML\Constants;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
@@ -14,12 +14,12 @@ use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 
 /**
- * Class \SAML2\XML\ds\TransformTest
+ * Class \SimpleSAML\XMLSecurity\XML\ds\TransformTest
  *
- * @covers \SimpleSAML\SAML2\XML\ds\Transform
- * @covers \SimpleSAML\SAML2\XML\ds\AbstractDsElement
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\Transform
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  *
- * @package simplesamlphp/saml2
+ * @package simplesamlphp/xml-security
  */
 final class TransformTest extends TestCase
 {

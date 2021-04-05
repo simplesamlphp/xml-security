@@ -7,9 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use Exception;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingAttributeException;
 use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Utils\Certificate;
 use SimpleSAML\XMLSecurity\Utils\Security;
@@ -29,6 +27,9 @@ final class Signature extends AbstractDsElement
     /** @var string[] */
     protected array $certificates = [];
 
+    /** @var SignatureValue */
+    protected SignatureValue $value;
+
     /** @var \SimpleSAML\XMLSecurity\XMLSecurityKey|null */
     protected ?XMLSecurityKey $key;
 
@@ -47,6 +48,7 @@ final class Signature extends AbstractDsElement
      */
     public function __construct(
         string $algorithm,
+        SignatureValue $value,
         array $certificates = [],
         ?XMLSecurityKey $key = null
     ) {
@@ -122,6 +124,28 @@ final class Signature extends AbstractDsElement
 
 
     /**
+     * Get the SignatureValue corresponding to this signature.
+     *
+     * @return SignatureValue
+     */
+    public function getSignatureValue(): SignatureValue
+    {
+        return $this->value;
+    }
+
+
+    /**
+     * Set the SignatureValue.
+     *
+     * @param SignatureValue $value
+     */
+    protected function setSignatureValue(SignatureValue $value): void
+    {
+        $this->value = $value;
+    }
+
+
+    /**
      * @return XMLSecurityDSig
      */
     public function getSigner(): XMLSecurityDSig
@@ -165,7 +189,10 @@ final class Signature extends AbstractDsElement
             );
         }
 
-        $signature = new self(self::getAttribute($sigMethod, 'Algorithm'), $certificates);
+        $value = SignatureValue::getChildrenOfClass($xml);
+        Assert::count($value, 1, 'ds:Signature needs exactly one ds:SignatureValue');
+
+        $signature = new self(self::getAttribute($sigMethod, 'Algorithm'), $value[0], $certificates);
 
         $signature->signer->sigNode = $xml;
 
