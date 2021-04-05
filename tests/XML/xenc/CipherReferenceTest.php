@@ -8,6 +8,7 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -54,7 +55,7 @@ final class CipherReferenceTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [Transforms::fromXML($this->transforms)]);
+        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [Transforms::fromXML($this->transforms->documentElement)]);
 
         $cipherReferenceElement = $cipherReference->toXML();
         $this->assertEquals('#Cipher_VALUE_ID', $cipherReferenceElement->getAttribute('URI'));
@@ -62,8 +63,8 @@ final class CipherReferenceTest extends TestCase
         $transformsElement = XMLUtils::xpQuery($cipherReferenceElement, './ds:Transforms');
         $this->assertCount(1, $transformsElement);
 
-        $transformElement = XMLUtils::xpQuery($transformsElement, './ds:Transform');
-        $this->assertCount(1, $transformsElement);
+        $transformElement = XMLUtils::xpQuery($transformsElement[0], './ds:Transform');
+        $this->assertCount(1, $transformElement);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

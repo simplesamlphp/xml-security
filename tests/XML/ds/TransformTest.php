@@ -45,7 +45,6 @@ final class TransformTest extends TestCase
         $transform = new Transform(
             'http://www.w3.org/TR/1999/REC-xpath-19991116',
             [
-                new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<ds:XPath>count(//. | //@* | //namespace::*)</ds:XPath>')->documentElement)
             ],
         );
@@ -55,12 +54,10 @@ final class TransformTest extends TestCase
         $transformElement = $transform->toXML($document->firstChild);
 
         $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transformElement->getAttribute('Algorithm'));
-        $this->assertCount(2, $transformElement->childNodes);
+        $this->assertCount(1, $transformElement->childNodes);
 
-        $this->assertEquals('some:Chunk', $transformElement->childNodes[0]->localName);
-        $this->assertEquals('Random', $transformElement->childNodes[0]->textContent);
-        $this->assertEquals('ds:XPath', $transformElement->childNodes[1]->localName);
-        $this->assertEquals('count(//. | //@* | //namespace::*)', $transformElement->childNodes[1]->textContent);
+        $this->assertEquals('ds:XPath', $transformElement->childNodes[0]->localName);
+        $this->assertEquals('count(//. | //@* | //namespace::*)', $transformElement->childNodes[0]->textContent);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -77,10 +74,9 @@ final class TransformTest extends TestCase
         $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transform->getAlgorithm());
 
         $elements = $transform->getElements();
-        $this->assertCount(2, $elements);
+        $this->assertCount(1, $elements);
 
         $this->assertInstanceOf(Chunk::class, $elements[0]);
-        $this->assertInstanceOf(Chunk::class, $elements[1]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
