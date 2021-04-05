@@ -13,7 +13,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  *
  * @package simplesaml/xml-security
  */
-class SignatureValue extends AbstractDsElement
+final class SignatureValue extends AbstractDsElement
 {
     /** @var string */
     protected string $value;

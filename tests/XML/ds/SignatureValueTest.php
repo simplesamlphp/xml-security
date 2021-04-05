@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Test\XML\ds;
+namespace SimpleSAML\Test\SAML2\XML\ds;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
@@ -17,7 +17,7 @@ use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
  *
  * @package simplesamlphp/xml-security
  */
-class SignatureValueTest extends TestCase
+final class SignatureValueTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
