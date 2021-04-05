@@ -104,7 +104,7 @@ abstract class AbstractReference extends AbstractXencElement
             if (!($element instanceof DOMElement)) {
                 continue;
             } elseif ($element->namespaceURI === Transforms::NS && $element->localName === 'Transforms') {
-                $elements[] = new Transforms($element);
+                $elements[] = Transforms::fromXML($element);
             } else {
                 $elements[] = new Chunk($element);
             }
