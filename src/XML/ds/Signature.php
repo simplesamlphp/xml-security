@@ -27,7 +27,7 @@ final class Signature extends AbstractDsElement
     /** @var string[] */
     protected array $certificates = [];
 
-    /** @var SignatureValue */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\SignatureValue */
     protected SignatureValue $value;
 
     /** @var \SimpleSAML\XMLSecurity\XMLSecurityKey|null */
@@ -41,6 +41,7 @@ final class Signature extends AbstractDsElement
      * Signature constructor.
      *
      * @param string $algorithm
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $value
      * @param string[] $certificates
      * @param \SimpleSAML\XMLSecurity\XMLSecurityKey|null $key
      *
@@ -79,7 +80,7 @@ final class Signature extends AbstractDsElement
      */
     protected function setAlgorithm(string $algorithm): void
     {
-        Assert::notEmpty($algorithm, 'Signature algorithm cannot be empty');
+        Assert::notWhitespaceOnly($algorithm, 'Signature algorithm cannot be empty');
         $this->algorithm = $algorithm;
     }
 
@@ -126,7 +127,7 @@ final class Signature extends AbstractDsElement
     /**
      * Get the SignatureValue corresponding to this signature.
      *
-     * @return SignatureValue
+     * @return \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
      */
     public function getSignatureValue(): SignatureValue
     {
@@ -137,7 +138,7 @@ final class Signature extends AbstractDsElement
     /**
      * Set the SignatureValue.
      *
-     * @param SignatureValue $value
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $value
      */
     protected function setSignatureValue(SignatureValue $value): void
     {
@@ -155,7 +156,7 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * @param DOMElement $xml
+     * @param \DOMElement $xml
      *
      * @return \SimpleSAML\XML\AbstractXMLElement
      * @throws \Exception

@@ -56,7 +56,7 @@ final class SignatureValue extends AbstractDsElement
     /**
      * Convert XML into a SignatureValue
      *
-     * @param DOMElement $xml The XML element we should load
+     * @param \DOMElement $xml The XML element we should load
      * @return self
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException If the qualified name of the supplied element is
@@ -74,8 +74,8 @@ final class SignatureValue extends AbstractDsElement
     /**
      * Convert this SignatureValue to XML.
      *
-     * @param DOMElement|null $parent The element we should append this SignatureValue element to.
-     * @return DOMElement
+     * @param \DOMElement|null $parent The element we should append this SignatureValue element to.
+     * @return \DOMElement
      */
     public function toXML(DOMElement $parent = null): \DOMElement
     {

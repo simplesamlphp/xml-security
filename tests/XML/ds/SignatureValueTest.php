@@ -10,7 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
+ * Class \SimpleSAML\XMLSecurity\XML\ds\SignatureValueTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\\XML\ds\SignatureValue
