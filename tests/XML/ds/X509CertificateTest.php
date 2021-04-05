@@ -63,11 +63,15 @@ final class X509CertificateTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $X509cert = new X509Certificate($this->certificate);
+        $x509cert = new X509Certificate($this->certificate);
 
-        $this->assertEquals($this->certificate, $X509cert->getCertificate());
+        $x509certElement = $x509cert->toXML();
+        $this->assertEquals($this->certificate, $x509certElement->textContent);
 
-        $this->assertEquals($this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement), strval($X509cert));
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($x509cert)
+        );
     }
 
 
@@ -75,7 +79,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals($this->certificate, $X509cert->getCertificate());
+        $x509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
+        $this->assertEquals($this->certificate, $x509cert->getCertificate());
     }
 }

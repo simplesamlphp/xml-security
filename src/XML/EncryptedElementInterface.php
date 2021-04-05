@@ -19,7 +19,8 @@ interface EncryptedElementInterface
      * Constructor for encrypted elements.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData The EncryptedData object.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] $encryptedKeys An array of zero or more EncryptedKey objects.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] $encryptedKeys
+     *   An array of zero or more EncryptedKey objects.
      */
     public function __construct(EncryptedData $encryptedData, array $encryptedKeys);
 

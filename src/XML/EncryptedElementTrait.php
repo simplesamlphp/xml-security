@@ -40,7 +40,8 @@ trait EncryptedElementTrait
      * Constructor for encrypted elements.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData The EncryptedData object.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] $encryptedKeys An array of zero or more EncryptedKey objects.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] $encryptedKeys
+     *   An array of zero or more EncryptedKey objects.
      */
     public function __construct(EncryptedData $encryptedData, array $encryptedKeys)
     {
@@ -154,11 +155,16 @@ trait EncryptedElementTrait
      * @inheritDoc
      * @return \SimpleSAML\XMLSecurity\XML\EncryptedElementInterface
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException if the qualified name of the supplied element is wrong
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): object
     {
-        Assert::same($xml->localName, AbstractXMLElement::getClassName(static::class), InvalidDOMElementException::class);
+        Assert::same(
+            $xml->localName,
+            AbstractXMLElement::getClassName(static::class),
+            InvalidDOMElementException::class
+        );
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
         $ed = EncryptedData::getChildrenOfClass($xml);

@@ -15,6 +15,7 @@ use SimpleSAML\XMLSecurity\Signature;
  * Test for XML digital signatures.
  *
  * @package SimpleSAML\XMLSecurity\Test
+ * @covers \SimpleSAML\XMLSecurity\Signature
  */
 final class SignatureTest extends TestCase
 {
