@@ -15,13 +15,13 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class Reference extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\Transforms|null */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transforms|null */
     protected Transforms $transforms;
 
-    /** @var \SimpleSAML\XMLSecurity\DigestMethod */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\DigestMethod */
     protected DigestMethod $digestMethod;
 
-    /** @var \SimpleSAML\XMLSecurity\DigestValue */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\DigestValue */
     protected DigestValue $digestValue;
 
     /** @var string|null $Id */
@@ -37,9 +37,9 @@ final class Reference extends AbstractDsElement
     /**
      * Initialize a ds:Reference
      *
-     * @param \SimpleSAML\XMLSecurity\DigestMethod $digestMethod
-     * @param \SimpleSAML\XMLSecurity\DigestValue $digestValue
-     * @param \SimpleSAML\XMLSecurity\Transforms|null $transforms
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
      * @param string|null $Id
      * @param string|null $Type
      * @param string|null $URI
@@ -62,7 +62,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return \SimpleSAML\XMLSecurity\Transforms|null
+     * @return \SimpleSAML\XMLSecurity\XML\ds\Transforms|null
      */
     public function getTransforms(): ?Transforms
     {
@@ -71,7 +71,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\Transforms|null
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null
      */
     protected function setTransforms(?Transforms $transforms): void
     {
@@ -80,7 +80,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return \SimpleSAML\XMLSecurity\DigestMethod
+     * @return \SimpleSAML\XMLSecurity\XML\ds\DigestMethod
      */
     public function getDigestMethod(): DigestMethod
     {
@@ -89,7 +89,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\DigestMethod $digestMethod
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
      */
     private function setDigestMethod(DigestMethod $digestMethod): void
     {
@@ -98,7 +98,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return \SimpleSAML\XMLSecurity\DigestValue
+     * @return \SimpleSAML\XMLSecurity\XML\ds\DigestValue
      */
     public function getDigestValue(): DigestValue
     {
@@ -107,7 +107,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\DigestValue $digestValue
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
      */
     private function setDigestValue(DigestValue $digestValue): void
     {

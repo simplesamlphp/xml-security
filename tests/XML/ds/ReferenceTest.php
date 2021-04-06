@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\SAML2\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
@@ -18,10 +18,10 @@ use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 /**
- * Class \SAML2\XML\ds\ReferenceTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\ReferenceTest
  *
- * @covers \SimpleSAML\SAML2\XML\ds\Reference
- * @covers \SimpleSAML\SAML2\XML\ds\AbstractDsElement
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\Reference
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  *
  * @package simplesamlphp/saml2
  */
