@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureValueTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\\XML\ds\SignatureValue
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
  *
  * @package simplesamlphp/xml-security
  */
