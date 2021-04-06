@@ -67,7 +67,7 @@ final class X509CertificateTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($X509cert)
+            strval($x509cert)
         );
     }
 

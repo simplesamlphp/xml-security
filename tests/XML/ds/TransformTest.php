@@ -73,19 +73,4 @@ final class TransformTest extends TestCase
             strval($transform)
         );
     }
-
-
-    /**
-     * Adding an empty Transform element should yield an empty element.
-     */
-    public function testMarshallingEmptyElement(): void
-    {
-        $ds_ns = Transform::NS;
-        $transform = new Transform('http://www.w3.org/TR/1999/REC-xpath-19991116', []);
-        $this->assertEquals(
-            "<ds:Transform xmlns:ds=\"$ds_ns\" Algorithm=\"http://www.w3.org/TR/1999/REC-xpath-19991116\"/>",
-            strval($transform)
-        );
-        $this->assertTrue($transform->isEmptyElement());
-    }
 }

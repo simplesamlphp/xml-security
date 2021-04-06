@@ -42,8 +42,8 @@ final class SignatureMethodTest extends TestCase
         $signatureMethod = new SignatureMethod(Constants::SIG_RSA_SHA256);
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval($SignatureMethod)
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($signatureMethod)
         );
     }
 

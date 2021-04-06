@@ -6,14 +6,15 @@ namespace SimpleSAML\Test\SAML2\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\SAML2\Constants;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 /**
@@ -46,14 +47,14 @@ final class ReferenceTest extends TestCase
     public function testMarshalling(): void
     {
         $reference = new Reference(
+            new DigestMethod(Constants::DIGEST_SHA256),
+            new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             new Transforms(
                 [
                     new Transform(Constants::XMLDSIG_ENVELOPED),
                     new Transform(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
                 ]
             ),
-            new DigestMethod(Constants::DIGEST_SHA256),
-            new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             'abc123',
             'someType',
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
@@ -71,24 +72,25 @@ final class ReferenceTest extends TestCase
     public function testMarshallingReferenceElementOrdering(): void
     {
         $reference = new Reference(
+            new DigestMethod(Constants::DIGEST_SHA256),
+            new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             new Transforms(
                 [
                     new Transform(Constants::XMLDSIG_ENVELOPED),
                     new Transform(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
                 ]
             ),
-            new DigestMethod(Constants::DIGEST_SHA256),
-            new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             'abc123',
             'someType',
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
         );
 
         $referenceElement = $reference->toXML();
+        $children = $referenceElement->childNodes;
 
-        $this->assertEquals('ds:Transforms', $referenceElement[0]->tagName);
-        $this->assertEquals('ds:DigestMethod', $referenceElement[1]->tagName);
-        $this->assertEquals('ds:DigestValue', $referenceElement[2]->tagName);
+        $this->assertEquals('ds:Transforms', $children[0]->tagName);
+        $this->assertEquals('ds:DigestMethod', $children[1]->tagName);
+        $this->assertEquals('ds:DigestValue', $children[2]->tagName);
     }
 
 
@@ -101,20 +103,19 @@ final class ReferenceTest extends TestCase
         $this->assertEquals('someType', $reference->getType());
         $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $reference->getURI());
 
-        $transforms = $reference->getTransforms();
-        $this->assertCount(1, $transforms);
+        $digestMethod = $reference->getDigestMethod();
+        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod->getAlgorithm());
 
+        $digestValue = $reference->getDigestValue();
+        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getDigest());
+
+
+        $transforms = $reference->getTransforms();
         $transform = $transforms->getTransform();
         $this->assertCount(2, $transform);
 
         $this->assertEquals(Constants::XMLDSIG_ENVELOPED, $transform[0]->getAlgorithm());
         $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $transform[1]->getAlgorithm());
-
-        $digestMethod = $transforms->getDigestMethod();
-        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod[0]->getAlgorithm());
-
-        $digestValue = $transforms->getDigestValue();
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue[0]->getDigest());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

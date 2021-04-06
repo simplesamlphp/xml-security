@@ -55,7 +55,7 @@ final class Reference extends AbstractDsElement
         $this->setTransforms($transforms);
         $this->setDigestMethod($digestMethod);
         $this->setDigestValue($digestValue);
-        $this->setId($ID);
+        $this->setId($Id);
         $this->setType($Type);
         $this->setURI($URI);
     }
@@ -188,13 +188,13 @@ final class Reference extends AbstractDsElement
         $URI = self::getAttribute($xml, 'URI', null);
 
         $transforms = Transforms::getChildrenOfClass($xml);
-        Assert::maxCount(1, $transforms, 'A <ds:Reference> may contain just on <ds:Transforms>.');
+        Assert::maxCount($transforms, 1, 'A <ds:Reference> may contain just on <ds:Transforms>.');
 
         $digestMethod = DigestMethod::getChildrenOfClass($xml);
-        Assert::count(1, $digestMethod, 'A <ds:Reference> must contain a <ds:DigestMethod>.');
+        Assert::count($digestMethod, 1, 'A <ds:Reference> must contain a <ds:DigestMethod>.');
 
         $digestValue = DigestValue::getChildrenOfClass($xml);
-        Assert::count(1, $digestValue, 'A <ds:Reference> must contain a <ds:DigestValue>.');
+        Assert::count($digestValue, 1, 'A <ds:Reference> must contain a <ds:DigestValue>.');
 
         return new self(
             array_pop($digestMethod),

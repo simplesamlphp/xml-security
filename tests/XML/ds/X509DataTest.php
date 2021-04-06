@@ -105,7 +105,7 @@ final class X509DataTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($X509data)
+            strval($x509data)
         );
     }
 
