@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
@@ -25,9 +27,6 @@ final class KeyReferenceTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-    /** @var \SimpleSAML\XML\Chunk $document */
-    private Chunk $reference;
-
 
     /**
      */
@@ -38,19 +37,6 @@ final class KeyReferenceTest extends TestCase
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_KeyReference.xml'
         );
-
-        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
-
-        $this->reference = new Chunk(DOMDocumentFactory::fromString(<<<XML
-  <ds:Transforms xmlns:ds="{$dsNamespace}">
-    <ds:Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116">
-      <ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-        self::xenc:EncryptedKey[@Id="example1"]
-      </ds:XPath>
-    </ds:Transform>
-  </ds:Transforms>
-XML
-        )->documentElement);
     }
 
 
@@ -61,13 +47,23 @@ XML
      */
     public function testMarshalling(): void
     {
-        $keyReference = new KeyReference('#Encrypted_KEY_ID', [$this->reference]);
-
-        $this->assertEquals('#Encrypted_KEY_ID', $keyReference->getURI());
-
-        $references = $keyReference->getElements();
-        $this->assertCount(1, $references);
-        $this->assertEquals($this->reference, $references[0]);
+        $keyReference = new KeyReference(
+            '#Encrypted_KEY_ID',
+            [
+                new Transforms([
+                    new Transform(
+                        'http://www.w3.org/TR/1999/REC-xpath-19991116',
+                        [
+                            new Chunk(
+                                DOMDocumentFactory::fromString(
+                                    '<ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:EncryptedKey[@Id="example1"]</ds:XPath>'
+                                )->documentElement
+                            )
+                        ]
+                    )
+                ])
+            ]
+        );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -89,7 +85,6 @@ XML
 
         $references = $keyReference->getElements();
         $this->assertCount(1, $references);
-        $this->assertEquals($this->reference, $references[0]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
