@@ -1,0 +1,1 @@
+<ds:X509SerialNumber xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:integer">123456</ds:X509SerialNumber>
