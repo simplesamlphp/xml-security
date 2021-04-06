@@ -82,11 +82,11 @@ final class SignedInfoTest extends TestCase
         );
 
         $references = $signedInfo->getReferences();
-        $this->assertCount(1, $signedInfo);
+        $this->assertCount(1, $references);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($transform)
+            strval($signedInfo)
         );
     }
 }
