@@ -20,7 +20,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\KeyInfoTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\KeyInfoTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\KeyInfo

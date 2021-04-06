@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\SignatureMethodTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureMethodTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod

@@ -21,7 +21,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\X509DataTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509DataTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\X509Data

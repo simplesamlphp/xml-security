@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\DigestValueTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\DigestValueTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\DigestValue

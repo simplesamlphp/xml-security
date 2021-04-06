@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\xenc\CipherDataTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherDataTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\CipherData

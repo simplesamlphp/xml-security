@@ -14,7 +14,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\X509DigestTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509DigestTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\X509Digest

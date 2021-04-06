@@ -19,7 +19,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKeyTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\EncryptedKeyTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType

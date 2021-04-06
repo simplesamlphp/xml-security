@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\xenc\ReferenceListTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\ReferenceListTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList

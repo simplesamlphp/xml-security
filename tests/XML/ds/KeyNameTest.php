@@ -10,7 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\KeyNameTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\KeyNameTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\KeyName

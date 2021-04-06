@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\DigestMethodTest
+ * Class \SimpleSAML\XMLSecurity\XML\Test\ds\DigestMethodTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\DigestMethod

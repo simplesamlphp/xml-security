@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\X509SubjectNameTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509SubjectNameTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName

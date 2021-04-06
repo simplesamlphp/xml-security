@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethodTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\CanonicalizationMethodTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod

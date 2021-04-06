@@ -13,7 +13,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\xenc\CipherReferenceTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherReferenceTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference

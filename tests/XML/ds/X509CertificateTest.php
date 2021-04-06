@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\X509CertificateTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509CertificateTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\XML\ds\X509Certificate

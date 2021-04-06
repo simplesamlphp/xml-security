@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +14,7 @@ use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\TransformTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\Transform
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement

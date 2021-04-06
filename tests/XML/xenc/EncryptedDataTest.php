@@ -17,7 +17,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\xenc\EncryptedDataTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\EncryptedDataTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType

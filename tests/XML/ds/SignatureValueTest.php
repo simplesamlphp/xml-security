@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\XMLSecurity\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
@@ -10,7 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 
 /**
- * Class \SimpleSAML\XMLSecurity\XML\ds\SignatureValueTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureValueTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  * @covers \SimpleSAML\XMLSecurity\\XML\ds\SignatureValue
