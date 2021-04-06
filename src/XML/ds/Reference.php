@@ -169,7 +169,7 @@ final class Reference extends AbstractDsElement
     }
 
 
-   /**
+    /**
      * Convert XML into a Reference element
      *
      * @param \DOMElement $xml The XML element we should load
