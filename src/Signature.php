@@ -27,7 +27,9 @@ use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
 use function array_key_exists;
