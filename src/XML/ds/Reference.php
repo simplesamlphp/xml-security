@@ -188,7 +188,7 @@ final class Reference extends AbstractDsElement
         $URI = self::getAttribute($xml, 'URI', null);
 
         $transforms = Transforms::getChildrenOfClass($xml);
-        Assert::maxCount($transforms, 1, 'A <ds:Reference> may contain just on <ds:Transforms>.');
+        Assert::maxCount($transforms, 1, 'A <ds:Reference> may contain just one <ds:Transforms>.');
 
         $digestMethod = DigestMethod::getChildrenOfClass($xml);
         Assert::count($digestMethod, 1, 'A <ds:Reference> must contain a <ds:DigestMethod>.');
