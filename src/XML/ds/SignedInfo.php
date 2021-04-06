@@ -47,7 +47,7 @@ final class SignedInfo extends AbstractDsElement
         CanonicalizationMethod $canonicalizationMethod,
         SignatureMethod $signatureMethod,
         array $references,
-        ?string $id
+        ?string $Id
     ) {
         $this->setCanonicalizationMethod($canonicalizationMethod);
         $this->setSignatureMethod($signatureMethod);
@@ -142,12 +142,7 @@ final class SignedInfo extends AbstractDsElement
      */
     private function setId(string $Id): void
     {
-        Assert::allIsInstanceOfAny(
-            $data,
-            [Chunk::class, X509Certificate::class, X509Digest::class, X509SubjectName::class]
-        );
-
-        $this->data = $data;
+        $this->Id = $Id;
     }
 
 
@@ -176,7 +171,12 @@ final class SignedInfo extends AbstractDsElement
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount($references, 1, 'A ds:SignedInfo element must contain at least one ds:Reference');
 
-        return new self($canonicalizationMethod, $signatureMethod, $references, $Id);
+        return new self(
+            array_pop($canonicalizationMethod),
+            array_pop($signatureMethod),
+            $references,
+            $Id
+        );
     }
 
 
@@ -194,8 +194,8 @@ final class SignedInfo extends AbstractDsElement
             $e->setAttribute('Id', $this->Id);
         }
 
-        $this->canonicalizationMethod($e);
-        $this->signatureMethod($e);
+        $this->canonicalizationMethod->toXML($e);
+        $this->signatureMethod->toXML($e);
 
         foreach ($this->references as $ref) {
             $ref->toXML($e);
