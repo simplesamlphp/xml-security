@@ -116,9 +116,9 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->Id;
     }
@@ -134,9 +134,9 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->Type;
     }
@@ -152,9 +152,9 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getURI(): string
+    public function getURI(): ?string
     {
         return $this->URI;
     }
@@ -216,9 +216,15 @@ final class Reference extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Id', $this->Id);
-        $e->setAttribute('Type', $this->Type);
-        $e->setAttribute('URI', $this->URI);
+        if ($this->Id !== null) {
+            $e->setAttribute('Id', $this->Id);
+        }
+        if ($this->Type !== null) {
+            $e->setAttribute('Type', $this->Type);
+        }
+        if ($this->URI !== null) {
+            $e->setAttribute('URI', $this->URI);
+        }
 
         if ($this->transforms !== null) {
             $this->transforms->toXML($e);
