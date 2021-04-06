@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
@@ -53,18 +52,16 @@ final class ReferenceListTest extends TestCase
                 new DataReference(
                     '#Encrypted_DATA_ID',
                     [
-                        new Transforms([
-                            new Transform(
-                                'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                                [
-                                    new Chunk(
-                                        DOMDocumentFactory::fromString(
-                                            '<ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:EncryptedData[@Id="example1"]</ds:XPath>'
-                                        )->documentElement
-                                    )
-                                ]
-                            )
-                        ])
+                        Transforms::fromXML(
+                            DOMDocumentFactory::fromString(<<<XML
+    <ds:Transforms xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ds:Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116">
+        <ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:EncryptedData[@Id="example1"]</ds:XPath>
+      </ds:Transform>
+    </ds:Transforms>
+XML
+                            )->documentElement
+                        )
                     ]
                 ),
             ],
@@ -72,18 +69,16 @@ final class ReferenceListTest extends TestCase
                 new KeyReference(
                     '#Encrypted_KEY_ID',
                     [
-                        new Transforms([
-                            new Transform(
-                                'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                                [
-                                    new Chunk(
-                                        DOMDocumentFactory::fromString(
-                                            '<ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:EncryptedKey[@Id="example1"]</ds:XPath>'
-                                        )->documentElement
-                                    )
-                                ]
-                            )
-                        ])
+                        Transforms::fromXML(
+                            DOMDocumentFactory::fromString(<<<XML
+    <ds:Transforms xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ds:Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116">
+        <ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:EncryptedKey[@Id="example1"]</ds:XPath>
+      </ds:Transform>
+    </ds:Transforms>
+XML
+                            )->documentElement
+                        )
                     ]
                 )
             ]
