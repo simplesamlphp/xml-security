@@ -52,8 +52,8 @@ final class X509Certificate extends AbstractDsElement
      */
     private function setCertificate(string $certificate): void
     {
-        Assert::notEmpty($digest, 'DigestValue cannot be empty');
-        Assert::stringPlausibleBase64($digest, 'ds:X509Certificate is not a valid Base64 encoded string');
+        Assert::notEmpty($certificate, 'ds:X509Certificate cannot be empty');
+        Assert::stringPlausibleBase64($certificate, 'ds:X509Certificate is not a valid Base64 encoded string');
 
         $this->certificate = $certificate;
     }
