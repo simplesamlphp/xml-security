@@ -9,245 +9,233 @@ use Exception;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Utils as XMLUtils;
-use SimpleSAML\XMLSecurity\Utils\Certificate;
-use SimpleSAML\XMLSecurity\Utils\Security;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
-use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
 /**
- * Wrapper class for XML signatures
+ * Class representing a ds:Signature element.
  *
  * @package simplesamlphp/xml-security
  */
 final class Signature extends AbstractDsElement
 {
-    /** @var string */
-    protected string $algorithm;
-
-    /** @var string[] */
-    protected array $certificates = [];
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\SignedInfo */
+    protected SignedInfo $signedInfo;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\SignatureValue */
-    protected SignatureValue $value;
+    protected SignatureValue $signatureValue;
 
-    /** @var \SimpleSAML\XMLSecurity\XMLSecurityKey|null */
-    protected ?XMLSecurityKey $key;
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo */
+    protected ?KeyInfo $keyInfo;
 
-    /** @var \SimpleSAML\XMLSecurity\XMLSecurityDSig */
-    protected XMLSecurityDSig $signer;
+    /** @var \SimpleSAML\XML\Chunk[] */
+    protected array $objects;
+
+    /** @var string|null */
+    protected ?string $Id;
 
 
     /**
      * Signature constructor.
      *
-     * @param string $algorithm
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $value
-     * @param string[] $certificates
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey|null $key
-     *
-     * @throws \Exception
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
+     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
+     * @param \SimpleSAML\XML\Chunk[] $objects
+     * @param string|null $Id
      */
     public function __construct(
-        string $algorithm,
-        SignatureValue $value,
-        array $certificates = [],
-        ?XMLSecurityKey $key = null
+        SignedInfo $signedInfo,
+        SignatureValue $signatureValue,
+        ?KeyInfo $keyInfo,
+        array $objects = [],
+        ?string $Id = null
     ) {
-        $this->setAlgorithm($algorithm);
-        $this->setCertificates($certificates);
-        $this->setKey($key);
-
-        $this->signer = new XMLSecurityDSig();
-        $this->signer->idKeys[] = 'ID';
+        $this->setSignedInfo($signedInfo);
+        $this->setSignatureValue($signatureValue);
+        $this->setKeyInfo($keyInfo);
+        $this->setObjects($objects);
+        $this->setId($Id);
     }
 
 
     /**
-     * Get the algorithm used by this signature.
+     * Get the Id used for this signature.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAlgorithm(): string
+    public function getId(): ?string
     {
-        return $this->algorithm;
+        return $this->Id;
     }
 
 
     /**
-     * Set the algorithm used by this signature.
+     * Set the Id used for this signature.
      *
-     * @param string $algorithm
+     * @param string|null $Id
      */
-    protected function setAlgorithm(string $algorithm): void
+    protected function setId(?string $Id): void
     {
-        Assert::notWhitespaceOnly($algorithm, 'Signature algorithm cannot be empty');
-        $this->algorithm = $algorithm;
+        $this->Id = $Id;
     }
 
 
     /**
-     * Get the array of certificates attached to this signature.
-     *
-     * @return string[]
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo
      */
-    public function getCertificates(): array
+    protected function setSignedInfo(SignedInfo $signedInfo): void
     {
-        return $this->certificates;
+        $this->signedInfo = $signedInfo;
     }
 
 
     /**
-     * Set the array of certificates (in PEM format) attached to this signature.
-     *
-     * @param string[] $certificates
+     * @return \SimpleSAML\XMLSecurity\XML\ds\SignedInfo
      */
-    protected function setCertificates(array $certificates): void
+    public function getSignedInfo(): SignedInfo
     {
-        Assert::allStringNotEmpty($certificates, 'Cannot add empty certificates.');
-        Assert::allTrue(
-            array_map([Certificate::class, 'hasValidStructure'], $certificates),
-            'One or more certificates have an invalid format.'
-        );
-        $this->certificates = $certificates;
+        return $this->signedInfo;
     }
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey|null $key
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
      */
-    protected function setKey(?XMLSecurityKey $key): void
+    protected function setSignatureValue(SignatureValue $signatureValue): void
     {
-        if ($key !== null) {
-            Assert::eq($this->algorithm, $key->getAlgorithm(), 'Key type does not match signature algorithm.');
-        }
-        $this->key = $key;
+        $this->signatureValue = $signatureValue;
     }
 
 
     /**
-     * Get the SignatureValue corresponding to this signature.
-     *
      * @return \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
      */
     public function getSignatureValue(): SignatureValue
     {
-        return $this->value;
+        return $this->signatureValue;
     }
 
 
     /**
-     * Set the SignatureValue.
+     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null
+     */
+    protected function setKeyInfo(?KeyInfo $keyInfo): void
+    {
+        $this->keyInfo = $keyInfo;
+    }
+
+
+    /**
+     * @return \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null
+     */
+    public function getKeyInfo(): ?KeyInfo
+    {
+        return $this->keyInfo;
+    }
+
+
+    /**
+     * Get the array of ds:Object elements attached to this signature.
      *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $value
+     * @return \SimpleSAML\XML\Chunk[]
      */
-    protected function setSignatureValue(SignatureValue $value): void
+    public function getObjects(): array
     {
-        $this->value = $value;
+        return $this->objects;
     }
 
 
     /**
-     * @return XMLSecurityDSig
+     * Set the array of ds:Object elements attached to this signature.
+     *
+     * @param \SimpleSAML\XML\Chunk[] $objects
      */
-    public function getSigner(): XMLSecurityDSig
+    protected function setObjects(array $objects): void
     {
-        return $this->signer;
+        Assert::allInstanceOf($objects, Chunk::class);
+
+        foreach ($objects as $o) {
+            Assert::true(
+                $o->getNamespaceURI() === Constants::NS_XDSIG
+                && $o->getLocalName() === 'Object',
+                'Only elements of type ds:Object are allowed.'
+            );
+        }
+
+        $this->objects = $objects;
     }
 
 
     /**
+     * Convert XML into a Signature element
+     *
      * @param \DOMElement $xml
-     *
      * @return \SimpleSAML\XML\AbstractXMLElement
-     * @throws \Exception
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingAttributeException
-     *   If the supplied signature is missing an Algorithm attribute
      */
     public static function fromXML(DOMElement $xml): object
     {
         Assert::same($xml->localName, 'Signature', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Signature::NS, InvalidDOMElementException::class);
 
-        $parent = $xml->parentNode;
+        $Id = self::getAttribute($xml, 'Id', null);
 
-        $sigMethod = XMLUtils::xpQuery($xml, './ds:SignedInfo/ds:SignatureMethod');
-        Assert::notEmpty($sigMethod, 'Missing ds:SignatureMethod element.');
-        /** @var \DOMElement $sigMethod */
-        $sigMethod = $sigMethod[0];
-        Assert::true(
-            $sigMethod->hasAttribute('Algorithm'),
-            'Missing "Algorithm" attribute on ds:SignatureMethod element.'
-        );
+        $signedInfo = SignedInfo::getChildrenOfClass($xml);
+        Assert::count($signedInfo, 1, 'ds:Signature needs exactly one ds:SignedInfo element.');
 
-        // now we extract all available X509 certificates in the signature element
-        $certificates = [];
-        foreach (XMLUtils::xpQuery($xml, './ds:KeyInfo/ds:X509Data/ds:X509Certificate') as $certNode) {
-            $certificates[] = Certificate::convertToCertificate(
-                str_replace(["\r", "\n", "\t", ' '], '', trim($certNode->textContent))
-            );
-        }
+        $signatureValue = SignatureValue::getChildrenOfClass($xml);
+        Assert::count($signatureValue, 1, 'ds:Signature needs exactly one ds:SignatureValue element.');
 
-        $value = SignatureValue::getChildrenOfClass($xml);
-        Assert::count($value, 1, 'ds:Signature needs exactly one ds:SignatureValue');
+        $keyInfo = KeyInfo::getChildrenOfClass($xml);
+        Assert::maxCount($keyInfo, 1, 'ds:Signature can hold a maximum of one ds:KeyInfo element.');
 
-        $signature = new self(self::getAttribute($sigMethod, 'Algorithm'), $value[0], $certificates);
-
-        $signature->signer->sigNode = $xml;
-
-        // canonicalize the XMLDSig SignedInfo element in the message
-        $signature->signer->canonicalizeSignedInfo();
-
-        // validate referenced xml nodes
-        if (!$signature->signer->validateReference()) {
-            throw new Exception('Digest validation failed.');
-        }
-
-        // check that $root is one of the signed nodes
-        $rootSigned = false;
-        /** @var \DOMNode $signedNode */
-        foreach ($signature->signer->getValidatedNodes() as $signedNode) {
-            if ($signedNode->isSameNode($parent)) {
-                $rootSigned = true;
-                break;
-            } elseif ($parent->parentNode instanceof \DOMDocument && $signedNode->isSameNode($parent->ownerDocument)) {
-                // $parent is the root element of a signed document
-                $rootSigned = true;
-                break;
+        $objects = [];
+        foreach ($xml->childNodes as $o) {
+            if (
+                $o instanceof DOMElement
+                && $o->namespaceURI === Constants::NS_XDSIG
+                && $o->localName === 'Object'
+            ) {
+                $objects[] = Chunk::fromXML($o);
             }
         }
-        if (!$rootSigned) {
-            throw new Exception('The parent element is not signed.');
-        }
 
-        return $signature;
+        return new self(
+            array_pop($signedInfo),
+            array_pop($signatureValue),
+            empty($keyInfo) ? null : array_pop($keyInfo),
+            $objects,
+            $Id
+        );
     }
 
 
     /**
-     * @param \DOMElement|null $parent
+     * Convert this Signature element to XML.
      *
+     * @param \DOMElement|null $parent The element we should append this Signature element to.
      * @return \DOMElement
-     *
-     * @psalm-suppress MoreSpecificReturnType
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        Assert::notNull($parent, 'Cannot create a Signature without anything to sign.');
-        Assert::notNull($this->key, 'Cannot sign without a signing key.');
+        $e->instantiateParentElement($parent);
 
-        // find first child element
-        $childElements = XMLUtils::xpQuery($parent, './*');
-        $firstChildElement = null;
-        if (count($childElements) > 0) {
-            $firstChildElement = $childElements[0];
+        if ($this->Id !== null) {
+            $e->setAttribute('Id', $this->Id);
         }
 
-        Security::insertSignature($this->key, $this->certificates, $parent, $firstChildElement);
+        $this->signedInfo->toXML($e);
+        $this->signatureValue->toXML($e);
 
-        /** @psalm-suppress LessSpecificReturnStatement */
-        return XMLUtils::xpQuery($parent, './ds:Signature')[0];
+        if ($this->keyInfo !== null) {
+            $this->keyInfo->toXML($e);
+        }
+
+        foreach ($this->objects as $o) {
+            $o->toXML($e);
+        }
+
+        return $e;
     }
 }
