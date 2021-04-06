@@ -140,7 +140,7 @@ final class SignedInfo extends AbstractDsElement
      *
      * @param string|null $Id
      */
-    private function setId(string $Id): void
+    private function setId(?string $Id): void
     {
         $this->Id = $Id;
     }
