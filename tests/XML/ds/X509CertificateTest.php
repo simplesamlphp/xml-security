@@ -65,9 +65,6 @@ final class X509CertificateTest extends TestCase
     {
         $x509cert = new X509Certificate($this->certificate);
 
-        $x509certElement = $x509cert->toXML();
-        $this->assertEquals($this->certificate, $x509certElement->textContent);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($x509cert)

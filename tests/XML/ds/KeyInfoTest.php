@@ -95,16 +95,6 @@ final class KeyInfoTest extends TestCase
             'abc123'
         );
 
-        $keyInfoElement = $keyInfo->toXML();
-        $this->assertCount(4, $keyInfoElement->childNodes);
-        $this->assertEquals('abc123', $keyInfoElement->getAttribute('Id'));
-
-        $keyNameElement = XMLUtils::xpQuery($keyInfoElement, './ds:KeyName');
-        $this->assertCount(1, $keyNameElement);
-
-        $x509DataElement = XMLUtils::xpQuery($keyInfoElement, './ds:X509Data');
-        $this->assertCount(1, $x509DataElement);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($keyInfo)

@@ -49,16 +49,6 @@ final class TransformTest extends TestCase
             ],
         );
 
-        $document = DOMDocumentFactory::fromString('<root />');
-        /** @psalm-var \DOMElement $document->firstChild */
-        $transformElement = $transform->toXML($document->firstChild);
-
-        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transformElement->getAttribute('Algorithm'));
-        $this->assertCount(1, $transformElement->childNodes);
-
-        $this->assertEquals('ds:XPath', $transformElement->childNodes[0]->localName);
-        $this->assertEquals('count(//. | //@* | //namespace::*)', $transformElement->childNodes[0]->textContent);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($transform)
@@ -82,20 +72,5 @@ final class TransformTest extends TestCase
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($transform)
         );
-    }
-
-
-    /**
-     * Adding an empty Transform element should yield an empty element.
-     */
-    public function testMarshallingEmptyElement(): void
-    {
-        $ds_ns = Transform::NS;
-        $transform = new Transform('http://www.w3.org/TR/1999/REC-xpath-19991116', []);
-        $this->assertEquals(
-            "<ds:Transform xmlns:ds=\"$ds_ns\" Algorithm=\"http://www.w3.org/TR/1999/REC-xpath-19991116\"/>",
-            strval($transform)
-        );
-        $this->assertTrue($transform->isEmptyElement());
     }
 }

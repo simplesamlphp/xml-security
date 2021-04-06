@@ -76,32 +76,6 @@ final class EncryptedKeyTest extends TestCase
             new ReferenceList([new DataReference('#Encrypted_DATA_ID')])
         );
 
-        $cipherData = $encryptedKey->getCipherData();
-        $this->assertEquals('PzA5X...', $cipherData->getCipherValue());
-
-        $encryptionMethod = $encryptedKey->getEncryptionMethod();
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#rsa-1_5', $encryptionMethod->getAlgorithm());
-
-        $keyInfo = $encryptedKey->getKeyInfo();
-        $info = $keyInfo->getInfo();
-        $this->assertCount(1, $info);
-
-        $encKey = $info[0];
-        $this->assertInstanceOf(EncryptedKey::class, $encKey);
-
-        $referenceList = $encryptedKey->getReferenceList();
-        $this->assertEmpty($referenceList->getKeyReferences());
-        $dataRefs = $referenceList->getDataReferences();
-        $this->assertCount(1, $dataRefs);
-        $this->assertEquals('#Encrypted_DATA_ID', $dataRefs[0]->getURI());
-
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#Element', $encryptedKey->getType());
-        $this->assertEquals('someEncoding', $encryptedKey->getEncoding());
-        $this->assertEquals('text/plain', $encryptedKey->getMimeType());
-        $this->assertEquals('Encrypted_KEY_ID', $encryptedKey->getID());
-        $this->assertEquals('some_ENTITY_ID', $encryptedKey->getRecipient());
-        $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName());
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedKey)

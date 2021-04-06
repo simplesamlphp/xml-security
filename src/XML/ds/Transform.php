@@ -84,17 +84,6 @@ final class Transform extends AbstractDsElement
 
 
     /**
-     * Test if an object, at the state it's in, would produce an empty XML-element
-     *
-     * @return bool
-     */
-    public function isEmptyElement(): bool
-    {
-        return empty($this->elements);
-    }
-
-
-    /**
      * Convert XML into a Transform element
      *
      * @param \DOMElement $xml The XML element we should load

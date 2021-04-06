@@ -52,11 +52,6 @@ final class EncryptionMethodTest extends TestCase
         $chunk = Chunk::fromXML($chunkXml->documentElement);
 
         $em = new EncryptionMethod($alg, 10, '9lWu3Q==', [$chunk]);
-        $this->assertEquals($alg, $em->getAlgorithm());
-        $this->assertEquals(10, $em->getKeySize());
-        $this->assertEquals('9lWu3Q==', $em->getOAEPParams());
-        $this->assertCount(1, $em->getChildren());
-        $this->assertInstanceOf(Chunk::class, $em->getChildren()[0]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

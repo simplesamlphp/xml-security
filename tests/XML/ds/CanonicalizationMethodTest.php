@@ -41,9 +41,6 @@ final class CanonicalizationMethodTest extends TestCase
     {
         $canonicalizationMethod = new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
 
-        $canonicalizationMethodElement = $canonicalizationMethod->toXML();
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethodElement->getAttribute('Algorithm'));
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($canonicalizationMethod)
@@ -55,8 +52,8 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $CanonicalizationMethod = CanonicalizationMethod::fromXML($this->xmlRepresentation->documentElement);
+        $canonicalizationMethod = CanonicalizationMethod::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $CanonicalizationMethod->getAlgorithm());
+        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethod->getAlgorithm());
     }
 }
