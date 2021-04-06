@@ -15,10 +15,10 @@ use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 /**
- * Class \SAML2\XML\ds\TransformsTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformsTest
  *
- * @covers \SimpleSAML\SAML2\XML\ds\Transforms
- * @covers \SimpleSAML\SAML2\XML\ds\AbstractDsElement
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\Transforms
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
  *
  * @package simplesamlphp/xml-security
  */
