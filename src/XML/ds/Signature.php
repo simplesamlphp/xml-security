@@ -221,7 +221,7 @@ final class Signature extends AbstractDsElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        $e->instantiateParentElement($parent);
+        $e = $this->instantiateParentElement($parent);
 
         if ($this->Id !== null) {
             $e->setAttribute('Id', $this->Id);
