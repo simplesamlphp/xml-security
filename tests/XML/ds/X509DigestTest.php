@@ -68,7 +68,7 @@ final class X509DigestTest extends TestCase
     {
         $x509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals($this->digest, $x509digest->getDigest());
+        $this->assertEquals($this->digest, $x509digest->getContent());
         $this->assertEquals(Constants::DIGEST_SHA256, $x509digest->getAlgorithm());
     }
 }

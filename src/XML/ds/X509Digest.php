@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
  * Class representing a ds:X509Digest element.
@@ -17,12 +18,10 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class X509Digest extends AbstractDsElement
 {
-    /**
-     * The digest.
-     *
-     * @var string
-     */
-    protected string $digest;
+    use XMLStringElementTrait {
+        __construct as __parentConstruct;
+        toXML as parentToXML;
+    }
 
 
     /**
@@ -41,33 +40,9 @@ final class X509Digest extends AbstractDsElement
      */
     public function __construct(string $digest, string $algorithm)
     {
-        $this->setDigest($digest);
+        $this->__parentConstruct($digest);
+
         $this->setAlgorithm($algorithm);
-    }
-
-
-    /**
-     * Collect the value of the digest-property
-     *
-     * @return string
-     */
-    public function getDigest(): string
-    {
-        return $this->digest;
-    }
-
-
-    /**
-     * Set the value of the digest-property
-     *
-     * @param string $digest
-     */
-    private function setDigest(string $digest): void
-    {
-        Assert::notEmpty($digest, 'X509Digest cannot be empty');
-        Assert::stringPlausibleBase64($digest, 'ds:X509Digest is not a valid Base64 encoded string');
-
-        $this->digest = $digest;
     }
 
 
@@ -108,6 +83,20 @@ final class X509Digest extends AbstractDsElement
 
 
     /**
+     * Validate the content of the element.
+     *
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
+     */
+    private function validateContent(string $content): void
+    {
+        Assert::notEmpty($content, 'X509Digest cannot be empty');
+        Assert::stringPlausibleBase64($content, 'ds:X509Digest is not a valid Base64 encoded string');
+    }
+
+
+    /**
      * Convert XML into a X509Digest
      *
      * @param \DOMElement $xml The XML element we should load
@@ -123,10 +112,7 @@ final class X509Digest extends AbstractDsElement
 
         $algorithm = self::getAttribute($xml, 'Algorithm');
 
-        $digest = $xml->textContent;
-        Assert::stringPlausibleBase64($digest);
-
-        return new self($digest, $algorithm);
+        return new self($xml->textContent, $algorithm);
     }
 
 
@@ -138,9 +124,7 @@ final class X509Digest extends AbstractDsElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        $e = $this->instantiateParentElement($parent);
-
-        $e->textContent = $this->digest;
+        $e = $this->parentToXML($parent);
         $e->setAttribute('Algorithm', $this->algorithm);
 
         return $e;

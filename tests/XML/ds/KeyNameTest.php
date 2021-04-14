@@ -52,6 +52,6 @@ final class KeyNameTest extends TestCase
     {
         $keyName = KeyName::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('testkey', $keyName->getName());
+        $this->assertEquals('testkey', $keyName->getContent());
     }
 }

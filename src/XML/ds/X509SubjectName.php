@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
  * Class representing a ds:X509SubjectName element.
@@ -15,46 +16,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class X509SubjectName extends AbstractDsElement
 {
-    /**
-     * The subject name.
-     *
-     * @var string
-     */
-    protected string $name;
-
-
-    /**
-     * Initialize a X509SubjectName element.
-     *
-     * @param string $name
-     */
-    public function __construct(string $name)
-    {
-        $this->setName($name);
-    }
-
-
-    /**
-     * Collect the value of the name-property
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-
-    /**
-     * Set the value of the name-property
-     *
-     * @param string $name
-     */
-    private function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
+    use XMLStringElementTrait;
 
     /**
      * Convert XML into a X509SubjectName
@@ -71,20 +33,5 @@ final class X509SubjectName extends AbstractDsElement
         Assert::same($xml->namespaceURI, X509SubjectName::NS, InvalidDOMElementException::class);
 
         return new self($xml->textContent);
-    }
-
-
-    /**
-     * Convert this X509SubjectName element to XML.
-     *
-     * @param \DOMElement|null $parent The element we should append this X509SubjectName element to.
-     * @return \DOMElement
-     */
-    public function toXML(DOMElement $parent = null): DOMElement
-    {
-        $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->name;
-
-        return $e;
     }
 }

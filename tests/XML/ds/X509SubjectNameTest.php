@@ -54,6 +54,6 @@ final class X509SubjectNameTest extends TestCase
     {
         $subjectName = X509SubjectName::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('some name', $subjectName->getName());
+        $this->assertEquals('some name', $subjectName->getContent());
     }
 }

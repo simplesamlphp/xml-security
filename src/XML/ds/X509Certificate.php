@@ -7,6 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
+
 
 /**
  * Class representing a ds:X509Certificate element.
@@ -15,47 +17,20 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class X509Certificate extends AbstractDsElement
 {
-    /**
-     * The base64-encoded certificate.
-     *
-     * @var string
-     */
-    protected string $certificate;
+    use XMLStringElementTrait;
 
 
     /**
-     * Initialize an X509Certificate element.
+     * Validate the content of the element.
      *
-     * @param string $certificate
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
      */
-    public function __construct(string $certificate)
+    private function validateContent(string $content): void
     {
-        $this->setCertificate($certificate);
-    }
-
-
-    /**
-     * Collect the value of the certificate-property
-     *
-     * @return string
-     */
-    public function getCertificate(): string
-    {
-        return $this->certificate;
-    }
-
-
-    /**
-     * Set the value of the certificate-property
-     *
-     * @param string $certificate
-     */
-    private function setCertificate(string $certificate): void
-    {
-        Assert::notEmpty($certificate, 'ds:X509Certificate cannot be empty');
-        Assert::stringPlausibleBase64($certificate, 'ds:X509Certificate is not a valid Base64 encoded string');
-
-        $this->certificate = $certificate;
+        Assert::notEmpty($content, 'ds:X509Certificate cannot be empty');
+        Assert::stringPlausibleBase64($content, 'ds:X509Certificate is not a valid Base64 encoded string');
     }
 
 
@@ -74,20 +49,5 @@ final class X509Certificate extends AbstractDsElement
         Assert::same($xml->namespaceURI, X509Certificate::NS, InvalidDOMElementException::class);
 
         return new self($xml->textContent);
-    }
-
-
-    /**
-     * Convert this X509Certificate element to XML.
-     *
-     * @param \DOMElement|null $parent The element we should append this X509Certificate element to.
-     * @return \DOMElement
-     */
-    public function toXML(DOMElement $parent = null): DOMElement
-    {
-        $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->certificate;
-
-        return $e;
     }
 }
