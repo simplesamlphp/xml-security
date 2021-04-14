@@ -15,14 +15,14 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class Transforms extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\Transform[] */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transform[] */
     protected array $transform;
 
 
     /**
      * Initialize a ds:Transforms
      *
-     * @param \SimpleSAML\XMLSecurity\Transform[] $transform
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transform[] $transform
      */
     public function __construct(array $transform)
     {
@@ -31,7 +31,7 @@ final class Transforms extends AbstractDsElement
 
 
     /**
-     * @return \SimpleSAML\XMLSecurity\Transform[]
+     * @return \SimpleSAML\XMLSecurity\XML\ds\Transform[]
      */
     public function getTransform(): array
     {
@@ -40,7 +40,7 @@ final class Transforms extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\Transform[] $transform
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transform[] $transform
      */
     protected function setTransform(array $transform): void
     {
