@@ -77,7 +77,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testMarshallingInvalidBase64(): void
     {
-        $certificate = str_replace(substr($this->certificate, 1), '', 1);
+        $certificate = str_replace(substr($this->certificate, 1), '', $this->certificate);
         $this->expectException(AssertionFailedException::class);
         new X509Certificate($certificate);
     }
