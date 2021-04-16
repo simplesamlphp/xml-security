@@ -84,7 +84,7 @@ final class X509Digest extends AbstractDsElement
      * @throws \Exception on failure
      * @return void
      */
-    private function validateContent(string $content): void
+    protected function validateContent(string $content): void
     {
         Assert::notEmpty($content, 'X509Digest cannot be empty');
         Assert::stringPlausibleBase64($content, 'ds:X509Digest is not a valid Base64 encoded string');

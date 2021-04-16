@@ -26,7 +26,7 @@ final class SignatureValue extends AbstractDsElement
      * @throws \Exception on failure
      * @return void
      */
-    private function validateContent(string $content): void
+    protected function validateContent(string $content): void
     {
         Assert::notEmpty($content, 'SignatureValue cannot be empty');
         Assert::stringPlausibleBase64($content, 'SignatureValue is not a valid Base64 encoded string');

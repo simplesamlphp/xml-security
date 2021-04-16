@@ -27,7 +27,7 @@ final class X509Certificate extends AbstractDsElement
      * @throws \Exception on failure
      * @return void
      */
-    private function validateContent(string $content): void
+    protected function validateContent(string $content): void
     {
         Assert::notEmpty($content, 'ds:X509Certificate cannot be empty');
         Assert::stringPlausibleBase64($content, 'ds:X509Certificate is not a valid Base64 encoded string');

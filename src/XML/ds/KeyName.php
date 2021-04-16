@@ -27,7 +27,7 @@ final class KeyName extends AbstractDsElement
      * @throws \Exception on failure
      * @return void
      */
-    private function validateContent(string $content): void
+    protected function validateContent(string $content): void
     {
         /**
          * Perform no validation by default.
