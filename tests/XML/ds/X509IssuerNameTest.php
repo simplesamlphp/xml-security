@@ -51,21 +51,10 @@ final class X509IssuerNameTest extends TestCase
 
     /**
      */
-    public function testMarshallingEmptyThrowsException(): void
-    {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage('ds:X509IssuerName cannot be empty.');
-
-        new X509IssuerName('');
-    }
-
-
-    /**
-     */
     public function testUnmarshalling(): void
     {
         $issuerName = X509IssuerName::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('some name', $issuerName->getName());
+        $this->assertEquals('some name', $issuerName->getContent());
     }
 }

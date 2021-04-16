@@ -7,6 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
+
 
 /**
  * Class representing a ds:KeyName element.
@@ -15,44 +17,22 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class KeyName extends AbstractDsElement
 {
-    /**
-     * The key name.
-     *
-     * @var string
-     */
-    protected string $name;
+    use XMLStringElementTrait;
 
 
     /**
-     * Initialize a KeyName element.
+     * Validate the content of the element.
      *
-     * @param string $name
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
      */
-    public function __construct(string $name)
+    protected function validateContent(string $content): void
     {
-        $this->setName($name);
-    }
-
-
-    /**
-     * Collect the value of the name-property
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-
-    /**
-     * Set the value of the name-property
-     *
-     * @param string $name
-     */
-    private function setName(string $name): void
-    {
-        $this->name = $name;
+        /**
+         * Perform no validation by default.
+         * Override this method on the implementing class to perform content validation.
+         */
     }
 
 
@@ -71,20 +51,5 @@ final class KeyName extends AbstractDsElement
         Assert::same($xml->namespaceURI, KeyName::NS, InvalidDOMElementException::class);
 
         return new self($xml->textContent);
-    }
-
-
-    /**
-     * Convert this KeyName element to XML.
-     *
-     * @param \DOMElement|null $parent The element we should append this KeyName element to.
-     * @return \DOMElement
-     */
-    public function toXML(DOMElement $parent = null): DOMElement
-    {
-        $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->name;
-
-        return $e;
     }
 }

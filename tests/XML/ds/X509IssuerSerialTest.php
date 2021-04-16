@@ -53,7 +53,7 @@ final class X509IssuerSerialTest extends TestCase
 
         $details = $this->key->getCertificateDetails();
         $this->issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
-        $this->serial = new X509SerialNumber(intval($details['serialNumber']));
+        $this->serial = new X509SerialNumber($details['serialNumber']);
     }
 
 

@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
@@ -50,10 +51,19 @@ final class DigestValueTest extends TestCase
 
     /**
      */
+    public function testMarshallingNotBase64(): void
+    {
+        $this->expectException(AssertionFailedException::class);
+        $digestValue = new DigestValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+    }
+
+
+    /**
+     */
     public function testUnmarshalling(): void
     {
         $digestValue = DigestValue::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getDigest());
+        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
     }
 }

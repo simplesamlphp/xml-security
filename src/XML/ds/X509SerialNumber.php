@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
  * Class representing a ds:X509SerialNumber element.
@@ -16,45 +17,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class X509SerialNumber extends AbstractDsElement
 {
-    /**
-     * The serial number.
-     *
-     * @var int
-     */
-    protected int $serial;
-
-
-    /**
-     * Initialize a X509SerialNumber element.
-     *
-     * @param int $serial
-     */
-    public function __construct(int $serial)
-    {
-        $this->setSerial($serial);
-    }
-
-
-    /**
-     * Collect the value of the serial-property
-     *
-     * @return int
-     */
-    public function getSerial(): int
-    {
-        return $this->serial;
-    }
-
-
-    /**
-     * Set the value of the serial-property
-     *
-     * @param int $serial
-     */
-    private function setSerial(int $serial): void
-    {
-        $this->serial = $serial;
-    }
+    use XMLStringElementTrait;
 
 
     /**
@@ -72,7 +35,7 @@ final class X509SerialNumber extends AbstractDsElement
         Assert::same($xml->namespaceURI, X509SerialNumber::NS, InvalidDOMElementException::class);
         Assert::same($xml->getAttributeNS(Constants::NS_XSI, "type"), 'xs:integer');
 
-        return new self(intval($xml->textContent));
+        return new self($xml->textContent);
     }
 
 
@@ -85,9 +48,8 @@ final class X509SerialNumber extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-
+        $e->textContent = $this->content;
         $e->setAttributeNS(Constants::NS_XSI, 'xsi:type', 'xs:integer');
-        $e->textContent = strval($this->serial);
 
         return $e;
     }

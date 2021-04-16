@@ -107,7 +107,7 @@ final class ReferenceTest extends TestCase
         $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod->getAlgorithm());
 
         $digestValue = $reference->getDigestValue();
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getDigest());
+        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
 
 
         $transforms = $reference->getTransforms();

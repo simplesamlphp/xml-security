@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
  * Class representing a ds:DigestValue element.
@@ -15,46 +16,20 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class DigestValue extends AbstractDsElement
 {
-    /**
-     * The digest value.
-     *
-     * @var string
-     */
-    protected string $digest;
+    use XMLStringElementTrait;
 
 
     /**
-     * Initialize a DigestValue element.
+     * Validate the content of the element.
      *
-     * @param string $digest
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
      */
-    public function __construct(string $digest)
+    protected function validateContent(string $content): void
     {
-        $this->setDigest($digest);
-    }
-
-
-    /**
-     * Collect the value of the digest-property
-     *
-     * @return string
-     */
-    public function getDigest(): string
-    {
-        return $this->digest;
-    }
-
-
-    /**
-     * Set the value of the digest-property
-     *
-     * @param string $digest
-     */
-    private function setDigest(string $digest): void
-    {
-        Assert::notEmpty($digest, 'DigestValue cannot be empty');
-        Assert::stringPlausibleBase64($digest, 'ds:DigestValue is not a valid Base64 encoded string');
-        $this->digest = $digest;
+        Assert::notEmpty($content, 'DigestValue cannot be empty');
+        Assert::stringPlausibleBase64($content, 'ds:DigestValue is not a valid Base64 encoded string');
     }
 
 
@@ -73,20 +48,5 @@ final class DigestValue extends AbstractDsElement
         Assert::same($xml->namespaceURI, DigestValue::NS, InvalidDOMElementException::class);
 
         return new self($xml->textContent);
-    }
-
-
-    /**
-     * Convert this DigestValue element to XML.
-     *
-     * @param \DOMElement|null $parent The element we should append this DigestValue element to.
-     * @return \DOMElement
-     */
-    public function toXML(DOMElement $parent = null): DOMElement
-    {
-        $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->digest;
-
-        return $e;
     }
 }

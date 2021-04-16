@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -74,9 +75,19 @@ final class X509CertificateTest extends TestCase
 
     /**
      */
+    public function testMarshallingInvalidBase64(): void
+    {
+        $certificate = str_replace(substr($this->certificate, 1), '', $this->certificate);
+        $this->expectException(AssertionFailedException::class);
+        new X509Certificate($certificate);
+    }
+
+
+    /**
+     */
     public function testUnmarshalling(): void
     {
         $x509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals($this->certificate, $x509cert->getCertificate());
+        $this->assertEquals($this->certificate, $x509cert->getContent());
     }
 }

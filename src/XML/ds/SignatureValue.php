@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
  * Class representing a ds:SignatureValue element.
@@ -15,41 +16,20 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  */
 final class SignatureValue extends AbstractDsElement
 {
-    /** @var string */
-    protected string $value;
+    use XMLStringElementTrait;
 
 
     /**
-     * Initialize a SignatureValue element.
+     * Validate the content of the element.
      *
-     * @param string $value
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
      */
-    public function __construct(string $value) {
-        $this->setValue($value);
-    }
-
-
-    /**
-     * Get the signature value.
-     *
-     * @return string
-     */
-    public function getValue(): string
+    protected function validateContent(string $content): void
     {
-        return $this->value;
-    }
-
-
-    /**
-     * Set the value.
-     *
-     * @param string $value
-     */
-    private function setValue(string $value): void
-    {
-        Assert::notEmpty($value, 'SignatureValue cannot be empty');
-        Assert::stringPlausibleBase64($value, 'SignatureValue is not a valid Base64 encoded string');
-        $this->value = $value;
+        Assert::notEmpty($content, 'SignatureValue cannot be empty');
+        Assert::stringPlausibleBase64($content, 'SignatureValue is not a valid Base64 encoded string');
     }
 
 
@@ -68,20 +48,5 @@ final class SignatureValue extends AbstractDsElement
         Assert::same($xml->namespaceURI, SignatureValue::NS, InvalidDOMElementException::class);
 
         return new self($xml->textContent);
-    }
-
-
-    /**
-     * Convert this SignatureValue to XML.
-     *
-     * @param \DOMElement|null $parent The element we should append this SignatureValue element to.
-     * @return \DOMElement
-     */
-    public function toXML(DOMElement $parent = null): \DOMElement
-    {
-        $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->value;
-
-        return $e;
     }
 }
