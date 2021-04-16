@@ -18,11 +18,7 @@ use SimpleSAML\XML\XMLStringElementTrait;
  */
 final class X509Digest extends AbstractDsElement
 {
-    use XMLStringElementTrait {
-        __construct as __parentConstruct;
-        toXML as parentToXML;
-    }
-
+    use XMLStringElementTrait;
 
     /**
      * The digest algorithm.
@@ -40,8 +36,7 @@ final class X509Digest extends AbstractDsElement
      */
     public function __construct(string $digest, string $algorithm)
     {
-        $this->__parentConstruct($digest);
-
+        $this->setContent($digest);
         $this->setAlgorithm($algorithm);
     }
 
@@ -124,7 +119,8 @@ final class X509Digest extends AbstractDsElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        $e = $this->parentToXML($parent);
+        $e = $this->instantiateParentElement($parent);
+        $e->textContent = $this->content;
         $e->setAttribute('Algorithm', $this->algorithm);
 
         return $e;

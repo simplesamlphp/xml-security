@@ -17,9 +17,7 @@ use SimpleSAML\XML\XMLStringElementTrait;
  */
 final class X509SerialNumber extends AbstractDsElement
 {
-    use XMLStringElementTrait {
-        toXML as parentToXML;
-    }
+    use XMLStringElementTrait;
 
 
     /**
@@ -49,7 +47,8 @@ final class X509SerialNumber extends AbstractDsElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        $e = $this->parentToXML($parent);
+        $e = $this->instantiateParentElement($parent);
+        $e->textContent = $this->content;
         $e->setAttributeNS(Constants::NS_XSI, 'xsi:type', 'xs:integer');
 
         return $e;
