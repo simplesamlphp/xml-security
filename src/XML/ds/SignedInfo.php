@@ -16,8 +16,8 @@ use SimpleSAML\XML\Chunk;
  */
 final class SignedInfo extends AbstractDsElement
 {
-    /** @var string */
-    protected string $Id;
+    /** @var string|null */
+    protected ?string $Id;
 
     /**
      * @var \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod
