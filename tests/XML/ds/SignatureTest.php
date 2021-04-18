@@ -6,8 +6,12 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
+use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureTest

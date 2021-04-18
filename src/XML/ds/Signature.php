@@ -153,7 +153,7 @@ final class Signature extends AbstractDsElement
      */
     protected function setObjects(array $objects): void
     {
-        Assert::allInstanceOf($objects, Chunk::class);
+        Assert::allIsInstanceOf($objects, Chunk::class);
 
         foreach ($objects as $o) {
             Assert::true(

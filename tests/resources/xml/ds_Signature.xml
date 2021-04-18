@@ -21,7 +21,5 @@
     <ds:KeySomething>Some unknown tag within the ds-namespace</ds:KeySomething>
     <some>Chunk</some>
   </ds:KeyInfo>
-  <ds:Object>
-    <some>Chunk</some>
-  </ds:Object>
+  <ds:Object Id="abc123" MimeType="image/png" Encoding="http://www.w3.org/2000/09/xmldsig#base64">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ds:Object>
 </ds:Signature>
