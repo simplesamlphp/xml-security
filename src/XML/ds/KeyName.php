@@ -9,7 +9,6 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\XMLStringElementTrait;
 
-
 /**
  * Class representing a ds:KeyName element.
  *

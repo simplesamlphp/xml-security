@@ -11,7 +11,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
  */
 class EncryptionMethod extends AbstractEncryptionMethod
 {
-    /*
+    /**
      * EncryptionMethod constructor.
      *
      * @param string $algorithm

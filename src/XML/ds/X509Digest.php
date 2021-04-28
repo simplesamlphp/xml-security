@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XML\XMLStringElementTrait;
+use SimpleSAML\XML\XMLBase64ElementTrait;
 
 /**
  * Class representing a ds:X509Digest element.
@@ -18,7 +18,7 @@ use SimpleSAML\XML\XMLStringElementTrait;
  */
 final class X509Digest extends AbstractDsElement
 {
-    use XMLStringElementTrait;
+    use XMLBase64ElementTrait;
 
     /**
      * The digest algorithm.

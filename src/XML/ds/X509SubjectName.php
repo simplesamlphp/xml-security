@@ -18,6 +18,7 @@ final class X509SubjectName extends AbstractDsElement
 {
     use XMLStringElementTrait;
 
+
     /**
      * Convert XML into a X509SubjectName
      *
