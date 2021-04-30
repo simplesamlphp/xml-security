@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 
@@ -67,7 +68,7 @@ final class X509CertificateTest extends TestCase
         $x509cert = new X509Certificate($this->certificate);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
             strval($x509cert)
         );
     }

@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
@@ -43,7 +44,7 @@ final class DigestValueTest extends TestCase
         $digestValue = new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
             strval($digestValue)
         );
     }

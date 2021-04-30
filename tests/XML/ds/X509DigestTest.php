@@ -10,6 +10,7 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key;
+use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
 
@@ -56,7 +57,7 @@ final class X509DigestTest extends TestCase
         $x509digest = new X509Digest($this->digest, Constants::DIGEST_SHA256);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
             strval($x509digest)
         );
     }
