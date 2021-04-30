@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 
 /**
@@ -42,7 +43,7 @@ final class SignatureValueTest extends TestCase
     public function testMarshalling(): void
     {
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
             strval(new SignatureValue(
                 'j14G9v6AnsOiEJYgkTg864DG3e/KLqoGpuybPGSGblVTn7ST6M/BsvP7YiVZjLqJEuEvWmf2mW4DPb+pbArzzDcsLWEtNveMrw+F' .
                 'kWehDUQV9oe20iepo+W46wmj7zB/eWL+Z8MrGvlycoTndJU6CVwHTLsB+dq2FDa7JV4pAPjMY32JZTbiwKhzqw3nEi/eVrujJE4Y' .
