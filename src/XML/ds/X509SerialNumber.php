@@ -21,6 +21,15 @@ final class X509SerialNumber extends AbstractDsElement
 
 
     /**
+     * @param string $content
+     */
+    public function __construct(string $content)
+    {
+        $this->setContent($content);
+    }
+
+
+    /**
      * Convert XML into a X509SerialNumber
      *
      * @param \DOMElement $xml The XML element we should load

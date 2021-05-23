@@ -14,4 +14,13 @@ use SimpleSAML\XML\XMLBase64ElementTrait;
 final class DigestValue extends AbstractDsElement
 {
     use XMLBase64ElementTrait;
+
+
+    /**
+     * @param string $content
+     */
+    public function __construct(string $content)
+    {
+        $this->setContent($content);
+    }
 }
