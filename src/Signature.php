@@ -320,8 +320,8 @@ class Signature
 
             if ($addSubject && isset($details['subject'])) {
                 // add subject
-                $subjectNameValue = $details['issuer'];
-                if (is_array($details['subject'])) {
+                $subjectNameValue = $details['subject'];
+                if (is_array($subjectNameValue)) {
                     $parts = [];
                     foreach ($details['subject'] as $key => $value) {
                         if (is_array($value)) {
