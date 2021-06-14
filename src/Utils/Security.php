@@ -210,7 +210,7 @@ class Security
 
         /* Check the signature. */
         if ($objXMLSecDSig->verify($key) !== 1) {
-            throw new Exception("Unable to validate Signature");
+            throw new Exception("Unable to validate Signature;  " . openssl_error_string());
         }
     }
 
