@@ -366,7 +366,7 @@ class Signature
             $certData[] = new X509Certificate(CertificateUtils::stripHeaders($cert->getCertificate()));
         }
 
-        $keyInfo = new KeyInfo($certData);
+        $keyInfo = new KeyInfo([new X509Data($certData)]);
         $keyInfoNode = $keyInfo->toXML();
 
         if ($this->objectNode === null) {
