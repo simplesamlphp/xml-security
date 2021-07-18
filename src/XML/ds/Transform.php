@@ -28,14 +28,14 @@ class Transform extends AbstractDsElement
      *
      * @var XPath|null
      */
-    protected XPath $xpath;
+    protected ?XPath $xpath = null;
 
     /**
      * An InclusiveNamespaces object.
      *
      * @var InclusiveNamespaces|null
      */
-    protected InclusiveNamespaces $inclusiveNamespaces;
+    protected ?InclusiveNamespaces $inclusiveNamespaces = null;
 
 
     /**
@@ -47,8 +47,8 @@ class Transform extends AbstractDsElement
      */
     public function __construct(
         string $algorithm,
-        ?XPath $xpath,
-        ?InclusiveNamespaces $inclusiveNamespaces
+        ?XPath $xpath = null,
+        ?InclusiveNamespaces $inclusiveNamespaces = null
     ) {
         $this->setAlgorithm($algorithm);
         $this->setXPath($xpath);
@@ -74,16 +74,7 @@ class Transform extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
-        Assert::oneOf(
-            $algorithm,
-            [
-                C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-                C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_INCLUSIVE_WITHOUT_COMMENTS
-            ],
-            'Unsupported Transform algorithm.'
-        );
+        $this->algorithm = $algorithm;
     }
 
 

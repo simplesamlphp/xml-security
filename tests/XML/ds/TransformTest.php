@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformTest
@@ -43,10 +41,8 @@ final class TransformTest extends TestCase
     public function testMarshalling(): void
     {
         $transform = new Transform(
-            'http://www.w3.org/TR/1999/REC-xpath-19991116',
-            [
-                new Chunk(DOMDocumentFactory::fromString('<ds:XPath>count(//. | //@* | //namespace::*)</ds:XPath>')->documentElement)
-            ],
+            C::XPATH_URI,
+            new XPath('count(//. | //@* | //namespace::*)')
         );
 
         $this->assertEquals(
@@ -61,12 +57,11 @@ final class TransformTest extends TestCase
     public function testUnmarshalling(): void
     {
         $transform = Transform::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transform->getAlgorithm());
+        $this->assertEquals(C::XPATH_URI, $transform->getAlgorithm());
 
-        $elements = $transform->getElements();
-        $this->assertCount(1, $elements);
+        $xpath = $transform->getXPath();
 
-        $this->assertInstanceOf(Chunk::class, $elements[0]);
+        $this->assertInstanceOf(XPath::class, $xpath);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

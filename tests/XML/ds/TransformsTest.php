@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\ds;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\SAML2\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformsTest
@@ -46,14 +44,11 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms(
             [
                 new Transform(
-                    'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    [
-                        new Chunk(
-                            DOMDocumentFactory::fromString(
-                                '<ds:XPath xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">self::xenc:CipherValue[@Id="example1"]</ds:XPath>'
-                            )->documentElement
-                        )
-                    ]
+                    C::XPATH_URI,
+                    new XPath(
+                        'self::xenc:CipherValue[@Id="example1"]',
+                        ['xenc' => 'http://www.w3.org/2001/04/xmlenc#']
+                    ),
                 )
             ]
         );
@@ -74,12 +69,10 @@ final class TransformsTest extends TestCase
         $this->assertCount(1, $transform);
 
         $transform = array_pop($transform);
-        $this->assertEquals('http://www.w3.org/TR/1999/REC-xpath-19991116', $transform->getAlgorithm());
+        $this->assertEquals(C::XPATH_URI, $transform->getAlgorithm());
 
-        $elements = $transform->getElements();
-        $this->assertCount(1, $elements);
-
-        $this->assertInstanceOf(Chunk::class, $elements[0]);
+        $xpath = $transform->getXPath();
+        $this->assertInstanceOf(XPath::class, $xpath);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
