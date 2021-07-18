@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ec;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
 /**
@@ -26,7 +25,7 @@ class InclusiveNamespacesTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->testedClass = Transforms::class;
+        $this->testedClass = InclusiveNamespaces::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) . '/resources/xml/ec_InclusiveNamespaces.xml'
