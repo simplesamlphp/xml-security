@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherReferenceTest
@@ -26,8 +26,8 @@ final class CipherReferenceTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-    /** @var \DOMDocument $transforms */
-    private DOMDocument $transforms;
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms */
+    private Transforms $transforms;
 
 
     /**
@@ -40,11 +40,9 @@ final class CipherReferenceTest extends TestCase
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml'
         );
 
-        $dsNamespace = XMLSecurityDSig::XMLDSIGNS;
-
-        $this->transforms = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Transforms.xml'
-        );
+        $xpath = new XPath('self::xenc:CipherValue[@Id="example1"]');
+        $transform = new Transform(C::XPATH_URI, $xpath);
+        $this->transforms = new Transforms([$transform]);
     }
 
 
@@ -55,7 +53,7 @@ final class CipherReferenceTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [Transforms::fromXML($this->transforms->documentElement)]);
+        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [$this->transforms]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -77,7 +75,7 @@ final class CipherReferenceTest extends TestCase
 
         $references = $cipherReference->getElements();
         $this->assertCount(1, $references);
-        $this->assertEquals($this->transforms, $references[0]->toXML());
+        $this->assertEquals($this->transforms, $references[0]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
