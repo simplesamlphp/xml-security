@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -21,6 +22,9 @@ final class DsObject extends AbstractDsElement
 
     /** @var string */
     public const LOCALNAME = 'Object';
+
+    /** @var string */
+    public const NAMESPACE = Constants::XS_ANY_NS_ANY;
 
     /**
      * The Id.
@@ -159,11 +163,11 @@ final class DsObject extends AbstractDsElement
     public static function fromXML(DOMElement $xml): object
     {
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, Object::NS, InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, DSObject::NS, InvalidDOMElementException::class);
 
-        $Id = Object::getAttribute($xml, 'Id');
-        $MimeType = Object::getAttribute($xml, 'MimeType');
-        $Encoding = Object::getAttribute($xml, 'Encoding');
+        $Id = DsObject::getAttribute($xml, 'Id');
+        $MimeType = DsObject::getAttribute($xml, 'MimeType');
+        $Encoding = DsObject::getAttribute($xml, 'Encoding');
 
         $elements = [];
         foreach ($xml->childNodes as $elt) {

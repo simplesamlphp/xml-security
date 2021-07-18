@@ -64,6 +64,9 @@ final class ObjectTest extends TestCase
         $this->assertEquals('abc123', $obj->getId());
         $this->assertEquals('image/png', $obj->getMimeType());
         $this->assertEquals('http://www.w3.org/2000/09/xmldsig#base64', $obj->getEncoding());
-        $this->assertEquals('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', $o->getElements()[0]->textContent);
+        $this->assertEquals(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+            $obj->getElements()[0]->textContent
+        );
     }
 }
