@@ -10,6 +10,7 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformTest
@@ -47,6 +48,25 @@ final class TransformTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($transform)
+        );
+
+        $transform = new Transform(
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+            null,
+            new InclusiveNamespaces(["dsig", "soap", "#default"])
+        );
+
+
+        $this->assertInstanceOf(InclusiveNamespaces::class, $transform->getInclusiveNamespaces());
+        $this->assertNull($transform->getXPath());
+
+        $xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(__FILE__))) .
+            '/resources/xml/ds_Transform_InclusiveNamespaces.xml'
+        );
+        $this->assertEquals(
+            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
             strval($transform)
         );
     }
