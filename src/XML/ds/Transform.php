@@ -5,110 +5,162 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
+use Webmozart\Assert\Assert;
 
 /**
- * Class representing a ds:Transform element.
+ * Class representing transforms.
  *
  * @package simplesamlphp/xml-security
  */
-final class Transform extends AbstractDsElement
+class Transform extends AbstractDsElement
 {
-    /** @var string */
-    protected string $Algorithm;
+    /**
+     * The algorithm used for this transform.
+     *
+     * @var string
+     */
+    protected string $algorithm;
 
-    /** @var \SimpleSAML\XML\Chunk[] */
-    protected array $elements = [];
+    /**
+     * An XPath object.
+     *
+     * @var XPath|null
+     */
+    protected ?XPath $xpath = null;
+
+    /**
+     * An InclusiveNamespaces object.
+     *
+     * @var InclusiveNamespaces|null
+     */
+    protected ?InclusiveNamespaces $inclusiveNamespaces = null;
 
 
     /**
-     * Initialize a ds:Transform
+     * Initialize the Transform element.
      *
-     * @param string $Algorithm
-     * @param \SimpleSAML\XML\Chunk[] $elements
+     * @param string $algorithm
+     * @param XPath|null $xpath
+     * @param InclusiveNamespaces|null $prefixes
      */
     public function __construct(
-        string $Algorithm,
-        array $elements = []
+        string $algorithm,
+        ?XPath $xpath = null,
+        ?InclusiveNamespaces $inclusiveNamespaces = null
     ) {
-        $this->setElements($elements);
-        $this->setAlgorithm($Algorithm);
+        $this->setAlgorithm($algorithm);
+        $this->setXPath($xpath);
+        $this->setInclusiveNamespaces($inclusiveNamespaces);
     }
 
 
     /**
+     * Get the algorithm associated with this transform.
+     *
      * @return string
      */
     public function getAlgorithm(): string
     {
-        return $this->Algorithm;
+        return $this->algorithm;
     }
 
 
     /**
-     * @param string $Algorithm
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     */
-    protected function setAlgorithm(string $Algorithm): void
-    {
-        Assert::notEmpty($Algorithm, 'Cannot set an empty algorithm in ' . static::NS_PREFIX . ':Transform.');
-        $this->Algorithm = $Algorithm;
-    }
-
-
-    /**
-     * Collect the elements
+     * Set the value of the algorithm property.
      *
-     * @return \SimpleSAML\XML\Chunk[]
+     * @param string $algorithm
      */
-    public function getElements(): array
+    private function setAlgorithm(string $algorithm): void
     {
-        return $this->elements;
+        $this->algorithm = $algorithm;
     }
 
 
     /**
-     * Set the value of the elements-property
+     * Get the XPath associated with this transform.
      *
-     * @param \SimpleSAML\XML\Chunk[] $elements
-     * @throws \SimpleSAML\Assert\AssertionFailedException if the supplied array contains anything other than Chunk objects
+     * @return XPath|null
      */
-    private function setElements(array $elements): void
+    public function getXPath(): ?XPath
     {
-        Assert::allIsInstanceOf($elements, Chunk::class);
-
-        $this->elements = $elements;
+        return $this->xpath;
     }
 
 
     /**
-     * Convert XML into a Transform element
+     * Set and validate the XPath object.
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param XPath|null $XPath
+     */
+    private function setXPath(?XPath $xpath): void
+    {
+        if ($xpath === null) {
+            return;
+        }
+        Assert::eq(
+            $this->algorithm,
+            C::XPATH_URI,
+            'Transform algorithm "' . C::XPATH_URI . '" required if XPath provided.'
+        );
+        $this->xpath = $xpath;
+    }
+
+
+    /**
+     * Get the InclusiveNamespaces associated with this transform.
+     *
+     * @return InclusiveNamespaces|null
+     */
+    public function getInclusiveNamespaces(): ?InclusiveNamespaces
+    {
+        return $this->inclusiveNamespaces;
+    }
+
+
+    /**
+     * Set and validate the InclusiveNamespaces object.
+     *
+     * @param InclusiveNamespaces|null $inclusiveNamespaces
+     */
+    private function setInclusiveNamespaces(?InclusiveNamespaces $inclusiveNamespaces)
+    {
+        if ($inclusiveNamespaces === null) {
+            return;
+        }
+        Assert::oneOf(
+            $this->algorithm,
+            [
+                C::C14N_INCLUSIVE_WITH_COMMENTS,
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+            ],
+            'Transform algorithm "' . C::C14N_EXCLUSIVE_WITH_COMMENTS . '" or "' .
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS . '" required if InclusiveNamespaces provided.'
+        );
+        $this->inclusiveNamespaces = $inclusiveNamespaces;
+    }
+
+
+    /**
+     * Convert XML into a Transform element.
+     *
+     * @param \DOMElement $xml The XML element we should load.
      * @return self
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): object
     {
-        Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
+        $alg = self::getAttribute($xml, 'Algorithm');
+        $xpath = XPath::getChildrenOfClass($xml);
+        Assert::maxCount($xpath, 1, 'Only one XPath element supported per Transform.');
+        $prefixes = InclusiveNamespaces::getChildrenOfClass($xml);
+        Assert::maxCount(
+            $prefixes,
+            1,
+            'Only one InclusiveNamespaces element supported per Transform.'
+        );
 
-        $Algorithm = self::getAttribute($xml, 'Algorithm');
-
-        $elements = [];
-        foreach ($xml->childNodes as $element) {
-            if (!($element instanceof DOMElement)) {
-                continue;
-            }
-
-            $elements[] = new Chunk($element);
-        }
-
-        return new self($Algorithm, $elements);
+        return new self($alg, array_pop($xpath), array_pop($prefixes));
     }
 
 
@@ -121,10 +173,20 @@ final class Transform extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->Algorithm);
 
-        foreach ($this->elements as $element) {
-            $e->appendChild($e->ownerDocument->importNode($element->getXML(), true));
+        $e->setAttribute('Algorithm', $this->algorithm);
+
+        switch ($this->algorithm) {
+            case C::XPATH_URI:
+                if ($this->xpath !== null) {
+                    $this->xpath->toXML($e);
+                }
+                break;
+            case C::C14N_EXCLUSIVE_WITH_COMMENTS:
+            case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
+                if ($this->inclusiveNamespaces !== null) {
+                    $this->inclusiveNamespaces->toXML($e);
+                }
         }
 
         return $e;
