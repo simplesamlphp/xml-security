@@ -83,7 +83,7 @@ class Transform extends AbstractDsElement
      *
      * @return XPath|null
      */
-    public function getXPath(): XPath
+    public function getXPath(): ?XPath
     {
         return $this->xpath;
     }
@@ -113,7 +113,7 @@ class Transform extends AbstractDsElement
      *
      * @return InclusiveNamespaces|null
      */
-    public function getInclusiveNamespaces(): array
+    public function getInclusiveNamespaces(): ?InclusiveNamespaces
     {
         return $this->inclusiveNamespaces;
     }
