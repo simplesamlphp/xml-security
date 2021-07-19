@@ -126,7 +126,7 @@ class Transform extends AbstractDsElement
      *
      * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $inclusiveNamespaces
      */
-    private function setInclusiveNamespaces(?InclusiveNamespaces $inclusiveNamespaces)
+    private function setInclusiveNamespaces(?InclusiveNamespaces $inclusiveNamespaces): void
     {
         if ($inclusiveNamespaces === null) {
             return;

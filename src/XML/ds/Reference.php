@@ -16,7 +16,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 final class Reference extends AbstractDsElement
 {
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Transforms|null */
-    protected Transforms $transforms;
+    protected ?Transforms $transforms;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\DigestMethod */
     protected DigestMethod $digestMethod;
@@ -71,7 +71,7 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
      */
     protected function setTransforms(?Transforms $transforms): void
     {

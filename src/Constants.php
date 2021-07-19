@@ -19,7 +19,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const DIGEST_SHA512 = 'http://www.w3.org/2001/04/xmlenc#sha512';
     public const DIGEST_RIPEMD160 = 'http://www.w3.org/2001/04/xmlenc#ripemd160';
 
-    public static $DIGEST_ALGORITHMS = [
+    public static array $DIGEST_ALGORITHMS = [
         self::DIGEST_SHA1 => 'sha1',
         self::DIGEST_SHA224 => 'sha224',
         self::DIGEST_SHA256 => 'sha256',
@@ -45,7 +45,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const BLOCK_ENC_AES192_GCM = 'http://www.w3.org/2009/xmlenc11#aes192-gcm';
     public const BLOCK_ENC_AES256_GCM = 'http://www.w3.org/2009xmlenc11#aes256-gcm';
 
-    public static $BLOCK_CIPHER_ALGORITHMS = [
+    public static array $BLOCK_CIPHER_ALGORITHMS = [
         self::BLOCK_ENC_3DES => 'des-ede3-cbc',
         self::BLOCK_ENC_AES128 => 'aes-128-cbc',
         self::BLOCK_ENC_AES192 => 'aes-192-cbc',
@@ -55,7 +55,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 'aes-256-gcm',
     ];
 
-    public static $BLOCK_SIZES = [
+    public static array $BLOCK_SIZES = [
         self::BLOCK_ENC_3DES => 8,
         self::BLOCK_ENC_AES128 => 16,
         self::BLOCK_ENC_AES192 => 16,
@@ -65,7 +65,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 16,
     ];
 
-    public static $BLOCK_CIPHER_KEY_SIZES = [
+    public static array $BLOCK_CIPHER_KEY_SIZES = [
         self::BLOCK_ENC_3DES => 24,
         self::BLOCK_ENC_AES128 => 16,
         self::BLOCK_ENC_AES192 => 24,

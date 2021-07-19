@@ -80,7 +80,7 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
      */
     protected function setSignedInfo(SignedInfo $signedInfo): void
     {
@@ -98,7 +98,7 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
      */
     protected function setSignatureValue(SignatureValue $signatureValue): void
     {
@@ -116,7 +116,7 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null
+     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
      */
     protected function setKeyInfo(?KeyInfo $keyInfo): void
     {

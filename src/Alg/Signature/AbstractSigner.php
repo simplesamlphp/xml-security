@@ -51,8 +51,7 @@ abstract class AbstractSigner implements SignatureAlgorithm
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend
-     *
+     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend
      */
     public function setBackend(SignatureBackend $backend): void
     {
