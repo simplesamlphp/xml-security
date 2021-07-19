@@ -9,7 +9,6 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
-use SimpleSAML\XMLSecurity\Signature;
 
 /**
  * Test for XML digital signatures.
