@@ -138,10 +138,10 @@ class X509Certificate extends PublicKey
      *
      * @param string $file The file where the PEM-encoded certificate is stored.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\PublicKey A new X509Certificate key.
+     * @return \SimpleSAML\XMLSecurity\Key\X509Certificate A new X509Certificate key.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
-    public static function fromFile(string $file): PublicKey
+    public static function fromFile(string $file): X509Certificate
     {
         return new static(static::readFile($file));
     }
