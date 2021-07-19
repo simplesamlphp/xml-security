@@ -4,6 +4,7 @@ namespace SimpleSAML\XMLSecurity;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -21,10 +22,10 @@ final class SignatureTest extends TestCase
     /** @var \DOMDocument */
     protected DOMDocument $basicDoc;
 
-    /** @var PrivateKey */
+    /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected PrivateKey $privKey;
 
-    /** @var X509Certificate */
+    /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
     protected X509Certificate $cert;
 
 
@@ -402,7 +403,7 @@ final class SignatureTest extends TestCase
         $signature = Signature::fromXML($doc->documentElement);
         $signature->setIdAttributes(['xml:id']);
         $this->assertEquals(['xml:id'], $signature->getIdAttributes());
-        $validateReference = new \ReflectionMethod(Signature::class, 'validateReferences');
+        $validateReference = new ReflectionMethod(Signature::class, 'validateReferences');
         $validateReference->setAccessible(true);
         $this->assertTrue($validateReference->invokeArgs($signature, []));
     }
@@ -423,7 +424,7 @@ final class SignatureTest extends TestCase
         $doc = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-empty-uri.xml');
         $signature = Signature::fromXML($doc->documentElement);
         $signature->setIdAttributes(['xml:id']);
-        $validateReference = new \ReflectionMethod(Signature::class, 'validateReferences');
+        $validateReference = new ReflectionMethod(Signature::class, 'validateReferences');
         $validateReference->setAccessible(true);
         $this->assertTrue($validateReference->invokeArgs($signature, []));
     }
@@ -439,7 +440,7 @@ final class SignatureTest extends TestCase
         $doc = DOMDocumentFactory::fromFile('tests/resources/xml/withcomment-id-uri-object.xml');
         $signature = Signature::fromXML($doc);
         $signature->setIdAttributes(['xml:id']);
-        $validateReference = new \ReflectionMethod(Signature::class, 'validateReferences');
+        $validateReference = new ReflectionMethod(Signature::class, 'validateReferences');
         $validateReference->setAccessible(true);
         $this->assertTrue($validateReference->invokeArgs($signature, []));
     }
@@ -557,7 +558,7 @@ final class SignatureTest extends TestCase
 
         $xml = DOMDocumentFactory::fromFile('tests/resources/xml/alt/sign-sha512-rsa-sha512-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
-        $validateRef = new \ReflectionMethod(Signature::class, 'validateReferences');
+        $validateRef = new ReflectionMethod(Signature::class, 'validateReferences');
         $validateRef->setAccessible(true);
         $this->assertTrue($validateRef->invokeArgs($signature, []), 'Failed to verify formatted RSA-SHA512 signature.');
     }

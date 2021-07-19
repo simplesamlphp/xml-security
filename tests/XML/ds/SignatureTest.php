@@ -61,7 +61,13 @@ final class SignatureTest extends TestCase
                     dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml'
                 )->documentElement
             ),
-            [new Chunk(DOMDocumentFactory::fromString('<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>')->documentElement)],
+            [
+                new Chunk(
+                    DOMDocumentFactory::fromString(
+                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>'
+                    )->documentElement
+                )
+            ],
             'def456'
         );
 
@@ -92,7 +98,13 @@ final class SignatureTest extends TestCase
                     dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml'
                 )->documentElement
             ),
-            [new Chunk(DOMDocumentFactory::fromString('<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>')->documentElement)],
+            [
+                new Chunk(
+                    DOMDocumentFactory::fromString(
+                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>'
+                    )->documentElement
+                )
+            ],
             'def456'
         );
 

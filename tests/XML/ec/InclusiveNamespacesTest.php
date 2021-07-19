@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ec;
 
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 

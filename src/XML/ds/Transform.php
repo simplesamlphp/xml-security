@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
+use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 use Webmozart\Assert\Assert;
@@ -26,14 +27,14 @@ class Transform extends AbstractDsElement
     /**
      * An XPath object.
      *
-     * @var XPath|null
+     * @var \SimpleSAML\XMLSecurity\XML\ds\XPath|null
      */
     protected ?XPath $xpath = null;
 
     /**
      * An InclusiveNamespaces object.
      *
-     * @var InclusiveNamespaces|null
+     * @var \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null
      */
     protected ?InclusiveNamespaces $inclusiveNamespaces = null;
 
@@ -42,8 +43,8 @@ class Transform extends AbstractDsElement
      * Initialize the Transform element.
      *
      * @param string $algorithm
-     * @param XPath|null $xpath
-     * @param InclusiveNamespaces|null $prefixes
+     * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $xpath
+     * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $prefixes
      */
     public function __construct(
         string $algorithm,
@@ -81,7 +82,7 @@ class Transform extends AbstractDsElement
     /**
      * Get the XPath associated with this transform.
      *
-     * @return XPath|null
+     * @return \SimpleSAML\XMLSecurity\XML\ds\XPath|null
      */
     public function getXPath(): ?XPath
     {
@@ -92,14 +93,15 @@ class Transform extends AbstractDsElement
     /**
      * Set and validate the XPath object.
      *
-     * @param XPath|null $XPath
+     * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $XPath
      */
     private function setXPath(?XPath $xpath): void
     {
         if ($xpath === null) {
             return;
         }
-        Assert::eq(
+
+        Assert::nullOrEq(
             $this->algorithm,
             C::XPATH_URI,
             'Transform algorithm "' . C::XPATH_URI . '" required if XPath provided.'
@@ -111,7 +113,7 @@ class Transform extends AbstractDsElement
     /**
      * Get the InclusiveNamespaces associated with this transform.
      *
-     * @return InclusiveNamespaces|null
+     * @return \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null
      */
     public function getInclusiveNamespaces(): ?InclusiveNamespaces
     {
@@ -122,13 +124,14 @@ class Transform extends AbstractDsElement
     /**
      * Set and validate the InclusiveNamespaces object.
      *
-     * @param InclusiveNamespaces|null $inclusiveNamespaces
+     * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $inclusiveNamespaces
      */
     private function setInclusiveNamespaces(?InclusiveNamespaces $inclusiveNamespaces)
     {
         if ($inclusiveNamespaces === null) {
             return;
         }
+
         Assert::oneOf(
             $this->algorithm,
             [
@@ -138,6 +141,7 @@ class Transform extends AbstractDsElement
             'Transform algorithm "' . C::C14N_EXCLUSIVE_WITH_COMMENTS . '" or "' .
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS . '" required if InclusiveNamespaces provided.'
         );
+
         $this->inclusiveNamespaces = $inclusiveNamespaces;
     }
 
@@ -150,6 +154,9 @@ class Transform extends AbstractDsElement
      */
     public static function fromXML(DOMElement $xml): object
     {
+        Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
+
         $alg = self::getAttribute($xml, 'Algorithm');
         $xpath = XPath::getChildrenOfClass($xml);
         Assert::maxCount($xpath, 1, 'Only one XPath element supported per Transform.');
