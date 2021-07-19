@@ -1,17 +1,23 @@
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="def456">
-  <ds:SignedInfo>
+  <ds:SignedInfo Id="abc123">
     <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
     <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
-    <ds:Reference URI="#_6b3172c144b22df2e6d4d1c57b3e4000435397a2f9">
+    <ds:Reference Id="abc123" Type="someType" URI="#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153">
       <ds:Transforms>
         <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
         <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
       </ds:Transforms>
       <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-      <ds:DigestValue>Rx8tHdemC1h0efVwTOSkYww3zUR1n7XBTreo0BN8N6w=</ds:DigestValue>
+      <ds:DigestValue>/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=</ds:DigestValue>
     </ds:Reference>
   </ds:SignedInfo>
-  <ds:SignatureValue>j14G9v6AnsOiEJYgkTg864DG3e/KLqoGpuybPGSGblVTn7ST6M/BsvP7YiVZjLqJEuEvWmf2mW4DPb+pbArzzDcsLWEtNveMrw+FkWehDUQV9oe20iepo+W46wmj7zB/eWL+Z8MrGvlycoTndJU6CVwHTLsB+dq2FDa7JV4pAPjMY32JZTbiwKhzqw3nEi/eVrujJE4YRrlW28D+rXhITfoUAGGvsqPzcwGzp02lnMe2SmXADY1u9lbVjOhUrJpgvWfn9YuiCR+wjvaGMwIwzfJxChLJZOBV+1ad1CyNTiu6qAblxZ4F8cWlMWJ7f0KkWvtw66HOf2VNR6Qan2Ra7Q==</ds:SignatureValue>
+  <ds:SignatureValue>
+j14G9v6AnsOiEJYgkTg864DG3e/KLqoGpuybPGSGblVTn7ST6M/BsvP7YiVZjLqJEuEvWmf2mW4D
+Pb+pbArzzDcsLWEtNveMrw+FkWehDUQV9oe20iepo+W46wmj7zB/eWL+Z8MrGvlycoTndJU6CVwH
+TLsB+dq2FDa7JV4pAPjMY32JZTbiwKhzqw3nEi/eVrujJE4YRrlW28D+rXhITfoUAGGvsqPzcwGz
+p02lnMe2SmXADY1u9lbVjOhUrJpgvWfn9YuiCR+wjvaGMwIwzfJxChLJZOBV+1ad1CyNTiu6qAbl
+xZ4F8cWlMWJ7f0KkWvtw66HOf2VNR6Qan2Ra7Q==
+</ds:SignatureValue>
   <ds:KeyInfo Id="abc123">
     <ds:KeyName>testkey</ds:KeyName>
     <ds:X509Data>
@@ -21,5 +27,7 @@
     <ds:KeySomething>Some unknown tag within the ds-namespace</ds:KeySomething>
     <some>Chunk</some>
   </ds:KeyInfo>
-  <ds:Object Id="abc123" MimeType="image/png" Encoding="http://www.w3.org/2000/09/xmldsig#base64">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ds:Object>
+  <ds:Object>
+    <some>Chunk</some>
+  </ds:Object>
 </ds:Signature>
