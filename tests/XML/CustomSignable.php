@@ -10,16 +10,17 @@ use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
-use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
-use SimpleSAML\XMLSecurity\XMLSecurityKey;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
+use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
 
 /**
  * @package simplesamlphp\saml2
  */
-final class CustomSignable extends AbstractXMLElement implements SignableElementInterface
+class CustomSignable extends AbstractXMLElement implements SignableElementInterface
 {
+    use SignableElementTrait;
+
     /** @var string */
     public const NS = 'urn:ssp:custom';
 
@@ -27,7 +28,14 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
     public const NS_PREFIX = 'ssp';
 
     /** @var \DOMElement $element */
-    protected $element;
+    protected \DOMElement $element;
+
+    /** @var bool */
+    protected bool $formatOutput = false;
+
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
+    protected ?Signature $signature = null;
+
 
     /**
      * Constructor
@@ -84,20 +92,11 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
 
 
     /**
-     * Sign the 'Element' and return a 'SignedElement'
-     *
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $signingKey  The private key we should use to sign the message
-     * @param string[] $certificates  The certificates should be strings with the PEM encoded data
-     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface
+     * @return string|null
      */
-    public function sign(XMLSecurityKey $signingKey, array $certificates = []): SignedElementInterface
+    public function getId(): ?string
     {
-        $unsigned = $this->toXML();
-        $signature = new Signature($signingKey->getAlgorithm(), $certificates, $signingKey);
-        $signedXml = $signature->toXML($this->toXML());
-        $signed = new CustomSigned($signedXml, $signature);
-
-        return $signed;
+        return null;
     }
 
 
@@ -117,19 +116,21 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
         Assert::minCount($xml->childNodes, 1, MissingElementException::class);
         Assert::maxCount($xml->childNodes, 2, TooManyElementsException::class);
 
-        // Remove the signature
-        Signature::getChildrenOfClass($xml);
+        $signature = Signature::getChildrenOfClass($xml);
+        Assert::maxCount($signature, 1, TooManyElementsException::class);
 
-        $element = $xml->childNodes[0];
-
-        return new self($element);
+        $customSignable = new self($xml->childNodes[(empty($signature) ? 0 : 1)]);
+        if (!empty($signature)) {
+            $customSignable->signature = $signature[0];
+        }
+        return $customSignable;
     }
 
 
     /**
      * Convert this CustomSignable to XML.
      *
-     * @param \DOMElement|null $element The element we are converting to XML.
+     * @param \DOMElement|null $parent The parent element to append this CustomSignable to.
      * @return \DOMElement The XML element after adding the data corresponding to this CustomSignable.
      */
     public function toXML(DOMElement $parent = null): DOMElement
@@ -137,7 +138,16 @@ final class CustomSignable extends AbstractXMLElement implements SignableElement
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
 
-        $e->appendChild($e->ownerDocument->importNode($this->element, true));
+        $node = $e->appendChild($e->ownerDocument->importNode($this->element, true));
+
+        if ($this->signer !== null) {
+            $this->doSign($e);
+        }
+
+        if ($this->signature !== null) {
+            $this->insertBefore($e, $node, $this->signature->toXML($e));
+        }
+
         return $e;
     }
 }
