@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
@@ -10,7 +12,7 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 /**
  * Class implementing the HMAC signature algorithm
  *
- * @package SimpleSAML\XMLSecurity\Alg\Signature
+ * @package simplesamlphp/xml-security
  */
 class HMAC extends AbstractSigner implements SignatureAlgorithm
 {
