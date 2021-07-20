@@ -1,15 +1,15 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Key;
+declare(strict_types=1);
 
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use function openssl_pkey_get_private;
 
 /**
  * A class modeling private keys for their use in asymmetric algorithms.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 class PrivateKey extends AsymmetricKey
 {

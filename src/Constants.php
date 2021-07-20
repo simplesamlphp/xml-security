@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity;
 
 /**
  * A collection of constants used in this library, as defined by the XMLSec set of recommendations.
  *
- * @package SimpleSAML\XMLSecurity
+ * @package simplesamlphp/xml-security
  */
 class Constants extends \SimpleSAML\XML\Constants
 {

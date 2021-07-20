@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
@@ -9,7 +11,7 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
 /**
  * An abstract class that implements a generic digital signature algorithm.
  *
- * @package SimpleSAML\XMLSecurity\\Alg\Signature
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractSigner implements SignatureAlgorithm
 {

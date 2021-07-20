@@ -1,8 +1,8 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Key;
+declare(strict_types=1);
 
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+namespace SimpleSAML\XMLSecurity\Key;
 
 use function base64_encode;
 use function chr;
@@ -15,7 +15,7 @@ use function sprintf;
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 class PublicKey extends AsymmetricKey
 {

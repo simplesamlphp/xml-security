@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
@@ -15,7 +17,7 @@ use function in_array;
 /**
  * Factory class to create and configure digital signature algorithms.
  *
- * @package SimpleSAML\XMLSecurity\Alg\Signature
+ * @package simplesamlphp/xml-security
  */
 class SignatureAlgorithmFactory
 {

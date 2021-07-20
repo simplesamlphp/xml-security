@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Key;
 
 /**
@@ -7,7 +9,7 @@ namespace SimpleSAML\XMLSecurity\Key;
  *
  * This class can be extended in order to implement specific types of keys.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 abstract class AbstractKey
 {
