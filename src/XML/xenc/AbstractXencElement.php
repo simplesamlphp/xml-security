@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\Constants;
 abstract class AbstractXencElement extends AbstractXMLElement
 {
     /** @var string */
-    public const NS = Constants::XMLENCNS;
+    public const NS = Constants::NS_XENC;
 
     /** @var string */
     public const NS_PREFIX = 'xenc';
