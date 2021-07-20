@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Utils;
 
 use DOMDocument;
@@ -10,6 +12,8 @@ use RuntimeException;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XMLSecEnc;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
@@ -31,7 +35,7 @@ use function var_export;
 /**
  * A collection of security-related functions.
  *
- * @package SimpleSAML\XMLSecurity\Utils
+ * @package simplesamlphp/xml-security
  */
 class Security
 {
@@ -50,6 +54,33 @@ class Security
     {
         return hash_equals($known, $user);
     }
+
+
+    /**
+     * Compute the hash for some data with a given algorithm.
+     *
+     * @param string $alg The identifier of the algorithm to use.
+     * @param string $data The data to digest.
+     * @param bool $encode Whether to bas64-encode the result or not. Defaults to true.
+     *
+     * @return string The (binary or base64-encoded) digest corresponding to the given data.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $alg is not a valid
+     *   identifier of a supported digest algorithm.
+     */
+    public static function hash(string $alg, string $data, bool $encode = true): string
+    {
+        if (!array_key_exists($alg, Constants::$DIGEST_ALGORITHMS)) {
+            throw new InvalidArgumentException('Unsupported digest method "' . $alg . '"');
+        }
+
+        $digest = hash(Constants::$DIGEST_ALGORITHMS[$alg], $data, true);
+        if ($encode) {
+            $digest = base64_encode($digest);
+        }
+        return $digest;
+    }
+
 
 
     /**
