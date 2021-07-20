@@ -26,8 +26,8 @@ class XPath extends \RobRichards\XMLSecLibs\Utils\XPath
     public static function getXPath(DOMDocument $doc)
     {
         $xp = new DOMXPath($doc);
-        $xp->registerNamespace('ds', C::XMLDSIGNS);
-        $xp->registerNamespace('xenc', C::XMLENCNS);
+        $xp->registerNamespace('ds', C::NS_XDSIG);
+        $xp->registerNamespace('xenc', C::NS_XENC);
         return $xp;
     }
 

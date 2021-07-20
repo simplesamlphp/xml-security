@@ -146,7 +146,7 @@ final class KeyInfo extends AbstractDsElement
                         $info[] = new Chunk($n);
                         break;
                 }
-            } elseif ($n->namespaceURI === Constants::XMLENCNS) {
+            } elseif ($n->namespaceURI === Constants::NS_XENC) {
                 switch ($n->localName) {
                     case 'EncryptedData':
                         $info[] = EncryptedData::fromXML($n);

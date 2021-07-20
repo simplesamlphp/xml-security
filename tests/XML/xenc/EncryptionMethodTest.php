@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
-use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
@@ -70,7 +68,7 @@ final class EncryptionMethodTest extends TestCase
     {
         $em = new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p');
         $document = DOMDocumentFactory::fromString(
-            '<xenc:EncryptionMethod xmlns:xenc="' . Constants::XMLENCNS .
+            '<xenc:EncryptionMethod xmlns:xenc="' . Constants::NS_XENC .
             '" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>'
         );
 
@@ -145,7 +143,7 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshallingWithoutOptionalParameters(): void
     {
-        $xencns = Constants::XMLENCNS;
+        $xencns = Constants::NS_XENC;
         $document = DOMDocumentFactory::fromString(<<<XML
 <xenc:EncryptionMethod xmlns:xenc="{$xencns}" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
 XML
