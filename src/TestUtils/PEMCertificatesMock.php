@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\TestUtils;
 
 use Exception;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
+use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 
 /**
  * Class \SimpleSAML\TestUtils\PEMCertificatesMock
@@ -14,9 +15,6 @@ class PEMCertificatesMock
 {
     public const ALG_SIG_RSA = 'rsa';
     public const ALG_SIG_DSA = 'dsa';
-
-    public const PUBLIC_KEY_PATTERN = '/^-----BEGIN CERTIFICATE-----([^-]*)^-----END CERTIFICATE-----/m';
-    public const PRIVATE_KEY_PATTERN = '/^-----BEGIN RSA PRIVATE KEY-----([^-]*)^-----END RSA PRIVATE KEY-----/m';
 
     public const CERTIFICATE_DIR_RSA = '/tests/resources/certificates/rsa-pem';
     public const CERTIFICATE_DIR_DSA = '/tests/resources/certificates/dsa-pem';
@@ -34,24 +32,6 @@ class PEMCertificatesMock
     public const BROKEN_PRIVATE_KEY = 'broken.simplesamlphp.org.key';
     public const CORRUPTED_PUBLIC_KEY = 'corrupted.simplesamlphp.org.crt';
     public const CORRUPTED_PRIVATE_KEY = 'corrupted.simplesamlphp.org.key';
-
-    /**
-     * @param string $key The PEM-encoded key
-     * @param bool $private
-     * @return string The stripped key
-     */
-    private static function stripHeaders(string $key, bool $private)
-    {
-        $matches = [];
-        if ($private === false && !preg_match(self::PUBLIC_KEY_PATTERN, $key, $matches)) {
-            throw new Exception('Could not find PEM encoded certificate.');
-        } elseif ($private === true && !preg_match(self::PRIVATE_KEY_PATTERN, $key, $matches)) {
-            throw new Exception('Could not find PEM encoded key.');
-        }
-
-        /** @psalm-suppress EmptyArrayAccess */
-        return preg_replace('/\s+/', '', $matches[1]);
-    }
 
 
     /**
@@ -139,7 +119,7 @@ class PEMCertificatesMock
         string $file = self::PUBLIC_KEY,
         string $sig_alg = self::ALG_SIG_RSA
     ): string {
-        return self::stripHeaders(self::loadPlainCertificateFile($file, $sig_alg), false);
+        return CertificateUtils::stripHeaders(self::loadPlainCertificateFile($file, $sig_alg), CertificateUtils::PUBLIC_KEY_PATTERN);
     }
 
 
@@ -152,6 +132,6 @@ class PEMCertificatesMock
         string $file = self::PRIVATE_KEY,
         string $sig_alg = self::ALG_SIG_RSA
     ): string {
-        return self::stripHeaders(self::loadPlainCertificateFile($file, $sig_alg), true);
+        return CertificateUtils::stripHeaders(self::loadPlainCertificateFile($file, $sig_alg), CertificateUtils::PRIVATE_KEY_PATTERN);
     }
 }
