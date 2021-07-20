@@ -75,8 +75,8 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetUnknownAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $this->expectException(RuntimeException::class);
-        $factory->getAlgorithm('Unknown alg', $this->skey);
+        $this->expectException(InvalidArgumentException::class);
+        $factory->getAlgorithm('Unknown algorithm identifier', $this->skey);
     }
 
 
