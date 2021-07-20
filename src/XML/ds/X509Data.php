@@ -8,7 +8,6 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 
 /**
  * Class representing a ds:X509Data element.
