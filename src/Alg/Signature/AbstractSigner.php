@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -16,7 +18,7 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
 abstract class AbstractSigner implements SignatureAlgorithm
 {
     /** @var \SimpleSAML\XMLSecurity\Key\AbstractKey */
-    protected AbstractKey $key;
+    private AbstractKey $key;
 
     /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
@@ -27,19 +29,43 @@ abstract class AbstractSigner implements SignatureAlgorithm
     /** @var string */
     protected string $digest;
 
+    /** @var string */
+    protected string $algId;
+
 
     /**
      * Build a signature algorithm.
      *
+     * Extend this class to implement your own signers.
+     *
+     * WARNING: remember to adjust the type of the key to the one that works with your algorithm!
+     *
      * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The signing key.
+     * @param string $algId The identifier of this algorithm.
      * @param string $digest The identifier of the digest algorithm to use.
      */
-    public function __construct(AbstractKey $key, string $digest)
+    public function __construct(AbstractKey $key, string $algId, string $digest)
     {
+        Assert::oneOf(
+            $algId,
+            static::getSupportedAlgorithms(),
+            'Unsupported algorithm for ' . static::class,
+            RuntimeException::class
+        );
         $this->key = $key;
+        $this->algId = $algId;
         $this->digest = $digest;
         $this->backend = new $this->default_backend();
         $this->backend->setDigestAlg($digest);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAlgorithmId(): string
+    {
+        return $this->algId;
     }
 
 
@@ -69,7 +95,7 @@ abstract class AbstractSigner implements SignatureAlgorithm
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      */
-    public function sign(string $plaintext): string
+    final public function sign(string $plaintext): string
     {
         return $this->backend->sign($this->key, $plaintext);
     }
@@ -83,7 +109,7 @@ abstract class AbstractSigner implements SignatureAlgorithm
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(string $plaintext, string $signature): bool
+    final public function verify(string $plaintext, string $signature): bool
     {
         return $this->backend->verify($this->key, $plaintext, $signature);
     }

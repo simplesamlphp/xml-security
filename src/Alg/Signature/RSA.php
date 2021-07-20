@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 
 /**
@@ -14,7 +14,7 @@ use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
  *
  * @package simplesamlphp/xml-security
  */
-class RSA extends AbstractSigner implements SignatureAlgorithm
+final class RSA extends AbstractSigner implements SignatureAlgorithm
 {
     /** @var string */
     protected string $default_backend = OpenSSL::class;
@@ -24,10 +24,26 @@ class RSA extends AbstractSigner implements SignatureAlgorithm
      * RSA constructor.
      *
      * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
-     * @param string $digest The identifier of the digest algorithm to use.
+     * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(AsymmetricKey $key, string $digest = Constants::DIGEST_SHA1)
+    public function __construct(AsymmetricKey $key, string $algId = C::SIG_RSA_SHA256)
     {
-        parent::__construct($key, $digest);
+        parent::__construct($key, $algId, C::$RSA_DIGESTS[$algId]);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public static function getSupportedAlgorithms(): array
+    {
+        return [
+            C::SIG_RSA_RIPEMD160,
+            C::SIG_RSA_SHA1,
+            C::SIG_RSA_SHA224,
+            C::SIG_RSA_SHA256,
+            C::SIG_RSA_SHA384,
+            C::SIG_RSA_SHA512,
+        ];
     }
 }

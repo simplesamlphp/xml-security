@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
-use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
-use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 use function in_array;
 
@@ -19,8 +17,18 @@ use function in_array;
  *
  * @package simplesamlphp/xml-security
  */
-class SignatureAlgorithmFactory
+final class SignatureAlgorithmFactory
 {
+    /**
+     * An array holding the known classes extending \SimpleSAML\XMLSecurity\Alg\Signature\AbstractSigner.
+     *
+     * @var string[]
+     */
+    private static array $algorithms = [
+        RSA::class,
+        HMAC::class
+    ];
+
     /**
      * An array of blacklisted algorithms.
      *
@@ -28,10 +36,24 @@ class SignatureAlgorithmFactory
      *
      * @var string[]
      */
-    protected array $blacklist = [
+    private array $blacklist = [
         Constants::SIG_RSA_SHA1,
         Constants::SIG_HMAC_SHA1,
     ];
+
+    /**
+     * A cache of signers indexed by algorithm ID.
+     *
+     * @var string[]
+     */
+    private static array $cache = [];
+
+    /**
+     * Whether the factory has been initialized or not.
+     *
+     * @var bool
+     */
+    private static bool $initialized = false;
 
 
     /**
@@ -44,6 +66,14 @@ class SignatureAlgorithmFactory
         if ($blacklist !== null) {
             $this->blacklist = $blacklist;
         }
+
+        // initialize the cache for supported algorithms per known signer
+        if (!self::$initialized) {
+            foreach (self::$algorithms as $algorithm) {
+                self::updateCache($algorithm);
+            }
+            self::$initialized = true;
+        }
     }
 
 
@@ -55,8 +85,8 @@ class SignatureAlgorithmFactory
      *
      * @return \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm An object implementing the given algorithm.
      *
-     * @throws InvalidArgumentException If an error occurs, e.g. the given algorithm is blacklisted, unknown or the
-     * given key is not suitable for it.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
+     * is blacklisted, unknown or the given key is not suitable for it.
      */
     public function getAlgorithm(string $algId, AbstractKey $key): SignatureAlgorithm
     {
@@ -64,59 +94,45 @@ class SignatureAlgorithmFactory
             throw new InvalidArgumentException('Blacklisted signature algorithm');
         }
 
-        // determine digest
-        switch ($algId) {
-            case Constants::SIG_RSA_SHA1:
-            case Constants::SIG_HMAC_SHA1:
-                $digest = Constants::DIGEST_SHA1;
-                break;
-            case Constants::SIG_RSA_SHA224:
-            case Constants::SIG_HMAC_SHA224:
-                $digest = Constants::DIGEST_SHA224;
-                break;
-            case Constants::SIG_RSA_SHA256:
-            case Constants::SIG_HMAC_SHA256:
-                $digest = Constants::DIGEST_SHA256;
-                break;
-            case Constants::SIG_RSA_SHA384:
-            case Constants::SIG_HMAC_SHA384:
-                $digest = Constants::DIGEST_SHA384;
-                break;
-            case Constants::SIG_RSA_SHA512:
-            case Constants::SIG_HMAC_SHA512:
-                $digest = Constants::DIGEST_SHA512;
-                break;
-            case Constants::SIG_RSA_RIPEMD160:
-            case Constants::SIG_HMAC_RIPEMD160:
-                $digest = Constants::DIGEST_RIPEMD160;
-                break;
-            default:
-                throw new RuntimeException('Unsupported signature algorithm');
+        if (!array_key_exists($algId, self::$cache)) {
+            throw new InvalidArgumentException('Unknown algorithm identifier.');
         }
 
-        // create instance
-        switch ($algId) {
-            case Constants::SIG_RSA_SHA1:
-            case Constants::SIG_RSA_SHA224:
-            case Constants::SIG_RSA_SHA256:
-            case Constants::SIG_RSA_SHA384:
-            case Constants::SIG_RSA_SHA512:
-            case Constants::SIG_RSA_RIPEMD160:
-                if ($key instanceof AsymmetricKey) {
-                    return new RSA($key, $digest);
-                }
-                break;
-            case Constants::SIG_HMAC_SHA1:
-            case Constants::SIG_HMAC_SHA224:
-            case Constants::SIG_HMAC_SHA256:
-            case Constants::SIG_HMAC_SHA384:
-            case Constants::SIG_HMAC_SHA512:
-            case Constants::SIG_HMAC_RIPEMD160:
-                if ($key instanceof SymmetricKey) {
-                    return new HMAC($key, $digest);
-                }
-                break;
+        return new self::$cache[$algId]($key, $algId);
+    }
+
+
+    /**
+     * Register a signature algorithm for its use.
+     *
+     * @note Algorithms must extend \SimpleSAML\XMLSecurity\Alg\Signature\AbstractSigner.
+     *
+     * @param string $className
+     */
+    public static function registerAlgorithm(string $className): void
+    {
+        Assert::subclassOf(
+            $className,
+            AbstractSigner::class,
+            'Cannot register algorithm "' . $className . '", must implement ' . "\SimpleSAML\XMLSecurity\Alg\SignatureInterface.",
+            InvalidArgumentException::class
+        );
+
+        self::$algorithms[] = $className;
+        self::updateCache($className);
+    }
+
+
+    /**
+     * Update the cache with a new signer implementation.
+     *
+     * @param string $signer
+     */
+    private static function updateCache(string $signer): void
+    {
+        /** @var \SimpleSAML\XMLSecurity\Alg\Signature\AbstractSigner $signer */
+        foreach ($signer::getSupportedAlgorithms() as $algId) {
+            self::$cache[$algId] = $signer;
         }
-        throw new RuntimeException('Invalid type of key for algorithm');
     }
 }
