@@ -37,13 +37,6 @@ final class HMAC extends AbstractSigner implements SignatureAlgorithm
      */
     public static function getSupportedAlgorithms(): array
     {
-        return [
-            C::SIG_HMAC_SHA1,
-            C::SIG_HMAC_SHA224,
-            C::SIG_HMAC_SHA256,
-            C::SIG_HMAC_SHA384,
-            C::SIG_HMAC_SHA512,
-            C::SIG_HMAC_RIPEMD160,
-        ];
+        return C::HMAC_DIGESTS;
     }
 }
