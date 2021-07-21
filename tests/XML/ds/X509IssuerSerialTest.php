@@ -7,11 +7,11 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
@@ -80,11 +80,13 @@ final class X509IssuerSerialTest extends TestCase
         $X509IssuerSerial = new X509IssuerSerial($this->issuer, $this->serial);
         $X509IssuerSerialElement = $X509IssuerSerial->toXML();
 
-        $issuerName = XMLUtils::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName');
+        $xpCache = XPath::getXPath($X509IssuerSerialElement);
+
+        $issuerName = XPath::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName', $xpCache);
         $this->assertCount(1, $issuerName);
 
         /** @psalm-var \DOMElement[] $X509IssuerSerialElements */
-        $X509IssuerSerialElements = XMLUtils::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName/following-sibling::*');
+        $X509IssuerSerialElements = XPath::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName/following-sibling::*', $xpCache);
 
         // Test ordering of X509IssuerSerial contents
         $this->assertCount(1, $X509IssuerSerialElements);

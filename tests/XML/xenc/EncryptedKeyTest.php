@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
@@ -119,14 +119,20 @@ final class EncryptedKeyTest extends TestCase
         // Marshall it to a \DOMElement
         $encryptedKeyElement = $encryptedKey->toXML();
 
+        $xpCache = XPath::getXPath($encryptedKeyElement);
         // Test for a ReferenceList
-        $encryptedKeyElements = XMLUtils::xpQuery($encryptedKeyElement, './xenc:ReferenceList');
+        $encryptedKeyElements = XPath::xpQuery(
+            $encryptedKeyElement,
+            './xenc:ReferenceList',
+            $xpCache
+        );
         $this->assertCount(1, $encryptedKeyElements);
 
         // Test ordering of EncryptedKey contents
-        $encryptedKeyElements = XMLUtils::xpQuery(
+        $encryptedKeyElements = XPath::xpQuery(
             $encryptedKeyElement,
-            './xenc:ReferenceList/following-sibling::*'
+            './xenc:ReferenceList/following-sibling::*',
+            $xpCache
         );
         $this->assertCount(1, $encryptedKeyElements);
         $this->assertEquals('xenc:CarriedKeyName', $encryptedKeyElements[0]->tagName);
