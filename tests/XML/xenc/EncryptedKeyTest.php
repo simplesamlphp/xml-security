@@ -12,6 +12,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
@@ -50,11 +51,11 @@ final class EncryptedKeyTest extends TestCase
 
 
     /**
-     */
+-     */
     public function testMarshalling(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData('PzA5X...'),
+            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
@@ -65,7 +66,7 @@ final class EncryptedKeyTest extends TestCase
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData('nxf0b...'),
+                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
                         null,
                         null,
                         null,
@@ -91,7 +92,7 @@ final class EncryptedKeyTest extends TestCase
     public function testMarshallingElementOrdering(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData('PzA5X...'),
+            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
@@ -102,7 +103,7 @@ final class EncryptedKeyTest extends TestCase
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData('nxf0b...'),
+                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
                         null,
                         null,
                         null,
@@ -149,7 +150,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromXML($this->xmlRepresentation->documentElement);
 
         $cipherData = $encryptedKey->getCipherData();
-        $this->assertEquals('PzA5X...', $cipherData->getCipherValue());
+        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $cipherData->getCipherValue()->getContent());
 
         $encryptionMethod = $encryptedKey->getEncryptionMethod();
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#rsa-1_5', $encryptionMethod->getAlgorithm());

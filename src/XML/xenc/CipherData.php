@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 
 use function array_pop;
 
@@ -18,8 +18,8 @@ use function array_pop;
  */
 class CipherData extends AbstractXencElement
 {
-    /** @var string|null */
-    protected ?string $cipherValue = null;
+    /** @var \SimpleSAML\XMLSecurity\xenc\CipherValue|null */
+    protected ?CipherValue $cipherValue = null;
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null */
     protected ?CipherReference $cipherReference = null;
@@ -28,15 +28,20 @@ class CipherData extends AbstractXencElement
     /**
      * CipherData constructor.
      *
-     * @param string|null $cipherValue
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null $cipherValue
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null $cipherReference
      */
-    public function __construct(?string $cipherValue, ?CipherReference $cipherReference = null)
+    public function __construct(?CipherValue $cipherValue, ?CipherReference $cipherReference = null)
     {
         Assert::oneOf(
             null,
             [$cipherValue, $cipherReference],
             'Can only have one of CipherValue/CipherReference'
+        );
+
+        Assert::false(
+            is_null($cipherValue) && is_null($cipherReference),
+            'You need either a CipherValue or a CipherReference'
         );
 
         $this->setCipherValue($cipherValue);
@@ -45,22 +50,21 @@ class CipherData extends AbstractXencElement
 
 
     /**
-     * Get the string value of the <xenc:CipherValue> element inside this CipherData object.
+     * Get the value of the $cipherValue property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null
      */
-    public function getCipherValue(): ?string
+    public function getCipherValue(): ?CipherValue
     {
         return $this->cipherValue;
     }
 
 
     /**
-     * @param string|null $cipherValue
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null $cipherValue
      */
-    protected function setCipherValue(?string $cipherValue): void
+    protected function setCipherValue(?CipherValue $cipherValue): void
     {
-        Assert::nullOrRegex($cipherValue, '/[a-zA-Z0-9_\-=\+\/]/', 'Invalid data in <xenc:CipherValue>.');
         $this->cipherValue = $cipherValue;
     }
 
@@ -96,15 +100,14 @@ class CipherData extends AbstractXencElement
         Assert::same($xml->localName, 'CipherData', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CipherData::NS, InvalidDOMElementException::class);
 
-        $cv = XMLUtils::xpQuery($xml, './xenc:CipherValue');
-        Assert::notEmpty($cv, 'Missing CipherValue element in <xenc:CipherData>');
-        Assert::count($cv, 1, 'More than one CipherValue element in <xenc:CipherData');
+        $cv = CipherValue::getChildrenOfClass($xml);
+        Assert::maxCount($cv, 1, 'More than one CipherValue element in <xenc:CipherData');
 
         $cr = CipherReference::getChildrenOfClass($xml);
         Assert::maxCount($cr, 1, 'More than one CipherReference element in <xenc:CipherData');
 
         return new self(
-            empty($cv) ? null : $cv[0]->textContent,
+            empty($cv) ? null : array_pop($cv),
             empty($cr) ? null : array_pop($cr)
         );
     }
@@ -119,7 +122,7 @@ class CipherData extends AbstractXencElement
         $e = $this->instantiateParentElement($parent);
 
         if ($this->cipherValue !== null) {
-            XMLUtils::addString($e, $this::NS, 'CipherValue', $this->cipherValue);
+            $this->cipherValue->toXML($e);
         }
 
         if ($this->cipherReference !== null) {
