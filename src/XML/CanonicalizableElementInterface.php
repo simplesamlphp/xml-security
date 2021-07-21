@@ -18,7 +18,7 @@ use SimpleSAML\XML\XMLElementInterface;
  *
  * @package simplesamlphp/xml-security
  */
-interface CanonicalizableInterface extends XMLElementInterface, \Serializable
+interface CanonicalizableElementInterface extends XMLElementInterface, \Serializable
 {
     /**
      * Get the canonical (string) representation of this object.

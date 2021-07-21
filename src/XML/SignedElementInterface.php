@@ -11,7 +11,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
  *
  * @package simplesamlphp/xml-security
  */
-interface SignedElementInterface
+interface SignedElementInterface extends CanonicalizableElementInterface
 {
     /**
      * Retrieve certificates that sign this element.

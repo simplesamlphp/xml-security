@@ -7,17 +7,17 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\XML\CanonicalizableInterface;
-use SimpleSAML\XMLSecurity\XML\CanonicalizableTrait;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 
 /**
  * Class representing a ds:SignedInfo element.
  *
  * @package simplesamlphp/xml-security
  */
-final class SignedInfo extends AbstractDsElement implements CanonicalizableInterface
+final class SignedInfo extends AbstractDsElement implements CanonicalizableElementInterface
 {
-    use CanonicalizableTrait;
+    use CanonicalizableElementTrait;
 
     /** @var string|null */
     protected ?string $Id;
