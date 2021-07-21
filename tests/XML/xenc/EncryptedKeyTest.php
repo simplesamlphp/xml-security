@@ -11,6 +11,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
@@ -61,7 +62,7 @@ final class EncryptedKeyTest extends TestCase
             'text/plain',
             'someEncoding',
             'some_ENTITY_ID',
-            'Name of the key',
+            new CarriedKeyName('Name of the key'),
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
             new KeyInfo(
                 [
@@ -98,7 +99,7 @@ final class EncryptedKeyTest extends TestCase
             'text/plain',
             'someEncoding',
             'some_ENTITY_ID',
-            'Name of the key',
+            new CarriedKeyName('Name of the key'),
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
             new KeyInfo(
                 [
@@ -173,7 +174,7 @@ final class EncryptedKeyTest extends TestCase
         $this->assertEquals('text/plain', $encryptedKey->getMimeType());
         $this->assertEquals('Encrypted_KEY_ID', $encryptedKey->getID());
         $this->assertEquals('some_ENTITY_ID', $encryptedKey->getRecipient());
-        $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName());
+        $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName()->getContent());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
