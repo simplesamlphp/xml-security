@@ -46,7 +46,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableInter
 
 
     /**
-     * Initialize a SignedIfno.
+     * Initialize a SignedInfo.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod $canonicalizationMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod $signatureMethod

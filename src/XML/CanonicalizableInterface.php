@@ -7,10 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML;
 use SimpleSAML\XML\XMLElementInterface;
 
 /**
- * An interface for objects that can be canonicalised.
+ * An interface for objects that can be canonicalized.
  *
  * Objects implementing this interface should retain the original XML structure that was used to create them with
- * fromXML(), in order to guarantee that the original canonicalisation of the object is the same as the one produced
+ * fromXML(), in order to guarantee that the original canonicalization of the object is the same as the one produced
  * by this interface.
  *
  * If the original DOM object is retained, please remember to implement the \Serializable interface so that the
