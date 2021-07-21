@@ -37,6 +37,6 @@ final class RSA extends AbstractSigner implements SignatureAlgorithm
      */
     public static function getSupportedAlgorithms(): array
     {
-        return C::$RSA_DIGESTS;
+        return array_keys(C::$RSA_DIGESTS);
     }
 }
