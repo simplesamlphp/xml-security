@@ -8,11 +8,11 @@ use DOMElement;
 use SimpleSAML\XMLSecurity\Utils\XML;
 
 /**
- * A trait implementing the CanonicalizableInterface.
+ * A trait implementing the CanonicalizableElementInterface.
  *
  * @package simplesamlphp/xml-security
  */
-trait CanonicalizableTrait
+trait CanonicalizableElementTrait
 {
     /**
      * This trait uses the php DOM extension. As such, it requires you to keep track (or produce) the DOMElement
