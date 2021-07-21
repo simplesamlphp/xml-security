@@ -106,7 +106,7 @@ trait SignableElementTrait
             [$reference]
         );
 
-        $signingData = XML::canonicalizeData($signedInfo->toXML(), $this->c14nAlg);
+        $signingData = $signedInfo->canonicalize($this->c14nAlg);
         $signedData = base64_encode($this->signer->sign($signingData));
 
         $this->signature = new Signature($signedInfo, new SignatureValue($signedData), $this->keyInfo);

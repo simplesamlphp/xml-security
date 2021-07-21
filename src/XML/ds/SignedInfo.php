@@ -7,7 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Chunk;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableInterface;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableTrait;
 
 use function array_pop;
 
@@ -16,8 +17,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-final class SignedInfo extends AbstractDsElement
+final class SignedInfo extends AbstractDsElement implements CanonicalizableInterface
 {
+    use CanonicalizableTrait;
+
     /** @var string|null */
     protected ?string $Id;
 
@@ -35,6 +38,11 @@ final class SignedInfo extends AbstractDsElement
      * @var \SimpleSAML\XMLSecurity\XML\ds\Reference[]
      */
     protected array $references;
+
+    /**
+     * @var DOMElement
+     */
+    protected ?DOMElement $xml = null;
 
 
     /**
@@ -149,6 +157,18 @@ final class SignedInfo extends AbstractDsElement
 
 
     /**
+     * @inheritDoc
+     */
+    protected function getOriginalXML(): DOMElement
+    {
+        if ($this->xml !== null) {
+            return $this->xml;
+        }
+        return $this->toXML();
+    }
+
+
+    /**
      * Convert XML into a SignedInfo instance
      *
      * @param \DOMElement $xml The XML element we should load
@@ -173,12 +193,9 @@ final class SignedInfo extends AbstractDsElement
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount($references, 1, 'A ds:SignedInfo element must contain at least one ds:Reference');
 
-        return new self(
-            array_pop($canonicalizationMethod),
-            array_pop($signatureMethod),
-            $references,
-            $Id
-        );
+        $signedInfo = new self(array_pop($canonicalizationMethod), array_pop($signatureMethod), $references, $Id);
+        $signedInfo->xml = $xml;
+        return $signedInfo;
     }
 
 

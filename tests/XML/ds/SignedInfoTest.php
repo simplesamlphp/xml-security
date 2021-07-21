@@ -89,4 +89,54 @@ final class SignedInfoTest extends TestCase
             strval($signedInfo)
         );
     }
+
+
+    /**
+     *
+     */
+    public function canonicalization(\DOMElement $xml, SignedInfo $signedInfo): void
+    {
+        $this->assertEquals(
+            $xml->C14N(true, false),
+            $signedInfo->canonicalize(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+        );
+        $this->assertEquals(
+            $xml->C14N(false, false),
+            $signedInfo->canonicalize(Constants::C14N_INCLUSIVE_WITHOUT_COMMENTS)
+        );
+        $this->assertEquals(
+            $xml->C14N(true, true),
+            $signedInfo->canonicalize(Constants::C14N_EXCLUSIVE_WITH_COMMENTS)
+        );
+        $this->assertEquals(
+            $xml->C14N(false, true),
+            $signedInfo->canonicalize(Constants::C14N_INCLUSIVE_WITH_COMMENTS)
+        );
+    }
+
+
+    /**
+     * Test that canonicalization works fine.
+     */
+    public function testCanonicalizaation(): void
+    {
+        $xml =  DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml'
+        )->documentElement;
+        $signedInfo = SignedInfo::fromXML($xml);
+        $this->canonicalization($xml, $signedInfo);
+    }
+
+
+    /**
+     * Test that canonicalization works fine even after serializing and unserializing
+     */
+    public function testCanonicalizationAfterSerialization(): void
+    {
+        $xml =  DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml'
+        )->documentElement;
+        $signedInfo = unserialize(serialize(SignedInfo::fromXML($xml)));
+        $this->canonicalization($xml, $signedInfo);
+    }
 }
