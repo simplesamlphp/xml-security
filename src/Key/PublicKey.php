@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use Webmozart\Assert\Assert;
+
 use function base64_encode;
 use function chr;
 use function chunk_split;
@@ -86,16 +88,16 @@ class PublicKey extends AsymmetricKey
         }
 
         $length = strlen($string);
+        Assert::lessThan($length, self::ASN1_SIZE_65535);
 
         if ($length < self::ASN1_SIZE_128) {
             $output = sprintf("%c%c%s", $type, $length, $string);
         } elseif ($length < self::ASN1_SIZE_256) {
             $output = sprintf("%c%c%c%s", $type, self::ASN1_SIZE_128 + 1, $length, $string);
-        } elseif ($length < self::ASN1_SIZE_65535) {
+        } else { // ($length < self::ASN1_SIZE_65535)
             $output = sprintf("%c%c%c%c%s", $type, self::ASN1_SIZE_128 +2, $length / 0x0100, $length % 0x0100, $string);
-        } else {
-            $output = null;
         }
+
         return $output;
     }
 
