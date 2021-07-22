@@ -72,7 +72,7 @@ class PEMCertificatesMock
 
     /**
      * @param string $hash_alg
-     * @param string The file to use
+     * @param string $file The file to use
      * @param string $sig_alg  One of rsa|dsa
      * @return \SimpleSAML\XMLSecurity\XMLSecurityKey
      */
@@ -89,7 +89,7 @@ class PEMCertificatesMock
 
     /**
      * @param string $hash_alg
-     * @param string The file to use
+     * @param string $file The file to use
      * @param string $sig_alg  One of rsa|dsa
      * @return \SimpleSAML\XMLSecurity\XMLSecurityKey
      */
