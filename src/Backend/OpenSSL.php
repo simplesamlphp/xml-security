@@ -64,7 +64,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
                 $fn = 'openssl_private_encrypt';
             }
 
-            $ciphertext = null;
+            $ciphertext = '';
             if (!$fn($plaintext, $ciphertext, $key->get(), $this->padding)) {
                 throw new RuntimeException('Cannot encrypt data: ' . openssl_error_string());
             }
@@ -109,7 +109,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
                 $fn = 'openssl_private_decrypt';
             }
 
-            $plaintext = null;
+            $plaintext = '';
             if (!$fn($ciphertext, $plaintext, $key->get(), $this->padding)) {
                 throw new RuntimeException('Cannot decrypt data: ' . openssl_error_string());
             }
