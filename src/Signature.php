@@ -390,7 +390,7 @@ class Signature
             $pem_lines = explode("\n", trim($cert->getCertificate()));
             array_shift($pem_lines);
             array_pop($pem_lines);
-            $pem = join($pem_lines);
+            $pem = /** @scrutinizer ignore-call */ join($pem_lines);
             $x509CertNode = $this->createElement('X509Certificate', $pem);
             $certDataNode->appendChild($x509CertNode);
         }
