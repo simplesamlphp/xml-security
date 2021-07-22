@@ -42,7 +42,7 @@ class XPath extends \SimpleSAML\XML\Utils\XPath
      *
      * @throws RuntimeException If no DOM document is available.
      */
-    public static function findElement(DOMNode $ref, string $name): DOMDocument
+    public static function findElement(DOMNode $ref, string $name)
     {
         $doc = $ref instanceof DOMDocument ? $ref : $ref->ownerDocument;
         if ($doc === null) {
