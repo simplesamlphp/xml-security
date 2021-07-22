@@ -1052,7 +1052,7 @@ class Signature
                     $includeCommentNodes = false;
 
                     $xp = XP::getXPath($ref->ownerDocument);
-                    if ($this->idNS && is_array($this->idNS)) {
+                    if (!empty($this->idNS) && is_array($this->idNS)) {
                         foreach ($this->idNS as $nspf => $ns) {
                             $xp->registerNamespace($nspf, $ns);
                         }
