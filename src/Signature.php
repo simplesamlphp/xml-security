@@ -1052,16 +1052,12 @@ class Signature
                     $includeCommentNodes = false;
 
                     $xp = XP::getXPath($ref->ownerDocument);
-                    if (!empty($this->idNS) && is_array($this->idNS)) {
-                        foreach ($this->idNS as $nspf => $ns) {
-                            $xp->registerNamespace($nspf, $ns);
-                        }
+                    foreach ($this->idNS as $nspf => $ns) {
+                        $xp->registerNamespace($nspf, $ns);
                     }
                     $iDlist = '@Id="' . $identifier . '"';
-                    if (is_array($this->idKeys)) {
-                        foreach ($this->idKeys as $idKey) {
-                            $iDlist .= " or @$idKey='$identifier'";
-                        }
+                    foreach ($this->idKeys as $idKey) {
+                        $iDlist .= " or @$idKey='$identifier'";
                     }
                     $query = '//*[' . $iDlist . ']';
                     $dataObject = $xp->query($query)->item(0);
