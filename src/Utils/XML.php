@@ -106,7 +106,7 @@ class XML
                     $inclusiveNamespaces = $transform->getInclusiveNamespaces();
                     if ($inclusiveNamespaces !== null) {
                         $prefixes = $inclusiveNamespaces->getPrefixes();
-                        if (count($prefixes > 0)) {
+                        if (count($prefixes) > 0) {
                             $prefixList = $prefixes;
                         }
                     }
