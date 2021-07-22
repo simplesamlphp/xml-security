@@ -18,7 +18,7 @@ use function array_pop;
  */
 class CipherData extends AbstractXencElement
 {
-    /** @var \SimpleSAML\XMLSecurity\xenc\CipherValue|null */
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null */
     protected ?CipherValue $cipherValue = null;
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null */
