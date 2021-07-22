@@ -341,7 +341,7 @@ class Signature
             if ($digest !== false) {
                 // add certificate digest
                 $fingerprint = base64_encode(hex2bin($cert->getRawThumbprint($digest)));
-                $x509DigestNode = $this->createElement('X509Digest', $fingerprint, C::XMLDSIG11NS, 'dsig11');
+                $x509DigestNode = $this->createElement('X509Digest', $fingerprint, C::NS_XDSIG11, 'dsig11');
                 $x509DigestNode->setAttribute('Algorithm', $digest);
                 $certDataNode->appendChild($x509DigestNode);
             }
@@ -370,7 +370,7 @@ class Signature
             $pem_lines = explode("\n", trim($cert->getCertificate()));
             array_shift($pem_lines);
             array_pop($pem_lines);
-            $pem = join($pem_lines);
+            $pem = /** @scrutinizer ignore-call */ join($pem_lines);
             $x509CertNode = $this->createElement('X509Certificate', $pem);
             $certDataNode->appendChild($x509CertNode);
         }
@@ -694,7 +694,7 @@ class Signature
      */
     public function setSignatureElement(DOMElement $element): void
     {
-        if ($element->localName !== 'Signature' || $element->namespaceURI !== C::XMLDSIGNS) {
+        if ($element->localName !== 'Signature' || $element->namespaceURI !== C::NS_XDSIG) {
             throw new RuntimeException('Node is not an XML signature');
         }
         $this->sigNode = $element;
@@ -897,7 +897,7 @@ class Signature
     protected function createElement(
         string $name,
         string $content = null,
-        string $ns = C::XMLDSIGNS,
+        string $ns = C::NS_XDSIG,
         string $nsPrefix = null
     ): DOMElement {
         if ($this->sigNode === null) {
@@ -1032,16 +1032,12 @@ class Signature
                     $includeCommentNodes = false;
 
                     $xp = XP::getXPath($ref->ownerDocument);
-                    if ($this->idNS && is_array($this->idNS)) {
-                        foreach ($this->idNS as $nspf => $ns) {
-                            $xp->registerNamespace($nspf, $ns);
-                        }
+                    foreach ($this->idNS as $nspf => $ns) {
+                        $xp->registerNamespace($nspf, $ns);
                     }
                     $iDlist = '@Id="' . $identifier . '"';
-                    if (is_array($this->idKeys)) {
-                        foreach ($this->idKeys as $idKey) {
-                            $iDlist .= " or @$idKey='$identifier'";
-                        }
+                    foreach ($this->idKeys as $idKey) {
+                        $iDlist .= " or @$idKey='$identifier'";
                     }
                     $query = '//*[' . $iDlist . ']';
                     $dataObject = $xp->query($query)->item(0);

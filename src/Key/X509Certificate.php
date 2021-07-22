@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Key;
 
 use SimpleSAML\XMLSecurity\Constants;
@@ -9,7 +11,7 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 /**
  * A class modeling X509 certificates.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 class X509Certificate extends PublicKey
 {
@@ -42,6 +44,7 @@ class X509Certificate extends PublicKey
         if (!openssl_x509_export($resource, $certificate)) {
             throw new RuntimeException('Cannot export certificate to PEM: ' . openssl_error_string());
         }
+        /** @var string $certificate */
         $this->certificate = $certificate;
 
         parent::__construct(openssl_pkey_get_public($this->certificate));

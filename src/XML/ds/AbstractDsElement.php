@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use SimpleSAML\XML\AbstractXMLElement;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
+use SimpleSAML\XMLSecurity\Constants;
 
 /**
  * Abstract class to be implemented by all the classes in this namespace
@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 abstract class AbstractDsElement extends AbstractXMLElement
 {
     /** @var string */
-    public const NS = XMLSecurityDSig::XMLDSIGNS;
+    public const NS = Constants::NS_XDSIG;
 
     /** @var string */
     public const NS_PREFIX = 'ds';

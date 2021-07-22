@@ -62,7 +62,7 @@ class InclusiveNamespaces extends AbstractEcElement
     {
         $prefixes = self::getAttribute($xml, 'PrefixList', '');
 
-        return new self(explode(' ', $prefixes));
+        return new self(array_filter(explode(' ', $prefixes)));
     }
 
     /**

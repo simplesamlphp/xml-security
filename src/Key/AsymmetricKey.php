@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Key;
 
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -9,7 +11,7 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  *
  * This class can be extended to implement public or private keys.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 abstract class AsymmetricKey extends AbstractKey
 {

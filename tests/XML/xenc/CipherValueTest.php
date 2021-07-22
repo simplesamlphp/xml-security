@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Test\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
@@ -10,17 +10,17 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
-use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 
 /**
- * Class \SimpleSAML\XMLSecurity\Test\XML\ds\DigestValueTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherValueTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\DigestValue
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\CipherValue
  *
  * @package simplesamlphp/xml-security
  */
-final class DigestValueTest extends TestCase
+final class CipherValueTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
@@ -28,10 +28,10 @@ final class DigestValueTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->testedClass = DigestValue::class;
+        $this->testedClass = CipherValue::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestValue.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherValue.xml'
         );
     }
 
@@ -40,11 +40,11 @@ final class DigestValueTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $digestValue = new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $cipherValue = new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
-            strval($digestValue)
+            strval($cipherValue)
         );
     }
 
@@ -54,7 +54,7 @@ final class DigestValueTest extends TestCase
     public function testMarshallingNotBase64(): void
     {
         $this->expectException(AssertionFailedException::class);
-        new DigestValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        new CipherValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
 
 
@@ -62,8 +62,8 @@ final class DigestValueTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $digestValue = DigestValue::fromXML($this->xmlRepresentation->documentElement);
+        $cipherValue = CipherValue::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
+        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $cipherValue->getContent());
     }
 }

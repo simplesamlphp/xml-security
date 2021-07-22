@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity;
 
 /**
  * A collection of constants used in this library, as defined by the XMLSec set of recommendations.
  *
- * @package SimpleSAML\XMLSecurity
+ * @package simplesamlphp/xml-security
  */
 class Constants extends \SimpleSAML\XML\Constants
 {
@@ -105,14 +107,32 @@ class Constants extends \SimpleSAML\XML\Constants
     public const SIG_HMAC_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha512';
     public const SIG_HMAC_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-ripemd160';
 
+    public static $RSA_DIGESTS = [
+        self::SIG_RSA_SHA1 => self::DIGEST_SHA1,
+        self::SIG_RSA_SHA224 => self::DIGEST_SHA224,
+        self::SIG_RSA_SHA256 => self::DIGEST_SHA256,
+        self::SIG_RSA_SHA384 => self::DIGEST_SHA384,
+        self::SIG_RSA_SHA512 => self::DIGEST_SHA512,
+        self::SIG_RSA_RIPEMD160 => self::DIGEST_RIPEMD160,
+    ];
+
+    public static $HMAC_DIGESTS = [
+        self::SIG_HMAC_SHA1 => self::DIGEST_SHA1,
+        self::SIG_HMAC_SHA224 => self::DIGEST_SHA224,
+        self::SIG_HMAC_SHA256 => self::DIGEST_SHA256,
+        self::SIG_HMAC_SHA384 => self::DIGEST_SHA384,
+        self::SIG_HMAC_SHA512 => self::DIGEST_SHA512,
+        self::SIG_HMAC_RIPEMD160 => self::DIGEST_RIPEMD160,
+    ];
+
     /**
      * XML & XPath namespaces and identifiers
      */
-    public const XMLDSIGNS = 'http://www.w3.org/2000/09/xmldsig#';
-    public const XMLDSIG11NS = 'http://www.w3.org/2009/xmldsig11#';
+    public const NS_XDSIG = 'http://www.w3.org/2000/09/xmldsig#';
+    public const NS_XDSIG11 = 'http://www.w3.org/2009/xmldsig11#';
     public const XMLDSIG_ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
 
-    public const XMLENCNS = 'http://www.w3.org/2001/04/xmlenc#';
+    public const NS_XENC = 'http://www.w3.org/2001/04/xmlenc#';
     public const XMLENC_ELEMENT = 'http://www.w3.org/2001/04/xmlenc#Element';
     public const XMLENC_CONTENT = 'http://www.w3.org/2001/04/xmlenc#Content';
 
