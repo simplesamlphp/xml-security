@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
+use function array_merge;
+
 /**
  * A class containing a list of references to either encrypted data or encryption keys.
  *

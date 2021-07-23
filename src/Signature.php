@@ -17,6 +17,26 @@ use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\Utils\Security as Sec;
 use SimpleSAML\XMLSecurity\Utils\XPath as XP;
 
+use function array_key_exists;
+use function array_pop;
+use function array_shift;
+use function array_unshift;
+use function base64_decode;
+use function base64_encode;
+use function count;
+use function explode;
+use function get_class;
+use function hash;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_null;
+use function is_string;
+use function join;
+use function parse_url;
+use function rtrim;
+use function trim;
+
 /**
  * Class implementing XML digital signatures.
  *

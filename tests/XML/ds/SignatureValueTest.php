@@ -11,6 +11,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureValueTest
  *

@@ -11,6 +11,9 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 
+use function array_pop;
+use function file_get_contents;
+
 /**
  * Test for XML digital signatures.
  *

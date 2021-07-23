@@ -11,6 +11,8 @@ use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
+use function count;
+
 /**
  * Abstract class representing encrypted data.
  *

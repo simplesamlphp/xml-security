@@ -11,6 +11,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureMethodTest
  *

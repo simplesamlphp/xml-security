@@ -12,6 +12,9 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
+use function bin2hex;
+use function hex2bin;
+
 /**
  * Tests for SimpleSAML\XMLSecurity\Backend\OpenSSL.
  *

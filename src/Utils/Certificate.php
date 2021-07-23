@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
+use function array_unshift;
+use function chunk_split;
+use function implode;
+use function is_array;
+use function preg_match;
+
 /**
  * Collection of Utility functions specifically for certificates
  */

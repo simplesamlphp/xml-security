@@ -12,6 +12,9 @@ use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\TransformTest
  *

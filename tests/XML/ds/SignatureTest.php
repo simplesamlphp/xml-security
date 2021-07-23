@@ -14,6 +14,9 @@ use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureTest
  *

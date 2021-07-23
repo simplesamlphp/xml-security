@@ -10,6 +10,8 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Constants;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
+use function array_pop;
+
 /**
  * Class representing a ds:Signature element.
  *

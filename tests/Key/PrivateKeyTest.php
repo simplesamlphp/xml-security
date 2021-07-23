@@ -5,6 +5,10 @@ namespace SimpleSAML\XMLSecurity\Key;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
+use function file_get_contents;
+use function openssl_pkey_get_details;
+use function openssl_pkey_get_private;
+
 /**
  * Tests for SimpleSAML\XMLSecurity\Key\PrivateKey
  *

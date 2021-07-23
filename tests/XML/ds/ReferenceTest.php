@@ -14,6 +14,9 @@ use SimpleSAML\XMLSecurity\XML\ds\Reference;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\ReferenceTest
  *

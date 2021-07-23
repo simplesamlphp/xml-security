@@ -12,6 +12,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\XML\Test\ds\DigestMethodTest
  *

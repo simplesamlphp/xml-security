@@ -7,6 +7,8 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Utils\Security;
 
+use function hash_hmac;
+
 /**
  * Backend for digital signatures based on hash-based message authentication codes.
  *

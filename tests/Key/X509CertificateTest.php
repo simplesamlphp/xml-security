@@ -3,9 +3,17 @@
 namespace SimpleSAML\XMLSecurity\Key;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
+
+use function file_get_contents;
+use function openssl_pkey_get_details;
+use function openssl_pkey_get_public;
+use function openssl_x509_fingerprint;
+use function openssl_x509_parse;
+use function openssl_x509_read;
 
 /**
  * Test for SimpleSAML\XMLSecurity\Key\X509Certificate
@@ -75,7 +83,7 @@ final class X509CertificateTest extends TestCase
         $f = openssl_x509_fingerprint($this->f);
         $this->assertEquals($f, $this->c->getRawThumbprint());
 
-        $m = new \ReflectionMethod(X509Certificate::class, 'manuallyComputeThumbprint');
+        $m = new ReflectionMethod(X509Certificate::class, 'manuallyComputeThumbprint');
         $m->setAccessible(true);
         $this->assertEquals($f, $m->invokeArgs($this->c, [Constants::DIGEST_SHA1]));
     }

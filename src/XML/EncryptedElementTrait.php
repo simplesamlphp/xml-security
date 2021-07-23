@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
+use Exception;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
@@ -141,7 +142,7 @@ trait EncryptedElementTrait
                 break;
 
             default:
-                throw new \Exception('Unknown key type for encryption: ' . $key->type);
+                throw new Exception('Unknown key type for encryption: ' . $key->type);
         }
 
         $dom = $enc->encryptNode($symmetricKey);

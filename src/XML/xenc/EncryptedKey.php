@@ -10,6 +10,8 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
+use function count;
+
 /**
  * Class representing an encrypted key.
  *

@@ -13,6 +13,11 @@ use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 
+use function dirname;
+use function str_replace;
+use function strval;
+use function substr;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509CertificateTest
  *

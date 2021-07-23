@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
+use function array_pop;
+
 /**
  * Class representing a ds:Reference element.
  *

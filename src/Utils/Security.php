@@ -14,6 +14,20 @@ use SimpleSAML\XMLSecurity\XMLSecEnc;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
+use function count;
+use function hash_equals;
+use function in_array;
+use function openssl_pkey_get_details;
+use function serialize;
+use function sha1;
+use function str_pad;
+use function str_replace;
+use function strlen;
+use function strval;
+use function substr;
+use function trim;
+use function var_export;
+
 /**
  * A collection of security-related functions.
  *

@@ -10,6 +10,8 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 use Webmozart\Assert\Assert;
 
+use function array_pop;
+
 /**
  * Class representing transforms.
  *

@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use Webmozart\Assert\Assert;
 
+use function str_replace;
+
 /**
  * Class implementing the XPath element.
  *

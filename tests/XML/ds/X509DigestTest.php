@@ -14,6 +14,11 @@ use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
 
+use function base64_encode;
+use function dirname;
+use function hex2bin;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509DigestTest
  *

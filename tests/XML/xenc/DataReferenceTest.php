@@ -13,6 +13,9 @@ use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\DataReferenceTest
  *

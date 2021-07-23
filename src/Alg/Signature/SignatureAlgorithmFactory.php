@@ -10,6 +10,8 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
+use function in_array;
+
 /**
  * Factory class to create and configure digital signature algorithms.
  *

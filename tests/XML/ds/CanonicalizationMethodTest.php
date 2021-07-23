@@ -11,6 +11,8 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 
+use function dirname;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\CanonicalizationMethodTest
  *

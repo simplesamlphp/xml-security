@@ -6,6 +6,22 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
+use function array_map;
+use function array_pop;
+use function array_shift;
+use function base64_encode;
+use function explode;
+use function function_exists;
+use function hash;
+use function implode;
+use function openssl_error_string;
+use function openssl_pkey_get_public;
+use function openssl_x509_export;
+use function openssl_x509_fingerprint;
+use function openssl_x509_parse;
+use function openssl_x509_read;
+use function trim;
+
 /**
  * A class modeling X509 certificates.
  *

@@ -11,6 +11,12 @@ use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Constants;
 
+use function base64_decode;
+use function base64_encode;
+use function intval;
+use function strval;
+use function trim;
+
 /**
  * A class implementing the xenc:AbstractEncryptionMethod element.
  *

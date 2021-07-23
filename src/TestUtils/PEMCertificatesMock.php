@@ -7,6 +7,11 @@ namespace SimpleSAML\XMLSecurity\TestUtils;
 use Exception;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
+use function dirname;
+use function file_get_contents;
+use function preg_match;
+use function preg_replace;
+
 /**
  * Class \SimpleSAML\TestUtils\PEMCertificatesMock
  */

@@ -5,6 +5,10 @@ namespace SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Utils\Random;
 
+use function chr;
+use function ord;
+use function strlen;
+
 /**
  * A class to model symmetric key secrets.
  *

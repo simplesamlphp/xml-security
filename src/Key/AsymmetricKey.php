@@ -4,6 +4,8 @@ namespace SimpleSAML\XMLSecurity\Key;
 
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
+use function file_get_contents;
+
 /**
  * A class representing an asymmetric key.
  *

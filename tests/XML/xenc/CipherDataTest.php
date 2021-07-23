@@ -12,6 +12,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherDataTest
  *

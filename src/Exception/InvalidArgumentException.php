@@ -4,6 +4,11 @@ namespace SimpleSAML\XMLSecurity\Exception;
 
 use Throwable;
 
+use function get_class;
+use function gettype;
+use function is_object;
+use function sprintf;
+
 /**
  * Class InvalidArgumentException
  *

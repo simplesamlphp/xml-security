@@ -4,6 +4,14 @@ namespace SimpleSAML\XMLSecurity\Key;
 
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
+use function base64_encode;
+use function chr;
+use function chunk_split;
+use function openssl_pkey_get_public;
+use function ord;
+use function pack;
+use function sprintf;
+
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *

@@ -7,6 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ec;
 use DOMElement;
 use Webmozart\Assert\Assert;
 
+use function explode;
+use function join;
+
 /**
  * Class implementing InclusiveNamespaces
  *

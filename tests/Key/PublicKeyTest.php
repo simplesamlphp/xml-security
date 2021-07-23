@@ -6,6 +6,10 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 
+use function file_get_contents;
+use function openssl_pkey_get_details;
+use function openssl_pkey_get_public;
+
 /**
  * Tests for SimpleSAML\XMLSecurity\Key\PublicKey.
  *

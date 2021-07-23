@@ -15,6 +15,9 @@ use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\Constants;
 
+use function dirname;
+use function strval;
+
 /**
  * Tests for the xenc:EncryptionMethod element.
  *

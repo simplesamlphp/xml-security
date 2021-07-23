@@ -18,6 +18,9 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\EncryptedKeyTest
  *

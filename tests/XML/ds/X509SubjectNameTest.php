@@ -11,6 +11,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\X509SubjectNameTest
  *

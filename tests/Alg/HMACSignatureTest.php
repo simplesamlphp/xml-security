@@ -14,6 +14,8 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use TypeError;
 
+use function bin2hex;
+
 /**
  * Tests for SimpleSAML\XMLSecurity\Alg\Signature\HMAC.
  *

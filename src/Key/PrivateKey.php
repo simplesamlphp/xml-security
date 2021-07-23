@@ -4,6 +4,8 @@ namespace SimpleSAML\XMLSecurity\Key;
 
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
+use function openssl_pkey_get_private;
+
 /**
  * A class modeling private keys for their use in asymmetric algorithms.
  *

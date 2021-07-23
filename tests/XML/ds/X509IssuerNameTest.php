@@ -12,6 +12,9 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\XML\ds\X509IssuerNameTest
  *

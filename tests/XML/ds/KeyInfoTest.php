@@ -19,6 +19,11 @@ use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
+use function dirname;
+use function openssl_x509_parse;
+use function str_replace;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\KeyInfoTest
  *

@@ -16,6 +16,9 @@ use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial
  *

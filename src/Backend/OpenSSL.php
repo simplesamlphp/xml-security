@@ -10,6 +10,22 @@ use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Utils\Random;
 
+use function chr;
+use function mb_strlen;
+use function openssl_cipher_iv_length;
+use function openssl_decrypt;
+use function openssl_encrypt;
+use function openssl_error_string;
+use function openssl_private_decrypt;
+use function openssl_public_decrypt;
+use function openssl_private_encrypt;
+use function openssl_public_encrypt;
+use function openssl_sign;
+use function openssl_verify;
+use function ord;
+use function str_repeat;
+use function substr;
+
 /**
  * Backend for encryption and digital signatures based on the native openssl library.
  *

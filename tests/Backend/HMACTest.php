@@ -8,6 +8,9 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
+use function bin2hex;
+use function hex2bin;
+
 /**
  * Test for SimpleSAML\XMLSecurity\Backend\HMAC.
  *

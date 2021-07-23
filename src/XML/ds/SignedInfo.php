@@ -9,6 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Chunk;
 
+use function array_pop;
+
 /**
  * Class representing a ds:SignedInfo element.
  *

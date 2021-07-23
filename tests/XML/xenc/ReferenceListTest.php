@@ -15,6 +15,9 @@ use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
+use function dirname;
+use function strval;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\ReferenceListTest
  *

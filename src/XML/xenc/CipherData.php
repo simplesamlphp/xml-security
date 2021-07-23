@@ -9,6 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Utils as XMLUtils;
 
+use function array_pop;
+
 /**
  * Class representing <xenc:CipherData>.
  *
