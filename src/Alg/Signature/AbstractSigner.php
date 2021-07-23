@@ -79,6 +79,15 @@ abstract class AbstractSigner implements SignatureAlgorithm
 
 
     /**
+     * @return AbstractKey
+     */
+    public function getKey(): AbstractKey
+    {
+        return $this->key;
+    }
+
+
+    /**
      * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend
      */
     public function setBackend(SignatureBackend $backend): void
