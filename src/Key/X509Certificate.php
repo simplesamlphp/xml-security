@@ -31,6 +31,9 @@ use function trim;
  */
 class X509Certificate extends PublicKey
 {
+    public const PEM_HEADER = '-----BEGIN CERTIFICATE-----';
+    public const PEM_FOOTER = '-----END CERTIFICATE-----';
+
     /** @var string */
     protected string $certificate;
 
