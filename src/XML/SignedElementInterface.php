@@ -23,7 +23,7 @@ interface SignedElementInterface extends CanonicalizableElementInterface
 
 
     /**
-     * Validate this element against a public key.
+     * Verify the signature in this object.
      *
      * If no signature is present, false is returned. If a signature is present,
      * but cannot be verified, an exception will be thrown.

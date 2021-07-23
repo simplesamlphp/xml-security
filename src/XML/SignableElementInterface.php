@@ -30,7 +30,7 @@ interface SignableElementInterface
      * @note The signature will not be applied until toSignedXML() is called.
      *
      * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm $signer The actual signer implementation to use.
-     * @param string|null $canonicalizationAlg The identifier of the canonicalization algorithm to use.
+     * @param string $canonicalizationAlg The identifier of the canonicalization algorithm to use.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo A KeyInfo object to add to the signature.
      */
     public function sign(
