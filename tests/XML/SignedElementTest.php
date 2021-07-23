@@ -9,6 +9,15 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
+use function array_pop;
+use function array_shift;
+use function dirname;
+use function explode;
+use function file_get_contents;
+use function join;
+use function strval;
+use function trim;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignedElementTest
  *

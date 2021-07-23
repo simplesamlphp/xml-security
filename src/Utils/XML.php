@@ -9,6 +9,9 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
+use function count;
+use function is_null;
+
 /**
  * Class with utility methods for XML manipulation.
  *

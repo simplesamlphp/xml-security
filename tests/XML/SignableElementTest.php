@@ -14,6 +14,15 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
+use function array_pop;
+use function array_shift;
+use function dirname;
+use function explode;
+use function file_get_contents;
+use function join;
+use function strval;
+use function trim;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignableElementTest
  *

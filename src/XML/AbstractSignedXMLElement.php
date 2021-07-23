@@ -11,6 +11,8 @@ use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
+use function array_pop;
+
 /**
  * Abstract class to be implemented by all signed classes
  *
