@@ -32,6 +32,8 @@ use SimpleSAML\XMLSecurity\XML\ds\Transforms;
  */
 trait SignableElementTrait
 {
+    use CanonicalizableElementTrait;
+
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
     protected ?Signature $signature = null;
 

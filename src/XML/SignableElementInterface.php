@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
  *
  * @package simplesamlphp/xml-security
  */
-interface SignableElementInterface
+interface SignableElementInterface extends CanonicalizableElementInterface
 {
     /**
      * Get the ID of this element.
