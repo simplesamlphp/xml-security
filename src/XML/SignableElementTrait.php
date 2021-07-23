@@ -6,8 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
 use DOMNode;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
@@ -22,7 +24,6 @@ use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
 use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
-use Webmozart\Assert\Assert;
 
 /**
  * Trait SignableElementTrait
@@ -37,7 +38,7 @@ trait SignableElementTrait
     /** @var string */
     private string $c14nAlg = Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
 
-    /** @var KeyInfo|null */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null */
     private ?KeyInfo $keyInfo = null;
 
     /** @var \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null */
@@ -67,7 +68,8 @@ trait SignableElementTrait
                 Constants::C14N_EXCLUSIVE_WITH_COMMENTS,
                 Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS
             ],
-            'Unsupported canonicalization algorithm'
+            'Unsupported canonicalization algorithm',
+            InvalidArgumentException::class
         );
         $this->c14nAlg = $canonicalizationAlg;
     }
@@ -79,9 +81,12 @@ trait SignableElementTrait
      */
     private function doSign(DOMElement $xml): void
     {
-        if ($this->signer === null) {
-            throw new RuntimeException('Cannot call toSignedXML() without calling sign() first.');
-        }
+        Assert::notNull(
+            $this->signer,
+            'Cannot call toSignedXML() without calling sign() first.',
+            RuntimeException::class
+        );
+
         $algorithm = $this->signer->getAlgorithmId();
         $digest = $this->signer->getDigest();
 
