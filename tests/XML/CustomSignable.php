@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
 use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
 
 /**
- * @package simplesamlphp\saml2
+ * @package simplesamlphp/xml-security
  */
 class CustomSignable extends AbstractXMLElement implements SignableElementInterface
 {
