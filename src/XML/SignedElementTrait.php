@@ -289,4 +289,10 @@ trait SignedElementTrait
         }
         throw new RuntimeException('Failed to validate signature.');
     }
+
+
+    /**
+     * @return string|null
+     */
+    abstract public function getId(): ?string;
 }
