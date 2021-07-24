@@ -172,6 +172,17 @@ final class Reference extends AbstractDsElement
 
 
     /**
+     * Determine whether this is an xpointer reference.
+     *
+     * @return bool
+     */
+    public function isXPointer(): bool
+    {
+        return !empty($this->URI) && preg_match('/^#xpointer\(.+\)$/', $this->URI);
+    }
+
+
+    /**
      * Convert XML into a Reference element
      *
      * @param \DOMElement $xml The XML element we should load
