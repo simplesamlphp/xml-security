@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
-use DOMNode;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -89,10 +89,69 @@ trait SignableElementTrait
 
 
     /**
-     * @param \DOMElement $xml
-     * @throws \Exception
+     * Get a ds:Reference pointing to this object.
+     *
+     * @param string $digestAlg The digest algorithm to use.
+     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms The transforms to apply to the object.
      */
-    private function doSign(DOMElement $xml): void
+    private function getReference(
+        string $digestAlg,
+        Transforms $transforms,
+        DOMElement $xml,
+        string $canonicalDocument
+    ): Reference {
+        $id = $this->getId();
+        $uri = null;
+        if (empty($id)) { // document reference
+            Assert::notNull(
+                $xml->ownerDocument->documentElement,
+                'Cannot create a document reference without a root element in the document.',
+                RuntimeException::class
+            );
+            Assert::true(
+                $xml->isSameNode($xml->ownerDocument->documentElement),
+                'Cannot create a document reference when signing an object that is not the root of the document. ' .
+                'Please give your object an identifier.',
+                RuntimeException::class
+            );
+            if (in_array($this->c14nAlg, [C::C14N_INCLUSIVE_WITH_COMMENTS, C::C14N_EXCLUSIVE_WITH_COMMENTS])) {
+                $uri = '#xpointer(/)';
+            }
+        } elseif (in_array($this->c14nAlg, [C::C14N_INCLUSIVE_WITH_COMMENTS, C::C14N_EXCLUSIVE_WITH_COMMENTS])) {
+            // regular reference, but must retain comments
+            $uri = '#xpointer(id(' . $id . '))';
+        } else { // regular reference, can ignore comments
+            $uri = '#' . $id;
+        }
+
+        return new Reference(
+            new DigestMethod($digestAlg),
+            new DigestValue(Security::hash($digestAlg, $canonicalDocument)),
+            $transforms,
+            null,
+            null,
+            $uri
+        );
+    }
+
+
+    /**
+     * Do the actual signing of the document.
+     *
+     * Note that this method does not insert the signature in the returned \DOMElement. The signature will be available
+     * in $this->signature as a \SimpleSAML\XMLSecurity\XML\ds\Signature object, which can then be converted to XML
+     * calling toXML() on it, passing the \DOMElement value returned here as a parameter. The resulting \DOMElement
+     * can then be inserted in the position desired.
+     *
+     * E.g.:
+     *     $xml = // our XML to sign
+     *     $signedXML = $this->doSign($xml);
+     *     $signedXML->appendChild($this->signature->toXML($signedXML));
+     *
+     * @param \DOMElement $xml The element to sign.
+     * @return \DOMElement The signed element, without the signature attached to it just yet.
+     */
+    protected function doSign(DOMElement $xml): DOMElement
     {
         Assert::notNull(
             $this->signer,
@@ -108,38 +167,18 @@ trait SignableElementTrait
             new Transform($this->c14nAlg)
         ]);
 
-        $refId = $this->getId();
-        $reference = new Reference(
-            new DigestMethod($digest),
-            new DigestValue(Security::hash($digest, XML::processTransforms($transforms, $xml))),
-            $transforms,
-            null,
-            null,
-            ($refId !== null) ? '#' . $refId : null
-        );
+        $canonicalDocument = XML::processTransforms($transforms, $xml);
 
         $signedInfo = new SignedInfo(
             new CanonicalizationMethod($this->c14nAlg),
             new SignatureMethod($algorithm),
-            [$reference]
+            [$this->getReference($digest, $transforms, $xml, $canonicalDocument)]
         );
 
         $signingData = $signedInfo->canonicalize($this->c14nAlg);
         $signedData = base64_encode($this->signer->sign($signingData));
 
         $this->signature = new Signature($signedInfo, new SignatureValue($signedData), $this->keyInfo);
-    }
-
-
-    /**
-     * @param DOMElement $root
-     * @param DOMNode $node
-     * @param DOMElement $signature
-     * @return DOMElement
-     */
-    private function insertBefore(DOMElement $root, DOMNode $node, DOMElement $signature): DOMElement
-    {
-        $root->removeChild($signature);
-        return $root->insertBefore($signature, $node);
+        return DOMDocumentFactory::fromString($canonicalDocument)->documentElement;
     }
 }

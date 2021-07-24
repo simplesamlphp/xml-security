@@ -8,18 +8,20 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
 use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
+use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
+use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
 
 /**
  * @package simplesamlphp/xml-security
  */
-class CustomSignable extends AbstractXMLElement implements SignableElementInterface
+class CustomSignable extends AbstractXMLElement implements SignableElementInterface, SignedElementInterface
 {
     use SignableElementTrait;
+    use SignedElementTrait;
 
     /** @var string */
     public const NS = 'urn:ssp:custom';
@@ -27,8 +29,11 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
     /** @var string */
     public const NS_PREFIX = 'ssp';
 
-    /** @var \DOMElement $element */
-    protected \DOMElement $element;
+    /** @var string|null */
+    public ?string $id = null;
+
+    /** @var \DOMElement $xml */
+    protected \DOMElement $xml;
 
     /** @var bool */
     protected bool $formatOutput = false;
@@ -40,10 +45,11 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
     /**
      * Constructor
      *
-     * @param \DOMElement $elt
+     * @param \DOMElement $xml
      */
-    public function __construct(DOMElement $elt) {
-        $this->setElement($elt);
+    private function __construct(DOMElement $xml, ?string $id) {
+        $this->setXML($xml);
+        $this->id = $id;
     }
 
 
@@ -70,24 +76,24 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
 
 
     /**
-     * Collect the value of the $element property
+     * Get the XML element.
      *
      * @return \DOMElement
      */
-    public function getElement(): DOMElement
+    public function getXML(): DOMElement
     {
-        return $this->element;
+        return $this->xml;
     }
 
 
     /**
-     * Set the value of the elment-property
+     * Set the XML element.
      *
-     * @param \DOMElement $elt
+     * @param \DOMElement $xml
      */
-    private function setElement(DOMElement $elt): void
+    private function setXML(DOMElement $xml): void
     {
-        $this->element = $elt;
+        $this->xml = $xml;
     }
 
 
@@ -96,7 +102,16 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
      */
     public function getId(): ?string
     {
-        return null;
+        return $this->id;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function getOriginalXML(): DOMElement
+    {
+        return $this->xml;
     }
 
 
@@ -113,13 +128,11 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        Assert::minCount($xml->childNodes, 1, MissingElementException::class);
-        Assert::maxCount($xml->childNodes, 2, TooManyElementsException::class);
-
+        $id = self::getAttribute($xml, 'id', null);
         $signature = Signature::getChildrenOfClass($xml);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 
-        $customSignable = new self($xml->childNodes[(empty($signature) ? 0 : 1)]);
+        $customSignable = new self($xml, $id);
         if (!empty($signature)) {
             $customSignable->signature = $signature[0];
         }
@@ -132,22 +145,16 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
      *
      * @param \DOMElement|null $parent The parent element to append this CustomSignable to.
      * @return \DOMElement The XML element after adding the data corresponding to this CustomSignable.
+     * @throws \Exception
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        /** @psalm-var \DOMDocument $e->ownerDocument */
-        $e = $this->instantiateParentElement($parent);
-
-        $node = $e->appendChild($e->ownerDocument->importNode($this->element, true));
-
         if ($this->signer !== null) {
-            $this->doSign($e);
+            $signedXML = $this->doSign($this->xml);
+            $signedXML->insertBefore($this->signature->toXML($signedXML), $signedXML->firstChild);
+            return $signedXML;
         }
 
-        if ($this->signature !== null) {
-            $this->insertBefore($e, $node, $this->signature->toXML($e));
-        }
-
-        return $e;
+        return $this->xml;
     }
 }
