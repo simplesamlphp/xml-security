@@ -114,7 +114,8 @@ final class SignatureAlgorithmFactory
         Assert::subclassOf(
             $className,
             AbstractSigner::class,
-            'Cannot register algorithm "' . $className . '", must implement ' . "\SimpleSAML\XMLSecurity\Alg\SignatureInterface.",
+            'Cannot register algorithm "' . $className . '", must implement '
+            . "\SimpleSAML\XMLSecurity\Alg\SignatureInterface.",
             InvalidArgumentException::class
         );
 

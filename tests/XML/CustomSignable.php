@@ -47,7 +47,8 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
      *
      * @param \DOMElement $xml
      */
-    private function __construct(DOMElement $xml, ?string $id) {
+    private function __construct(DOMElement $xml, ?string $id)
+    {
         $this->setXML($xml);
         $this->id = $id;
     }
@@ -121,7 +122,8 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
      * @param \DOMElement $xml The XML element we should load
      * @return \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException if the qualified name of the supplied element is wrong
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   if the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): object
     {

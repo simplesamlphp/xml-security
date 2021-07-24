@@ -95,7 +95,8 @@ final class DigestMethod extends AbstractDsElement
      * Set the value of the elements-property
      *
      * @param \SimpleSAML\XML\Chunk[] $elements
-     * @throws \SimpleSAML\Assert\AssertionFailedException if the supplied array contains anything other than Chunk objects
+     * @throws \SimpleSAML\Assert\AssertionFailedException
+     *   if the supplied array contains anything other than Chunk objects
      */
     private function setElements(array $elements): void
     {

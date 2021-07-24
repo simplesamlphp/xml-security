@@ -151,7 +151,10 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromXML($this->xmlRepresentation->documentElement);
 
         $cipherData = $encryptedKey->getCipherData();
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $cipherData->getCipherValue()->getContent());
+        $this->assertEquals(
+            '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=',
+            $cipherData->getCipherValue()->getContent()
+        );
 
         $encryptionMethod = $encryptedKey->getEncryptionMethod();
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#rsa-1_5', $encryptionMethod->getAlgorithm());

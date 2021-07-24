@@ -95,7 +95,14 @@ class PublicKey extends AsymmetricKey
         } elseif ($length < self::ASN1_SIZE_256) {
             $output = sprintf("%c%c%c%s", $type, self::ASN1_SIZE_128 + 1, $length, $string);
         } else { // ($length < self::ASN1_SIZE_65535)
-            $output = sprintf("%c%c%c%c%s", $type, self::ASN1_SIZE_128 +2, $length / 0x0100, $length % 0x0100, $string);
+            $output = sprintf(
+                "%c%c%c%c%s",
+                $type,
+                self::ASN1_SIZE_128 + 2,
+                $length / 0x0100,
+                $length % 0x0100,
+                $string
+            );
         }
 
         return $output;

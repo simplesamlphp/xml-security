@@ -7,10 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ec;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XMLSecurity\Constants;
 
-
 /**
  * Abstract class to be implemented by all the classes in this namespace
-
+ *
  * @package simplesamlphp/xml-security
  */
 abstract class AbstractEcElement extends AbstractXMLElement

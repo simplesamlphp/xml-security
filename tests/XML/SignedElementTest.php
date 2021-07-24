@@ -79,104 +79,103 @@ final class SignedElementTest extends TestCase
             $this->signedDocument->ownerDocument->saveXML($this->signedDocument),
             strval($customSigned)
         );
-   }
+    }
 
 
     /**
      * Test the verification of a signature with a given key.
      */
-   public function testSuccessfulVerifyingWithGivenKey(): void
-   {
-       $customSigned = CustomSignable::fromXML($this->signedDocument);
+    public function testSuccessfulVerifyingWithGivenKey(): void
+    {
+        $customSigned = CustomSignable::fromXML($this->signedDocument);
 
-       $this->assertTrue($customSigned->isSigned());
-       $signature = $customSigned->getSignature();
-       $this->assertInstanceOf(Signature::class, $signature);
-       $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-       $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
-       $factory = new SignatureAlgorithmFactory();
-       $certificate = new X509Certificate($this->certificate);
-       $verifier = $factory->getAlgorithm($sigAlg, $certificate);
+        $this->assertTrue($customSigned->isSigned());
+        $signature = $customSigned->getSignature();
+        $this->assertInstanceOf(Signature::class, $signature);
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $factory = new SignatureAlgorithmFactory();
+        $certificate = new X509Certificate($this->certificate);
+        $verifier = $factory->getAlgorithm($sigAlg, $certificate);
 
-       $verified = $customSigned->verify($verifier);
-       $this->assertInstanceOf(CustomSignable::class, $verified);
-       $this->assertFalse($verified->isSigned());
-       $this->assertEquals(
-           '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
-           strval($verified)
-       );
-       $this->assertEquals($certificate, $verified->getValidatingKey());
-   }
+        $verified = $customSigned->verify($verifier);
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+        $this->assertFalse($verified->isSigned());
+        $this->assertEquals(
+            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
+            strval($verified)
+        );
+        $this->assertEquals($certificate, $verified->getValidatingKey());
+    }
 
 
     /**
      * Test the verification of a signature without passing a key, just what's in KeyInfo
      */
-   public function testSuccessfulVerifyingWithoutKey(): void
-   {
-       $customSigned = CustomSignable::fromXML($this->signedDocument);
+    public function testSuccessfulVerifyingWithoutKey(): void
+    {
+        $customSigned = CustomSignable::fromXML($this->signedDocument);
 
-       $this->assertTrue($customSigned->isSigned());
-       $signature = $customSigned->getSignature();
-       $this->assertInstanceOf(Signature::class, $signature);
-       $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-       $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
-       $certificate = new X509Certificate($this->certificate);
+        $this->assertTrue($customSigned->isSigned());
+        $signature = $customSigned->getSignature();
+        $this->assertInstanceOf(Signature::class, $signature);
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $certificate = new X509Certificate($this->certificate);
 
-       $verified = $customSigned->verify();
-       $this->assertInstanceOf(CustomSignable::class, $verified);
-       $this->assertFalse($verified->isSigned());
-       $this->assertEquals(
-           '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
-           strval($verified)
-       );
-       $validatingKey = $verified->getValidatingKey();
-       $this->assertInstanceOf(X509Certificate::class, $validatingKey);
-       /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate $validatingKey */
-       $this->assertEquals($certificate->getCertificate(), $validatingKey->getCertificate());
-   }
+        $verified = $customSigned->verify();
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+        $this->assertFalse($verified->isSigned());
+        $this->assertEquals(
+            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
+            strval($verified)
+        );
+        $validatingKey = $verified->getValidatingKey();
+        $this->assertInstanceOf(X509Certificate::class, $validatingKey);
+        /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate $validatingKey */
+        $this->assertEquals($certificate->getCertificate(), $validatingKey->getCertificate());
+    }
 
 
     /**
      * Test that verifying a tampered signature, without giving a key for verification, fails as expected.
      */
-   public function testVerifyingTamperedSignatureWithoutKeyFails(): void
-   {
-       $customSigned = CustomSignable::fromXML($this->tamperedDocument);
+    public function testVerifyingTamperedSignatureWithoutKeyFails(): void
+    {
+        $customSigned = CustomSignable::fromXML($this->tamperedDocument);
 
-       $this->assertTrue($customSigned->isSigned());
-       $signature = $customSigned->getSignature();
-       $this->assertInstanceOf(Signature::class, $signature);
-       $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-       $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertTrue($customSigned->isSigned());
+        $signature = $customSigned->getSignature();
+        $this->assertInstanceOf(Signature::class, $signature);
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
 
-       $this->expectException(RuntimeException::class);
-       $this->expectDeprecationMessage('Failed to validate signature.');
-       $customSigned->verify();
-   }
+        $this->expectException(RuntimeException::class);
+        $this->expectDeprecationMessage('Failed to validate signature.');
+        $customSigned->verify();
+    }
 
 
     /**
      * Test that verifying a tampered signature with a given key fails as expected.
      */
-   public function testVerifyingTamperedSignatureWithKeyFails(): void
-   {
-       $customSigned = CustomSignable::fromXML($this->tamperedDocument);
+    public function testVerifyingTamperedSignatureWithKeyFails(): void
+    {
+        $customSigned = CustomSignable::fromXML($this->tamperedDocument);
 
+        $this->assertTrue($customSigned->isSigned());
+        $signature = $customSigned->getSignature();
+        $this->assertInstanceOf(Signature::class, $signature);
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $factory = new SignatureAlgorithmFactory();
+        $certificate = new X509Certificate($this->certificate);
+        $verifier = $factory->getAlgorithm($sigAlg, $certificate);
 
-       $this->assertTrue($customSigned->isSigned());
-       $signature = $customSigned->getSignature();
-       $this->assertInstanceOf(Signature::class, $signature);
-       $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-       $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
-       $factory = new SignatureAlgorithmFactory();
-       $certificate = new X509Certificate($this->certificate);
-       $verifier = $factory->getAlgorithm($sigAlg, $certificate);
-
-       $this->expectException(RuntimeException::class);
-       $this->expectDeprecationMessage('Failed to validate signature.');
-       $customSigned->verify($verifier);
-   }
+        $this->expectException(RuntimeException::class);
+        $this->expectDeprecationMessage('Failed to validate signature.');
+        $customSigned->verify($verifier);
+    }
 
 
 
@@ -215,4 +214,3 @@ final class SignedElementTest extends TestCase
         $this->assertEquals($certificate, $verified->getValidatingKey());
     }
 }
-

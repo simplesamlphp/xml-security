@@ -86,7 +86,11 @@ final class X509IssuerSerialTest extends TestCase
         $this->assertCount(1, $issuerName);
 
         /** @psalm-var \DOMElement[] $X509IssuerSerialElements */
-        $X509IssuerSerialElements = XPath::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName/following-sibling::*', $xpCache);
+        $X509IssuerSerialElements = XPath::xpQuery(
+            $X509IssuerSerialElement,
+            './ds:X509IssuerName/following-sibling::*',
+            $xpCache
+        );
 
         // Test ordering of X509IssuerSerial contents
         $this->assertCount(1, $X509IssuerSerialElements);

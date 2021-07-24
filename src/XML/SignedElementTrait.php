@@ -76,13 +76,15 @@ trait SignedElementTrait
      */
     private function validateReferenceUri(Reference $reference, \DOMElement $xml): void
     {
-        if (in_array(
+        if (
+            in_array(
                 $this->signature->getSignedInfo()->getCanonicalizationMethod()->getAlgorithm(),
                 [
                     Constants::C14N_INCLUSIVE_WITH_COMMENTS,
                     Constants::C14N_EXCLUSIVE_WITH_COMMENTS,
                 ]
-            ) && !$reference->isXPointer()
+            )
+            && !$reference->isXPointer()
         ) { // canonicalization with comments used, but reference wasn't an xpointer!
             throw new RuntimeException('Invalid reference for canonicalization algorithm.');
         }
@@ -95,7 +97,6 @@ trait SignedElementTrait
                 $xml->isSameNode($xml->ownerDocument->documentElement),
                 'Cannot use document reference when element is not the root of the document.',
                 RuntimeException::class
-
             );
         } else { // short-name or scheme-based xpointer
             Assert::notEmpty(
@@ -178,10 +179,12 @@ trait SignedElementTrait
         /** @var SignedElementInterface $ref */
         $ref = $this->validateReference();
 
-        if ($verifier->verify(
-            $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
-            base64_decode($this->signature->getSignatureValue()->getRawContent()) // the actual signature
-        )) {
+        if (
+            $verifier->verify(
+                $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
+                base64_decode($this->signature->getSignatureValue()->getRawContent()) // the actual signature
+            )
+        ) {
             /*
              * validateReference() returns an object of the same class using this trait. This means the validatingKey
              * property is available, and we can set it on the newly created object because we are in the same class,

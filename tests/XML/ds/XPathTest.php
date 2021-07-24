@@ -75,5 +75,4 @@ class XPathTest extends TestCase
             strval($xpath)
         );
     }
-
 }

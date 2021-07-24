@@ -92,7 +92,10 @@ final class EncryptedDataTest extends TestCase
         $encryptedData = EncryptedData::fromXML($this->xmlRepresentation->documentElement);
 
         $cipherData = $encryptedData->getCipherData();
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $cipherData->getCipherValue()->getContent());
+        $this->assertEquals(
+            '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=',
+            $cipherData->getCipherValue()->getContent()
+        );
 
         $encryptionMethod = $encryptedData->getEncryptionMethod();
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#aes128-cbc', $encryptionMethod->getAlgorithm());

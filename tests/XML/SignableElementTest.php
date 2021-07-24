@@ -256,8 +256,4 @@ final class SignableElementTest extends TestCase
         );
         $customSignable->toXML($doc->documentElement);
     }
-
-
-
 }
-
