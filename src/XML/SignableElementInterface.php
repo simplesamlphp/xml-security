@@ -27,7 +27,7 @@ interface SignableElementInterface extends CanonicalizableElementInterface
     /**
      * Sign the current element.
      *
-     * @note The signature will not be applied until toSignedXML() is called.
+     * @note The signature will not be applied until toXML() is called.
      *
      * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm $signer The actual signer implementation to use.
      * @param string $canonicalizationAlg The identifier of the canonicalization algorithm to use.
