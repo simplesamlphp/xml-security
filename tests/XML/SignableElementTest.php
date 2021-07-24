@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
+use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -42,7 +43,7 @@ final class SignableElementTest extends TestCase
     private PrivateKey $key;
 
     /** @var \DOMDocument */
-    private \DOMDocument $signed;
+    private DOMDocument $signed;
 
 
     /**
