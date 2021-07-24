@@ -8,7 +8,7 @@ use DOMElement;
 use DOMNode;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Utils\Security;
@@ -38,7 +38,7 @@ trait SignableElementTrait
     protected ?Signature $signature = null;
 
     /** @var string */
-    private string $c14nAlg = Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
+    private string $c14nAlg = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null */
     private ?KeyInfo $keyInfo = null;
@@ -68,7 +68,7 @@ trait SignableElementTrait
      */
     public function sign(
         SignatureAlgorithm $signer,
-        string $canonicalizationAlg = Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+        string $canonicalizationAlg = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
         ?KeyInfo $keyInfo = null
     ): void {
         $this->signer = $signer;
@@ -76,10 +76,10 @@ trait SignableElementTrait
         Assert::oneOf(
             $canonicalizationAlg,
             [
-                Constants::C14N_INCLUSIVE_WITH_COMMENTS,
-                Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-                Constants::C14N_EXCLUSIVE_WITH_COMMENTS,
-                Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+                C::C14N_INCLUSIVE_WITH_COMMENTS,
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+                C::C14N_EXCLUSIVE_WITH_COMMENTS,
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
             ],
             'Unsupported canonicalization algorithm',
             InvalidArgumentException::class
@@ -104,7 +104,7 @@ trait SignableElementTrait
         $digest = $this->signer->getDigest();
 
         $transforms = new Transforms([
-            new Transform(Constants::XMLDSIG_ENVELOPED),
+            new Transform(C::XMLDSIG_ENVELOPED),
             new Transform($this->c14nAlg)
         ]);
 
