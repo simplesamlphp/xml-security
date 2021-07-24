@@ -33,7 +33,7 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
     public ?string $id = null;
 
     /** @var \DOMElement $xml */
-    protected \DOMElement $xml;
+    protected DOMElement $xml;
 
     /** @var bool */
     protected bool $formatOutput = false;

@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFound;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\Utils\XPath;
@@ -20,6 +20,10 @@ use SimpleSAML\XMLSecurity\XML\ds\Reference;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+
+use function array_pop;
+use function base64_decode;
+use function in_array;
 
 /**
  * Helper trait for processing signed elements.
@@ -42,7 +46,7 @@ trait SignedElementTrait
      *
      * @var \SimpleSAML\XMLSecurity\Key\AbstractKey|null
      */
-    private ?AbstractKey $validatingKey = null;
+    private ?Key\AbstractKey $validatingKey = null;
 
 
     /**
@@ -132,14 +136,14 @@ trait SignedElementTrait
         $this->validateReferenceUri($reference, $xml);
 
         $xp = XPath::getXPath($xml->ownerDocument);
-        $sigNode = $xp->query('child::ds:Signature', $xml);
+        $sigNode = XPath::xpQuery($xml, 'child::ds:Signature', $xp);
         Assert::count(
             $sigNode,
             1,
             'None or more than one signature found in object.',
             RuntimeException::class
         );
-        $xml->removeChild($sigNode->item(0));
+        $xml->removeChild($sigNode[0]);
 
         $data = XML::processTransforms($reference->getTransforms(), $xml);
         $digest = Security::hash($reference->getDigestMethod()->getAlgorithm(), $data, false);
@@ -196,7 +200,7 @@ trait SignedElementTrait
      *
      * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully validated this signature.
      */
-    public function getValidatingKey(): ?AbstractKey
+    public function getValidatingKey(): ?Key\AbstractKey
     {
         return $this->validatingKey;
     }
@@ -266,11 +270,11 @@ trait SignedElementTrait
                 }
 
                 // build a valid PEM for the certificate
-                $cert = \SimpleSAML\XMLSecurity\Key\X509Certificate::PEM_HEADER . "\n" .
+                $cert = Key\X509Certificate::PEM_HEADER . "\n" .
                         $data->getRawContent() . "\n" .
-                        \SimpleSAML\XMLSecurity\Key\X509Certificate::PEM_FOOTER;
+                        Key\X509Certificate::PEM_FOOTER;
 
-                $key = new \SimpleSAML\XMLSecurity\Key\X509Certificate($cert);
+                $key = new Key\X509Certificate($cert);
                 $verifier = $factory->getAlgorithm($algId, $key);
 
                 try {

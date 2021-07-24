@@ -25,6 +25,8 @@ use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
+use function in_array;
+
 /**
  * Trait SignableElementTrait
  *

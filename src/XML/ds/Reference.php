@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
 use function array_pop;
+use function preg_match;
 
 /**
  * Class representing a ds:Reference element.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
+use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -36,13 +37,13 @@ final class SignedElementTest extends TestCase
     private string $certificate;
 
     /** @var \DOMElement */
-    private \DOMElement $signedDocumentWithComments;
+    private DOMElement $signedDocumentWithComments;
 
     /** @var \DOMElement */
-    private \DOMElement $signedDocument;
+    private DOMElement $signedDocument;
 
     /** @var \DOMElement  */
-    private \DOMElement $tamperedDocument;
+    private DOMElement $tamperedDocument;
 
 
     /**
