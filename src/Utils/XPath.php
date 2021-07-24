@@ -18,14 +18,14 @@ class XPath extends \SimpleSAML\XML\Utils\XPath
     /**
      * Get a DOMXPath object that can be used to search for XMLDSIG elements.
      *
-     * @param \DOMNode $doc The document to associate to the DOMXPath object.
+     * @param \DOMNode $node The document to associate to the DOMXPath object.
      *
      * @return \DOMXPath A DOMXPath object ready to use in the given document, with the XMLDSIG namespace already
      * registered.
      */
-    public static function getXPath(DOMNode $doc): DOMXPath
+    public static function getXPath(DOMNode $node): DOMXPath
     {
-        $xp = parent::getXPath($doc);
+        $xp = parent::getXPath($node);
         $xp->registerNamespace('ds', C::NS_XDSIG);
         $xp->registerNamespace('xenc', C::NS_XENC);
         return $xp;
