@@ -11,7 +11,7 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 /**
  * Compilation of utilities for XPath.
  *
- * @package SimpleSAML\XMLSecurity\Utils
+ * @package simplesamlphp/xml-security
  */
 class XPath extends \SimpleSAML\XML\Utils\XPath
 {
