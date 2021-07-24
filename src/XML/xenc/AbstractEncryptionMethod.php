@@ -84,7 +84,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         foreach ($xml->childNodes as $node) {
             if (!$node instanceof DOMElement) {
                 continue;
-            } elseif ($node->namespaceURI === Constants::XMLENCNS) {
+            } elseif ($node->namespaceURI === Constants::NS_XENC) {
                 if ($node->localName === 'KeySize') {
                     Assert::null(
                         $keySize,
@@ -232,12 +232,12 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $e->setAttribute('Algorithm', $this->algorithm);
 
         if ($this->keySize !== null) {
-            $keySize = $e->ownerDocument->createElementNS(Constants::XMLENCNS, 'xenc:KeySize', strval($this->keySize));
+            $keySize = $e->ownerDocument->createElementNS(Constants::NS_XENC, 'xenc:KeySize', strval($this->keySize));
             $e->appendChild($keySize);
         }
 
         if ($this->oaepParams !== null) {
-            $oaepParams = $e->ownerDocument->createElementNS(Constants::XMLENCNS, 'xenc:OAEPParams', $this->oaepParams);
+            $oaepParams = $e->ownerDocument->createElementNS(Constants::NS_XENC, 'xenc:OAEPParams', $this->oaepParams);
             $e->appendChild($oaepParams);
         }
 

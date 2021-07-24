@@ -10,6 +10,7 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 use function dirname;
@@ -46,7 +47,7 @@ final class CipherDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $cipherData = new CipherData('c29tZSB0ZXh0');
+        $cipherData = new CipherData(new CipherValue('c29tZSB0ZXh0'));
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -64,6 +65,6 @@ final class CipherDataTest extends TestCase
     {
         $cipherData = CipherData::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue());
+        $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue()->getContent());
     }
 }

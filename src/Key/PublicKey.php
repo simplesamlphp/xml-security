@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use Webmozart\Assert\Assert;
 
 use function base64_encode;
 use function chr;
@@ -15,10 +17,29 @@ use function sprintf;
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *
- * @package SimpleSAML\XMLSecurity\Key
+ * @package simplesamlphp/xml-security
  */
 class PublicKey extends AsymmetricKey
 {
+    /** @var int */
+    public const ASN1_TYPE_INTEGER = 0x02; // 2
+
+    /** @var int */
+    public const ASN1_TYPE_BIT_STRING = 0x03; // 3
+
+    /** @var int */
+    public const ASN1_TYPE_SEQUENCE = 0x30; // 16
+
+    /** @var int */
+    public const ASN1_SIZE_128 = 0x80; // 128
+
+    /** @var int */
+    public const ASN1_SIZE_256 = 0x0100; // 256
+
+    /** @var int */
+    public const ASN1_SIZE_65535 = 0x010000; // 65535
+
+
     /**
      * Create a new public key from the PEM-encoded key material.
      *
@@ -56,27 +77,34 @@ class PublicKey extends AsymmetricKey
     protected static function makeASN1Segment(int $type, string $string): ?string
     {
         switch ($type) {
-            case 0x02:
-                if (ord($string) > 0x7f) {
+            case self::ASN1_TYPE_INTEGER:
+                if (ord($string) > self::ASN1_SIZE_128 - 1) {
                     $string = chr(0) . $string;
                 }
                 break;
-            case 0x03:
+            case self::ASN1_TYPE_BIT_STRING:
                 $string = chr(0) . $string;
                 break;
         }
 
         $length = strlen($string);
+        Assert::lessThan($length, self::ASN1_SIZE_65535);
 
-        if ($length < 128) {
+        if ($length < self::ASN1_SIZE_128) {
             $output = sprintf("%c%c%s", $type, $length, $string);
-        } elseif ($length < 0x0100) {
-            $output = sprintf("%c%c%c%s", $type, 0x81, $length, $string);
-        } elseif ($length < 0x010000) {
-            $output = sprintf("%c%c%c%c%s", $type, 0x82, $length / 0x0100, $length % 0x0100, $string);
-        } else {
-            $output = null;
+        } elseif ($length < self::ASN1_SIZE_256) {
+            $output = sprintf("%c%c%c%s", $type, self::ASN1_SIZE_128 + 1, $length, $string);
+        } else { // ($length < self::ASN1_SIZE_65535)
+            $output = sprintf(
+                "%c%c%c%c%s",
+                $type,
+                self::ASN1_SIZE_128 + 2,
+                $length / 0x0100,
+                $length % 0x0100,
+                $string
+            );
         }
+
         return $output;
     }
 
@@ -96,14 +124,14 @@ class PublicKey extends AsymmetricKey
             chunk_split(
                 base64_encode(
                     self::makeASN1Segment(
-                        0x30,
+                        self::ASN1_TYPE_SEQUENCE,
                         pack("H*", "300D06092A864886F70D0101010500") . // RSA alg id
                         self::makeASN1Segment( // bitstring
-                            0x03,
+                            self::ASN1_TYPE_BIT_STRING,
                             self::makeASN1Segment( // sequence
-                                0x30,
-                                self::makeASN1Segment(0x02, $modulus) .
-                                self::makeASN1Segment(0x02, $exponent)
+                                self::ASN1_TYPE_SEQUENCE,
+                                self::makeASN1Segment(self::ASN1_TYPE_INTEGER, $modulus)
+                                . self::makeASN1Segment(self::ASN1_TYPE_INTEGER, $exponent)
                             )
                         )
                     )

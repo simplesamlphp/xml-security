@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Alg;
 
 use PHPUnit\Framework\TestCase;
@@ -7,14 +9,13 @@ use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 /**
  * Tests for SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory
  *
- * @package SimpleSAML\XMLSecurity\Alg
+ * @package simplesamlphp/xml-security
  */
 final class SignatureAlgorithmFactoryTest extends TestCase
 {
@@ -74,8 +75,8 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetUnknownAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $this->expectException(RuntimeException::class);
-        $factory->getAlgorithm('Unknown alg', $this->skey);
+        $this->expectException(InvalidArgumentException::class);
+        $factory->getAlgorithm('Unknown algorithm identifier', $this->skey);
     }
 
 

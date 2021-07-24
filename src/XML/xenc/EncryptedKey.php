@@ -19,8 +19,8 @@ use function count;
  */
 class EncryptedKey extends AbstractEncryptedType
 {
-    /** @var string|null */
-    protected ?string $carriedKeyName;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null */
+    protected ?CarriedKeyName $carriedKeyName;
 
     /** @var string|null */
     protected ?string $recipient;
@@ -38,7 +38,8 @@ class EncryptedKey extends AbstractEncryptedType
      * @param string|null $mimeType The MimeType attribute of this object. Optional.
      * @param string|null $encoding The Encoding attribute of this object. Optional.
      * @param string|null $recipient The Recipient attribute of this object. Optional.
-     * @param string|null $carriedKeyName The value of the CarriedKeyName element of this EncryptedData.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
+     *   The value of the CarriedKeyName element of this EncryptedData.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
@@ -52,7 +53,7 @@ class EncryptedKey extends AbstractEncryptedType
         ?string $mimeType = null,
         ?string $encoding = null,
         ?string $recipient = null,
-        ?string $carriedKeyName = null,
+        ?CarriedKeyName $carriedKeyName = null,
         ?EncryptionMethod $encryptionMethod = null,
         ?KeyInfo $keyInfo = null,
         ?ReferenceList $referenceList = null
@@ -65,20 +66,20 @@ class EncryptedKey extends AbstractEncryptedType
 
 
     /**
-     * Get the value of the CarriedKeyName element.
+     * Get the value of the CarriedKeyName property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null
      */
-    public function getCarriedKeyName(): ?string
+    public function getCarriedKeyName(): ?CarriedKeyName
     {
         return $this->carriedKeyName;
     }
 
 
     /**
-     * @param string|null $carriedKeyName
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
      */
-    protected function setCarriedKeyName(?string $carriedKeyName): void
+    protected function setCarriedKeyName(?CarriedKeyName $carriedKeyName): void
     {
         $this->carriedKeyName = $carriedKeyName;
     }
@@ -151,7 +152,7 @@ class EncryptedKey extends AbstractEncryptedType
         $referenceLists = ReferenceList::getChildrenOfClass($xml);
         Assert::maxCount($keyInfo, 1, 'Only one ReferenceList element allowed in <xenc:EncryptedKey>.');
 
-        $carriedKeyNames = XMLUtils::xpQuery($xml, './xenc:CarriedKeyName');
+        $carriedKeyNames = CarriedKeyName::getChildrenOfClass($xml);
         Assert::maxCount($carriedKeyNames, 1, 'Only one CarriedKeyName element allowed in <xenc:EncryptedKey>.');
 
         return new self(
@@ -161,10 +162,10 @@ class EncryptedKey extends AbstractEncryptedType
             self::getAttribute($xml, 'MimeType', null),
             self::getAttribute($xml, 'Encoding', null),
             self::getAttribute($xml, 'Recipient', null),
-            count($carriedKeyNames) === 1 ? $carriedKeyNames[0]->textContent : null,
-            count($encryptionMethod) === 1 ? $encryptionMethod[0] : null,
-            count($keyInfo) === 1 ? $keyInfo[0] : null,
-            count($referenceLists) === 1 ? $referenceLists[0] : null
+            array_pop($carriedKeyNames),
+            array_pop($encryptionMethod),
+            array_pop($keyInfo),
+            array_pop($referenceLists)
         );
     }
 
@@ -182,9 +183,7 @@ class EncryptedKey extends AbstractEncryptedType
         }
 
         if ($this->carriedKeyName !== null) {
-            $ckn = $e->ownerDocument->createElementNS(self::NS, self::NS_PREFIX . ':CarriedKeyName');
-            $ckn->textContent = $this->carriedKeyName;
-            $e->appendChild($ckn);
+            $this->carriedKeyName->toXML($e);
         }
 
         if ($this->recipient !== null) {

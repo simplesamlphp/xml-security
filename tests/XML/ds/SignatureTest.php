@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
@@ -112,12 +112,13 @@ final class SignatureTest extends TestCase
         );
 
         $signatureElement = $signature->toXML();
+        $xpCache = XPath::getXPath($signatureElement);
 
-        $signedInfo = XMLUtils::xpQuery($signatureElement, './ds:SignedInfo');
+        $signedInfo = XPath::xpQuery($signatureElement, './ds:SignedInfo', $xpCache);
         $this->assertCount(1, $signedInfo);
 
         /** @psalm-var \DOMElement[] $signatureElements */
-        $signatureElements = XMLUtils::xpQuery($signatureElement, './ds:SignedInfo/following-sibling::*');
+        $signatureElements = XPath::xpQuery($signatureElement, './ds:SignedInfo/following-sibling::*', $xpCache);
 
         // Test ordering of Signature contents
         $this->assertCount(3, $signatureElements);

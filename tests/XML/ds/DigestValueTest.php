@@ -11,7 +11,6 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 use function dirname;
 use function strval;
@@ -58,7 +57,7 @@ final class DigestValueTest extends TestCase
     public function testMarshallingNotBase64(): void
     {
         $this->expectException(AssertionFailedException::class);
-        $digestValue = new DigestValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        new DigestValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
 
 

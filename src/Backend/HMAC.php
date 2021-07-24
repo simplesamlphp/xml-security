@@ -62,7 +62,7 @@ final class HMAC implements SignatureBackend
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to.
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify the signature.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *

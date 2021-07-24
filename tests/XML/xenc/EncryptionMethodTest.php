@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
-use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\Constants;
 
@@ -70,7 +68,7 @@ final class EncryptionMethodTest extends TestCase
     {
         $em = new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p');
         $document = DOMDocumentFactory::fromString(
-            '<xenc:EncryptionMethod xmlns:xenc="' . Constants::XMLENCNS .
+            '<xenc:EncryptionMethod xmlns:xenc="' . Constants::NS_XENC .
             '" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>'
         );
 
@@ -95,13 +93,15 @@ final class EncryptionMethodTest extends TestCase
         // Marshall it to a \DOMElement
         $emElement = $em->toXML();
 
+        $xpCache = XPath::getXPath($emElement);
+
         // Test for a KeySize
-        $keySizeElements = XMLUtils::xpQuery($emElement, './xenc:KeySize');
+        $keySizeElements = XPath::xpQuery($emElement, './xenc:KeySize', $xpCache);
         $this->assertCount(1, $keySizeElements);
         $this->assertEquals('10', $keySizeElements[0]->textContent);
 
         // Test ordering of EncryptionMethod contents
-        $emElements = XMLUtils::xpQuery($emElement, './xenc:KeySize/following-sibling::*');
+        $emElements = XPath::xpQuery($emElement, './xenc:KeySize/following-sibling::*', $xpCache);
 
         $this->assertCount(2, $emElements);
         $this->assertEquals('xenc:OAEPParams', $emElements[0]->tagName);
@@ -145,7 +145,7 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshallingWithoutOptionalParameters(): void
     {
-        $xencns = Constants::XMLENCNS;
+        $xencns = Constants::NS_XENC;
         $document = DOMDocumentFactory::fromString(<<<XML
 <xenc:EncryptionMethod xmlns:xenc="{$xencns}" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
 XML

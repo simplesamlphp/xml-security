@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
 use function array_pop;
+use function preg_match;
 
 /**
  * Class representing a ds:Reference element.
@@ -168,6 +169,17 @@ final class Reference extends AbstractDsElement
     private function setURI(?string $URI): void
     {
         $this->URI = $URI;
+    }
+
+
+    /**
+     * Determine whether this is an xpointer reference.
+     *
+     * @return bool
+     */
+    public function isXPointer(): bool
+    {
+        return !empty($this->URI) && preg_match('/^#xpointer\(.+\)$/', $this->URI);
     }
 
 

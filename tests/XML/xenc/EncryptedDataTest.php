@@ -11,6 +11,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
@@ -52,7 +53,7 @@ final class EncryptedDataTest extends TestCase
     public function testMarshalling(): void
     {
         $encryptedData = new EncryptedData(
-            new CipherData('iaDc7...'),
+            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
             'MyID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
@@ -61,7 +62,7 @@ final class EncryptedDataTest extends TestCase
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData('nxf0b...'),
+                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
                         null,
                         null,
                         null,
@@ -91,7 +92,10 @@ final class EncryptedDataTest extends TestCase
         $encryptedData = EncryptedData::fromXML($this->xmlRepresentation->documentElement);
 
         $cipherData = $encryptedData->getCipherData();
-        $this->assertEquals('iaDc7...', $cipherData->getCipherValue());
+        $this->assertEquals(
+            '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=',
+            $cipherData->getCipherValue()->getContent()
+        );
 
         $encryptionMethod = $encryptedData->getEncryptionMethod();
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#aes128-cbc', $encryptionMethod->getAlgorithm());

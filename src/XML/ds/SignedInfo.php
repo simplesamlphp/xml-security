@@ -7,7 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Chunk;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 
 use function array_pop;
 
@@ -16,8 +17,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-final class SignedInfo extends AbstractDsElement
+final class SignedInfo extends AbstractDsElement implements CanonicalizableElementInterface
 {
+    use CanonicalizableElementTrait;
+
     /** @var string|null */
     protected ?string $Id;
 
@@ -36,9 +39,14 @@ final class SignedInfo extends AbstractDsElement
      */
     protected array $references;
 
+    /**
+     * @var DOMElement
+     */
+    protected ?DOMElement $xml = null;
+
 
     /**
-     * Initialize a SignedIfno.
+     * Initialize a SignedInfo.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod $canonicalizationMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod $signatureMethod
@@ -149,6 +157,18 @@ final class SignedInfo extends AbstractDsElement
 
 
     /**
+     * @inheritDoc
+     */
+    protected function getOriginalXML(): DOMElement
+    {
+        if ($this->xml !== null) {
+            return $this->xml;
+        }
+        return $this->toXML();
+    }
+
+
+    /**
      * Convert XML into a SignedInfo instance
      *
      * @param \DOMElement $xml The XML element we should load
@@ -165,7 +185,11 @@ final class SignedInfo extends AbstractDsElement
         $Id = self::getAttribute($xml, 'Id', null);
 
         $canonicalizationMethod = CanonicalizationMethod::getChildrenOfClass($xml);
-        Assert::count($canonicalizationMethod, 1, 'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod');
+        Assert::count(
+            $canonicalizationMethod,
+            1,
+            'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod'
+        );
 
         $signatureMethod = SignatureMethod::getChildrenOfClass($xml);
         Assert::count($signatureMethod, 1, 'A ds:SignedInfo element must contain exactly one ds:SignatureMethod');
@@ -173,12 +197,9 @@ final class SignedInfo extends AbstractDsElement
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount($references, 1, 'A ds:SignedInfo element must contain at least one ds:Reference');
 
-        return new self(
-            array_pop($canonicalizationMethod),
-            array_pop($signatureMethod),
-            $references,
-            $Id
-        );
+        $signedInfo = new self(array_pop($canonicalizationMethod), array_pop($signatureMethod), $references, $Id);
+        $signedInfo->xml = $xml;
+        return $signedInfo;
     }
 
 

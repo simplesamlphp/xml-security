@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
 use Webmozart\Assert\Assert;
 
 use function str_replace;
@@ -108,12 +109,12 @@ class XPath extends AbstractDsElement
         Assert::same($xml->namespaceURI, self::NS, InvalidDOMElementException::class);
 
         $namespaces = [];
-        $xpath = new \DOMXPath($xml->ownerDocument);
+        $xpath = XPathUtils::getXPath($xml->ownerDocument);
         /** @var \DOMNode $ns */
-        foreach ($xpath->query('namespace::*', $xml) as $ns) {
+        foreach (XPathUtils::xpQuery($xml, './namespace::*', $xpath) as $ns) {
             if ($xml->getAttributeNode($ns->nodeName)) {
-                $namespaces[str_replace('xmlns:', '', $ns->nodeName)] =
-                    $xml->getAttribute($ns->nodeName);
+                // only add namespaces when they are defined explicitly in an attribute
+                $namespaces[$ns->localName] = $xml->getAttribute($ns->nodeName);
             }
         }
 

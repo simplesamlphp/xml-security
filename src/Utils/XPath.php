@@ -13,21 +13,21 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
  *
  * @package SimpleSAML\XMLSecurity\Utils
  */
-class XPath extends \RobRichards\XMLSecLibs\Utils\XPath
+class XPath extends \SimpleSAML\XML\Utils\XPath
 {
     /**
      * Get a DOMXPath object that can be used to search for XMLDSIG elements.
      *
-     * @param \DOMDocument $doc The document to associate to the DOMXPath object.
+     * @param \DOMNode $node The document to associate to the DOMXPath object.
      *
      * @return \DOMXPath A DOMXPath object ready to use in the given document, with the XMLDSIG namespace already
      * registered.
      */
-    public static function getXPath(DOMDocument $doc)
+    public static function getXPath(DOMNode $node): DOMXPath
     {
-        $xp = new DOMXPath($doc);
-        $xp->registerNamespace('ds', C::XMLDSIGNS);
-        $xp->registerNamespace('xenc', C::XMLENCNS);
+        $xp = parent::getXPath($node);
+        $xp->registerNamespace('ds', C::NS_XDSIG);
+        $xp->registerNamespace('xenc', C::NS_XENC);
         return $xp;
     }
 
@@ -42,7 +42,7 @@ class XPath extends \RobRichards\XMLSecLibs\Utils\XPath
      *
      * @throws RuntimeException If no DOM document is available.
      */
-    public static function findElement(DOMNode $ref, $name)
+    public static function findElement(DOMNode $ref, string $name)
     {
         $doc = $ref instanceof DOMDocument ? $ref : $ref->ownerDocument;
         if ($doc === null) {

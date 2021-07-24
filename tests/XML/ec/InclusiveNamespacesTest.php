@@ -16,6 +16,7 @@ use function strval;
  * Class \SimpleSAML\XMLSecurity\Test\XML\ec\InclusiveNamespacesTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces
+ * @covers \SimpleSAML\XMLSecurity\XML\ec\AbstractEcElement
  *
  * @package simplesamlphp/xml-security
  */

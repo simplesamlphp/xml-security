@@ -3,6 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Alg;
 
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * An interface representing algorithms that can be used for digital signatures.
@@ -12,11 +13,35 @@ use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 interface SignatureAlgorithm
 {
     /**
+     * Get an array with all the identifiers for algorithms supported.
+     *
+     * @return string[]
+     */
+    public static function getSupportedAlgorithms(): array;
+
+
+    /**
      * Get the digest used by this signature algorithm.
      *
      * @return string The identifier of the digest algorithm used.
      */
     public function getDigest(): string;
+
+
+    /**
+     * Get the identifier of this signature algorithm.
+     *
+     * @return string The identifier of this signature algorithm.
+     */
+    public function getAlgorithmId(): string;
+
+
+    /**
+     * Get the key to use with this signature algorithm.
+     *
+     * @return AbstractKey
+     */
+    public function getKey(): AbstractKey;
 
 
     /**
