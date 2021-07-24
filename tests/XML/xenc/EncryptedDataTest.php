@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
@@ -79,6 +80,52 @@ final class EncryptedDataTest extends TestCase
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedData)
         );
+    }
+
+
+    /**
+     */
+    public function testMarshallingElementOrdering(): void
+    {
+        $encryptedData = new EncryptedData(
+            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+            'MyID',
+            'http://www.w3.org/2001/04/xmlenc#Element',
+            'text/plain',
+            'SomeEncoding',
+            new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#aes128-cbc'),
+            new KeyInfo(
+                [
+                    new EncryptedKey(
+                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256')
+                    )
+                ]
+            )
+        );
+
+        $encryptedDataElement = $encryptedData->toXML();
+        $xpCache = XPath::getXPath($encryptedDataElement);
+
+        // Test for an EncryptionMethod
+        $encryptedDataElements = XPath::xpQuery($encryptedDataElement, './xenc:EncryptionMethod', $xpCache);
+        $this->assertCount(1, $encryptedDataElements);
+
+        // Test ordering of EncryptedData contents
+        /** @psalm-var \DOMElement[] $encryptedDataElements */
+        $encryptedDataElements = XPath::xpQuery($encryptedDataElement, './xenc:EncryptionMethod/following-sibling::*', $xpCache);
+        $this->assertCount(2, $encryptedDataElements);
+        $this->assertEquals('ds:KeyInfo', $encryptedDataElements[0]->tagName);
+        $this->assertEquals('xenc:CipherData', $encryptedDataElements[1]->tagName);
+
+        // EncryptionProperties is currently not supported
+        //$this->assertEquals('xenc:EncryptionProperties', $encryptedDataElements[2]->tagName);
     }
 
 
