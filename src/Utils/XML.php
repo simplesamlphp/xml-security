@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\Utils;
 
 use DOMElement;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 use function count;
@@ -88,25 +87,16 @@ class XML
      */
     public static function processTransforms(
         Transforms $transforms,
-        DOMElement $data,
-        bool $includeCommentNodes = false
+        DOMElement $data
     ): string {
         $canonicalMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
         $arXPath = null;
         $prefixList = null;
-        foreach ($transforms as $transform) {
-            /** @var Transform $transform */
-            $algorithm = $transform->getAlgorithm();
-            switch ($algorithm) {
+        foreach ($transforms->getTransform() as $transform) {
+            $canonicalMethod = $transform->getAlgorithm();
+            switch ($canonicalMethod) {
                 case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
                 case C::C14N_EXCLUSIVE_WITH_COMMENTS:
-                    if (!$includeCommentNodes) {
-                        // remove comment nodes by forcing it to use a canonicalization without comments
-                        $canonicalMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
-                    } else {
-                        $canonicalMethod = $algorithm;
-                    }
-
                     $inclusiveNamespaces = $transform->getInclusiveNamespaces();
                     if ($inclusiveNamespaces !== null) {
                         $prefixes = $inclusiveNamespaces->getPrefixes();
@@ -114,16 +104,6 @@ class XML
                             $prefixList = $prefixes;
                         }
                     }
-                    break;
-                case C::C14N_INCLUSIVE_WITHOUT_COMMENTS:
-                case C::C14N_INCLUSIVE_WITH_COMMENTS:
-                    if (!$includeCommentNodes) {
-                        // remove comment nodes by forcing it to use a canonicalization without comments
-                        $canonicalMethod = C::C14N_INCLUSIVE_WITHOUT_COMMENTS;
-                    } else {
-                        $canonicalMethod = $algorithm;
-                    }
-
                     break;
                 case C::XPATH_URI:
                     $xpath = $transform->getXPath();
