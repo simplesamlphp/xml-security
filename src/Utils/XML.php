@@ -52,6 +52,7 @@ class XML
         if (
             is_null($xpaths)
             && ($element->ownerDocument !== null)
+            && ($element->ownerDocument->documentElement !== null)
             && $element->isSameNode($element->ownerDocument->documentElement)
         ) {
             // check for any PI or comments as they would have been excluded
@@ -65,7 +66,7 @@ class XML
                 }
                 $current = $refNode;
             }
-            if ($refNode == null) {
+            if ($refNode === null) {
                 $element = $element->ownerDocument;
             }
         }
