@@ -46,7 +46,7 @@ trait SignableElementTrait
     private ?KeyInfo $keyInfo = null;
 
     /** @var \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null */
-    private ?SignatureAlgorithm $signer = null;
+    protected ?SignatureAlgorithm $signer = null;
 
 
     /**
