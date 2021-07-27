@@ -47,12 +47,12 @@ class X509Certificate extends PublicKey
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param string $cert The PEM-encoded certificate or the path to a file containing it.
+     * @param string|resource $cert The PEM-encoded certificate or the path to a file containing it.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    public function __construct(string $cert)
+    public function __construct($cert)
     {
         $resource = openssl_x509_read($cert);
         if ($resource === false) {
