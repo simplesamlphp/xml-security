@@ -7,7 +7,7 @@ use Throwable;
 /**
  * Class FileNotFoundException
  *
- * This exception is thrown when a file cannot be efound on the file system
+ * This exception is thrown when a file cannot be found on the file system
  *
  * @package simplesamlphp/xml-security
  */
