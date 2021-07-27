@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -49,9 +49,10 @@ abstract class AbstractSigner implements SignatureAlgorithm
         Assert::oneOf(
             $algId,
             static::getSupportedAlgorithms(),
-            'Unsupported algorithm for ' . static::class,
-            RuntimeException::class
+            sprintf('Unsupported algorithm for %s', static::class),
+            UnsupportedAlgorithmException::class
         );
+
         $this->key = $key;
         $this->algId = $algId;
         $this->digest = $digest;

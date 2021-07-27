@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -75,8 +76,8 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetUnknownAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $this->expectException(InvalidArgumentException::class);
-        $factory->getAlgorithm('Unknown algorithm identifier', $this->skey);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $factory->getAlgorithm('Unsupported algorithm identifier', $this->skey);
     }
 
 
@@ -91,7 +92,7 @@ final class SignatureAlgorithmFactoryTest extends TestCase
             $factory->getAlgorithm(Constants::SIG_HMAC_SHA1, $this->skey)
         );
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(BlacklistedAlgorithmException::class);
         $factory->getAlgorithm(Constants::SIG_RSA_SHA1, $this->pkey);
     }
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\XMLSecurity\Exception\FileNotFoundException;
 
 use function file_get_contents;
 
@@ -33,9 +34,9 @@ abstract class AsymmetricKey extends AbstractKey
     protected static function readFile(string $file): string
     {
         $key = file_get_contents($file);
-        if ($key === false) {
-            throw new InvalidArgumentException('Cannot read key from file "' . $file . '"');
-        }
+
+        Assert::true(is_string($key), 'Cannot read key from file "' . $file . '"', FileNotFoundException::class);
+
         return $key;
     }
 }

@@ -10,7 +10,9 @@ use RuntimeException;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\XMLSecEnc;
 use SimpleSAML\XMLSecurity\XMLSecurityKey;
 
@@ -98,20 +100,8 @@ class Security
             return $key;
         }
 
-        if (
-            !in_array(
-                $algorithm,
-                [
-                    XMLSecurityKey::RSA_1_5,
-                    XMLSecurityKey::RSA_SHA1,
-                    XMLSecurityKey::RSA_SHA256,
-                    XMLSecurityKey::RSA_SHA384,
-                    XMLSecurityKey::RSA_SHA512
-                ],
-                true
-            )
-        ) {
-            throw new Exception('Unsupported signing algorithm.');
+        if (!in_array($algorithm, C::$RSA_DIGESTS, true)) {
+            throw new UnsupportedAlgorithmException('Unsupported signing algorithm.');
         }
 
         /** @psalm-suppress PossiblyNullArgument */
@@ -165,18 +155,20 @@ class Security
         if ($symmetricKeyInfo->isEncrypted) {
             $symKeyInfoAlgo = $symmetricKeyInfo->getAlgorithm();
 
-            if (in_array($symKeyInfoAlgo, $blacklist, true)) {
-                throw new Exception('Algorithm disabled: ' . var_export($symKeyInfoAlgo, true));
-            }
+            Assert::true(
+                !in_array($symKeyInfoAlgo, $blacklist, true),
+                sprintf('Blacklisted algorithm;  \'%s\'.', $symKeyInfoAlgo),
+                BlacklistedAlgorithmException::class
+            );
 
-            if ($symKeyInfoAlgo === XMLSecurityKey::RSA_OAEP_MGF1P && $inputKeyAlgo === XMLSecurityKey::RSA_1_5) {
+            if ($symKeyInfoAlgo === C::KEY_TRANSPORT_OAEP_MGF1P && $inputKeyAlgo === C::KEY_TRANSPORT_RSA_1_5) {
                 /*
                  * The RSA key formats are equal, so loading an RSA_1_5 key
                  * into an RSA_OAEP_MGF1P key can be done without problems.
                  * We therefore pretend that the input key is an
                  * RSA_OAEP_MGF1P key.
                  */
-                $inputKeyAlgo = XMLSecurityKey::RSA_OAEP_MGF1P;
+                $inputKeyAlgo = C::KEY_TRANSPORT_OAEP_MGF1P;
             }
 
             /* Make sure that the input key format is the same as the one used to encrypt the key. */
@@ -257,7 +249,7 @@ class Security
 
         $algorithm = $symmetricKey->getAlgorithm();
         if (in_array($algorithm, $blacklist, true)) {
-            throw new Exception('Algorithm disabled: ' . var_export($algorithm, true));
+            throw new BlacklistedAlgorithmException('Algorithm disabled: ' . var_export($algorithm, true));
         }
 
         /**

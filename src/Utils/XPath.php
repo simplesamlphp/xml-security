@@ -5,6 +5,7 @@ namespace SimpleSAML\XMLSecurity\Utils;
 use DOMDocument;
 use DOMNode;
 use DOMXPath;
+use SimpleSAML\XML\Utils\XPath as XPathUtils;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
@@ -13,7 +14,7 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
  *
  * @package simplesamlphp/xml-security
  */
-class XPath extends \SimpleSAML\XML\Utils\XPath
+class XPath extends XPathUtils
 {
     /**
      * Get a DOMXPath object that can be used to search for XMLDSIG elements.

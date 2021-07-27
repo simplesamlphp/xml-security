@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
+use Exception;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
@@ -30,15 +31,13 @@ class Random
      */
     public static function generateRandomBytes(int $length): string
     {
-        if ($length < 1) {
-            throw new InvalidArgumentException('Invalid length received to generate random bytes.');
-        }
-
         try {
             return random_bytes($length);
-        } catch (\Exception $e) {
+        } catch (Error $e) {
+            throw new InvalidArgumentException('Invalid length received to generate random bytes.');
+        } catch (Exception $e) {
             throw new RuntimeException(
-                'Cannot generate random bytes, no cryptographically secure random ' . 'generator available.'
+                'Cannot generate random bytes, no cryptographically secure random generator available.'
             );
         }
     }

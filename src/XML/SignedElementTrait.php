@@ -10,7 +10,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\NoSignatureFound;
+use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security;
@@ -230,7 +230,7 @@ trait SignedElementTrait
      * If null, attempt to verify it with the KeyInfo information in the signature.
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The object processed again from its canonicalised
      * representation verified by the signature.
-     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound if the object is not signed.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException if the object is not signed.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException if no key is passed and there is no KeyInfo
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to validate.
@@ -238,7 +238,7 @@ trait SignedElementTrait
     public function verify(SignatureAlgorithm $verifier = null): SignedElementInterface
     {
         if (!$this->isSigned()) {
-            throw new NoSignatureFound();
+            throw new NoSignatureFoundException();
         }
 
         $keyInfo = $this->signature->getKeyInfo();
