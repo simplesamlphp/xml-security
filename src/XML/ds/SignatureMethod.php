@@ -57,8 +57,8 @@ final class SignatureMethod extends AbstractDsElement
         Assert::oneOf(
             $algorithm,
             array_merge(
-                C::$RSA_DIGESTS,
-                C::$HMAC_DIGESTS
+                array_keys(C::$RSA_DIGESTS),
+                array_keys(C::$HMAC_DIGESTS)
             ),
             'Invalid signature method',
             InvalidArgumentException::class

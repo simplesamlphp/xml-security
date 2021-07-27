@@ -41,7 +41,7 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     {
         $factory = new SignatureAlgorithmFactory([]);
         $hmac = C::$HMAC_DIGESTS;
-        $rsa = C::$RSA_DIGESTSl
+        $rsa = C::$RSA_DIGESTS;
 
         foreach ($hmac as $signature => $digest) {
             $alg = $factory->getAlgorithm($signature, $this->skey);
