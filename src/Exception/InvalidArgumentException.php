@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Exception;
 
-use InvalidArgumentException as BUILTIN_InvalidArgumentException;
+use InvalidArgumentException as BuiltinInvalidArgumentException;
 use Throwable;
 
 use function get_class;
@@ -17,7 +17,7 @@ use function sprintf;
  *
  * @package simplesamlphp/xml-security
  */
-class InvalidArgumentException extends BUILTIN_InvalidArgumentException implements Throwable
+class InvalidArgumentException extends BuiltinInvalidArgumentException implements Throwable
 {
     /**
      * @param string $expected description of expected type
