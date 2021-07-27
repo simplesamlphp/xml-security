@@ -9,7 +9,7 @@ namespace SimpleSAML\XMLSecurity\Exception;
  *
  * @package simplesamlphp/xml-security
  */
-class BlacklistedAlgorithmException extends RuntimeException
+class BlacklistedAlgorithmException extends BlacklistedAlgorithmException
 {
     /**
      * @param string|null $message
