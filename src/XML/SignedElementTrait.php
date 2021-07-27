@@ -42,7 +42,7 @@ trait SignedElementTrait
     protected ?Signature $signature = null;
 
     /**
-     * The key that successfully validates the signature in this object.
+     * The key that successfully verifies the signature in this object.
      *
      * @var \SimpleSAML\XMLSecurity\Key\AbstractKey|null
      */
@@ -150,7 +150,7 @@ trait SignedElementTrait
         $digest = Security::hash($reference->getDigestMethod()->getAlgorithm(), $data, false);
 
         if (Security::compareStrings($digest, base64_decode($reference->getDigestValue()->getRawContent())) !== true) {
-            throw new RuntimeException('Failed to validate signature.');
+            throw new RuntimeException('Failed to verify signature.');
         }
 
         $verifiedXml = DOMDocumentFactory::fromString($data);
@@ -159,16 +159,16 @@ trait SignedElementTrait
 
 
     /**
-     * Validate this element against a public key.
+     * Verify this element against a public key.
      *
      * true is returned on success, false is returned if we don't have any
-     * signature we can validate. An exception is thrown if the signature
+     * signature we can verify. An exception is thrown if the signature
      * validation fails.
      *
      * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null $verifier The verifier to use to verify the signature.
      * If null, attempt to verify it with the KeyInfo information in the signature.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The Signed element if it was validated.
+     * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The Signed element if it was verified.
      */
     private function verifyInternal(SignatureAlgorithm $verifier): SignedElementInterface
     {
@@ -194,14 +194,14 @@ trait SignedElementTrait
             $ref->validatingKey = $verifier->getKey();
             return $ref;
         }
-        throw new RuntimeException('Failed to validate signature.');
+        throw new RuntimeException('Failed to verify signature.');
     }
 
 
     /**
      * Retrieve certificates that sign this element.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully validated this signature.
+     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully verified this signature.
      */
     public function getValidatingKey(): ?Key\AbstractKey
     {
@@ -233,7 +233,7 @@ trait SignedElementTrait
      * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException if the object is not signed.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException if no key is passed and there is no KeyInfo
      * in the signature.
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to validate.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to verify.
      */
     public function verify(SignatureAlgorithm $verifier = null): SignedElementInterface
     {
@@ -283,11 +283,11 @@ trait SignedElementTrait
                 try {
                     return $this->verifyInternal($verifier);
                 } catch (RuntimeException $e) {
-                    // failed to validate with this certificate, try with other, if any
+                    // failed to verify with this certificate, try with other, if any
                 }
             }
         }
-        throw new RuntimeException('Failed to validate signature.');
+        throw new RuntimeException('Failed to verify signature.');
     }
 
 
