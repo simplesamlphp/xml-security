@@ -100,7 +100,7 @@ class Security
             return $key;
         }
 
-        if (!in_array($algorithm, C::$RSA_DIGESTS, true)) {
+        if (!in_array($algorithm, array_keys(C::$RSA_DIGESTS, true))) {
             throw new UnsupportedAlgorithmException('Unsupported signing algorithm.');
         }
 

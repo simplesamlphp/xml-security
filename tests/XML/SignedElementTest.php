@@ -105,7 +105,7 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $this->assertEquals($certificate, $verified->getValidatingKey());
+        $this->assertEquals($certificate, $verified->getVerifyingKey());
     }
 
 
@@ -130,7 +130,7 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $validatingKey = $verified->getValidatingKey();
+        $validatingKey = $verified->getVerifyingKey();
         $this->assertInstanceOf(X509Certificate::class, $validatingKey);
         /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate $validatingKey */
         $this->assertEquals($certificate->getCertificate(), $validatingKey->getCertificate());
@@ -211,6 +211,6 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment --></ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $this->assertEquals($certificate, $verified->getValidatingKey());
+        $this->assertEquals($certificate, $verified->getVerifyingKey());
     }
 }

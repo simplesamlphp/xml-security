@@ -9,7 +9,7 @@ namespace SimpleSAML\XMLSecurity\Exception;
  *
  * @package simplesamlphp/xml-security
  */
-class BlacklistedAlgorithmException extends BlacklistedAlgorithmException
+class BlacklistedAlgorithmException extends SignatureVerificationFailedException
 {
     /**
      * @param string|null $message

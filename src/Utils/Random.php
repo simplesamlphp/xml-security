@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
+use Error;
 use Exception;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;

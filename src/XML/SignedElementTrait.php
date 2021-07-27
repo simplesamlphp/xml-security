@@ -203,7 +203,7 @@ trait SignedElementTrait
      *
      * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully verified this signature.
      */
-    public function getValidatingKey(): ?Key\AbstractKey
+    public function getVerifyingKey(): ?Key\AbstractKey
     {
         return $this->validatingKey;
     }
