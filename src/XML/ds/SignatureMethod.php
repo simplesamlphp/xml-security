@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
@@ -56,20 +56,10 @@ final class SignatureMethod extends AbstractDsElement
     {
         Assert::oneOf(
             $algorithm,
-            [
-                Constants::SIG_RSA_SHA1,
-                Constants::SIG_RSA_SHA224,
-                Constants::SIG_RSA_SHA256,
-                Constants::SIG_RSA_SHA384,
-                Constants::SIG_RSA_SHA512,
-                Constants::SIG_RSA_RIPEMD160,
-                Constants::SIG_HMAC_SHA1,
-                Constants::SIG_HMAC_SHA224,
-                Constants::SIG_HMAC_SHA256,
-                Constants::SIG_HMAC_SHA384,
-                Constants::SIG_HMAC_SHA512,
-                Constants::SIG_HMAC_RIPEMD160,
-            ],
+            array_merge(
+                C::$RSA_DIGESTS,
+                C::$HMAC_DIGESTS
+            ),
             'Invalid signature method',
             InvalidArgumentException::class
         );

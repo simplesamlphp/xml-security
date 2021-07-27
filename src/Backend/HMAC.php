@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Utils\Security;
@@ -25,7 +25,7 @@ final class HMAC implements SignatureBackend
      */
     public function __construct()
     {
-        $this->digest = Constants::$DIGEST_ALGORITHMS[Constants::DIGEST_SHA256];
+        $this->digest = C::$DIGEST_ALGORITHMS[C::DIGEST_SHA256];
     }
 
 
@@ -38,10 +38,10 @@ final class HMAC implements SignatureBackend
      */
     public function setDigestAlg(string $digest): void
     {
-        if (!isset(Constants::$DIGEST_ALGORITHMS[$digest])) {
+        if (!isset(C::$DIGEST_ALGORITHMS[$digest])) {
             throw new InvalidArgumentException('Unknown digest or non-cryptographic hash function.');
         }
-        $this->digest = Constants::$DIGEST_ALGORITHMS[$digest];
+        $this->digest = C::$DIGEST_ALGORITHMS[$digest];
     }
 
 

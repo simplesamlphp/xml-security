@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 
 use function base64_decode;
 use function base64_encode;
@@ -84,7 +84,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         foreach ($xml->childNodes as $node) {
             if (!$node instanceof DOMElement) {
                 continue;
-            } elseif ($node->namespaceURI === Constants::NS_XENC) {
+            } elseif ($node->namespaceURI === C::NS_XENC) {
                 if ($node->localName === 'KeySize') {
                     Assert::null(
                         $keySize,
@@ -232,12 +232,12 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $e->setAttribute('Algorithm', $this->algorithm);
 
         if ($this->keySize !== null) {
-            $keySize = $e->ownerDocument->createElementNS(Constants::NS_XENC, 'xenc:KeySize', strval($this->keySize));
+            $keySize = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:KeySize', strval($this->keySize));
             $e->appendChild($keySize);
         }
 
         if ($this->oaepParams !== null) {
-            $oaepParams = $e->ownerDocument->createElementNS(Constants::NS_XENC, 'xenc:OAEPParams', $this->oaepParams);
+            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPParams', $this->oaepParams);
             $e->appendChild($oaepParams);
         }
 

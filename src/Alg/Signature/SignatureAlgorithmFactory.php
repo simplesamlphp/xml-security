@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
@@ -39,8 +39,8 @@ final class SignatureAlgorithmFactory
      * @var string[]
      */
     private array $blacklist = [
-        Constants::SIG_RSA_SHA1,
-        Constants::SIG_HMAC_SHA1,
+        C::SIG_RSA_SHA1,
+        C::SIG_HMAC_SHA1,
     ];
 
     /**

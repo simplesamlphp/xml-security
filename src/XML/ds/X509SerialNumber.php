@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Constants;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\XMLStringElementTrait;
 
@@ -42,7 +42,7 @@ final class X509SerialNumber extends AbstractDsElement
     {
         Assert::same($xml->localName, 'X509SerialNumber', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509SerialNumber::NS, InvalidDOMElementException::class);
-        Assert::same($xml->getAttributeNS(Constants::NS_XSI, "type"), 'xs:integer');
+        Assert::same($xml->getAttributeNS(C::NS_XSI, "type"), 'xs:integer');
 
         return new self($xml->textContent);
     }
@@ -58,7 +58,7 @@ final class X509SerialNumber extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->content;
-        $e->setAttributeNS(Constants::NS_XSI, 'xsi:type', 'xs:integer');
+        $e->setAttributeNS(C::NS_XSI, 'xsi:type', 'xs:integer');
 
         return $e;
     }

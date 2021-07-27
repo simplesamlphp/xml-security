@@ -9,7 +9,7 @@ use Exception;
 use RuntimeException;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
@@ -68,11 +68,11 @@ class Security
      */
     public static function hash(string $alg, string $data, bool $encode = true): string
     {
-        if (!array_key_exists($alg, Constants::$DIGEST_ALGORITHMS)) {
+        if (!array_key_exists($alg, C::$DIGEST_ALGORITHMS)) {
             throw new InvalidArgumentException('Unsupported digest method "' . $alg . '"');
         }
 
-        $digest = hash(Constants::$DIGEST_ALGORITHMS[$alg], $data, true);
+        $digest = hash(C::$DIGEST_ALGORITHMS[$alg], $data, true);
         if ($encode) {
             $digest = base64_encode($digest);
         }

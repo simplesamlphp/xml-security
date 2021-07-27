@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 
 use function array_pop;
 
@@ -157,7 +157,7 @@ final class Signature extends AbstractDsElement
 
         foreach ($objects as $o) {
             Assert::true(
-                $o->getNamespaceURI() === Constants::NS_XDSIG
+                $o->getNamespaceURI() === C::NS_XDSIG
                 && $o->getLocalName() === 'Object',
                 'Only elements of type ds:Object are allowed.'
             );
@@ -196,7 +196,7 @@ final class Signature extends AbstractDsElement
         foreach ($xml->childNodes as $o) {
             if (
                 $o instanceof DOMElement
-                && $o->namespaceURI === Constants::NS_XDSIG
+                && $o->namespaceURI === C::NS_XDSIG
                 && $o->localName === 'Object'
             ) {
                 $objects[] = Chunk::fromXML($o);

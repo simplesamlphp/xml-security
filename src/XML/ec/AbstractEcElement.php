@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use SimpleSAML\XML\AbstractXMLElement;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 
 /**
  * Abstract class to be implemented by all the classes in this namespace
@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\Constants;
 abstract class AbstractEcElement extends AbstractXMLElement
 {
     /** @var string */
-    public const NS = Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
+    public const NS = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
 
     /** @var string */
     public const NS_PREFIX = 'ec';

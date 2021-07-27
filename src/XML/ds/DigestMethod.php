@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
@@ -64,14 +64,7 @@ final class DigestMethod extends AbstractDsElement
     {
         Assert::oneOf(
             $algorithm,
-            [
-                Constants::DIGEST_SHA1,
-                Constants::DIGEST_SHA224,
-                Constants::DIGEST_SHA256,
-                Constants::DIGEST_SHA384,
-                Constants::DIGEST_SHA512,
-                Constants::DIGEST_RIPEMD160,
-            ],
+            C::DIGEST_ALGORITHMS
             'Invalid digest method',
             InvalidArgumentException::class
         );

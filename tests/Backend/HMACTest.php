@@ -4,7 +4,7 @@ namespace SimpleSAML\XMLSecurity\Backend;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Backend\HMAC;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -43,7 +43,7 @@ final class HMACTest extends TestCase
     public function testSign(): void
     {
         $backend = new HMAC();
-        $backend->setDigestAlg(Constants::DIGEST_SHA1);
+        $backend->setDigestAlg(C::DIGEST_SHA1);
         $this->assertEquals(self::SIGNATURE, bin2hex($backend->sign($this->key, self::PLAINTEXT)));
     }
 
@@ -66,7 +66,7 @@ final class HMACTest extends TestCase
     {
         // test successful verification
         $backend = new HMAC();
-        $backend->setDigestAlg(Constants::DIGEST_SHA1);
+        $backend->setDigestAlg(C::DIGEST_SHA1);
         $this->assertTrue($backend->verify($this->key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
 
         // test failure to verify with different plaintext
@@ -84,7 +84,7 @@ final class HMACTest extends TestCase
         $this->assertFalse($backend->verify($key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
 
         // test failure to verify with wrong digest algorithm
-        $backend->setDigestAlg(Constants::DIGEST_RIPEMD160);
+        $backend->setDigestAlg(C::DIGEST_RIPEMD160);
         $this->assertFalse($backend->verify($this->key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
     }
 }

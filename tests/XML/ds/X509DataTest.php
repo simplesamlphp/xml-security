@@ -11,7 +11,7 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Utils as XMLUtils;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
@@ -66,7 +66,7 @@ final class X509DataTest extends TestCase
             PEMCertificatesMock::getPlainPublicKey()
         );
 
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(Constants::DIGEST_SHA256)));
+        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
 
         $this->certificate = str_replace(
             [
@@ -104,7 +104,7 @@ final class X509DataTest extends TestCase
                     DOMDocumentFactory::fromString('<ds:X509UnknownTag>somevalue</ds:X509UnknownTag>')->documentElement
                 ),
                 new X509Certificate($this->certificate),
-                new X509Digest($this->digest, Constants::DIGEST_SHA256),
+                new X509Digest($this->digest, C::DIGEST_SHA256),
                 new X509SubjectName($this->certData['name']),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
             ]

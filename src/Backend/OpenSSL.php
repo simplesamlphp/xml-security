@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
@@ -39,7 +39,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
     // asymmetric encryption options
     /** @var int */
-    protected int $padding = Constants::PADDING_PKCS1;
+    protected int $padding = C::PADDING_PKCS1;
 
     // symmetric encryption options
     /** @var string */
@@ -57,8 +57,8 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      */
     public function __construct()
     {
-        $this->setDigestAlg(Constants::DIGEST_SHA256);
-        $this->setCipher(Constants::BLOCK_ENC_AES128_GCM);
+        $this->setDigestAlg(C::DIGEST_SHA256);
+        $this->setCipher(C::BLOCK_ENC_AES128_GCM);
     }
 
 
@@ -195,12 +195,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      */
     public function setCipher(string $cipher): void
     {
-        if (!isset(Constants::$BLOCK_CIPHER_ALGORITHMS[$cipher])) {
+        if (!isset(C::$BLOCK_CIPHER_ALGORITHMS[$cipher])) {
             throw new InvalidArgumentException('Invalid or unknown cipher');
         }
-        $this->cipher = Constants::$BLOCK_CIPHER_ALGORITHMS[$cipher];
-        $this->blocksize = Constants::$BLOCK_SIZES[$cipher];
-        $this->keysize = Constants::$BLOCK_CIPHER_KEY_SIZES[$cipher];
+        $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
+        $this->blocksize = C::$BLOCK_SIZES[$cipher];
+        $this->keysize = C::$BLOCK_CIPHER_KEY_SIZES[$cipher];
     }
 
 
@@ -213,10 +213,10 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      */
     public function setDigestAlg(string $digest): void
     {
-        if (!isset(Constants::$DIGEST_ALGORITHMS[$digest])) {
+        if (!isset(C::$DIGEST_ALGORITHMS[$digest])) {
             throw new InvalidArgumentException('Unknown digest or non-cryptographic hash function.');
         }
-        $this->digest = Constants::$DIGEST_ALGORITHMS[$digest];
+        $this->digest = C::$DIGEST_ALGORITHMS[$digest];
     }
 
 

@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
@@ -46,8 +46,8 @@ final class SignedInfoTest extends TestCase
     public function testMarshalling(): void
     {
         $signedInfo = new SignedInfo(
-            new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
-            new SignatureMethod(Constants::SIG_RSA_SHA256),
+            new CanonicalizationMethod(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+            new SignatureMethod(C::SIG_RSA_SHA256),
             [
                 Reference::fromXML(
                     DOMDocumentFactory::fromFile(
@@ -73,11 +73,11 @@ final class SignedInfoTest extends TestCase
         $this->assertEquals('abc123', $signedInfo->getId());
 
         $this->assertEquals(
-            Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             $signedInfo->getCanonicalizationMethod()->getAlgorithm()
         );
         $this->assertEquals(
-            Constants::SIG_RSA_SHA256,
+            C::SIG_RSA_SHA256,
             $signedInfo->getSignatureMethod()->getAlgorithm()
         );
 
@@ -98,19 +98,19 @@ final class SignedInfoTest extends TestCase
     {
         $this->assertEquals(
             $xml->C14N(true, false),
-            $signedInfo->canonicalize(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
         );
         $this->assertEquals(
             $xml->C14N(false, false),
-            $signedInfo->canonicalize(Constants::C14N_INCLUSIVE_WITHOUT_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITHOUT_COMMENTS)
         );
         $this->assertEquals(
             $xml->C14N(true, true),
-            $signedInfo->canonicalize(Constants::C14N_EXCLUSIVE_WITH_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITH_COMMENTS)
         );
         $this->assertEquals(
             $xml->C14N(false, true),
-            $signedInfo->canonicalize(Constants::C14N_INCLUSIVE_WITH_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITH_COMMENTS)
         );
     }
 

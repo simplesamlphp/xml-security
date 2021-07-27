@@ -8,7 +8,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
@@ -80,8 +80,8 @@ trait SignedElementTrait
             in_array(
                 $this->signature->getSignedInfo()->getCanonicalizationMethod()->getAlgorithm(),
                 [
-                    Constants::C14N_INCLUSIVE_WITH_COMMENTS,
-                    Constants::C14N_EXCLUSIVE_WITH_COMMENTS,
+                    C::C14N_INCLUSIVE_WITH_COMMENTS,
+                    C::C14N_EXCLUSIVE_WITH_COMMENTS,
                 ]
             )
             && !$reference->isXPointer()

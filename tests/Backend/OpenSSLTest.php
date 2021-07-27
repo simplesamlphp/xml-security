@@ -5,7 +5,7 @@ namespace SimpleSAML\XMLSecurity\Backend;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
@@ -45,8 +45,8 @@ final class OpenSSLTest extends TestCase
         $this->pubKey = PublicKey::fromFile('tests/pubkey.pem');
         $this->sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
         $this->backend = new OpenSSL();
-        $this->backend->setDigestAlg(Constants::DIGEST_SHA256);
-        $this->backend->setCipher(Constants::BLOCK_ENC_AES256_GCM);
+        $this->backend->setDigestAlg(C::DIGEST_SHA256);
+        $this->backend->setCipher(C::BLOCK_ENC_AES256_GCM);
         $this->validSig =
             'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed057' .
             '104721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27' .
@@ -98,9 +98,9 @@ final class OpenSSLTest extends TestCase
     public function testEncrypt(): void
     {
         // test symmetric encryption
-        $this->backend->setCipher(Constants::BLOCK_ENC_AES128);
+        $this->backend->setCipher(C::BLOCK_ENC_AES128);
         $this->assertNotEmpty($this->backend->encrypt($this->sharedKey, 'Plaintext'));
-        $this->backend->setCipher(Constants::BLOCK_ENC_AES128_GCM);
+        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
 
         // test encryption with public key
         $this->assertNotEmpty($this->backend->encrypt($this->pubKey, 'Plaintext'));
@@ -116,7 +116,7 @@ final class OpenSSLTest extends TestCase
     public function testDecrypt(): void
     {
         // test decryption with symmetric key
-        $this->backend->setCipher(Constants::BLOCK_ENC_AES128);
+        $this->backend->setCipher(C::BLOCK_ENC_AES128);
         $this->assertEquals(
             'Plaintext',
             $this->backend->decrypt(
@@ -124,7 +124,7 @@ final class OpenSSLTest extends TestCase
                 hex2bin('9faa2195bd89d2b8b3721f4fea39e904250096ad2bcd66cf77f8423af83d18ba')
             )
         );
-        $this->backend->setCipher(Constants::BLOCK_ENC_AES128_GCM);
+        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
 
         // test decryption with private key
         $this->assertEquals(

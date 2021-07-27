@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
@@ -67,7 +67,7 @@ class X509Certificate extends PublicKey
         $this->certificate = $certificate;
 
         parent::__construct(openssl_pkey_get_public($this->certificate));
-        $this->thumbprint[Constants::DIGEST_SHA1] = $this->getRawThumbprint();
+        $this->thumbprint[C::DIGEST_SHA1] = $this->getRawThumbprint();
 
         $this->parsed = openssl_x509_parse($this->certificate);
     }
@@ -89,7 +89,7 @@ class X509Certificate extends PublicKey
 
         return $this->thumbprint[$alg] = strtolower(
             hash(
-                Constants::$DIGEST_ALGORITHMS[$alg],
+                C::$DIGEST_ALGORITHMS[$alg],
                 base64_decode(
                     implode(
                         array_map("trim", $lines)
@@ -109,13 +109,13 @@ class X509Certificate extends PublicKey
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $alg is not a valid digest identifier.
      */
-    public function getRawThumbprint(string $alg = Constants::DIGEST_SHA1): string
+    public function getRawThumbprint(string $alg = C::DIGEST_SHA1): string
     {
         if (isset($this->thumbprint[$alg])) {
             return $this->thumbprint[$alg];
         }
 
-        if (!isset(Constants::$DIGEST_ALGORITHMS[$alg])) {
+        if (!isset(C::$DIGEST_ALGORITHMS[$alg])) {
             throw new InvalidArgumentException('Invalid digest algorithm identifier');
         }
 
@@ -123,7 +123,7 @@ class X509Certificate extends PublicKey
             // if available, use the openssl function
             return $this->thumbprint[$alg] = openssl_x509_fingerprint(
                 $this->certificate,
-                Constants::$DIGEST_ALGORITHMS[$alg]
+                C::$DIGEST_ALGORITHMS[$alg]
             );
         }
 

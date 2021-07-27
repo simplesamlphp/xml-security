@@ -8,7 +8,7 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 
 use function dirname;
@@ -41,7 +41,7 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $canonicalizationMethod = new CanonicalizationMethod(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
+        $canonicalizationMethod = new CanonicalizationMethod(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -56,6 +56,6 @@ final class CanonicalizationMethodTest extends TestCase
     {
         $canonicalizationMethod = CanonicalizationMethod::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethod->getAlgorithm());
+        $this->assertEquals(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethod->getAlgorithm());
     }
 }
