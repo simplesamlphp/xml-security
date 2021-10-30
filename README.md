@@ -291,3 +291,14 @@ Not available yet.
 ## Extending the library
 
 Not available yet.
+
+## Keys for testing purposes
+All encrypted keys use '1234' as passphrase.
+
+The following keys are available:
+  - signed      - A CA-signed certificate
+  - other       - Another CA-signed certificate
+  - selfsigned  - A self-signed certificate
+  - broken      - A file with a broken PEM-structure (all spaces are removed from the headers)
+  - corrupted   - This looks like a proper certificate (every first & last character of every line has been swapped)
+  - expired     - This CA-signed certificate expires the moment it is generated
