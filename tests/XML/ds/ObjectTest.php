@@ -16,7 +16,7 @@ use SimpleSAML\XMLSecurity\XML\ds\DsObject;
  * Class \SimpleSAML\XMLSecurity\XML\Test\ds\ObjectTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\Object
+ * @covers \SimpleSAML\XMLSecurity\XML\ds\DsObject
  *
  * @package simplesamlphp/xml-security
  */
