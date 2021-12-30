@@ -81,6 +81,7 @@ class Constants extends \SimpleSAML\XML\Constants
      * Key transport algorithms
      */
     public const KEY_TRANSPORT_RSA_1_5 = 'http://www.w3.org/2001/04/xmlenc#rsa-1_5';
+    public const KEY_TRANSPORT_OAEP = 'http://www.w3.org/2009/xmlenc11#rsa-oaep';
     public const KEY_TRANSPORT_OAEP_MGF1P = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
     /**

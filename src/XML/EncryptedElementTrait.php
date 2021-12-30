@@ -9,6 +9,7 @@ use Exception;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XMLSecEnc;
@@ -117,24 +118,25 @@ trait EncryptedElementTrait
         $enc->type = XMLSecEnc::Element;
 
         switch ($key->type) {
-            case XMLSecurityKey::TRIPLEDES_CBC:
-            case XMLSecurityKey::AES128_CBC:
-            case XMLSecurityKey::AES192_CBC:
-            case XMLSecurityKey::AES256_CBC:
-            case XMLSecurityKey::AES128_GCM:
-            case XMLSecurityKey::AES192_GCM:
-            case XMLSecurityKey::AES256_GCM:
+            case C::BLOCK_ENC_3DES:
+            case C::BLOCK_ENC_AES128:
+            case C::BLOCK_ENC_AES192:
+            case C::BLOCK_ENC_AES256:
+            case C::BLOCK_ENC_AES128_GCM:
+            case C::BLOCK_ENC_AES192_GCM:
+            case C::BLOCK_ENC_AES256_GCM:
                 $symmetricKey = $key;
                 break;
 
-            case XMLSecurityKey::RSA_1_5:
-            case XMLSecurityKey::RSA_SHA1:
-            case XMLSecurityKey::RSA_SHA256:
-            case XMLSecurityKey::RSA_SHA384:
-            case XMLSecurityKey::RSA_SHA512:
-            case XMLSecurityKey::RSA_OAEP:
-            case XMLSecurityKey::RSA_OAEP_MGF1P:
-                $symmetricKey = new XMLSecurityKey(XMLSecurityKey::AES128_CBC);
+            case C::KEY_TRANSPORT_RSA_1_5:
+            case C::SIG_RSA_SHA1:
+            case C::SIG_RSA_SHA224:
+            case C::SIG_RSA_SHA256:
+            case C::SIG_RSA_SHA384:
+            case C::SIG_RSA_SHA512:
+            case C::KEY_TRANSPORT_OAEP:
+            case C::KEY_TRANSPORT_OAEP_MGF1P:
+                $symmetricKey = new XMLSecurityKey(C::BLOCK_ENC_AES128);
                 $symmetricKey->generateSessionKey();
 
                 $enc->encryptKey($key, $symmetricKey);
