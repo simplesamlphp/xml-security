@@ -46,7 +46,6 @@ final class ObjectTest extends TestCase
             'image/png',
             'http://www.w3.org/2000/09/xmldsig#base64',
             [$this->xmlRepresentation],
-//            [new Chunk(DOMDocumentFactory::fromString('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=')->documentElement)]
         );
 
         $this->assertEquals(
@@ -65,9 +64,13 @@ final class ObjectTest extends TestCase
         $this->assertEquals('abc123', $obj->getId());
         $this->assertEquals('image/png', $obj->getMimeType());
         $this->assertEquals('http://www.w3.org/2000/09/xmldsig#base64', $obj->getEncoding());
+
+        $objElement = $obj->getElements();
+        $objElement = $objElement[0]->getXML();
+
         $this->assertEquals(
-            '<ssp:data>iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ssp:data>',
-            $obj->getElements()[0]->textContent
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+            $objElement->textContent
         );
     }
 }
