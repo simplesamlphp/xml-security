@@ -40,15 +40,13 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetDigestAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $hmac = C::$HMAC_DIGESTS;
-        $rsa = C::$RSA_DIGESTS;
 
-        foreach ($hmac as $signature => $digest) {
+        foreach (C::$HMAC_DIGESTS as $signature => $digest) {
             $alg = $factory->getAlgorithm($signature, $this->skey);
             $this->assertEquals($digest, $alg->getDigest());
         }
 
-        foreach ($rsa as $signature => $digest) {
+        foreach (C::$RSA_DIGESTS as $signature => $digest) {
             $alg = $factory->getAlgorithm($signature, $this->pkey);
             $this->assertEquals($digest, $alg->getDigest());
         }
