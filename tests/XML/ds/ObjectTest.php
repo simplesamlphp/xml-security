@@ -45,7 +45,12 @@ final class ObjectTest extends TestCase
             'abc123',
             'image/png',
             'http://www.w3.org/2000/09/xmldsig#base64',
-            [$this->xmlRepresentation],
+            [
+                new Chunk(
+                    DOMDocumentFactory::fromString(
+                        '<ssp:data xmlns:ssp="urn:ssp:custom">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ssp:data>'
+                )->documentElement)
+            ],
         );
 
         $this->assertEquals(
