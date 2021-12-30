@@ -2,6 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Exception;
 
+use InvalidArgumentException as BuiltinInvalidArgumentException;
 use Throwable;
 
 use function get_class;
@@ -14,9 +15,9 @@ use function sprintf;
  *
  * This exception is thrown when a parameter is passed to a method with the wrong type or contents.
  *
- * @package SimpleSAML\XMLSecurity\Exception
+ * @package simplesamlphp/xml-security
  */
-class InvalidArgumentException extends \InvalidArgumentException implements Throwable
+class InvalidArgumentException extends BuiltinInvalidArgumentException implements Throwable
 {
     /**
      * @param string $expected description of expected type
@@ -24,7 +25,7 @@ class InvalidArgumentException extends \InvalidArgumentException implements Thro
      *
      * @return \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
      */
-    public static function invalidType(string $expected, $parameter): InvalidArgumentException
+    public static function invalidType(string $expected, $parameter): self
     {
         $message = sprintf(
             'Invalid Argument type: "%s" expected, "%s" given',

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
 use function dirname;
@@ -45,7 +45,7 @@ final class DigestMethodTest extends TestCase
     public function testMarshalling(): void
     {
         $digestMethod = new DigestMethod(
-            Constants::DIGEST_SHA256,
+            C::DIGEST_SHA256,
             [new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement)]
         );
 
@@ -62,6 +62,6 @@ final class DigestMethodTest extends TestCase
     {
         $digestMethod = DigestMethod::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod->getAlgorithm());
+        $this->assertEquals(C::DIGEST_SHA256, $digestMethod->getAlgorithm());
     }
 }

@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
@@ -57,10 +57,10 @@ final class CanonicalizationMethod extends AbstractDsElement
         Assert::oneOf(
             $algorithm,
             [
-                Constants::C14N_EXCLUSIVE_WITH_COMMENTS,
-                Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-                Constants::C14N_INCLUSIVE_WITH_COMMENTS,
-                Constants::C14N_INCLUSIVE_WITHOUT_COMMENTS
+                C::C14N_EXCLUSIVE_WITH_COMMENTS,
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+                C::C14N_INCLUSIVE_WITH_COMMENTS,
+                C::C14N_INCLUSIVE_WITHOUT_COMMENTS
             ],
             'Invalid canonicalization method',
             InvalidArgumentException::class

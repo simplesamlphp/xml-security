@@ -34,14 +34,14 @@ interface SignedElementInterface extends CanonicalizableElementInterface
 
 
     /**
-     * Retrieve the key used to validate the signature in this object.
+     * Retrieve the key used to verify the signature in this object.
      *
      * Warning:
      *
-     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey The key that validated the signature in this object.
+     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey The key that verified the signature in this object.
      * @throws \Exception if an error occurs while trying to extract the public key from a certificate.
      */
-    public function getValidatingKey(): ?AbstractKey;
+    public function getVerifyingKey(): ?AbstractKey;
 
 
     /**
@@ -62,7 +62,7 @@ interface SignedElementInterface extends CanonicalizableElementInterface
      * If null, attempt to verify it with the KeyInfo information in the signature.
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The object processed again from its canonicalised
      * representation verified by the signature.
-     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound if the object is not signed.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException if the object is not signed.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException if no key is passed and there is no KeyInfo
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to validate.

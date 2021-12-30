@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 
@@ -319,7 +319,7 @@ final class SignatureTest extends TestCase
     {
         $signature = new Signature($this->basicDoc->documentElement);
         $signature->addReference($this->basicDoc, C::DIGEST_SHA1, [C::XMLDSIG_ENVELOPED]);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(BlacklistedAlgorithmException::class);
         $signature->sign($this->privKey, C::SIG_RSA_SHA1);
     }
 
@@ -492,7 +492,7 @@ final class SignatureTest extends TestCase
     {
         $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-basic-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(BlacklistedAlgorithmException::class);
         $signature->verify($this->cert);
     }
 
@@ -505,7 +505,7 @@ final class SignatureTest extends TestCase
         $xml = DOMDocumentFactory::fromFile('tests/resources/xml/sign-sha256-rsa-sha256-test.xml');
         $signature = Signature::fromXML($xml->documentElement);
         $signature->setBlacklistedAlgorithms([C::SIG_RSA_SHA256]);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(BlacklistedAlgorithmException::class);
         $signature->verify($this->cert);
     }
 

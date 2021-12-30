@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
@@ -47,12 +47,12 @@ final class ReferenceTest extends TestCase
     public function testMarshalling(): void
     {
         $reference = new Reference(
-            new DigestMethod(Constants::DIGEST_SHA256),
+            new DigestMethod(C::DIGEST_SHA256),
             new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             new Transforms(
                 [
-                    new Transform(Constants::XMLDSIG_ENVELOPED),
-                    new Transform(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+                    new Transform(C::XMLDSIG_ENVELOPED),
+                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
                 ]
             ),
             'abc123',
@@ -72,12 +72,12 @@ final class ReferenceTest extends TestCase
     public function testMarshallingReferenceElementOrdering(): void
     {
         $reference = new Reference(
-            new DigestMethod(Constants::DIGEST_SHA256),
+            new DigestMethod(C::DIGEST_SHA256),
             new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             new Transforms(
                 [
-                    new Transform(Constants::XMLDSIG_ENVELOPED),
-                    new Transform(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+                    new Transform(C::XMLDSIG_ENVELOPED),
+                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
                 ]
             ),
             'abc123',
@@ -104,7 +104,7 @@ final class ReferenceTest extends TestCase
         $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $reference->getURI());
 
         $digestMethod = $reference->getDigestMethod();
-        $this->assertEquals(Constants::DIGEST_SHA256, $digestMethod->getAlgorithm());
+        $this->assertEquals(C::DIGEST_SHA256, $digestMethod->getAlgorithm());
 
         $digestValue = $reference->getDigestValue();
         $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
@@ -114,8 +114,8 @@ final class ReferenceTest extends TestCase
         $transform = $transforms->getTransform();
         $this->assertCount(2, $transform);
 
-        $this->assertEquals(Constants::XMLDSIG_ENVELOPED, $transform[0]->getAlgorithm());
-        $this->assertEquals(Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $transform[1]->getAlgorithm());
+        $this->assertEquals(C::XMLDSIG_ENVELOPED, $transform[0]->getAlgorithm());
+        $this->assertEquals(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $transform[1]->getAlgorithm());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

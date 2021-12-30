@@ -8,7 +8,7 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -51,7 +51,7 @@ final class X509DigestTest extends TestCase
             PEMCertificatesMock::getPlainPublicKey()
         );
 
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(Constants::DIGEST_SHA256)));
+        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
     }
 
 
@@ -59,7 +59,7 @@ final class X509DigestTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $x509digest = new X509Digest($this->digest, Constants::DIGEST_SHA256);
+        $x509digest = new X509Digest($this->digest, C::DIGEST_SHA256);
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
@@ -75,6 +75,6 @@ final class X509DigestTest extends TestCase
         $x509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals($this->digest, $x509digest->getContent());
-        $this->assertEquals(Constants::DIGEST_SHA256, $x509digest->getAlgorithm());
+        $this->assertEquals(C::DIGEST_SHA256, $x509digest->getAlgorithm());
     }
 }

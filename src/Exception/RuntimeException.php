@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Exception;
 
-use RuntimeException as BUILTIN_RuntimeException;
+use RuntimeException as BuiltinRuntimeException;
 use Throwable;
 
 /**
@@ -10,8 +10,8 @@ use Throwable;
  *
  * This exception is thrown when an error occurs during processing in the library.
  *
- * @package SimpleSAML\XMLSecurity\Exception
+ * @package simplesamlphp/xml-security
  */
-class RuntimeException extends BUILTIN_RuntimeException implements Throwable
+class RuntimeException extends BuiltinRuntimeException implements Throwable
 {
 }

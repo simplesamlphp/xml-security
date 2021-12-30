@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 
@@ -146,7 +146,7 @@ final class KeyInfo extends AbstractDsElement
                         $info[] = new Chunk($n);
                         break;
                 }
-            } elseif ($n->namespaceURI === Constants::NS_XENC) {
+            } elseif ($n->namespaceURI === C::NS_XENC) {
                 switch ($n->localName) {
                     case 'EncryptedData':
                         $info[] = EncryptedData::fromXML($n);

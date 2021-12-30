@@ -6,8 +6,10 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 use function in_array;
@@ -37,8 +39,8 @@ final class SignatureAlgorithmFactory
      * @var string[]
      */
     private array $blacklist = [
-        Constants::SIG_RSA_SHA1,
-        Constants::SIG_HMAC_SHA1,
+        C::SIG_RSA_SHA1,
+        C::SIG_HMAC_SHA1,
     ];
 
     /**
@@ -85,18 +87,22 @@ final class SignatureAlgorithmFactory
      *
      * @return \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm An object implementing the given algorithm.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given algorithm
      * is blacklisted, unknown or the given key is not suitable for it.
      */
     public function getAlgorithm(string $algId, AbstractKey $key): SignatureAlgorithm
     {
-        if (in_array($algId, $this->blacklist)) {
-            throw new InvalidArgumentException('Blacklisted signature algorithm');
-        }
+        Assert::true(
+            !in_array($algId, $this->blacklist, true),
+            sprintf('Blacklisted signature algorithm;  \'%s\'.', $algId),
+            BlacklistedAlgorithmException::class
+        );
 
-        if (!array_key_exists($algId, self::$cache)) {
-            throw new InvalidArgumentException('Unknown algorithm identifier.');
-        }
+        Assert::true(
+            array_key_exists($algId, self::$cache),
+            sprintf('Unsupported algorithm identifier;  \'%s\'.', $algId),
+            UnsupportedAlgorithmException::class
+        );
 
         return new self::$cache[$algId]($key, $algId);
     }

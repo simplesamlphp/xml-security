@@ -8,7 +8,7 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
 
 use function dirname;
@@ -42,7 +42,7 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $signatureMethod = new SignatureMethod(Constants::SIG_RSA_SHA256);
+        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -57,6 +57,6 @@ final class SignatureMethodTest extends TestCase
     {
         $signatureMethod = SignatureMethod::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $signatureMethod->getAlgorithm());
+        $this->assertEquals(C::SIG_RSA_SHA256, $signatureMethod->getAlgorithm());
     }
 }

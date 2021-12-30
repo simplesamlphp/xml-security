@@ -10,7 +10,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\NoSignatureFound;
+use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
@@ -429,7 +429,7 @@ class Signature
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $node is not
      *   an instance of DOMDocument or DOMElement.
-     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound If there is no signature in the $node.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException If there is no signature in the $node.
      */
     public static function fromXML(DOMNode $node): Signature
     {
@@ -948,7 +948,7 @@ class Signature
      * @return \DOMElement The signature element.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is no DOMDocument element available.
-     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFound If no signature is found.
+     * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException If no signature is found.
      */
     protected static function findSignature(DOMNode $node): DOMElement
     {
@@ -962,7 +962,7 @@ class Signature
         $nodeset = $xp->query('./ds:Signature', $node);
 
         if ($nodeset->length === 0) {
-            throw new NoSignatureFound();
+            throw new NoSignatureFoundException();
         }
         return $nodeset->item(0);
     }

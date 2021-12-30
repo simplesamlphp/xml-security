@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;

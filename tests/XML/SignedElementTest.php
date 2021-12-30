@@ -8,7 +8,7 @@ use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
@@ -93,7 +93,7 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
         $verifier = $factory->getAlgorithm($sigAlg, $certificate);
@@ -105,7 +105,7 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $this->assertEquals($certificate, $verified->getValidatingKey());
+        $this->assertEquals($certificate, $verified->getVerifyingKey());
     }
 
 
@@ -120,7 +120,7 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $certificate = new X509Certificate($this->certificate);
 
         $verified = $customSigned->verify();
@@ -130,7 +130,7 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $validatingKey = $verified->getValidatingKey();
+        $validatingKey = $verified->getVerifyingKey();
         $this->assertInstanceOf(X509Certificate::class, $validatingKey);
         /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate $validatingKey */
         $this->assertEquals($certificate->getCertificate(), $validatingKey->getCertificate());
@@ -148,10 +148,10 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
 
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessage('Failed to validate signature.');
+        $this->expectDeprecationMessage('Failed to verify signature.');
         $customSigned->verify();
     }
 
@@ -167,13 +167,13 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
         $verifier = $factory->getAlgorithm($sigAlg, $certificate);
 
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessage('Failed to validate signature.');
+        $this->expectDeprecationMessage('Failed to verify signature.');
         $customSigned->verify($verifier);
     }
 
@@ -193,7 +193,7 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(Constants::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
         $verifier = $factory->getAlgorithm($sigAlg, $certificate);
@@ -211,6 +211,6 @@ final class SignedElementTest extends TestCase
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment --></ssp:Some></ssp:CustomSignable>',
             strval($verified)
         );
-        $this->assertEquals($certificate, $verified->getValidatingKey());
+        $this->assertEquals($certificate, $verified->getVerifyingKey());
     }
 }

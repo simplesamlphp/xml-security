@@ -7,8 +7,9 @@ namespace SimpleSAML\XMLSecurity\Alg;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Constants;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -39,30 +40,13 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetDigestAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $hmac = [
-            Constants::SIG_HMAC_SHA1      => Constants::DIGEST_SHA1,
-            Constants::SIG_HMAC_SHA224    => Constants::DIGEST_SHA224,
-            Constants::SIG_HMAC_SHA256    => Constants::DIGEST_SHA256,
-            Constants::SIG_HMAC_SHA384    => Constants::DIGEST_SHA384,
-            Constants::SIG_HMAC_SHA512    => Constants::DIGEST_SHA512,
-            Constants::SIG_HMAC_RIPEMD160 => Constants::DIGEST_RIPEMD160,
-        ];
 
-        $rsa = [
-            Constants::SIG_RSA_SHA1      => Constants::DIGEST_SHA1,
-            Constants::SIG_RSA_SHA224    => Constants::DIGEST_SHA224,
-            Constants::SIG_RSA_SHA256    => Constants::DIGEST_SHA256,
-            Constants::SIG_RSA_SHA384    => Constants::DIGEST_SHA384,
-            Constants::SIG_RSA_SHA512    => Constants::DIGEST_SHA512,
-            Constants::SIG_RSA_RIPEMD160 => Constants::DIGEST_RIPEMD160,
-        ];
-
-        foreach ($hmac as $signature => $digest) {
+        foreach (C::$HMAC_DIGESTS as $signature => $digest) {
             $alg = $factory->getAlgorithm($signature, $this->skey);
             $this->assertEquals($digest, $alg->getDigest());
         }
 
-        foreach ($rsa as $signature => $digest) {
+        foreach (C::$RSA_DIGESTS as $signature => $digest) {
             $alg = $factory->getAlgorithm($signature, $this->pkey);
             $this->assertEquals($digest, $alg->getDigest());
         }
@@ -75,8 +59,8 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testGetUnknownAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([]);
-        $this->expectException(InvalidArgumentException::class);
-        $factory->getAlgorithm('Unknown algorithm identifier', $this->skey);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $factory->getAlgorithm('Unsupported algorithm identifier', $this->skey);
     }
 
 
@@ -85,13 +69,13 @@ final class SignatureAlgorithmFactoryTest extends TestCase
      */
     public function testBlacklistedAlgorithm(): void
     {
-        $factory = new SignatureAlgorithmFactory([Constants::SIG_RSA_SHA1]);
+        $factory = new SignatureAlgorithmFactory([C::SIG_RSA_SHA1]);
         $this->assertInstanceOf(
             HMAC::class,
-            $factory->getAlgorithm(Constants::SIG_HMAC_SHA1, $this->skey)
+            $factory->getAlgorithm(C::SIG_HMAC_SHA1, $this->skey)
         );
 
-        $this->expectException(InvalidArgumentException::class);
-        $factory->getAlgorithm(Constants::SIG_RSA_SHA1, $this->pkey);
+        $this->expectException(BlacklistedAlgorithmException::class);
+        $factory->getAlgorithm(C::SIG_RSA_SHA1, $this->pkey);
     }
 }
