@@ -192,9 +192,18 @@ final class DsObject extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Id', $this->Id);
-        $e->setAttribute('MimeType', $this->MimeType);
-        $e->setAttribute('Encoding', $this->Encoding);
+
+        if ($this->Id !== null) {
+            $e->setAttribute('Id', $this->Id);
+        }
+
+        if ($this->MimeType !== null) {
+            $e->setAttribute('MimeType', $this->MimeType);
+        }
+
+        if ($this->Encoding !== null) {
+            $e->setAttribute('Encoding', $this->Encoding);
+        }
 
         foreach ($this->elements as $elt) {
             $elt->toXML($e);

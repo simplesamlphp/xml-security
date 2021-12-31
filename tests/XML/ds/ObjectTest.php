@@ -69,6 +69,7 @@ final class ObjectTest extends TestCase
         $this->assertEquals('abc123', $obj->getId());
         $this->assertEquals('image/png', $obj->getMimeType());
         $this->assertEquals('http://www.w3.org/2000/09/xmldsig#base64', $obj->getEncoding());
+        $this->assertFalse($obj->isEmptyElement());
 
         $objElement = $obj->getElements();
         $objElement = $objElement[0]->getXML();
@@ -77,5 +78,20 @@ final class ObjectTest extends TestCase
             'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
             $objElement->textContent
         );
+    }
+
+
+    /**
+     * Adding an empty Object-element should yield an empty element.
+     */
+    public function testMarshallingEmptyElement(): void
+    {
+        $ds_ns = DsObject::NS;
+        $obj = new DsObject(null, null, null, []);
+        $this->assertEquals(
+            "<ds:Object xmlns:ds=\"$ds_ns\"/>",
+            strval($obj)
+        );
+        $this->assertTrue($obj->isEmptyElement());
     }
 }
