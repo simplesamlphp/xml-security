@@ -55,7 +55,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     protected bool $useAuthTag = false;
 
     /** @var int */
-    const AUTH_TAG_LEN = 16;
+    public const AUTH_TAG_LEN = 16;
 
 
     /**
