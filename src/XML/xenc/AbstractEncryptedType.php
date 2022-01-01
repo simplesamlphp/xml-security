@@ -20,7 +20,7 @@ use function count;
  *
  * @package simplesamlphp/xml-security
  */
-class AbstractEncryptedType extends AbstractXencElement
+abstract class AbstractEncryptedType extends AbstractXencElement
 {
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherData */
     protected CipherData $cipherData;
