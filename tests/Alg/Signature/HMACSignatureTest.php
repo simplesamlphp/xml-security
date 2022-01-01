@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Alg;
+namespace SimpleSAML\XMLSecurity\Test\Alg\Signature;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;

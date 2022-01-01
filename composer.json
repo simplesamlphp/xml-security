@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SimpleSAML\\XMLSecurity\\": "tests",
+            "SimpleSAML\\XMLSecurity\\Test\\": "tests",
             "SimpleSAML\\XMLSecurity\\Test\\Utils\\": "tests/Utils",
             "SimpleSAML\\XMLSecurity\\Test\\XML\\": "tests/XML"
         }
