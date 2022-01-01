@@ -133,13 +133,18 @@ class EncryptedKey extends AbstractEncryptedType
      */
     public function decrypt(EncryptionAlgorithmInterface $decryptor): string
     {
-        if ($this->getCipherData()->getCipherValue() === null) {
-            throw new InvalidArgumentException('Decrypting keys by reference is not supported.');
-        }
+        Assert::notNull(
+            $this->getCipherData()->getCipherValue(),
+            'Decrypting keys by reference is not supported.',
+            InvalidArgumentException::class
+        );
 
-        if ($this->getEncryptionMethod()->getAlgorithm() !== $decryptor->getAlgorithmId()) {
-            throw new InvalidArgumentException('Decryptor algorithm does not match algorithm used.');
-        }
+        Assert::eq(
+            $decryptor->getAlgorithmId(),
+            $this->getEncryptionMethod()->getAlgorithm(),
+            'Decryptor algorithm does not match algorithm used.',
+            InvalidArgumentException::class
+        );
 
         return $decryptor->decrypt(base64_decode($this->getCipherData()->getCipherValue()->getContent()));
     }
@@ -178,9 +183,12 @@ class EncryptedKey extends AbstractEncryptedType
         ?KeyInfo $keyInfo = null,
         ?ReferenceList $referenceList = null
     ): EncryptedKey {
-        if ($encryptor->getAlgorithmId() !== $encryptionMethod->getAlgorithm()) {
-            throw new InvalidArgumentException('Encryptor algorithm and encryption method do not match.');
-        }
+        Assert::eq(
+            $encryptor->getAlgorithmId(),
+            $encryptionMethod->getAlgorithm(),
+            'Encryptor algorithm and encryption method do not match.',
+            InvalidArgumentException::class
+        );
 
         return new self(
             new CipherData(
