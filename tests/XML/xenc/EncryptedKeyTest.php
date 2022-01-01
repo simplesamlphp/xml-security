@@ -9,6 +9,12 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\RSA;
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
@@ -36,6 +42,12 @@ final class EncryptedKeyTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
+    /** @var PrivateKey */
+    protected PrivateKey $privKey;
+
+    /** @var PublicKey */
+    protected PublicKey $pubKey;
+
     /**
      */
     public function setup(): void
@@ -45,6 +57,9 @@ final class EncryptedKeyTest extends TestCase
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedKey.xml'
         );
+
+        $this->privKey = PrivateKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/privkey.pem');
+        $this->pubKey = PublicKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/pubkey.pem');
     }
 
 
@@ -56,7 +71,10 @@ final class EncryptedKeyTest extends TestCase
     public function testMarshalling(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+            new CipherData(new CipherValue('3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s'
+                . '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQ'
+                . 'V6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwMiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO'
+                . 'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==')),
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
@@ -93,7 +111,10 @@ final class EncryptedKeyTest extends TestCase
     public function testMarshallingElementOrdering(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+            new CipherData(new CipherValue('3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s'
+                . '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQ'
+                . 'V6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwMiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO'
+                . 'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==')),
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
@@ -152,7 +173,10 @@ final class EncryptedKeyTest extends TestCase
 
         $cipherData = $encryptedKey->getCipherData();
         $this->assertEquals(
-            '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=',
+            '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s4eHBdHejiL1bySDQT5diN/TVo8zz0A'
+            . 'mPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwM'
+            . 'iaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FOV3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4'
+            . 'JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==',
             $cipherData->getCipherValue()->getContent()
         );
 
@@ -183,5 +207,68 @@ final class EncryptedKeyTest extends TestCase
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedKey)
         );
+    }
+
+
+    /**
+     * Test encryption and decryption with PKCS1 RSA 1.5.
+     */
+    public function testPKCS1Encryption(): void
+    {
+        $factory = new KeyTransportAlgorithmFactory([]);
+        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_RSA_1_5, $this->pubKey);
+        $symmetricKey = SymmetricKey::generate(8);
+        $encryptedKey = EncryptedKey::fromKey(
+            $symmetricKey,
+            $encryptor,
+            new EncryptionMethod(Constants::KEY_TRANSPORT_RSA_1_5)
+        );
+
+        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_RSA_1_5, $this->privKey);
+        $decryptedKey = $encryptedKey->decrypt($decryptor);
+
+        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
+    }
+
+
+    /**
+     * Test encryption and decryption with RSA OAEP
+     */
+    public function testOAEPEncryption(): void
+    {
+        $factory = new KeyTransportAlgorithmFactory([]);
+        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP, $this->pubKey);
+        $symmetricKey = SymmetricKey::generate(16);
+        $encryptedKey = EncryptedKey::fromKey(
+            $symmetricKey,
+            $encryptor,
+            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP)
+        );
+
+        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP, $this->privKey);
+        $decryptedKey = $encryptedKey->decrypt($decryptor);
+
+        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
+    }
+
+
+    /**
+     * Test encryption and decryption with RSA OAEP-MGF1P
+     */
+    public function testOAEMGF1PPEncryption(): void
+    {
+        $factory = new KeyTransportAlgorithmFactory([]);
+        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
+        $symmetricKey = SymmetricKey::generate(16);
+        $encryptedKey = EncryptedKey::fromKey(
+            $symmetricKey,
+            $encryptor,
+            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP_MGF1P)
+        );
+
+        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
+        $decryptedKey = $encryptedKey->decrypt($decryptor);
+
+        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
     }
 }
