@@ -3,6 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Test\Backend;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XMLSecurity\Backend\HMAC;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
