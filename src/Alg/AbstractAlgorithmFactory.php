@@ -80,8 +80,9 @@ abstract class AbstractAlgorithmFactory
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
             BlacklistedAlgorithmException::class
         );
-        Assert::true(
-            array_key_exists($algId, static::$cache),
+        Assert::keyExists(
+            static::$cache,
+            $algId,
             sprintf('Unknown or unsupported algorithm: \'%s\'.', $algId),
             UnsupportedAlgorithmException::class
         );
