@@ -2,14 +2,12 @@
 
 namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * Interface for backends implementing digital signatures.
  *
- * @package SimpleSAML\XMLSecurity\Backend
+ * @package simplesamlphp/xml-security
  */
 interface SignatureBackend
 {

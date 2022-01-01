@@ -13,14 +13,9 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
-use function array_pop;
-use function array_shift;
 use function dirname;
-use function explode;
 use function file_get_contents;
-use function join;
 use function strval;
-use function trim;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignedElementTest
