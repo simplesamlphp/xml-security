@@ -33,8 +33,8 @@ class Constants extends \SimpleSAML\XML\Constants
     /**
      * Padding schemas
      */
-    public const PADDING_PKCS1 = 1;
-    public const PADDING_PKCS1_OAEP = 4;
+    public const PADDING_PKCS1 = "PKCS1";
+    public const PADDING_PKCS1_OAEP = "OAEP";
 
     /**
      * Block encryption algorithms
