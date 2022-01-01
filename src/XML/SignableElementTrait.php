@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
@@ -45,8 +45,8 @@ trait SignableElementTrait
     /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null */
     private ?KeyInfo $keyInfo = null;
 
-    /** @var \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null */
-    protected ?SignatureAlgorithm $signer = null;
+    /** @var \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface|null */
+    protected ?SignatureAlgorithmInterface $signer = null;
 
 
     /**
@@ -64,12 +64,13 @@ trait SignableElementTrait
      *
      * The signature will not be applied until toXML() is called.
      *
-     * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm $signer The actual signer implementation to use.
+     * @param \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface $signer The actual signer implementation
+     * to use.
      * @param string $canonicalizationAlg The identifier of the canonicalization algorithm to use.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo A KeyInfo object to add to the signature.
      */
     public function sign(
-        SignatureAlgorithm $signer,
+        SignatureAlgorithmInterface $signer,
         string $canonicalizationAlg = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
         ?KeyInfo $keyInfo = null
     ): void {

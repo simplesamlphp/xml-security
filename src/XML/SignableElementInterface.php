@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 /**
@@ -29,13 +29,14 @@ interface SignableElementInterface extends CanonicalizableElementInterface
      *
      * @note The signature will not be applied until toXML() is called.
      *
-     * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm $signer The actual signer implementation to use.
+     * @param \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface $signer The actual signer implementation
+     * to use.
      * @param string $canonicalizationAlg The identifier of the canonicalization algorithm to use.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo A KeyInfo object to add to the signature.
      */
     public function sign(
-        SignatureAlgorithm $signer,
-        string $canonicalizationAlg,
-        ?KeyInfo $keyInfo = null
+        SignatureAlgorithmInterface $signer,
+        string                      $canonicalizationAlg,
+        ?KeyInfo                    $keyInfo = null
     ): void;
 }
