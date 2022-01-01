@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
@@ -15,7 +14,7 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractSigner implements SignatureAlgorithm
+abstract class AbstractSigner implements SignatureAlgorithmInterface
 {
     /** @var \SimpleSAML\XMLSecurity\Key\AbstractKey */
     private AbstractKey $key;
@@ -89,10 +88,14 @@ abstract class AbstractSigner implements SignatureAlgorithm
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend
+     * @inheritDoc
      */
-    public function setBackend(SignatureBackend $backend): void
+    public function setBackend(?SignatureBackend $backend): void
     {
+        if ($backend === null) {
+            return;
+        }
+
         $this->backend = $backend;
         $this->backend->setDigestAlg($this->digest);
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
@@ -14,7 +13,7 @@ use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
  *
  * @package simplesamlphp/xml-security
  */
-final class RSA extends AbstractSigner implements SignatureAlgorithm
+final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
 {
     /** @var string */
     protected string $default_backend = OpenSSL::class;

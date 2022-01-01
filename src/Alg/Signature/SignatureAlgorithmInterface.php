@@ -1,39 +1,26 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Alg;
+declare(strict_types=1);
 
+namespace SimpleSAML\XMLSecurity\Alg\Signature;
+
+use SimpleSAML\XMLSecurity\Alg\AlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
  * An interface representing algorithms that can be used for digital signatures.
  *
- * @package SimpleSAML\XMLSecurity\Alg
+ * @package simplesamlphp/xml-security
  */
-interface SignatureAlgorithm
+interface SignatureAlgorithmInterface extends AlgorithmInterface
 {
-    /**
-     * Get an array with all the identifiers for algorithms supported.
-     *
-     * @return string[]
-     */
-    public static function getSupportedAlgorithms(): array;
-
-
     /**
      * Get the digest used by this signature algorithm.
      *
      * @return string The identifier of the digest algorithm used.
      */
     public function getDigest(): string;
-
-
-    /**
-     * Get the identifier of this signature algorithm.
-     *
-     * @return string The identifier of this signature algorithm.
-     */
-    public function getAlgorithmId(): string;
 
 
     /**
@@ -47,10 +34,11 @@ interface SignatureAlgorithm
     /**
      * Set the backend to use for actual computations by this algorithm.
      *
-     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend The backend to use.
+     * @param \SimpleSAML\XMLSecurity\Backend\SignatureBackend|null $backend The backend to use, or null if we want to
+     * use the default.
      *
      */
-    public function setBackend(SignatureBackend $backend): void;
+    public function setBackend(?SignatureBackend $backend): void;
 
 
     /**
