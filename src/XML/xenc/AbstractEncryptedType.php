@@ -56,7 +56,7 @@ class AbstractEncryptedType extends AbstractXencElement
      *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
      */
-    protected function __construct(
+    public function __construct(
         CipherData $cipherData,
         ?string $id = null,
         ?string $type = null,
