@@ -63,7 +63,7 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
 
 
     /**
-     * @return AbstractKey
+     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey
      */
     public function getKey(): AbstractKey
     {
