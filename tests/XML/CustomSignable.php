@@ -9,19 +9,28 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
 use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
 use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
 use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
 use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
 
 /**
+ * This is an example class demonstrating an object that can be signed and encrypted.
+ *
  * @package simplesamlphp/xml-security
  */
-class CustomSignable extends AbstractXMLElement implements SignableElementInterface, SignedElementInterface
+class CustomSignable extends AbstractXMLElement implements
+    SignableElementInterface,
+    SignedElementInterface,
+    EncryptableElementInterface
 {
     use SignableElementTrait;
     use SignedElementTrait;
+    use EncryptableElementTrait;
 
     /** @var string */
     public const NS = 'urn:ssp:custom';
@@ -41,6 +50,11 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
     protected ?Signature $signature = null;
 
+    /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null */
+    private ?EncryptionBackend $backend = null;
+
+    /** @var string[] */
+    private array $blacklistedAlgs = [];
 
     /**
      * Constructor
@@ -113,6 +127,58 @@ class CustomSignable extends AbstractXMLElement implements SignableElementInterf
     protected function getOriginalXML(): DOMElement
     {
         return $this->xml;
+    }
+
+
+    /**
+     * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
+     * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
+     *
+     * @return \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null The encryption backend to use, or null if we want
+     * to use the default.
+     */
+    public function getEncryptionBackend(): ?EncryptionBackend
+    {
+        return $this->backend;
+    }
+
+
+    /**
+     * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
+     * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
+     *
+     * @param \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null $backend The encryption backend we want to use, or
+     * null if we want to use the defaults.
+     */
+    public function setEncryptionBackend(?EncryptionBackend $backend): void
+    {
+        $this->backend = $backend;
+    }
+
+
+    /**
+     * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
+     * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
+     *
+     * @return string[]|null An array with all algorithm identifiers that we want to blacklist, or null if we want to
+     * use the defaults.
+     */
+    public function getBlacklistedAlgorithms(): ?array
+    {
+        return $this->blacklistedAlgs;
+    }
+
+
+    /**
+     * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
+     * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
+     *
+     * @param string[]|null $algIds An array with the identifiers of the algorithms we want to blacklist, or null if we
+     * want to use the defaults.
+     */
+    public function setBlacklistedAlgorithms(?array $algIds): void
+    {
+        $this->blacklistedAlgs = $algIds;
     }
 
 
