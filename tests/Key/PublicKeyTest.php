@@ -3,7 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\IOException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 
 use function file_get_contents;
@@ -60,7 +60,7 @@ final class PublicKeyTest extends TestCase
      */
     public function testFromMissingFile(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(IOException::class);
         @PublicKey::fromFile('foo/bar');
     }
 

@@ -2,8 +2,6 @@
 
 namespace SimpleSAML\XMLSecurity\Exception;
 
-use Throwable;
-
 /**
  * Class IOException
  *
@@ -11,7 +9,7 @@ use Throwable;
  *
  * @package simplesamlphp/xml-security
  */
-class IOException extends InvalidArgumentException
+class IOException extends RuntimeException
 {
     /**
      * @param string|null $message
