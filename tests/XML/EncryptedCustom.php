@@ -126,25 +126,8 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
      * If, on the contrary, the decryptor implements a block cipher encryption algorithm, the method in the trait will
      * attempt to decrypt the object directly.
      *
-     * Here we implement this method manually to serve as a guide for those needing to implement it on their own. This
-     * method implements an example where the EncryptedData includes a KeyInfo with an EncryptedKey. We then use the
-     * given decryptor to decrypt that key, which will in turn be used to decrypt the element itself. Note that if you
-     * plan to support encrypted objects that include their own EncryptedKey, your object will have to build a
-     * decryptor on its own. This means the end user will have no way to specify the backend to use or what algorithms
-     * should be blacklisted, so your encrypted object implementation should cater for this.
-     *
-     * For your convenience, you can just use the \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait::decryptData()
-     * to implement this method:
-     *
-     *     return MyObject::fromXML(
-     *         \SimpleSAML\XML\DOMDocumentFactory::fromString(
-     *             $this->decryptData($decryptor)
-     *         )->documentElement
-     *     );
-     *
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor able to
-     * decrypt this object. In this particular example, this decryptor will be used to decrypt the session key inside
-     * the encrypted object, and therefore must implement a key transport algorithm.
+     * decrypt this object.
      */
     public function decrypt(EncryptionAlgorithmInterface $decryptor): CustomSignable
     {
@@ -156,6 +139,21 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
     }
 
 
+    /**
+     * Custom implementation of the decrypt() method.
+     *
+     * Here we implement this method manually to serve as a guide for those needing to implement it on their own. This
+     * method implements an example where the EncryptedData includes a KeyInfo with an EncryptedKey. We then use the
+     * given decryptor to decrypt that key, which will in turn be used to decrypt the element itself. Note that if you
+     * plan to support encrypted objects that include their own EncryptedKey, your object will have to build a
+     * decryptor on its own. This means the end user will have no way to specify the backend to use or what algorithms
+     * should be blacklisted, so your encrypted object implementation should cater for this.
+     *
+     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor able to
+     * decrypt this object. In this particular example, this decryptor will be used to decrypt the session key inside
+     * the encrypted object, and therefore must implement a key transport algorithm.
+     * @return CustomSignable A CustomSignable object created from the decrypted element.
+     */
     public function decryptWithSessionKey(EncryptionAlgorithmInterface $decryptor): CustomSignable
     {
         if (!$this->hasDecryptionKey()) {
