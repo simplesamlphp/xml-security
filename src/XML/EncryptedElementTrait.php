@@ -225,28 +225,10 @@ trait EncryptedElementTrait
 
 
     /**
-     * Set the encryption backend to use for any encryption operation.
-     *
-     * @param \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null $backend The encryption backend we want to use, or
-     * null if we want to use the defaults.
-     */
-    abstract public function setEncryptionBackend(EncryptionBackend $backend): void;
-
-
-    /**
      * Get the list of algorithms that are blacklisted for any encryption operation.
      *
      * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
      * defaults.
      */
     abstract public function getBlacklistedAlgorithms(): ?array;
-
-
-    /**
-     * Set the list of algorithms that are blacklisted for any encryption operation.
-     *
-     * @param string[]|null $algIds An array with all algorithm identifiers that are blacklisted, or null if we want to
-     * use the defaults.
-     */
-    abstract public function setBlacklistedAlgorithms(?array $algIds): void;
 }
