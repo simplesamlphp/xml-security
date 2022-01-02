@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Exception;
 
 use RuntimeException as BuiltinRuntimeException;
