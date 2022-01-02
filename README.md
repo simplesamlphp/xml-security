@@ -286,7 +286,307 @@ forces you to **remember that you need to check the key used to verify the signa
 
 ## Encryption API
 
-Not available yet.
+The XML encryption API is similar to its signature counterpart, and also consists of two main
+interfaces:
+
+- `SimpleSAML\XMLSecurity\XML\EncryptableElementInterface`
+- `SimpleSAML\XMLSecurity\XML\EncryptedElementInterface`
+
+Just like in the signature APi, the former signals that an object can be encrypted (and as such
+requires the implementation of an `encrypt()` method), while the latter means an object is already
+encrypted (and therefore requires a `decrypt()` method to be implemented). There is a substantial
+difference with the signature API though: you need to implement two different classes, one for your
+objects themselves, and another for your encrypted objects. The former will then implement 
+`EncryptableElementInterface`, while the latter will be the one implementing 
+`EncryptedElementInterface`.
+
+Again, the library provides a couple of traits for your convenience, in order to minimise the amount
+of code you have to write. Those traits are:
+
+- `SimpleSAML\XMLSecurity\XML\EncryptableElementTrait`
+- `SimpleSAML\XMLSecurity\XML\EncryptedElementTrait`
+
+Both traits are somewhat asymmetrical, in the sense that while `EncryptableElementTrait` does
+implement the `encrypt()` method, the `EncryptedElementTrait` does not implement its `decrypt()`
+counterpart. This is because the way objects are encrypted may vary a lot, and the application 
+itself will be the only one that knows exactly how that should be done. A basic default 
+implementation that should cover most use cases is provided, though.
+
+As with digital signatures, we provide classes that demonstrate the encryption functionality. You
+may have a look at the `CustomSignable` class provided with the tests in order to see how 
+encryption can be added to your objects, and the `EncryptedCustom` class will then demonstrate how
+to deal with objects that are already encrypted.
+
+### Decrypting objects
+
+In XML encryption, when you have an encrypted object, you typically wrap that inside a specific
+element that signals that the object represents an encrypted version of another object. You may 
+have your own elements and logic in that encrypted object, but the absolute minimum would be an
+`xenc:EncryptedData` element inside. This means you will have to create classes for your encrypted
+objects, and they will have to implement the `EncryptedElementInterface`.
+
+The simplest approach is then to take advantage of `EncryptedElementTrait` and again, we recommend
+taking advantage of the XML object framework provided by `simplesamlphp/xml-common`. The only 
+thing you will then have to implement is the `decrypt()` method, and a couple of getters required
+by the trait:
+
+```php
+
+use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
+use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
+
+class MyEncryptedObject extends AbstractXMLElement implements EncryptedElementInterface
+{
+    use EncryptedElementTrait;
+    
+    
+    public function getBlacklistedAlgorithms(): ?array
+    {
+        // return an array with the algorithms you don't want to allow to be used
+    }
+    
+    
+    public function getEncryptionBackend(): ?EncryptionBackend
+    {
+        // return the encryption backend you want to use, or null if you are fine with the default
+    }
+    
+    
+    public function decrypt(EncryptionAlgorithmInterface $decryptor): MyObject 
+    {
+        // implement the actual decryption here with help from the library
+    }
+}
+```
+
+Note that the value returned by `decrypt()` here is your own `MyObject` class. This means 
+`MyObject` needs to extend `SimpleSAML\XML\XMLElementInterface`, but it is also one of the reasons
+why the implementation of `decrypt()` is left to the application.
+
+Now, the aim of this library is of course to make your life easier so that you don't actually have
+to implement decryption yourself. The following implementation of `decrypt()` will be suitable 
+for most use cases:
+
+```php
+    public function decrypt(EncryptionAlgorithmInterface $decryptor): MyObject
+    {
+        return MyObject::fromXML(
+            \SimpleSAML\XML\DOMDocumentFactory::fromString(
+                $this->decryptData($decryptor)
+            )->documentElement
+        );
+    }
+```
+
+So what did just happen here? `MyObject` is supposed to implement `XMLElementInterface`, right? That
+means it must implement a `fromXML()` static method that creates a new instance of the class based
+on what's passed to it as a `DOMElement` object. The `DOMElement` itself was created with help from
+the `DOMDocumentFactory` class, which in turn took the `string` result of calling the 
+`decryptData()` method provided by the trait. And that's it, that might be all you need to decrypt
+your encrypted objects!
+
+Bear in mind though that this is the most basic use case. Your encrypted objects will need to 
+look like this:
+
+```xml
+<MyEncryptedObject>
+  <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+    <xenc:EncryptionMethod Algorithm="..."/>
+    <xenc:CipherData>
+      <xenc:CipherValue>...</xenc:CipherValue>
+    </xenc:CipherData>
+  </xenc:EncryptedData>
+</MyEncryptedObject>
+```
+
+If you need any more elements inside, attributes in the root element or anything else, you will have
+to adjust the implementation for that. In that case, you may need a different constructor for your
+encrypted objects than the one provided by the trait. You can define your own constructor while 
+taking advantage of the one in the trait by renaming the latter:
+
+```php
+
+use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
+
+class MyEncryptedObject extends AbstractXMLElement implements EncryptedElementInterface
+{
+    use EncryptedElementTrait {
+        __construct as constructor;
+    }
+    
+    
+    public function __construct(EncryptedData $encryptedData, ...)
+    {
+        $this->constructor($encryptedData);
+        
+        ...
+    }
+}
+```
+
+Similarly, if your encryption scheme does not fit with any of the two supported by default, you 
+will also need to implement it yourself. The two encryption schemes supported are:
+
+- **Shared key encryption**: both parties share a secret key and use it to encrypt and decrypt the
+  objects, respectively. This means the `<xenc:EncryptionMethod>` element will have a block 
+  cipher specified in the `Algorithm` attribute. The `$decryptor` object passed to the `decrypt()`
+  method will then be created for that block cipher in particular, and the key used will be a
+  `SimpleSAML\XMLSecurity\Key\SymmetricKey` object with the shared secret as the key material.
+- **Asymmetric encryption**: in this case, public key cryptography is used to encrypt the objects.
+  However, public key cryptography is extremely costly in computational terms, so in a similar 
+  fashion to digital signatures, what we do is to generate a random secret or _session key_, which
+  will be used to encrypt the object itself with a block cipher, and in turn we will encrypt 
+  that key with the recipient's public key.
+
+  In this case, the `$decryptor` will implement a _key transport_ algorithm (which in turn is just
+  an assymetric encryption algorithm like RSA), and the key attached to it will be a
+  `SimpleSAML\XMLSecurity\Key\PrivateKey` object with the recipient's private key.
+
+  When using asymmetric encryption, your encrypted XML objects will look similar to this:
+
+  ```xml
+  <MyEncryptedObject>
+    <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+      <xenc:EncryptionMethod Algorithm="BLOCK CIPHER ALGORITHM IDENTIFIER"/>
+      <dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+        <xenc:EncryptedKey>
+          <xenc:EncryptionMethod Algorithm="KEY TRANSPORT ALGORITHM IDENTIFIER"/>
+          <xenc:CipherData>
+            <xenc:CipherValue>...</xenc:CipherValue>
+          </xenc:CipherData>
+        </xenc:EncryptedKey>
+      </dsig:KeyInfo>
+      <xenc:CipherData>
+        <xenc:CipherValue>...</xenc:CipherValue>
+      </xenc:CipherData>
+    </xenc:EncryptedData>
+  </MyEncryptedObject> 
+  ```
+  
+  The innermost `<xenc:CipherValue>` will contain the encrypted session key, while the outermost
+  will contain the encrypted object itself.
+
+The `SimpleSAML\XMLSecurity\XML\EncryptedElementTrait::decryptData()` method is capable of handling
+both encryption schemes. If your application uses any of those, you can just use the method by
+passing the appropriate _decryptor_ as explained earlier. If you are using _shared key encryption_,
+you can then just do the following:
+
+```php
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+
+$decryptor = (new EncryptionAlgorithmFactory())->getAlgorithm(
+    $myEncryptedObject->getEncryptedData()->getEncryptionMethod()->getAlgorithm(),
+    new SymmetricKey('MY SHARED SECRET')
+);
+$myObject = $myEncryptedObject->decrypt($decryptor);
+```
+
+> #### :warning: WARNING
+>
+> Always make sure that the algorithm specified in the `<xenc:EncryptionMethod>` element is a block
+> cipher algorithm. Only in that case the library will attempt to decrypt using the shared secret
+> encryption scheme. The `SimpleSAML\XMLSecurity\Constants::$BLOCK_CIPHER_ALGORITHMS` associative
+> array contains as keys all the identifiers of block ciphers supported by this library.
+
+Alternatively, if your application uses asymmetric encryption, you will have to use an appropriate
+decryptor instantiated with your private key in order to decrypt your objects:
+
+```php
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
+
+$decryptor = (new EncryptionAlgorithmFactory())->getAlgorithm(
+    $myEncryptedObject->getEncryptedKey()->getEncryptionMethod()->getAlgorithm(),
+    PrivateKey::fromFile('/path/to/private-key.pem')
+);
+$myObject = $myEncryptedObject->decrypt($decryptor);
+```
+
+One last note: you may have noticed the `getBlacklistedAlgorithms()` and `getEncryptionBackend()`
+methods that you are required to implement when using `EncryptedElementTrait`. These methods are 
+needed because of asymmetric encryption support. Since the library will have to create a block
+cipher decryptor with the session key, the user does not control that decryptor and therefore won't
+be able to specify directly neither the algorithms to forbid nor the encryption backend to use.
+Hence the need of these two methods, which will allow the trait to modify any of those parameters
+for the decryptor it will build. If you just want to use the default values, just implement them to
+return `null`. However, if you want to customise the algorithms you accept and/or the backend to 
+use, then you will have to return the desired values in those methods.
+
+### Encrypting objects
+
+If you want to support decrypting objects, it is likely that you also want to encrypt them in the
+first place. Doing so is as simple as implementing the 
+`SimpleSAML\XMLSecurity\XML\EncryptableElementInterface`:
+
+```php
+use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
+
+class MyObject extends AbstractXMLElement implements EncryptableElementInterface
+{
+    use EncryptableElementTrait;
+
+
+    public function getBlacklistedAlgorithms(): ?array
+    {
+        // return an array with the algorithms you don't want to allow to be used
+    }
+    
+    
+    public function getEncryptionBackend(): ?EncryptionBackend
+    {
+        // return the encryption backend you want to use, or null if you are fine with the default
+    }
+}
+```
+
+That's it. Easy, isn't it? In this case, the `encrypt()` method is provided directly by
+`SimpleSAML\XMLSecurity\XML\EncryptableElementTrait`, since its return value will always be
+a `SimpleSAML\XMLSecurity\XML\xenc\EncryptedData` object. Again, you have to implement a couple of
+abstract methods required by the trait in order to tell it what algorithms are supported and what
+backend it should use in case of asymmetric encryption.
+
+Now, we just need to actually encrypt our objects. If our application uses shared key encryption,
+we just need to create an appropriate encryptor with a symmetric key:
+
+```php
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+
+$encryptor = (new EncryptionAlgorithmFactory())->getAlgorithm(
+    Constants::BLOCK_ENC_...,
+    new SymmetricKey('MY SHARED SECRET')
+);
+$myEncryptedObject = $myObject->encrypt($encryptor)
+```
+
+If, on the contrary, we want to use an asymmetric encryption scheme, our encryptor will need to
+implement a _key transport_ algorithm, and use a public key:
+
+```php
+use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
+
+$encryptor = (new KeyTransportAlgorithmFactory())->getAlgorithm(
+    Constants::KEY_TRANSPORT_...,
+    PublicKey::fromFile('/path/to/public-key.pem')
+);
+$myEncryptedObject = $myObject->encrypt($encryptor);
+```
+
+That will cover most needs. In general, **asymmetric encryption** will be preferred for most 
+applications, as secret management is a difficult problem to tackle. If you need to implement a 
+different encryption scheme than the two supported here, you will have to implement the `encrypt()`
+method yourself.
 
 ## Extending the library
 
