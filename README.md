@@ -292,7 +292,7 @@ interfaces:
 - `SimpleSAML\XMLSecurity\XML\EncryptableElementInterface`
 - `SimpleSAML\XMLSecurity\XML\EncryptedElementInterface`
 
-Just like in the signature APi, the former signals that an object can be encrypted (and as such
+Just like in the signature API, the former signals that an object can be encrypted (and as such
 requires the implementation of an `encrypt()` method), while the latter means an object is already
 encrypted (and therefore requires a `decrypt()` method to be implemented). There is a substantial
 difference with the signature API though: you need to implement two different classes, one for your
