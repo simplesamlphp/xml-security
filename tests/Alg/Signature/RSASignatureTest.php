@@ -1,13 +1,11 @@
 <?php
 
-namespace SimpleSAML\XMLSecuritiy\Alg;
+namespace SimpleSAML\XMLSecurity\Test\Alg\Signature;
 
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Signature\RSA;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;

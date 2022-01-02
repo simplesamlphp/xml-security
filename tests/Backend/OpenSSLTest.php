@@ -1,8 +1,7 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Backend;
+namespace SimpleSAML\XMLSecurity\Test\Backend;
 
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -41,8 +40,8 @@ final class OpenSSLTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->privKey = PrivateKey::fromFile('tests/privkey.pem');
-        $this->pubKey = PublicKey::fromFile('tests/pubkey.pem');
+        $this->privKey = PrivateKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/tests/privkey.pem');
+        $this->pubKey = PublicKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/tests/pubkey.pem');
         $this->sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
         $this->backend = new OpenSSL();
         $this->backend->setDigestAlg(C::DIGEST_SHA256);
@@ -100,7 +99,7 @@ final class OpenSSLTest extends TestCase
         // test symmetric encryption
         $this->backend->setCipher(C::BLOCK_ENC_AES128);
         $this->assertNotEmpty($this->backend->encrypt($this->sharedKey, 'Plaintext'));
-        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
+        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
 
         // test encryption with public key
         $this->assertNotEmpty($this->backend->encrypt($this->pubKey, 'Plaintext'));
@@ -124,9 +123,9 @@ final class OpenSSLTest extends TestCase
                 hex2bin('9faa2195bd89d2b8b3721f4fea39e904250096ad2bcd66cf77f8423af83d18ba')
             )
         );
-        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
 
         // test decryption with private key
+        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
         $this->assertEquals(
             'Plaintext',
             $this->backend->decrypt(
@@ -157,6 +156,103 @@ final class OpenSSLTest extends TestCase
                 )
             )
         );
+    }
+
+
+    /**
+     * Test that RSA-OAEP and RSA-OAEP-MGF1P are equivalent by default.
+     */
+    public function testEquivalentOAEP(): void
+    {
+        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
+        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->privKey, $ciphertext));
+        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->privKey, $ciphertext));
+    }
+
+
+    /**
+     * Test that encrypting with RSA 1.5 and decrypting with RSA-OAEP* fails.
+     */
+    public function testEncryptRSA15DecryptOAEP(): void
+    {
+        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
+        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
+        $this->backend->decrypt($this->privKey, $ciphertext);
+    }
+
+
+    /**
+     * Test that encrypting with RSA-OAEP* and decrypting with RSA 1.5 fails.
+     */
+    public function testEncryptOAEPDecryptRSA15(): void
+    {
+        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
+        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
+        $this->backend->decrypt($this->privKey, $ciphertext);
+    }
+
+
+    /**
+     * Test that CBC and GCM modes are incompatible.
+     */
+    public function testMismatchingSymmetricEncryptionAlgorithm(): void
+    {
+        $this->backend->setCipher(C::BLOCK_ENC_AES128);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
+        $this->expectException(RuntimeException::class);
+        $plaintext = $this->backend->decrypt($this->sharedKey, $ciphertext);
+    }
+
+
+    /**
+     * Test that all symmetric encryption CBC modes work.
+     */
+    public function testSymmetricCBCEncryption(): void
+    {
+        $this->backend->setCipher(C::BLOCK_ENC_3DES);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+
+        $this->backend->setCipher(C::BLOCK_ENC_AES128);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+
+        $this->backend->setCipher(C::BLOCK_ENC_AES192);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+
+        $this->backend->setCipher(C::BLOCK_ENC_AES256);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+    }
+
+
+    /**
+     * Test that all symmetric encryption GCM modes work.
+     */
+    public function testSymmetricGCMEncryption(): void
+    {
+        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+
+        $this->backend->setCipher(C::BLOCK_ENC_AES192_GCM);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+
+        $this->backend->setCipher(C::BLOCK_ENC_AES256_GCM);
+        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
     }
 
 

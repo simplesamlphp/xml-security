@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SimpleSAML\\XMLSecurity\\": "tests",
+            "SimpleSAML\\XMLSecurity\\Test\\": "tests",
             "SimpleSAML\\XMLSecurity\\Test\\Utils\\": "tests/Utils",
             "SimpleSAML\\XMLSecurity\\Test\\XML\\": "tests/XML"
         }
@@ -40,7 +40,7 @@
         "ext-spl": "*",
 
         "robrichards/xmlseclibs": "^3.1.1",
-        "simplesamlphp/assert": "~0.2.7",
+        "simplesamlphp/assert": "~0.2.8",
         "simplesamlphp/xml-common": "^0.8.1"
     },
     "require-dev": {

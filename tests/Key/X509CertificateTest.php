@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Key;
+namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;

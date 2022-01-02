@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Alg\Signature;
+namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
- * Factory class to create and configure digital signature algorithms.
+ * Factory class to create and configure encryption algorithms.
  *
  * @package simplesamlphp/xml-security
  */
-final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
+final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
 {
     /**
      * A cache of algorithm implementations indexed by algorithm ID.
@@ -32,18 +32,17 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
     /**
      * An array of blacklisted algorithms.
      *
-     * Defaults to RSA-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
+     * Defaults to 3DES.
      *
      * @var string[]
      */
     protected array $blacklist = [
-        C::SIG_RSA_SHA1,
-        C::SIG_HMAC_SHA1,
+        Constants::BLOCK_ENC_3DES,
     ];
 
 
     /**
-     * Build a factory that creates signature algorithms.
+     * Build a factory that creates encryption algorithms.
      *
      * @param array|null $blacklist A list of algorithms forbidden for their use.
      */
@@ -52,8 +51,8 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
         parent::__construct(
             $blacklist,
             [
-                RSA::class,
-                HMAC::class,
+                TripleDES::class,
+                AES::class,
             ]
         );
     }
@@ -66,23 +65,23 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
      */
     protected static function getExpectedParent(): string
     {
-        return SignatureAlgorithmInterface::class;
+        return EncryptionAlgorithmInterface::class;
     }
 
 
     /**
-     * Get a new object implementing the given digital signature algorithm.
+     * Get a new object implementing the given encryption algorithm.
      *
      * @param string $algId The identifier of the algorithm desired.
      * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use with the given algorithm.
      *
-     * @return \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface An object implementing the given
+     * @return \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface An object implementing the given
      * algorithm.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given algorithm
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
      * is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, AbstractKey $key): SignatureAlgorithmInterface
+    public function getAlgorithm(string $algId, AbstractKey $key): EncryptionAlgorithmInterface
     {
         return parent::getAlgorithm($algId, $key);
     }

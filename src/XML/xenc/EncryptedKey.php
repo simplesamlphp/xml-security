@@ -7,10 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Utils as XMLUtils;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-
-use function count;
 
 /**
  * Class representing an encrypted key.
@@ -122,6 +122,92 @@ class EncryptedKey extends AbstractEncryptedType
     protected function setReferenceList(?ReferenceList $referenceList): void
     {
         $this->referenceList = $referenceList;
+    }
+
+
+    /**
+     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor to use
+     * to decrypt the key.
+     *
+     * @return string The decrypted key.
+     */
+    public function decrypt(EncryptionAlgorithmInterface $decryptor): string
+    {
+        Assert::notNull(
+            $this->getCipherData()->getCipherValue(),
+            'Decrypting keys by reference is not supported.',
+            InvalidArgumentException::class
+        );
+
+        Assert::eq(
+            $decryptor->getAlgorithmId(),
+            $this->getEncryptionMethod()->getAlgorithm(),
+            'Decryptor algorithm does not match algorithm used.',
+            InvalidArgumentException::class
+        );
+
+        return $decryptor->decrypt(base64_decode($this->getCipherData()->getCipherValue()->getContent()));
+    }
+
+
+    /**
+     * Create an EncryptedKey by encrypting a given key.
+     *
+     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $keyToEncrypt The key to encrypt.
+     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
+     *   The EncryptionMethod object of this EncryptedData. Optional.
+     * @param string|null $id The Id attribute of this object. Optional.
+     * @param string|null $type The Type attribute of this object. Optional.
+     * @param string|null $mimeType The MimeType attribute of this object. Optional.
+     * @param string|null $encoding The Encoding attribute of this object. Optional.
+     * @param string|null $recipient The Recipient attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
+     *   The value of the CarriedKeyName element of this EncryptedData.
+     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
+     *   The ReferenceList object of this EncryptedData. Optional.
+     *
+     * @return EncryptedKey The new EncryptedKey object.
+     */
+    public static function fromKey(
+        AbstractKey $keyToEncrypt,
+        EncryptionAlgorithmInterface $encryptor,
+        EncryptionMethod $encryptionMethod,
+        ?string $id = null,
+        ?string $type = null,
+        ?string $mimeType = null,
+        ?string $encoding = null,
+        ?string $recipient = null,
+        ?CarriedKeyName $carriedKeyName = null,
+        ?KeyInfo $keyInfo = null,
+        ?ReferenceList $referenceList = null
+    ): EncryptedKey {
+        Assert::eq(
+            $encryptor->getAlgorithmId(),
+            $encryptionMethod->getAlgorithm(),
+            'Encryptor algorithm and encryption method do not match.',
+            InvalidArgumentException::class
+        );
+
+        return new self(
+            new CipherData(
+                new CipherValue(
+                    base64_encode(
+                        $encryptor->encrypt($keyToEncrypt->get())
+                    )
+                )
+            ),
+            $id,
+            $type,
+            $mimeType,
+            $encoding,
+            $recipient,
+            $carriedKeyName,
+            $encryptionMethod,
+            $keyInfo,
+            $referenceList
+        );
     }
 
 

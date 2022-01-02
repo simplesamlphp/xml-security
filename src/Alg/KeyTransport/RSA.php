@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Alg\Signature;
+namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 
 /**
- * Class implementing the RSA signature algorithm.
+ * Class implementing the RSA key transport algorithms.
  *
  * @package simplesamlphp/xml-security
  */
-final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
+final class RSA extends AbstractKeyTransporter
 {
     /** @var string */
     protected string $default_backend = OpenSSL::class;
@@ -25,9 +25,9 @@ final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
      * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(AsymmetricKey $key, string $algId = C::SIG_RSA_SHA256)
+    public function __construct(AsymmetricKey $key, string $algId = C::KEY_TRANSPORT_OAEP_MGF1P)
     {
-        parent::__construct($key, $algId, C::$RSA_DIGESTS[$algId]);
+        parent::__construct($key, $algId);
     }
 
 
@@ -36,6 +36,6 @@ final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
      */
     public static function getSupportedAlgorithms(): array
     {
-        return array_keys(C::$RSA_DIGESTS);
+        return C::$KEY_TRANSPORT_ALGORITHMS;
     }
 }

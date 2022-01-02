@@ -39,7 +39,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
     // asymmetric encryption options
     /** @var int */
-    protected int $padding = C::PADDING_PKCS1;
+    protected int $padding = OPENSSL_PKCS1_PADDING;
 
     // symmetric encryption options
     /** @var string */
@@ -50,6 +50,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
     /** @var int */
     protected int $keysize;
+
+    /** @var bool */
+    protected bool $useAuthTag = false;
+
+    /** @var int */
+    public const AUTH_TAG_LEN = 16;
 
 
     /**
@@ -90,19 +96,27 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         // symmetric encryption
         $ivlen = openssl_cipher_iv_length($this->cipher);
         $iv = Random::generateRandomBytes($ivlen);
-        $plaintext = $this->pad($plaintext);
+        $data = $this->pad($plaintext);
+        $authTag = null;
+        $options = OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING;
+        if ($this->useAuthTag) { // configure GCM mode
+            $authTag = Random::generateRandomBytes(self::AUTH_TAG_LEN);
+            $options = OPENSSL_RAW_DATA;
+            $data = $plaintext;
+        }
         $ciphertext = openssl_encrypt(
-            $plaintext,
+            $data,
             $this->cipher,
             $key->get(),
-            OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,
-            $iv
+            $options,
+            $iv,
+            $authTag
         );
 
         if (!$ciphertext) {
             throw new RuntimeException('Cannot encrypt data: ' . openssl_error_string());
         }
-        return $iv . $ciphertext;
+        return $iv . $ciphertext . $authTag;
     }
 
 
@@ -137,18 +151,27 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         $iv = substr($ciphertext, 0, $ivlen);
         $ciphertext = substr($ciphertext, $ivlen);
 
+        $authTag = null;
+        $options = OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING;
+        if ($this->useAuthTag) { // configure GCM mode
+            $authTag = substr($ciphertext, - self::AUTH_TAG_LEN);
+            $ciphertext = substr($ciphertext, 0, - self::AUTH_TAG_LEN);
+            $options = OPENSSL_RAW_DATA;
+        }
+
         $plaintext = openssl_decrypt(
             $ciphertext,
             $this->cipher,
             $key->get(),
-            OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,
-            $iv
+            $options,
+            $iv,
+            $authTag
         );
 
         if ($plaintext === false) {
             throw new RuntimeException('Cannot decrypt data: ' . openssl_error_string());
         }
-        return $this->unpad($plaintext);
+        return $this->useAuthTag ? $plaintext : $this->unpad($plaintext);
     }
 
 
@@ -195,12 +218,30 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      */
     public function setCipher(string $cipher): void
     {
-        if (!isset(C::$BLOCK_CIPHER_ALGORITHMS[$cipher])) {
+        if (!isset(C::$BLOCK_CIPHER_ALGORITHMS[$cipher]) && !in_array($cipher, C::$KEY_TRANSPORT_ALGORITHMS)) {
             throw new InvalidArgumentException('Invalid or unknown cipher');
         }
-        $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
-        $this->blocksize = C::$BLOCK_SIZES[$cipher];
-        $this->keysize = C::$BLOCK_CIPHER_KEY_SIZES[$cipher];
+
+        // configure the backend depending on the actual algorithm to use
+        $this->useAuthTag = false;
+        $this->cipher = $cipher;
+        switch ($cipher) {
+            case C::KEY_TRANSPORT_RSA_1_5:
+                $this->padding = OPENSSL_PKCS1_PADDING;
+                break;
+            case C::KEY_TRANSPORT_OAEP:
+            case C::KEY_TRANSPORT_OAEP_MGF1P:
+                $this->padding = OPENSSL_PKCS1_OAEP_PADDING;
+                break;
+            case C::BLOCK_ENC_AES128_GCM:
+            case C::BLOCK_ENC_AES192_GCM:
+            case C::BLOCK_ENC_AES256_GCM:
+                $this->useAuthTag = true;
+            default:
+                $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
+                $this->blocksize = C::$BLOCK_SIZES[$cipher];
+                $this->keysize = C::$BLOCK_CIPHER_KEY_SIZES[$cipher];
+        }
     }
 
 

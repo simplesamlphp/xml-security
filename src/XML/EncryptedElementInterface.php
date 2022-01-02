@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XMLSecurityKey;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 
 /**
  * Interface for encrypted elements.
@@ -16,23 +17,29 @@ use SimpleSAML\XMLSecurity\XMLSecurityKey;
 interface EncryptedElementInterface
 {
     /**
-     * Constructor for encrypted elements.
+     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor to use to
+     * decrypt
+     * the object.
      *
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData The EncryptedData object.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] $encryptedKeys
-     *   An array of zero or more EncryptedKey objects.
+     * @return \SimpleSAML\XML\XMLElementInterface The decrypted element.
      */
-    public function __construct(EncryptedData $encryptedData, array $encryptedKeys);
+    public function decrypt(EncryptionAlgorithmInterface $decryptor): XMLElementInterface;
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XMLSecurityKey $key The key we should use to decrypt the element.
-     * @param string[] $blacklist List of blacklisted encryption algorithms.
+     * Whether the encrypted object is accompanied by the decryption key or not.
      *
-     * @return \SimpleSAML\XML\AbstractXMLElement The decrypted element.
+     * @return bool
      */
-    public function decrypt(XMLSecurityKey $key, array $blacklist = []): AbstractXMLElement;
+    public function hasDecryptionKey(): bool;
 
+
+    /**
+     * Get the encrypted key used to encrypt the current element.
+     *
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     */
+    public function getDecryptionKey(): EncryptedKey;
 
     /**
      * Get the EncryptedData object.
@@ -40,12 +47,4 @@ interface EncryptedElementInterface
      * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData
      */
     public function getEncryptedData(): EncryptedData;
-
-
-    /**
-     * Get the array of EncryptedKey objects
-     *
-     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[]
-     */
-    public function getEncryptedKeys(): array;
 }

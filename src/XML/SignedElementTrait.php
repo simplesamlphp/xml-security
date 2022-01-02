@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
@@ -165,12 +165,12 @@ trait SignedElementTrait
      * signature we can verify. An exception is thrown if the signature
      * validation fails.
      *
-     * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null $verifier The verifier to use to verify the signature.
-     * If null, attempt to verify it with the KeyInfo information in the signature.
+     * @param \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface|null $verifier The verifier to use to
+     * verify the signature. If null, attempt to verify it with the KeyInfo information in the signature.
      *
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The Signed element if it was verified.
      */
-    private function verifyInternal(SignatureAlgorithm $verifier): SignedElementInterface
+    private function verifyInternal(SignatureAlgorithmInterface $verifier): SignedElementInterface
     {
         /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature $this->signature */
         $signedInfo = $this->signature->getSignedInfo();
@@ -226,8 +226,8 @@ trait SignedElementTrait
      * If no signature is present, false is returned. If a signature is present,
      * but cannot be verified, an exception will be thrown.
      *
-     * @param \SimpleSAML\XMLSecurity\Alg\SignatureAlgorithm|null $verifier The verifier to use to verify the signature.
-     * If null, attempt to verify it with the KeyInfo information in the signature.
+     * @param \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface|null $verifier The verifier to use to
+     * verify the signature. If null, attempt to verify it with the KeyInfo information in the signature.
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The object processed again from its canonicalised
      * representation verified by the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException if the object is not signed.
@@ -235,7 +235,7 @@ trait SignedElementTrait
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to verify.
      */
-    public function verify(SignatureAlgorithm $verifier = null): SignedElementInterface
+    public function verify(SignatureAlgorithmInterface $verifier = null): SignedElementInterface
     {
         if (!$this->isSigned()) {
             throw new NoSignatureFoundException();

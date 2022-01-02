@@ -33,8 +33,8 @@ class Constants extends \SimpleSAML\XML\Constants
     /**
      * Padding schemas
      */
-    public const PADDING_PKCS1 = 1;
-    public const PADDING_PKCS1_OAEP = 4;
+    public const PADDING_PKCS1 = "PKCS1";
+    public const PADDING_PKCS1_OAEP = "OAEP";
 
     /**
      * Block encryption algorithms
@@ -51,7 +51,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_3DES => 'des-ede3-cbc',
         self::BLOCK_ENC_AES128 => 'aes-128-cbc',
         self::BLOCK_ENC_AES192 => 'aes-192-cbc',
-        self::BLOCK_ENC_AES256 => 'aes-256-cb',
+        self::BLOCK_ENC_AES256 => 'aes-256-cbc',
         self::BLOCK_ENC_AES128_GCM => 'aes-128-gcm',
         self::BLOCK_ENC_AES192_GCM => 'aes-192-gcm',
         self::BLOCK_ENC_AES256_GCM => 'aes-256-gcm',
@@ -83,6 +83,12 @@ class Constants extends \SimpleSAML\XML\Constants
     public const KEY_TRANSPORT_RSA_1_5 = 'http://www.w3.org/2001/04/xmlenc#rsa-1_5';
     public const KEY_TRANSPORT_OAEP = 'http://www.w3.org/2009/xmlenc11#rsa-oaep';
     public const KEY_TRANSPORT_OAEP_MGF1P = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
+
+    public static array $KEY_TRANSPORT_ALGORITHMS = [
+        self::KEY_TRANSPORT_RSA_1_5,
+        self::KEY_TRANSPORT_OAEP,
+        self::KEY_TRANSPORT_OAEP_MGF1P,
+    ];
 
     /**
      * Canonicalization algorithms

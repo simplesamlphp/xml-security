@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleSAML\XMLSecurity\Backend;
+namespace SimpleSAML\XMLSecurity\Test\Backend;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Backend\HMAC;
