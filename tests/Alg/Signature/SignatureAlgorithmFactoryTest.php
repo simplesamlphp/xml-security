@@ -70,10 +70,10 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testBlacklistedAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([C::SIG_RSA_SHA1]);
-        $this->assertInstanceOf(
-            HMAC::class,
-            $factory->getAlgorithm(C::SIG_HMAC_SHA1, $this->skey)
-        );
+        $algorithm = $factory->getAlgorithm(C::SIG_HMAC_SHA1, $this->skey);
+        $this->assertInstanceOf(HMAC::class, $algorithm);
+        $this->assertEquals(C::SIG_HMAC_SHA1, $algorithm->getAlgorithmId());
+        $this->assertEquals($this->skey, $algorithm->getKey());
 
         $this->expectException(BlacklistedAlgorithmException::class);
         $factory->getAlgorithm(C::SIG_RSA_SHA1, $this->pkey);
