@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -46,7 +46,7 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
             $algId,
             static::getSupportedAlgorithms(),
             'Unsupported algorithm for ' . static::class,
-            RuntimeException::class,
+            UnsupportedAlgorithmException::class,
         );
         $this->key = $key;
         $this->algId = $algId;

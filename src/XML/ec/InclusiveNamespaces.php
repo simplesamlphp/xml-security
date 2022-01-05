@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use DOMElement;
-use Webmozart\Assert\Assert;
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function explode;
 use function join;
@@ -50,7 +51,12 @@ class InclusiveNamespaces extends AbstractEcElement
      */
     private function setPrefixes(array $prefixes): void
     {
-        Assert::allString($prefixes, 'Can only add string InclusiveNamespaces prefixes.');
+        Assert::allString(
+            $prefixes,
+            'Can only add string InclusiveNamespaces prefixes.',
+            InvalidArgumentException::class
+        );
+
         $this->prefixes = $prefixes;
     }
 

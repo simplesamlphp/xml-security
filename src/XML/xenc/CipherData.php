@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 
 use function array_pop;
@@ -101,10 +102,20 @@ class CipherData extends AbstractXencElement
         Assert::same($xml->namespaceURI, CipherData::NS, InvalidDOMElementException::class);
 
         $cv = CipherValue::getChildrenOfClass($xml);
-        Assert::maxCount($cv, 1, 'More than one CipherValue element in <xenc:CipherData');
+        Assert::maxCount(
+            $cv,
+            1,
+            'More than one CipherValue element in <xenc:CipherData',
+            TooManyElementsException::class
+        );
 
         $cr = CipherReference::getChildrenOfClass($xml);
-        Assert::maxCount($cr, 1, 'More than one CipherReference element in <xenc:CipherData');
+        Assert::maxCount(
+            $cr,
+            1,
+            'More than one CipherReference element in <xenc:CipherData',
+            TooManyElementsException::class
+        );
 
         return new self(
             empty($cv) ? null : array_pop($cv),

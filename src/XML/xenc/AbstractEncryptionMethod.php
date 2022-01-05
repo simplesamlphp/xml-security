@@ -10,6 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function base64_decode;
 use function base64_encode;
@@ -76,11 +77,11 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-
         $algorithm = self::getAttribute($xml, 'Algorithm');
         $keySize = null;
         $oaepParams = null;
         $children = [];
+
         foreach ($xml->childNodes as $node) {
             if (!$node instanceof DOMElement) {
                 continue;
@@ -133,7 +134,12 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      */
     protected function setAlgorithm(string $algorithm): void
     {
-        Assert::notEmpty($algorithm, 'Cannot set an empty algorithm in ' . static::NS_PREFIX . ':EncryptionMethod.');
+        Assert::notEmpty(
+            $algorithm,
+            'Cannot set an empty algorithm in ' . static::NS_PREFIX . ':EncryptionMethod.',
+            InvalidArgumentException::class,
+        );
+
         $this->algorithm = $algorithm;
     }
 
@@ -182,11 +188,14 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         if ($oaepParams === null) {
             return;
         }
-        Assert::eq(
+
+        Assert::stringPlausibleBase64(
             $oaepParams,
             base64_encode(base64_decode($oaepParams, true)),
             'OAEPParams must be base64-encoded.',
+            InvalidArgumentException::class,
         );
+
         $this->oaepParams = $oaepParams;
     }
 
@@ -214,7 +223,9 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
             $children,
             Chunk::class,
             'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
+            InvalidArgumentException::class,
         );
+
         $this->children = $children;
     }
 

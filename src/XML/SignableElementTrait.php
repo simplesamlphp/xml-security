@@ -11,6 +11,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
@@ -85,7 +86,7 @@ trait SignableElementTrait
                 C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             ],
             'Unsupported canonicalization algorithm',
-            InvalidArgumentException::class,
+            UnsupportedAlgorithmException::class,
         );
         $this->c14nAlg = $canonicalizationAlg;
     }

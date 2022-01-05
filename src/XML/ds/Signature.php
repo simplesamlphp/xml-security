@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Constants as C;
 
 use function array_pop;
@@ -160,6 +162,7 @@ final class Signature extends AbstractDsElement
                 $o->getNamespaceURI() === C::NS_XDSIG
                 && $o->getLocalName() === 'Object',
                 'Only elements of type ds:Object are allowed.',
+                InvalidDOMElementException::class,
             );
         }
 
@@ -184,13 +187,40 @@ final class Signature extends AbstractDsElement
         $Id = self::getAttribute($xml, 'Id', null);
 
         $signedInfo = SignedInfo::getChildrenOfClass($xml);
-        Assert::count($signedInfo, 1, 'ds:Signature needs exactly one ds:SignedInfo element.');
+        Assert::minCount(
+            $signedInfo,
+            1,
+            'ds:Signature needs exactly one ds:SignedInfo element.',
+            MissingElementException::class,
+        );
+        Assert::maxCount(
+            $signedInfo,
+            1,
+            'ds:Signature needs exactly one ds:SignedInfo element.',
+            TooManyElementsException::class,
+        );
 
         $signatureValue = SignatureValue::getChildrenOfClass($xml);
-        Assert::count($signatureValue, 1, 'ds:Signature needs exactly one ds:SignatureValue element.');
+        Assert::minCount(
+            $signatureValue,
+            1,
+            'ds:Signature needs exactly one ds:SignatureValue element.',
+            MissingElementException::class,
+        );
+        Assert::maxCount(
+            $signatureValue,
+            1,
+            'ds:Signature needs exactly one ds:SignatureValue element.',
+            TooManyElementsException::class,
+        );
 
         $keyInfo = KeyInfo::getChildrenOfClass($xml);
-        Assert::maxCount($keyInfo, 1, 'ds:Signature can hold a maximum of one ds:KeyInfo element.');
+        Assert::maxCount(
+            $keyInfo,
+            1,
+            'ds:Signature can hold a maximum of one ds:KeyInfo element.',
+            TooManyElementsException::class,
+        );
 
         $objects = [];
         foreach ($xml->childNodes as $o) {

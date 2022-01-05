@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -45,7 +45,7 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
             $algId,
             static::getSupportedAlgorithms(),
             'Unsupported algorithm for ' . static::class,
-            RuntimeException::class,
+            UnsupportedAlgorithmException::class,
         );
         $this->key = $key;
         $this->algId = $algId;

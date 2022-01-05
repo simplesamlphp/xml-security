@@ -93,7 +93,7 @@ final class DigestMethod extends AbstractDsElement
      */
     private function setElements(array $elements): void
     {
-        Assert::allIsInstanceOf($elements, Chunk::class);
+        Assert::allIsInstanceOf($elements, Chunk::class, InvalidArgumentException::class);
 
         $this->elements = $elements;
     }

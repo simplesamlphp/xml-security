@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 /**
@@ -54,7 +55,7 @@ abstract class AbstractReference extends AbstractXencElement
      */
     protected function setURI(string $uri): void
     {
-        Assert::notEmpty($uri, 'The URI attribute of a reference cannot be empty.');
+        Assert::notEmpty($uri, 'The URI attribute of a reference cannot be empty.', InvalidArgumentException::class);
         $this->uri = $uri;
     }
 
@@ -74,12 +75,12 @@ abstract class AbstractReference extends AbstractXencElement
      * Set the value of the elements-property
      *
      * @param \SimpleSAML\XML\XMLElementInterface[] $elements
-     * @throws \SimpleSAML\Assert\AssertionFailedException
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
      *   if the supplied array contains anything other than XMLElementInterface objects
      */
     private function setElements(array $elements): void
     {
-        Assert::allIsInstanceOf($elements, XMLElementInterface::class);
+        Assert::allIsInstanceOf($elements, XMLElementInterface::class, InvalidArgumentException::class);
         $this->elements = $elements;
     }
 

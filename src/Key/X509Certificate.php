@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 
 use function array_map;
 use function array_pop;
@@ -115,9 +117,12 @@ class X509Certificate extends PublicKey
             return $this->thumbprint[$alg];
         }
 
-        if (!isset(C::$DIGEST_ALGORITHMS[$alg])) {
-            throw new InvalidArgumentException('Invalid digest algorithm identifier');
-        }
+        Assert::keyExists(
+            C::$DIGEST_ALGORITHMS,
+            $alg,
+            'Invalid digest algorithm identifier',
+            UnsupportedAlgorithmException::class,
+        );
 
         if (function_exists('openssl_x509_fingerprint')) {
             // if available, use the openssl function

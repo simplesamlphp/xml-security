@@ -7,6 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
 use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 
@@ -128,7 +131,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
      */
     private function setReferences(array $references): void
     {
-        Assert::allIsInstanceOf($references, Reference::class);
+        Assert::allIsInstanceOf($references, Reference::class, InvalidArgumentException::class);
 
         $this->references = $references;
     }
@@ -185,17 +188,40 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         $Id = self::getAttribute($xml, 'Id', null);
 
         $canonicalizationMethod = CanonicalizationMethod::getChildrenOfClass($xml);
-        Assert::count(
+        Assert::minCount(
             $canonicalizationMethod,
             1,
             'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod',
+            MissingElementException::class,
+        );
+        Assert::maxCount(
+            $canonicalizationMethod,
+            1,
+            'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod',
+            TooManyElementsException::class,
         );
 
         $signatureMethod = SignatureMethod::getChildrenOfClass($xml);
-        Assert::count($signatureMethod, 1, 'A ds:SignedInfo element must contain exactly one ds:SignatureMethod');
+        Assert::minCount(
+            $signatureMethod,
+            1,
+            'A ds:SignedInfo element must contain exactly one ds:SignatureMethod',
+            MissingElementException::class,
+        );
+        Assert::maxCount(
+            $signatureMethod,
+            1,
+            'A ds:SignedInfo element must contain exactly one ds:SignatureMethod',
+            TooManyElementsException::class,
+        );
 
         $references = Reference::getChildrenOfClass($xml);
-        Assert::minCount($references, 1, 'A ds:SignedInfo element must contain at least one ds:Reference');
+        Assert::minCount(
+            $references,
+            1,
+            'A ds:SignedInfo element must contain at least one ds:Reference',
+            MissingElementException::class,
+        );
 
         $signedInfo = new self(array_pop($canonicalizationMethod), array_pop($signatureMethod), $references, $Id);
         $signedInfo->xml = $xml;

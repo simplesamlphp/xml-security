@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
-use Webmozart\Assert\Assert;
 
 use function str_replace;
 
@@ -87,8 +88,8 @@ class XPath extends AbstractDsElement
      */
     private function setNamespaces(array $namespaces): void
     {
-        Assert::allString($namespaces);
-        Assert::allString(array_keys($namespaces));
+        Assert::allString($namespaces, InvalidArgumentException::class);
+        Assert::allString(array_keys($namespaces, InvalidArgumentException::class));
 
         $this->namespaces = $namespaces;
     }

@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function count;
@@ -111,7 +112,12 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      */
     protected function setEncoding(?string $encoding): void
     {
-        Assert::nullOrNotEmpty($encoding, 'Encoding in <xenc:EncryptedData> cannot be empty.');
+        Assert::nullOrNotEmpty(
+            $encoding,
+            'Encoding in <xenc:EncryptedData> cannot be empty.',
+            InvalidArgumentException::class
+        );
+
         $this->encoding = $encoding;
     }
 
@@ -152,7 +158,12 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      */
     protected function setID(?string $id): void
     {
-        Assert::nullOrNotEmpty($id, 'Id in <xenc:EncryptedData> cannot be empty.');
+        Assert::nullOrNotEmpty(
+            $id,
+            'Id in <xenc:EncryptedData> cannot be empty.',
+            InvalidArgumentException::class,
+        );
+
         $this->id = $id;
     }
 
@@ -213,7 +224,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      */
     protected function setType(?string $type): void
     {
-        Assert::nullOrNotEmpty($type, 'Type in <xenc:EncryptedData> cannot be empty.');
+        Assert::nullOrNotEmpty($type, 'Type in <xenc:EncryptedData> cannot be empty.', InvalidArgumentException::class);
         $this->type = $type;
     }
 

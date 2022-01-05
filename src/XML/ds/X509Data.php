@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * Class representing a ds:X509Data element.
@@ -77,6 +78,7 @@ final class X509Data extends AbstractDsElement
         Assert::allIsInstanceOfAny(
             $data,
             [Chunk::class, X509Certificate::class, X509Digest::class, X509SubjectName::class],
+            InvalidArgumentException::class,
         );
 
         $this->data = $data;

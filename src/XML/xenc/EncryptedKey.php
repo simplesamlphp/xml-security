@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
@@ -223,23 +224,44 @@ class EncryptedKey extends AbstractEncryptedType
         Assert::same($xml->namespaceURI, EncryptedKey::NS, InvalidDOMElementException::class);
 
         $cipherData = CipherData::getChildrenOfClass($xml);
-        Assert::count($cipherData, 1, 'No or more than one CipherData element found in <xenc:EncryptedKey>.');
+        Assert::count(
+            $cipherData,
+            1,
+            'No or more than one CipherData element found in <xenc:EncryptedKey>.',
+            TooManyElementsException::class,
+        );
 
         $encryptionMethod = EncryptionMethod::getChildrenOfClass($xml);
         Assert::maxCount(
             $encryptionMethod,
             1,
             'No more than one EncryptionMethod element allowed in <xenc:EncryptedKey>.',
+            TooManyElementsException::class,
         );
 
         $keyInfo = KeyInfo::getChildrenOfClass($xml);
-        Assert::maxCount($keyInfo, 1, 'No more than one KeyInfo element allowed in <xenc:EncryptedKey>.');
+        Assert::maxCount(
+            $keyInfo,
+            1,
+            'No more than one KeyInfo element allowed in <xenc:EncryptedKey>.',
+            TooManyElementsException::class,
+        );
 
         $referenceLists = ReferenceList::getChildrenOfClass($xml);
-        Assert::maxCount($keyInfo, 1, 'Only one ReferenceList element allowed in <xenc:EncryptedKey>.');
+        Assert::maxCount(
+            $keyInfo,
+            1,
+            'Only one ReferenceList element allowed in <xenc:EncryptedKey>.',
+            TooManyElementsException::class,
+        );
 
         $carriedKeyNames = CarriedKeyName::getChildrenOfClass($xml);
-        Assert::maxCount($carriedKeyNames, 1, 'Only one CarriedKeyName element allowed in <xenc:EncryptedKey>.');
+        Assert::maxCount(
+            $carriedKeyNames,
+            1,
+            'Only one CarriedKeyName element allowed in <xenc:EncryptedKey>.',
+            TooManyElementsException::class,
+        );
 
         return new self(
             $cipherData[0],

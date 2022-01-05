@@ -7,12 +7,14 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
@@ -130,7 +132,7 @@ trait SignedElementTrait
             $references,
             1,
             'Exactly one reference expected in signature.',
-            RuntimeException::class,
+            TooManyElementsException::class,
         );
         $reference = array_pop($references);
 
@@ -143,7 +145,7 @@ trait SignedElementTrait
             $sigNode,
             1,
             'None or more than one signature found in object.',
-            RuntimeException::class,
+            TooManyElementsException::class,
         );
         $xml->removeChild($sigNode[0]);
 
@@ -151,7 +153,7 @@ trait SignedElementTrait
         $digest = Security::hash($reference->getDigestMethod()->getAlgorithm(), $data, false);
 
         if (Security::compareStrings($digest, base64_decode($reference->getDigestValue()->getRawContent())) !== true) {
-            throw new RuntimeException('Failed to verify signature.');
+            throw new SignatureVerificationFailedException('Failed to verify signature.');
         }
 
         $verifiedXml = DOMDocumentFactory::fromString($data);
@@ -195,7 +197,7 @@ trait SignedElementTrait
             $ref->validatingKey = $verifier->getKey();
             return $ref;
         }
-        throw new RuntimeException('Failed to verify signature.');
+        throw new SignatureVerificationFailedException('Failed to verify signature.');
     }
 
 
@@ -288,7 +290,7 @@ trait SignedElementTrait
                 }
             }
         }
-        throw new RuntimeException('Failed to verify signature.');
+        throw new SignatureVerificationFailedException('Failed to verify signature.');
     }
 
 

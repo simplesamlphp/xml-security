@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 
@@ -104,11 +105,12 @@ final class KeyInfo extends AbstractDsElement
      */
     private function setInfo(array $info): void
     {
-        Assert::notEmpty($info, 'ds:KeyInfo cannot be empty');
+        Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
         Assert::allIsInstanceOfAny(
             $info,
             [Chunk::class, KeyName::class, X509Data::class, EncryptedKey::class],
             'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.',
+            InvalidArgumentException::class,
         );
         $this->info = $info;
     }

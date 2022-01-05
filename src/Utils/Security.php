@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -47,9 +48,12 @@ class Security
      */
     public static function hash(string $alg, string $data, bool $encode = true): string
     {
-        if (!array_key_exists($alg, C::$DIGEST_ALGORITHMS)) {
-            throw new InvalidArgumentException('Unsupported digest method "' . $alg . '"');
-        }
+        Assert::keyExists(
+            C::$DIGEST_ALGORITHMS,
+            $alg,
+            'Unsupported digest method "' . $alg . '"',
+            InvalidArgumentException::class,
+        );
 
         $digest = hash(C::$DIGEST_ALGORITHMS[$alg], $data, true);
         if ($encode) {

@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 use Webmozart\Assert\Assert;
@@ -161,12 +162,13 @@ class Transform extends AbstractDsElement
 
         $alg = self::getAttribute($xml, 'Algorithm');
         $xpath = XPath::getChildrenOfClass($xml);
-        Assert::maxCount($xpath, 1, 'Only one XPath element supported per Transform.');
+        Assert::maxCount($xpath, 1, 'Only one XPath element supported per Transform.', TooManyElementsException::class);
         $prefixes = InclusiveNamespaces::getChildrenOfClass($xml);
         Assert::maxCount(
             $prefixes,
             1,
             'Only one InclusiveNamespaces element supported per Transform.',
+            TooManyElementsException::class,
         );
 
         return new self($alg, array_pop($xpath), array_pop($prefixes));

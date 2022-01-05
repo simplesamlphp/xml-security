@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * Class representing a ds:Transforms element.
@@ -44,7 +45,7 @@ final class Transforms extends AbstractDsElement
      */
     protected function setTransform(array $transform): void
     {
-        Assert::allIsInstanceOf($transform, Transform::class);
+        Assert::allIsInstanceOf($transform, Transform::class, InvalidArgumentException::class);
         $this->transform = $transform;
     }
 

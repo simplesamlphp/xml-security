@@ -9,6 +9,7 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
@@ -109,7 +110,7 @@ final class KeyInfoTest extends TestCase
      */
     public function testMarshallingEmpty(): void
     {
-        $this->expectException(AssertionFailedException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
 
         $keyInfo = new KeyInfo([]);
@@ -139,7 +140,7 @@ final class KeyInfoTest extends TestCase
     {
         $document = DOMDocumentFactory::fromString('<ds:KeyInfo xmlns:ds="' . KeyInfo::NS . '"/>');
 
-        $this->expectException(AssertionFailedException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
 
         $keyInfo = KeyInfo::fromXML($document->documentElement);

@@ -7,6 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function array_merge;
 
@@ -38,6 +40,7 @@ class ReferenceList extends AbstractXencElement
             array_merge($this->dataReferences, $this->keyreferences),
             1,
             'At least one <xenc:DataReference> or <xenc:KeyReference> element required in <xenc:ReferenceList>.',
+            MissingElementException::class,
         );
     }
 
@@ -62,6 +65,7 @@ class ReferenceList extends AbstractXencElement
             $dataReferences,
             DataReference::class,
             'All data references must be an instance of <xenc:DataReference>.',
+            InvalidArgumentException::class,
         );
 
         $this->dataReferences = $dataReferences;
@@ -88,6 +92,7 @@ class ReferenceList extends AbstractXencElement
             $keyReferences,
             KeyReference::class,
             'All key references must be an instance of <xenc:KeyReference>.',
+            InvalidArgumentException::class,
         );
 
         $this->keyreferences = $keyReferences;

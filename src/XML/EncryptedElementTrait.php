@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractXMLElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
@@ -184,8 +185,15 @@ trait EncryptedElementTrait
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
         $ed = EncryptedData::getChildrenOfClass($xml);
-        Assert::count($ed, 1, 'No more or less than one EncryptedData element allowed in ' .
-            AbstractXMLElement::getClassName(static::class) . '.');
+        Assert::count(
+            $ed,
+            1,
+            sprintf(
+                'No more or less than one EncryptedData element allowed in %s.',
+                AbstractXMLElement::getClassName(static::class),
+            ),
+            TooManyElementsException::class,
+        );
 
         return new static($ed[0]);
     }

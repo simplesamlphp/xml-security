@@ -7,6 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 
 use function array_pop;
 use function preg_match;
@@ -202,13 +204,28 @@ final class Reference extends AbstractDsElement
         $URI = self::getAttribute($xml, 'URI', null);
 
         $transforms = Transforms::getChildrenOfClass($xml);
-        Assert::maxCount($transforms, 1, 'A <ds:Reference> may contain just one <ds:Transforms>.');
+        Assert::maxCount(
+            $transforms,
+            1,
+            'A <ds:Reference> may contain just one <ds:Transforms>.',
+            TooManyElementsException::class,
+        );
 
         $digestMethod = DigestMethod::getChildrenOfClass($xml);
-        Assert::count($digestMethod, 1, 'A <ds:Reference> must contain a <ds:DigestMethod>.');
+        Assert::count(
+            $digestMethod,
+            1,
+            'A <ds:Reference> must contain a <ds:DigestMethod>.',
+            MissingElementException::class,
+        );
 
         $digestValue = DigestValue::getChildrenOfClass($xml);
-        Assert::count($digestValue, 1, 'A <ds:Reference> must contain a <ds:DigestValue>.');
+        Assert::count(
+            $digestValue,
+            1,
+            'A <ds:Reference> must contain a <ds:DigestValue>.',
+            MissingElementException::class,
+        );
 
         return new self(
             array_pop($digestMethod),

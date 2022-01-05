@@ -5,7 +5,7 @@ namespace SimpleSAML\XMLSecurity\Test\Key;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 
 use function file_get_contents;
@@ -94,7 +94,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetRawThumbprintWithWrongAlg(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(UnsupportedAlgorithmException::class);
         $this->c->getRawThumbprint('invalid');
     }
 
