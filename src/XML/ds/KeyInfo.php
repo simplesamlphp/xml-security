@@ -138,29 +138,17 @@ final class KeyInfo extends AbstractDsElement
             if (!($n instanceof DOMElement)) {
                 continue;
             } elseif ($n->namespaceURI === self::NS) {
-                switch ($n->localName) {
-                    case 'KeyName':
-                        $info[] = KeyName::fromXML($n);
-                        break;
-                    case 'X509Data':
-                        $info[] = X509Data::fromXML($n);
-                        break;
-                    default:
-                        $info[] = new Chunk($n);
-                        break;
-                }
+                $info[] = match ($n->localName) {
+                    'KeyName' => KeyName::fromXML($n),
+                    'X509Data' => X509Data::fromXML($n),
+                    default => new Chunk($n),
+                };
             } elseif ($n->namespaceURI === C::NS_XENC) {
-                switch ($n->localName) {
-                    case 'EncryptedData':
-                        $info[] = EncryptedData::fromXML($n);
-                        break;
-                    case 'EncryptedKey':
-                        $info[] = EncryptedKey::fromXML($n);
-                        break;
-                    default:
-                        $info[] = new Chunk($n);
-                        break;
-                }
+                $info[] = match ($n->localName) {
+                    'EncryptedData' => EncryptedData::fromXML($n),
+                    'EncryptedKey' => EncryptedKey::fromXML($n),
+                    default => new Chunk($n),
+                };
             } else {
                 $info[] = new Chunk($n);
                 break;

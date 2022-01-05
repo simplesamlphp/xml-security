@@ -105,20 +105,12 @@ final class X509Data extends AbstractDsElement
                 continue;
             }
 
-            switch ($n->localName) {
-                case 'X509Certificate':
-                    $data[] = X509Certificate::fromXML($n);
-                    break;
-                case 'X509IssuerSerial':
-                    $data[] = X509IssuerSerial::fromXML($n);
-                    break;
-                case 'X509SubjectName':
-                    $data[] = X509SubjectName::fromXML($n);
-                    break;
-                default:
-                    $data[] = new Chunk($n);
-                    break;
-            }
+            $data[] = match ($n->localName) {
+                'X509Certificate' => X509Certificate::fromXML($n),
+                'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
+                'X509SubjectName' => X509SubjectName::fromXML($n),
+                default => new Chunk($n),
+            };
         }
 
         return new self($data);

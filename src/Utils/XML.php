@@ -36,17 +36,14 @@ class XML
         array $prefixes = null
     ): string {
         $exclusive = false;
-        $withComments = false;
-        switch ($c14nMethod) {
-            case C::C14N_EXCLUSIVE_WITH_COMMENTS:
-            case C::C14N_INCLUSIVE_WITH_COMMENTS:
-                $withComments = true;
-        }
-        switch ($c14nMethod) {
-            case C::C14N_EXCLUSIVE_WITH_COMMENTS:
-            case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
-                $exclusive = true;
-        }
+        $withComments = match ($c14nMethod) {
+            C::C14N_EXCLUSIVE_WITH_COMMENTS, C::C14N_INCLUSIVE_WITH_COMMENTS => true,
+            default => false,
+        };
+        $exclusive = match ($c14nMethod) {
+            C::C14N_EXCLUSIVE_WITH_COMMENTS, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS => true,
+            default => false,
+        };
 
         if (
             is_null($xpaths)
