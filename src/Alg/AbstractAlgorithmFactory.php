@@ -22,6 +22,10 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
  */
 abstract class AbstractAlgorithmFactory
 {
+    protected static array $cache = [];
+    protected static bool $initialized = false;
+
+
     /**
      * An array of blacklisted algorithms.
      *
