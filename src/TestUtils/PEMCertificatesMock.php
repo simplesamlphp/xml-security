@@ -44,7 +44,7 @@ class PEMCertificatesMock
      * @param string $sig_alg  One of rsa|dsa
      * @return string The file contents
      */
-    public static function loadPlainCertificateFile(string $file, $sig_alg = self::ALG_SIG_RSA)
+    public static function loadPlainCertificateFile(string $file, string $sig_alg = self::ALG_SIG_RSA): string
     {
         $base = dirname(dirname(dirname(__FILE__)));
         if ($sig_alg === self::ALG_SIG_RSA) {

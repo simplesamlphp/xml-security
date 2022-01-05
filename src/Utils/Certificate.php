@@ -73,7 +73,7 @@ class Certificate
      * @param string $pattern The pattern to use
      * @return string The stripped key
      */
-    public static function stripHeaders(string $key, string $pattern = self::PUBLIC_KEY_PATTERN)
+    public static function stripHeaders(string $key, string $pattern = self::PUBLIC_KEY_PATTERN): string
     {
         $matches = [];
         $result = preg_match($pattern, $key, $matches);

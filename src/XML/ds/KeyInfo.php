@@ -49,7 +49,7 @@ final class KeyInfo extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
      * @param string|null $Id
      */
-    public function __construct(array $info, $Id = null)
+    public function __construct(array $info, ?string $Id = null)
     {
         $this->setInfo($info);
         $this->setId($Id);
