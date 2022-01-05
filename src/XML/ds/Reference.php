@@ -11,7 +11,6 @@ use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 
 use function array_pop;
-use function preg_match;
 
 /**
  * Class representing a ds:Reference element.
@@ -184,7 +183,7 @@ final class Reference extends AbstractDsElement
      */
     public function isXPointer(): bool
     {
-        return !empty($this->URI) && preg_match('/^#xpointer\(.+\)$/', $this->URI);
+        return !empty($this->URI) && str_starts_with($this->URI, '#xpointer');
     }
 
 
