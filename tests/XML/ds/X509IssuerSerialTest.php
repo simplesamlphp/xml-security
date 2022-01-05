@@ -51,11 +51,11 @@ final class X509IssuerSerialTest extends TestCase
         $this->testedClass = X509IssuerSerial::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerSerial.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerSerial.xml',
         );
 
         $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey()
+            PEMCertificatesMock::getPlainPublicKey(),
         );
 
         $details = $this->key->getCertificateDetails();
@@ -72,7 +72,7 @@ final class X509IssuerSerialTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($X509IssuerSerial)
+            strval($X509IssuerSerial),
         );
     }
 
@@ -93,7 +93,7 @@ final class X509IssuerSerialTest extends TestCase
         $X509IssuerSerialElements = XPath::xpQuery(
             $X509IssuerSerialElement,
             './ds:X509IssuerName/following-sibling::*',
-            $xpCache
+            $xpCache,
         );
 
         // Test ordering of X509IssuerSerial contents

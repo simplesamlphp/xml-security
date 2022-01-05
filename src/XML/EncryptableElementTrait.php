@@ -68,7 +68,7 @@ trait EncryptableElementTrait
             $encryptedKey = EncryptedKey::fromKey(
                 $sessionKey,
                 $encryptor,
-                new EncryptionMethod($encryptor->getAlgorithmId())
+                new EncryptionMethod($encryptor->getAlgorithmId()),
             );
 
             $keyInfo = new KeyInfo([$encryptedKey]);
@@ -81,15 +81,15 @@ trait EncryptableElementTrait
         return new EncryptedData(
             new CipherData(
                 new CipherValue(
-                    base64_encode($encryptor->encrypt($this->__toString()))
-                )
+                    base64_encode($encryptor->encrypt($this->__toString())),
+                ),
             ),
             null,
             $this->dataType,
             null,
             null,
             new EncryptionMethod($encryptor->getAlgorithmId()),
-            $keyInfo
+            $keyInfo,
         );
     }
 

@@ -89,7 +89,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
                     Assert::null(
                         $keySize,
                         $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class
+                        TooManyElementsException::class,
                     );
                     Assert::numeric($node->textContent, $node->tagName . ' must be numerical.');
                     $keySize = intval($node->textContent);
@@ -100,7 +100,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
                     Assert::null(
                         $oaepParams,
                         $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class
+                        TooManyElementsException::class,
                     );
                     $oaepParams = trim($node->textContent);
                     continue;
@@ -185,7 +185,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::eq(
             $oaepParams,
             base64_encode(base64_decode($oaepParams, true)),
-            'OAEPParams must be base64-encoded.'
+            'OAEPParams must be base64-encoded.',
         );
         $this->oaepParams = $oaepParams;
     }
@@ -213,7 +213,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::allIsInstanceOf(
             $children,
             Chunk::class,
-            'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SimpleSAML\XML\Chunk.'
+            'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
         );
         $this->children = $children;
     }

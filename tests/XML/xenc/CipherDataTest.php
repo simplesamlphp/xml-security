@@ -35,7 +35,7 @@ final class CipherDataTest extends TestCase
         $this->testedClass = CipherData::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherData.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherData.xml',
         );
     }
 
@@ -51,7 +51,7 @@ final class CipherDataTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($cipherData)
+            strval($cipherData),
         );
     }
 

@@ -76,7 +76,7 @@ final class HMACTest extends TestCase
         $this->assertFalse($backend->verify(
             $this->key,
             self::PLAINTEXT,
-            hex2bin('12345678901234567890abcdefabcdef12345678')
+            hex2bin('12345678901234567890abcdefabcdef12345678'),
         ));
 
         // test failure to verify with wrong key

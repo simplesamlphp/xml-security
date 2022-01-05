@@ -92,10 +92,10 @@ class X509Certificate extends PublicKey
                 C::$DIGEST_ALGORITHMS[$alg],
                 base64_decode(
                     implode(
-                        array_map("trim", $lines)
-                    )
-                )
-            )
+                        array_map("trim", $lines),
+                    ),
+                ),
+            ),
         );
     }
 
@@ -123,7 +123,7 @@ class X509Certificate extends PublicKey
             // if available, use the openssl function
             return $this->thumbprint[$alg] = openssl_x509_fingerprint(
                 $this->certificate,
-                C::$DIGEST_ALGORITHMS[$alg]
+                C::$DIGEST_ALGORITHMS[$alg],
             );
         }
 

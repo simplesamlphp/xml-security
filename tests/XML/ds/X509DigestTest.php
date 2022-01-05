@@ -45,10 +45,10 @@ final class X509DigestTest extends TestCase
         $this->testedClass = X509Digest::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Digest.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Digest.xml',
         );
         $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey()
+            PEMCertificatesMock::getPlainPublicKey(),
         );
 
         $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
@@ -63,7 +63,7 @@ final class X509DigestTest extends TestCase
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
-            strval($x509digest)
+            strval($x509digest),
         );
     }
 

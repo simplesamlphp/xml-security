@@ -110,7 +110,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             $key->get(),
             $options,
             $iv,
-            $authTag
+            $authTag,
         );
 
         if (!$ciphertext) {
@@ -165,7 +165,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             $key->get(),
             $options,
             $iv,
-            $authTag
+            $authTag,
         );
 
         if ($plaintext === false) {

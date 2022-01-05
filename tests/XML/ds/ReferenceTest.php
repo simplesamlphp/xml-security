@@ -37,7 +37,7 @@ final class ReferenceTest extends TestCase
         $this->testedClass = Reference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Reference.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Reference.xml',
         );
     }
 
@@ -52,17 +52,17 @@ final class ReferenceTest extends TestCase
             new Transforms(
                 [
                     new Transform(C::XMLDSIG_ENVELOPED),
-                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
-                ]
+                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+                ],
             ),
             'abc123',
             'someType',
-            '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
+            '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($reference)
+            strval($reference),
         );
     }
 
@@ -77,12 +77,12 @@ final class ReferenceTest extends TestCase
             new Transforms(
                 [
                     new Transform(C::XMLDSIG_ENVELOPED),
-                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
                 ]
             ),
             'abc123',
             'someType',
-            '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'
+            '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
 
         $referenceElement = $reference->toXML();
@@ -119,7 +119,7 @@ final class ReferenceTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($reference)
+            strval($reference),
         );
     }
 }

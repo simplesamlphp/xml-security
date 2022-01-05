@@ -120,8 +120,8 @@ final class OpenSSLTest extends TestCase
             'Plaintext',
             $this->backend->decrypt(
                 $this->sharedKey,
-                hex2bin('9faa2195bd89d2b8b3721f4fea39e904250096ad2bcd66cf77f8423af83d18ba')
-            )
+                hex2bin('9faa2195bd89d2b8b3721f4fea39e904250096ad2bcd66cf77f8423af83d18ba'),
+            ),
         );
 
         // test decryption with private key
@@ -137,8 +137,8 @@ final class OpenSSLTest extends TestCase
                     'eb6aaa2db63264cd2013e4008d82c4e7b3f8f13447cf136e52c9b9f06c062a3fe66d3b9f7fa78281d149e7756a97edb' .
                     '0b2a500f110587f2d81790922def9061c4d8d500cd67ade406b61a20a8fe3b7db1ccc69095a20f556e5ed1f91ccaff1' .
                     'cb3f13065ebee9e20064b0a75edb2b603af6c'
-                )
-            )
+                ),
+            ),
         );
 
         // test decryption with public key
@@ -153,8 +153,8 @@ final class OpenSSLTest extends TestCase
                     '2380a09fb6bff787ff167a20662740e1ac034e66612e2194d8b60a22341032d758fd94221314125dbb2d1432b4a3633' .
                     'b0857d8d4938aabe1b53ab5f970fb4ad0ed0a554771cfa819cffba8ec5935a6d2f706dfcada355da34b994691c76a60' .
                     'd10c746a5b683b2a0080d847ff208cf240a1c'
-                )
-            )
+                ),
+            ),
         );
     }
 
@@ -276,7 +276,7 @@ final class OpenSSLTest extends TestCase
         $this->assertEquals('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d', bin2hex($this->backend->pad('foo')));
         $this->assertEquals(
             '666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e',
-            bin2hex($this->backend->pad('foobarfoobarfoobar'))
+            bin2hex($this->backend->pad('foobarfoobarfoobar')),
         );
     }
 
@@ -289,7 +289,7 @@ final class OpenSSLTest extends TestCase
         $this->assertEquals('foo', $this->backend->unpad(hex2bin('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d')));
         $this->assertEquals(
             'foobarfoobarfoobar',
-            $this->backend->unpad(hex2bin('666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e'))
+            $this->backend->unpad(hex2bin('666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e')),
         );
     }
 

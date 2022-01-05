@@ -36,7 +36,7 @@ final class SignedInfoTest extends TestCase
         $this->testedClass = SignedInfo::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml',
         );
     }
 
@@ -51,16 +51,16 @@ final class SignedInfoTest extends TestCase
             [
                 Reference::fromXML(
                     DOMDocumentFactory::fromFile(
-                        dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Reference.xml'
-                    )->documentElement
-                )
+                        dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Reference.xml',
+                    )->documentElement,
+                ),
             ],
-            'abc123'
+            'abc123',
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signedInfo)
+            strval($signedInfo),
         );
     }
 
@@ -74,11 +74,11 @@ final class SignedInfoTest extends TestCase
 
         $this->assertEquals(
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-            $signedInfo->getCanonicalizationMethod()->getAlgorithm()
+            $signedInfo->getCanonicalizationMethod()->getAlgorithm(),
         );
         $this->assertEquals(
             C::SIG_RSA_SHA256,
-            $signedInfo->getSignatureMethod()->getAlgorithm()
+            $signedInfo->getSignatureMethod()->getAlgorithm(),
         );
 
         $references = $signedInfo->getReferences();
@@ -86,7 +86,7 @@ final class SignedInfoTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signedInfo)
+            strval($signedInfo),
         );
     }
 
@@ -98,19 +98,19 @@ final class SignedInfoTest extends TestCase
     {
         $this->assertEquals(
             $xml->C14N(true, false),
-            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
         );
         $this->assertEquals(
             $xml->C14N(false, false),
-            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITHOUT_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITHOUT_COMMENTS),
         );
         $this->assertEquals(
             $xml->C14N(true, true),
-            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITH_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_EXCLUSIVE_WITH_COMMENTS),
         );
         $this->assertEquals(
             $xml->C14N(false, true),
-            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITH_COMMENTS)
+            $signedInfo->canonicalize(C::C14N_INCLUSIVE_WITH_COMMENTS),
         );
     }
 
@@ -121,7 +121,7 @@ final class SignedInfoTest extends TestCase
     public function testCanonicalizaation(): void
     {
         $xml =  DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml',
         )->documentElement;
         $signedInfo = SignedInfo::fromXML($xml);
         $this->canonicalization($xml, $signedInfo);
@@ -134,7 +134,7 @@ final class SignedInfoTest extends TestCase
     public function testCanonicalizationAfterSerialization(): void
     {
         $xml =  DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml',
         )->documentElement;
         $signedInfo = unserialize(serialize(SignedInfo::fromXML($xml)));
         $this->canonicalization($xml, $signedInfo);

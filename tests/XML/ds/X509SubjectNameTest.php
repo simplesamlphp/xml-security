@@ -33,7 +33,7 @@ final class X509SubjectNameTest extends TestCase
         $this->testedClass = X509SubjectName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SubjectName.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SubjectName.xml',
         );
     }
 
@@ -46,7 +46,7 @@ final class X509SubjectNameTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($subjectName)
+            strval($subjectName),
         );
     }
 

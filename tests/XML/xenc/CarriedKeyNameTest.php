@@ -31,7 +31,7 @@ final class CarriedKeyNameTest extends TestCase
         $this->testedClass = CarriedKeyName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CarriedKeyName.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CarriedKeyName.xml',
         );
     }
 
@@ -44,7 +44,7 @@ final class CarriedKeyNameTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyName)
+            strval($keyName),
         );
     }
 

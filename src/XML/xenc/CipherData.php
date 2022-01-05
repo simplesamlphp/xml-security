@@ -36,12 +36,12 @@ class CipherData extends AbstractXencElement
         Assert::oneOf(
             null,
             [$cipherValue, $cipherReference],
-            'Can only have one of CipherValue/CipherReference'
+            'Can only have one of CipherValue/CipherReference',
         );
 
         Assert::false(
             is_null($cipherValue) && is_null($cipherReference),
-            'You need either a CipherValue or a CipherReference'
+            'You need either a CipherValue or a CipherReference',
         );
 
         $this->setCipherValue($cipherValue);
@@ -108,7 +108,7 @@ class CipherData extends AbstractXencElement
 
         return new self(
             empty($cv) ? null : array_pop($cv),
-            empty($cr) ? null : array_pop($cr)
+            empty($cr) ? null : array_pop($cr),
         );
     }
 

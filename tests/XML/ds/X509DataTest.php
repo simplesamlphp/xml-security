@@ -59,11 +59,11 @@ final class X509DataTest extends TestCase
         $this->testedClass = X509Data::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml',
         );
 
         $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey()
+            PEMCertificatesMock::getPlainPublicKey(),
         );
 
         $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
@@ -85,11 +85,11 @@ final class X509DataTest extends TestCase
                 "\n",
                 ''
             ],
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
         );
 
         $this->certData = openssl_x509_parse(
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
         );
     }
 
@@ -101,18 +101,18 @@ final class X509DataTest extends TestCase
         $x509data = new X509Data(
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString('<ds:X509UnknownTag>somevalue</ds:X509UnknownTag>')->documentElement
+                    DOMDocumentFactory::fromString('<ds:X509UnknownTag>somevalue</ds:X509UnknownTag>')->documentElement,
                 ),
                 new X509Certificate($this->certificate),
                 new X509Digest($this->digest, C::DIGEST_SHA256),
                 new X509SubjectName($this->certData['name']),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
-            ]
+            ],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($x509data)
+            strval($x509data),
         );
     }
 

@@ -21,12 +21,12 @@ final class CertificateTest extends TestCase
     public function testValidStructure(): void
     {
         $result = Certificate::hasValidStructure(
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY),
         );
         $this->assertTrue($result);
 
         $result = Certificate::hasValidStructure(
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::BROKEN_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::BROKEN_PUBLIC_KEY),
         );
         $this->assertFalse($result);
     }
@@ -60,7 +60,7 @@ final class CertificateTest extends TestCase
                 'L' => 'Honolulu',
                 'O' => 'SimpleSAMLphp HQ',
                 'CN' => 'SimpleSAMLphp Testing CA',
-            ]
+            ],
         );
         $this->assertEquals('CN=SimpleSAMLphp Testing CA,O=SimpleSAMLphp HQ,L=Honolulu,S=Hawaii,C=US', $result);
     }

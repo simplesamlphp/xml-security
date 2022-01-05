@@ -40,7 +40,7 @@ final class CipherReferenceTest extends TestCase
         $this->testedClass = CipherReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml',
         );
 
         $xpath = new XPath('self::xenc:CipherValue[@Id="example1"]');
@@ -60,7 +60,7 @@ final class CipherReferenceTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($cipherReference)
+            strval($cipherReference),
         );
     }
 
@@ -82,7 +82,7 @@ final class CipherReferenceTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($cipherReference)
+            strval($cipherReference),
         );
     }
 }

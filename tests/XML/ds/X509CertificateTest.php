@@ -41,7 +41,7 @@ final class X509CertificateTest extends TestCase
         $this->testedClass = X509Certificate::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml',
         );
 
         $this->certificate = str_replace(
@@ -61,7 +61,7 @@ final class X509CertificateTest extends TestCase
                 "\n",
                 ''
             ],
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
         );
     }
 
@@ -74,7 +74,7 @@ final class X509CertificateTest extends TestCase
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
-            strval($x509cert)
+            strval($x509cert),
         );
     }
 

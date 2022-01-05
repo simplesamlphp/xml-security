@@ -188,7 +188,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         Assert::count(
             $canonicalizationMethod,
             1,
-            'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod'
+            'A ds:SignedInfo element must contain exactly one ds:CanonicalizationMethod',
         );
 
         $signatureMethod = SignatureMethod::getChildrenOfClass($xml);

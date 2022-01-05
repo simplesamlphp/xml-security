@@ -106,7 +106,7 @@ class Transform extends AbstractDsElement
         Assert::nullOrEq(
             $this->algorithm,
             C::XPATH_URI,
-            'Transform algorithm "' . C::XPATH_URI . '" required if XPath provided.'
+            'Transform algorithm "' . C::XPATH_URI . '" required if XPath provided.',
         );
         $this->xpath = $xpath;
     }
@@ -138,10 +138,10 @@ class Transform extends AbstractDsElement
             $this->algorithm,
             [
                 C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             ],
             'Transform algorithm "' . C::C14N_EXCLUSIVE_WITH_COMMENTS . '" or "' .
-            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS . '" required if InclusiveNamespaces provided.'
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS . '" required if InclusiveNamespaces provided.',
         );
 
         $this->inclusiveNamespaces = $inclusiveNamespaces;
@@ -166,7 +166,7 @@ class Transform extends AbstractDsElement
         Assert::maxCount(
             $prefixes,
             1,
-            'Only one InclusiveNamespaces element supported per Transform.'
+            'Only one InclusiveNamespaces element supported per Transform.',
         );
 
         return new self($alg, array_pop($xpath), array_pop($prefixes));

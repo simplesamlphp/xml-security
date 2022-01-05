@@ -179,7 +179,7 @@ trait EncryptedElementTrait
         Assert::same(
             $xml->localName,
             AbstractXMLElement::getClassName(static::class),
-            InvalidDOMElementException::class
+            InvalidDOMElementException::class,
         );
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 

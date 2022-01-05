@@ -83,7 +83,7 @@ trait SignedElementTrait
                 [
                     C::C14N_INCLUSIVE_WITH_COMMENTS,
                     C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                ]
+                ],
             )
             && !$reference->isXPointer()
         ) { // canonicalization with comments used, but reference wasn't an xpointer!
@@ -97,22 +97,22 @@ trait SignedElementTrait
             Assert::true(
                 $xml->isSameNode($xml->ownerDocument->documentElement),
                 'Cannot use document reference when element is not the root of the document.',
-                RuntimeException::class
+                RuntimeException::class,
             );
         } else { // short-name or scheme-based xpointer
             Assert::notEmpty(
                 $id,
                 'Reference points to an element, but given element does not have an ID.',
-                RuntimeException::class
+                RuntimeException::class,
             );
             Assert::oneOf(
                 $uri,
                 [
                     '#' . $id,
-                    '#xpointer(id(' . $id . '))'
+                    '#xpointer(id(' . $id . '))',
                 ],
                 'Reference does not point to given element.',
-                RuntimeException::class
+                RuntimeException::class,
             );
         }
     }
@@ -130,7 +130,7 @@ trait SignedElementTrait
             $references,
             1,
             'Exactly one reference expected in signature.',
-            RuntimeException::class
+            RuntimeException::class,
         );
         $reference = array_pop($references);
 
@@ -143,7 +143,7 @@ trait SignedElementTrait
             $sigNode,
             1,
             'None or more than one signature found in object.',
-            RuntimeException::class
+            RuntimeException::class,
         );
         $xml->removeChild($sigNode[0]);
 
@@ -183,7 +183,7 @@ trait SignedElementTrait
         if (
             $verifier->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
-                base64_decode($this->signature->getSignatureValue()->getRawContent()) // the actual signature
+                base64_decode($this->signature->getSignatureValue()->getRawContent()), // the actual signature
             )
         ) {
             /*
@@ -254,7 +254,7 @@ trait SignedElementTrait
             Assert::eq(
                 $verifier->getAlgorithmId(),
                 $algId,
-                'Algorithm provided in key does not match algorithm used in signature.'
+                'Algorithm provided in key does not match algorithm used in signature.',
             );
 
             return $this->verifyInternal($verifier);

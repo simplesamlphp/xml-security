@@ -48,7 +48,7 @@ final class KeyInfoTest extends TestCase
         $this->testedClass = KeyInfo::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml',
         );
 
         $this->certificate = str_replace(
@@ -68,11 +68,11 @@ final class KeyInfoTest extends TestCase
                 "\n",
                 ''
             ],
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
         );
 
         $this->certData = openssl_x509_parse(
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY)
+            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
         );
     }
 
@@ -87,20 +87,20 @@ final class KeyInfoTest extends TestCase
                 new X509Data(
                     [
                         new X509Certificate($this->certificate),
-                        new X509SubjectName($this->certData['name'])
-                    ]
+                        new X509SubjectName($this->certData['name']),
+                    ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<ds:KeySomething>Some unknown tag within the ds-namespace</ds:KeySomething>'
+                    '<ds:KeySomething>Some unknown tag within the ds-namespace</ds:KeySomething>',
                 )->documentElement),
-                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
+                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
             ],
-            'abc123'
+            'abc123',
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyInfo)
+            strval($keyInfo),
         );
     }
 

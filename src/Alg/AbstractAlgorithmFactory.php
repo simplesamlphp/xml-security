@@ -78,13 +78,13 @@ abstract class AbstractAlgorithmFactory
         Assert::true(
             !in_array($algId, $this->blacklist, true),
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
-            BlacklistedAlgorithmException::class
+            BlacklistedAlgorithmException::class,
         );
         Assert::keyExists(
             static::$cache,
             $algId,
             sprintf('Unknown or unsupported algorithm: \'%s\'.', $algId),
-            UnsupportedAlgorithmException::class
+            UnsupportedAlgorithmException::class,
         );
 
         return new static::$cache[$algId]($key, $algId);
@@ -110,7 +110,7 @@ abstract class AbstractAlgorithmFactory
         Assert::subclassOf(
             $className,
             $parent,
-            'Cannot register algorithm "' . $className . '", must implement ' . $parent . '.'
+            'Cannot register algorithm "' . $className . '", must implement ' . $parent . '.',
         );
 
         /** @var \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface $className */

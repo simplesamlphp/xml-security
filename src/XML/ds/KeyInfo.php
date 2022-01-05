@@ -108,7 +108,7 @@ final class KeyInfo extends AbstractDsElement
         Assert::allIsInstanceOfAny(
             $info,
             [Chunk::class, KeyName::class, X509Data::class, EncryptedKey::class],
-            'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.'
+            'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.',
         );
         $this->info = $info;
     }

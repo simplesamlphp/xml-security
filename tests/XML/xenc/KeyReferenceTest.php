@@ -37,7 +37,7 @@ final class KeyReferenceTest extends TestCase
         $this->testedClass = KeyReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_KeyReference.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_KeyReference.xml',
         );
     }
 
@@ -56,16 +56,16 @@ final class KeyReferenceTest extends TestCase
                     [
                         new Transform(
                             C::XPATH_URI,
-                            new XPath('self::xenc:EncryptedKey[@Id="example1"]')
-                        )
-                    ]
-                )
-            ]
+                            new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
+                        ),
+                    ],
+                ),
+            ],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyReference)
+            strval($keyReference),
         );
     }
 
@@ -86,7 +86,7 @@ final class KeyReferenceTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyReference)
+            strval($keyReference),
         );
     }
 }

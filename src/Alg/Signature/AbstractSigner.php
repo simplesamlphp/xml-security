@@ -49,7 +49,7 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
             $algId,
             static::getSupportedAlgorithms(),
             sprintf('Unsupported algorithm for %s', static::class),
-            UnsupportedAlgorithmException::class
+            UnsupportedAlgorithmException::class,
         );
 
         $this->key = $key;

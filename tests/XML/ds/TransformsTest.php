@@ -35,7 +35,7 @@ final class TransformsTest extends TestCase
         $this->testedClass = Transforms::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Transforms.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Transforms.xml',
         );
     }
 
@@ -50,15 +50,15 @@ final class TransformsTest extends TestCase
                     C::XPATH_URI,
                     new XPath(
                         'self::xenc:CipherValue[@Id="example1"]',
-                        ['xenc' => 'http://www.w3.org/2001/04/xmlenc#']
+                        ['xenc' => 'http://www.w3.org/2001/04/xmlenc#'],
                     ),
-                )
-            ]
+                ),
+            ],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($transforms)
+            strval($transforms),
         );
     }
 
@@ -79,7 +79,7 @@ final class TransformsTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($transforms)
+            strval($transforms),
         );
     }
 
@@ -93,7 +93,7 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms([]);
         $this->assertEquals(
             "<ds:Transforms xmlns:ds=\"$ds_ns\"/>",
-            strval($transforms)
+            strval($transforms),
         );
         $this->assertTrue($transforms->isEmptyElement());
     }

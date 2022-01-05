@@ -53,7 +53,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
             [
                 TripleDES::class,
                 AES::class,
-            ]
+            ],
         );
     }
 

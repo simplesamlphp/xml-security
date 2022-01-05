@@ -60,10 +60,10 @@ final class CanonicalizationMethod extends AbstractDsElement
                 C::C14N_EXCLUSIVE_WITH_COMMENTS,
                 C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
                 C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_INCLUSIVE_WITHOUT_COMMENTS
+                C::C14N_INCLUSIVE_WITHOUT_COMMENTS,
             ],
             'Invalid canonicalization method',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         $this->Algorithm = $algorithm;

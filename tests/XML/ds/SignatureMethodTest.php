@@ -33,7 +33,7 @@ final class SignatureMethodTest extends TestCase
         $this->testedClass = SignatureMethod::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_SignatureMethod.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_SignatureMethod.xml',
         );
     }
 
@@ -46,7 +46,7 @@ final class SignatureMethodTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signatureMethod)
+            strval($signatureMethod),
         );
     }
 

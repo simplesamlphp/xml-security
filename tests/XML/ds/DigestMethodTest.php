@@ -35,7 +35,7 @@ final class DigestMethodTest extends TestCase
         $this->testedClass = DigestMethod::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestMethod.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestMethod.xml',
         );
     }
 
@@ -46,12 +46,12 @@ final class DigestMethodTest extends TestCase
     {
         $digestMethod = new DigestMethod(
             C::DIGEST_SHA256,
-            [new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement)]
+            [new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement)],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($digestMethod)
+            strval($digestMethod),
         );
     }
 

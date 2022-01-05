@@ -133,8 +133,8 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
     {
         return CustomSignable::fromXML(
             DOMDocumentFactory::fromString(
-                $this->decryptData($decryptor)
-            )->documentElement
+                $this->decryptData($decryptor),
+            )->documentElement,
         );
     }
 
@@ -188,7 +188,7 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
 
         // finally, decrypt the element, create an XML document from it and then use that to create an object
         $xml = DOMDocumentFactory::fromString(
-            $alg->decrypt($this->getEncryptedData()->getCipherData()->getCipherValue()->getContent())
+            $alg->decrypt($this->getEncryptedData()->getCipherData()->getCipherValue()->getContent()),
         );
         return CustomSignable::fromXML($xml->documentElement);
     }

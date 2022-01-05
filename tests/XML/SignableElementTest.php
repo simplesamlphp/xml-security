@@ -53,15 +53,15 @@ final class SignableElementTest extends TestCase
         $this->testedClass = CustomSignable::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignable.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignable.xml',
         );
 
         $this->signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
         );
 
         $certificate = file_get_contents(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt'
+            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt',
         );
         $certificateLines = explode("\n", trim($certificate));
         array_pop($certificateLines);
@@ -69,7 +69,7 @@ final class SignableElementTest extends TestCase
         $this->certificate = join("\n", $certificateLines);
 
         $this->key = PrivateKey::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org_nopasswd.key'
+            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org_nopasswd.key',
         );
     }
 
@@ -89,15 +89,15 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate)
-            ])
+                new X509Certificate($this->certificate),
+            ]),
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
 
         $this->assertEquals(
             $this->signed->saveXML($this->signed->documentElement),
-            strval($customSignable)
+            strval($customSignable),
         );
     }
 
@@ -111,7 +111,7 @@ final class SignableElementTest extends TestCase
     {
         $xml = DOMDocumentFactory::fromString(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom" id="_1234"><ssp:Some><!-- comment -->Chunk' .
-            '<!-- comment --></ssp:Some></ssp:CustomSignable>'
+            '<!-- comment --></ssp:Some></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -121,18 +121,18 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate)
-            ])
+                new X509Certificate($this->certificate),
+            ]),
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedElement.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedElement.xml',
         );
 
         $this->assertEquals(
             $signed->saveXML($signed->documentElement),
-            strval($customSignable)
+            strval($customSignable),
         );
     }
 
@@ -147,7 +147,7 @@ final class SignableElementTest extends TestCase
     {
         $xml = DOMDocumentFactory::fromString(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment -->' .
-            '</ssp:Some></ssp:CustomSignable>'
+            '</ssp:Some></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -157,18 +157,18 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate)
-            ])
+                new X509Certificate($this->certificate),
+            ]),
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml',
         );
 
         $this->assertEquals(
             $signed->saveXML($signed->documentElement),
-            strval($customSignable)
+            strval($customSignable),
         );
     }
 
@@ -183,7 +183,7 @@ final class SignableElementTest extends TestCase
     {
         $xml = DOMDocumentFactory::fromString(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom" id="_1234"><ssp:Some><!-- comment -->Chunk' .
-            '<!-- comment --></ssp:Some></ssp:CustomSignable>'
+            '<!-- comment --></ssp:Some></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -193,8 +193,8 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate)
-            ])
+                new X509Certificate($this->certificate),
+            ]),
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
@@ -204,7 +204,7 @@ final class SignableElementTest extends TestCase
 
         $this->assertEquals(
             $signed->saveXML($signed->documentElement),
-            strval($customSignable)
+            strval($customSignable),
         );
     }
 
@@ -252,7 +252,7 @@ final class SignableElementTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
             'Cannot create a document reference when signing an object that is not the root of the document. Please ' .
-            'give your object an identifier.'
+            'give your object an identifier.',
         );
         $customSignable->toXML($doc->documentElement);
     }

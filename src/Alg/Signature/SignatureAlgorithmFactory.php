@@ -54,7 +54,7 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
             [
                 RSA::class,
                 HMAC::class,
-            ]
+            ],
         );
     }
 

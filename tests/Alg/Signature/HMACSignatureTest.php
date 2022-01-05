@@ -52,21 +52,21 @@ final class HMACSignatureTest extends TestCase
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA224, $key);
         $this->assertEquals(
             '645405ccc725e10022e5a89e98cc33db07c0cd89ba78c21caf931f40',
-            bin2hex($hmac->sign($this->plaintext))
+            bin2hex($hmac->sign($this->plaintext)),
         );
 
         // test HMAC-SHA256
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA256, $key);
         $this->assertEquals(
             '721d8385785a3d4c8d16c7b4a96b343728a11e221656e6dd9502d540d4e87ef2',
-            bin2hex($hmac->sign($this->plaintext))
+            bin2hex($hmac->sign($this->plaintext)),
         );
 
         // test HMAC-SHA384
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA384, $key);
         $this->assertEquals(
             'b3ad2e39a057fd7a952cffd503d30eca295c6698dc23ddf0bebf98631a0162da0db0105db156a220dec78cebaf2c202c',
-            bin2hex($hmac->sign($this->plaintext))
+            bin2hex($hmac->sign($this->plaintext)),
         );
 
         // test HMAC-SHA512
@@ -74,7 +74,7 @@ final class HMACSignatureTest extends TestCase
         $this->assertEquals(
             '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f506776d8' .
             '8e2f47fff055fc51342b69cdc',
-            bin2hex($hmac->sign($this->plaintext))
+            bin2hex($hmac->sign($this->plaintext)),
         );
 
         // test HMAC-RIPEMD160
@@ -98,21 +98,21 @@ final class HMACSignatureTest extends TestCase
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA224, $key);
         $this->assertTrue($hmac->verify(
             $this->plaintext,
-            hex2bin('645405ccc725e10022e5a89e98cc33db07c0cd89ba78c21caf931f40')
+            hex2bin('645405ccc725e10022e5a89e98cc33db07c0cd89ba78c21caf931f40'),
         ));
 
         // test HMAC-SHA256
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA256, $key);
         $this->assertTrue($hmac->verify(
             $this->plaintext,
-            hex2bin('721d8385785a3d4c8d16c7b4a96b343728a11e221656e6dd9502d540d4e87ef2')
+            hex2bin('721d8385785a3d4c8d16c7b4a96b343728a11e221656e6dd9502d540d4e87ef2'),
         ));
 
         // test HMAC-SHA384
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA384, $key);
         $this->assertTrue($hmac->verify(
             $this->plaintext,
-            hex2bin('b3ad2e39a057fd7a952cffd503d30eca295c6698dc23ddf0bebf98631a0162da0db0105db156a220dec78cebaf2c202c')
+            hex2bin('b3ad2e39a057fd7a952cffd503d30eca295c6698dc23ddf0bebf98631a0162da0db0105db156a220dec78cebaf2c202c'),
         ));
 
         // test HMAC-SHA512
@@ -121,8 +121,8 @@ final class HMACSignatureTest extends TestCase
             $this->plaintext,
             hex2bin(
                 '9cc73c95f564a142b28340cf6e1d6b509a9e97dab6577e5d0199760a858105185252e203b6b096ad24708a2b7e34a0f5067' .
-                '76d88e2f47fff055fc51342b69cdc'
-            )
+                '76d88e2f47fff055fc51342b69cdc',
+            ),
         ));
 
         // test HMAC-RIPEMD160

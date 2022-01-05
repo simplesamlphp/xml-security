@@ -37,7 +37,7 @@ final class DataReferenceTest extends TestCase
         $this->testedClass = DataReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_DataReference.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_DataReference.xml',
         );
     }
 
@@ -55,16 +55,16 @@ final class DataReferenceTest extends TestCase
                     [
                         new Transform(
                             C::XPATH_URI,
-                            new XPath('self::xenc:EncryptedData[@Id="example1"]')
-                        )
-                    ]
-                )
-            ]
+                            new XPath('self::xenc:EncryptedData[@Id="example1"]'),
+                        ),
+                    ],
+                ),
+            ],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($dataReference)
+            strval($dataReference),
         );
     }
 
@@ -85,7 +85,7 @@ final class DataReferenceTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($dataReference)
+            strval($dataReference),
         );
     }
 }

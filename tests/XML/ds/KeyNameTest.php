@@ -31,7 +31,7 @@ final class KeyNameTest extends TestCase
         $this->testedClass = KeyName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyName.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyName.xml',
         );
     }
 
@@ -44,7 +44,7 @@ final class KeyNameTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyName)
+            strval($keyName),
         );
     }
 

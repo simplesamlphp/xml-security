@@ -32,7 +32,7 @@ final class CanonicalizationMethodTest extends TestCase
         $this->testedClass = CanonicalizationMethod::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_CanonicalizationMethod.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_CanonicalizationMethod.xml',
         );
     }
 
@@ -45,7 +45,7 @@ final class CanonicalizationMethodTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($canonicalizationMethod)
+            strval($canonicalizationMethod),
         );
     }
 

@@ -238,13 +238,13 @@ abstract class AbstractEncryptedType extends AbstractXencElement
             $cipherData,
             1,
             'At least one CipherData element found in <xenc:EncryptedData>.',
-            MissingElementException::class
+            MissingElementException::class,
         );
         Assert::maxCount(
             $cipherData,
             1,
             'No or more than one CipherData element found in <xenc:EncryptedData>.',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         $encryptionMethod = EncryptionMethod::getChildrenOfClass($xml);
@@ -252,7 +252,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
             $encryptionMethod,
             1,
             'No more than one EncryptionMethod element allowed in <xenc:EncryptedData>.',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         $keyInfo = KeyInfo::getChildrenOfClass($xml);
@@ -260,7 +260,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
             $keyInfo,
             1,
             'No more than one KeyInfo element allowed in <xenc:EncryptedData>.',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         return new static(
@@ -270,7 +270,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
             self::getAttribute($xml, 'MimeType', null),
             self::getAttribute($xml, 'Encoding', null),
             count($encryptionMethod) === 1 ? $encryptionMethod[0] : null,
-            count($keyInfo) === 1 ? $keyInfo[0] : null
+            count($keyInfo) === 1 ? $keyInfo[0] : null,
         );
     }
 

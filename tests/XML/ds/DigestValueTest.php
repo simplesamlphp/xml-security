@@ -34,7 +34,7 @@ final class DigestValueTest extends TestCase
         $this->testedClass = DigestValue::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestValue.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestValue.xml',
         );
     }
 
@@ -47,7 +47,7 @@ final class DigestValueTest extends TestCase
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
-            strval($digestValue)
+            strval($digestValue),
         );
     }
 

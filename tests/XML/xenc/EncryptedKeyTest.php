@@ -55,7 +55,7 @@ final class EncryptedKeyTest extends TestCase
         $this->testedClass = EncryptedKey::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedKey.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedKey.xml',
         );
 
         $this->privKey = PrivateKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/privkey.pem');
@@ -92,16 +92,16 @@ final class EncryptedKeyTest extends TestCase
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256')
-                    )
-                ]
+                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                    ),
+                ],
             ),
-            new ReferenceList([new DataReference('#Encrypted_DATA_ID')])
+            new ReferenceList([new DataReference('#Encrypted_DATA_ID')]),
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($encryptedKey)
+            strval($encryptedKey),
         );
     }
 
@@ -132,11 +132,11 @@ final class EncryptedKeyTest extends TestCase
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256')
-                    )
-                ]
+                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                    ),
+                ],
             ),
-            new ReferenceList([new DataReference('#Encrypted_DATA_ID')])
+            new ReferenceList([new DataReference('#Encrypted_DATA_ID')]),
         );
 
         // Marshall it to a \DOMElement
@@ -147,7 +147,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKeyElements = XPath::xpQuery(
             $encryptedKeyElement,
             './xenc:ReferenceList',
-            $xpCache
+            $xpCache,
         );
         $this->assertCount(1, $encryptedKeyElements);
 
@@ -155,7 +155,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKeyElements = XPath::xpQuery(
             $encryptedKeyElement,
             './xenc:ReferenceList/following-sibling::*',
-            $xpCache
+            $xpCache,
         );
         $this->assertCount(1, $encryptedKeyElements);
         $this->assertEquals('xenc:CarriedKeyName', $encryptedKeyElements[0]->tagName);
@@ -177,7 +177,7 @@ final class EncryptedKeyTest extends TestCase
             . 'mPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwM'
             . 'iaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FOV3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4'
             . 'JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==',
-            $cipherData->getCipherValue()->getContent()
+            $cipherData->getCipherValue()->getContent(),
         );
 
         $encryptionMethod = $encryptedKey->getEncryptionMethod();
@@ -205,7 +205,7 @@ final class EncryptedKeyTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($encryptedKey)
+            strval($encryptedKey),
         );
     }
 
@@ -221,7 +221,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_RSA_1_5)
+            new EncryptionMethod(Constants::KEY_TRANSPORT_RSA_1_5),
         );
 
         $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_RSA_1_5, $this->privKey);
@@ -242,7 +242,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP)
+            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP),
         );
 
         $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP, $this->privKey);
@@ -263,7 +263,7 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP_MGF1P)
+            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP_MGF1P),
         );
 
         $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);

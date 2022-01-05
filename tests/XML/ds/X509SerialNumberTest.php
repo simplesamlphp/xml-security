@@ -35,7 +35,7 @@ final class X509SerialNumberTest extends TestCase
         $this->testedClass = X509SerialNumber::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SerialNumber.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509SerialNumber.xml',
         );
     }
 
@@ -48,7 +48,7 @@ final class X509SerialNumberTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($serialNumber)
+            strval($serialNumber),
         );
     }
 

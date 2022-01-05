@@ -41,7 +41,7 @@ final class EncryptedDataTest extends TestCase
         $this->testedClass = EncryptedData::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedData.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedData.xml',
         );
     }
 
@@ -70,15 +70,15 @@ final class EncryptedDataTest extends TestCase
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256')
-                    )
-                ]
-            )
+                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                    ),
+                ],
+            ),
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($encryptedData)
+            strval($encryptedData),
         );
     }
 
@@ -104,10 +104,10 @@ final class EncryptedDataTest extends TestCase
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256')
-                    )
-                ]
-            )
+                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                    ),
+                ],
+            ),
         );
 
         $encryptedDataElement = $encryptedData->toXML();
@@ -141,7 +141,7 @@ final class EncryptedDataTest extends TestCase
         $cipherData = $encryptedData->getCipherData();
         $this->assertEquals(
             '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=',
-            $cipherData->getCipherValue()->getContent()
+            $cipherData->getCipherValue()->getContent(),
         );
 
         $encryptionMethod = $encryptedData->getEncryptionMethod();
@@ -161,7 +161,7 @@ final class EncryptedDataTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($encryptedData)
+            strval($encryptedData),
         );
     }
 }

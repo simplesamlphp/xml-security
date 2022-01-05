@@ -35,7 +35,7 @@ final class EncryptionMethodTest extends TestCase
         $this->testedClass = EncryptionMethod::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptionMethod.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptionMethod.xml',
         );
     }
 
@@ -56,7 +56,7 @@ final class EncryptionMethodTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($em)
+            strval($em),
         );
     }
 
@@ -69,7 +69,7 @@ final class EncryptionMethodTest extends TestCase
         $em = new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p');
         $document = DOMDocumentFactory::fromString(
             '<xenc:EncryptionMethod xmlns:xenc="' . C::NS_XENC .
-            '" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>'
+            '" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>',
         );
 
         $this->assertNull($em->getKeySize());
@@ -77,7 +77,7 @@ final class EncryptionMethodTest extends TestCase
         $this->assertEmpty($em->getChildren());
         $this->assertEquals(
             $document->saveXML($document->documentElement),
-            strval($em)
+            strval($em),
         );
     }
 
@@ -157,7 +157,7 @@ XML
         $this->assertEmpty($em->getChildren());
         $this->assertEquals(
             $document->saveXML($document->documentElement),
-            strval($em)
+            strval($em),
         );
     }
 }

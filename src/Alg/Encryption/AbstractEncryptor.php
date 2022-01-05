@@ -45,7 +45,7 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
             $algId,
             static::getSupportedAlgorithms(),
             'Unsupported algorithm for ' . static::class,
-            RuntimeException::class
+            RuntimeException::class,
         );
         $this->key = $key;
         $this->algId = $algId;

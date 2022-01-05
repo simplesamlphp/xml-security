@@ -101,7 +101,7 @@ class PublicKey extends AsymmetricKey
                 self::ASN1_SIZE_128 + 2,
                 $length / 0x0100,
                 $length % 0x0100,
-                $string
+                $string,
             );
         }
 
@@ -131,15 +131,15 @@ class PublicKey extends AsymmetricKey
                             self::makeASN1Segment( // sequence
                                 self::ASN1_TYPE_SEQUENCE,
                                 self::makeASN1Segment(self::ASN1_TYPE_INTEGER, $modulus)
-                                . self::makeASN1Segment(self::ASN1_TYPE_INTEGER, $exponent)
-                            )
-                        )
-                    )
+                                . self::makeASN1Segment(self::ASN1_TYPE_INTEGER, $exponent),
+                            ),
+                        ),
+                    ),
                 ),
                 64,
-                "\n"
+                "\n",
             ) .
-            "-----END PUBLIC KEY-----\n"
+            "-----END PUBLIC KEY-----\n",
         );
     }
 }

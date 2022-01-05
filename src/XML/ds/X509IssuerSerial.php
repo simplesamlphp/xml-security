@@ -117,7 +117,7 @@ final class X509IssuerSerial extends AbstractDsElement
 
         return new self(
             array_pop($issuer),
-            array_pop($serial)
+            array_pop($serial),
         );
     }
 

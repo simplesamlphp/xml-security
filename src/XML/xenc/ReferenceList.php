@@ -37,7 +37,7 @@ class ReferenceList extends AbstractXencElement
         Assert::minCount(
             array_merge($this->dataReferences, $this->keyreferences),
             1,
-            'At least one <xenc:DataReference> or <xenc:KeyReference> element required in <xenc:ReferenceList>.'
+            'At least one <xenc:DataReference> or <xenc:KeyReference> element required in <xenc:ReferenceList>.',
         );
     }
 
@@ -61,7 +61,7 @@ class ReferenceList extends AbstractXencElement
         Assert::allIsInstanceOf(
             $dataReferences,
             DataReference::class,
-            'All data references must be an instance of <xenc:DataReference>.'
+            'All data references must be an instance of <xenc:DataReference>.',
         );
 
         $this->dataReferences = $dataReferences;
@@ -87,7 +87,7 @@ class ReferenceList extends AbstractXencElement
         Assert::allIsInstanceOf(
             $keyReferences,
             KeyReference::class,
-            'All key references must be an instance of <xenc:KeyReference>.'
+            'All key references must be an instance of <xenc:KeyReference>.',
         );
 
         $this->keyreferences = $keyReferences;

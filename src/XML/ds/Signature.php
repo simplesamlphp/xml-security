@@ -159,7 +159,7 @@ final class Signature extends AbstractDsElement
             Assert::true(
                 $o->getNamespaceURI() === C::NS_XDSIG
                 && $o->getLocalName() === 'Object',
-                'Only elements of type ds:Object are allowed.'
+                'Only elements of type ds:Object are allowed.',
             );
         }
 
@@ -208,7 +208,7 @@ final class Signature extends AbstractDsElement
             array_pop($signatureValue),
             empty($keyInfo) ? null : array_pop($keyInfo),
             $objects,
-            $Id
+            $Id,
         );
     }
 

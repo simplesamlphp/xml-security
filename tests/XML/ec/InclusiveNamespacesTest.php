@@ -32,7 +32,7 @@ class InclusiveNamespacesTest extends TestCase
         $this->testedClass = InclusiveNamespaces::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ec_InclusiveNamespaces.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ec_InclusiveNamespaces.xml',
         );
     }
 
@@ -48,7 +48,7 @@ class InclusiveNamespacesTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($inclusiveNamespaces)
+            strval($inclusiveNamespaces),
         );
     }
 
@@ -58,7 +58,7 @@ class InclusiveNamespacesTest extends TestCase
     public function testUnmarshalling(): void
     {
         $inclusiveNamespaces = InclusiveNamespaces::fromXML(
-            $this->xmlRepresentation->documentElement
+            $this->xmlRepresentation->documentElement,
         );
         $prefixes = $inclusiveNamespaces->getPrefixes();
         $this->assertCount(3, $prefixes);
@@ -70,7 +70,7 @@ class InclusiveNamespacesTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($inclusiveNamespaces)
+            strval($inclusiveNamespaces),
         );
     }
 }

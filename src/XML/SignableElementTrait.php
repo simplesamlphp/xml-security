@@ -82,10 +82,10 @@ trait SignableElementTrait
                 C::C14N_INCLUSIVE_WITH_COMMENTS,
                 C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
                 C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             ],
             'Unsupported canonicalization algorithm',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
         $this->c14nAlg = $canonicalizationAlg;
     }
@@ -109,13 +109,13 @@ trait SignableElementTrait
             Assert::notNull(
                 $xml->ownerDocument->documentElement,
                 'Cannot create a document reference without a root element in the document.',
-                RuntimeException::class
+                RuntimeException::class,
             );
             Assert::true(
                 $xml->isSameNode($xml->ownerDocument->documentElement),
                 'Cannot create a document reference when signing an object that is not the root of the document. ' .
                 'Please give your object an identifier.',
-                RuntimeException::class
+                RuntimeException::class,
             );
             if (in_array($this->c14nAlg, [C::C14N_INCLUSIVE_WITH_COMMENTS, C::C14N_EXCLUSIVE_WITH_COMMENTS])) {
                 $uri = '#xpointer(/)';
@@ -133,7 +133,7 @@ trait SignableElementTrait
             $transforms,
             null,
             null,
-            $uri
+            $uri,
         );
     }
 
@@ -159,7 +159,7 @@ trait SignableElementTrait
         Assert::notNull(
             $this->signer,
             'Cannot call toSignedXML() without calling sign() first.',
-            RuntimeException::class
+            RuntimeException::class,
         );
 
         $algorithm = $this->signer->getAlgorithmId();
@@ -167,7 +167,7 @@ trait SignableElementTrait
 
         $transforms = new Transforms([
             new Transform(C::XMLDSIG_ENVELOPED),
-            new Transform($this->c14nAlg)
+            new Transform($this->c14nAlg),
         ]);
 
         $canonicalDocument = XML::processTransforms($transforms, $xml);
@@ -175,7 +175,7 @@ trait SignableElementTrait
         $signedInfo = new SignedInfo(
             new CanonicalizationMethod($this->c14nAlg),
             new SignatureMethod($algorithm),
-            [$this->getReference($digest, $transforms, $xml, $canonicalDocument)]
+            [$this->getReference($digest, $transforms, $xml, $canonicalDocument)],
         );
 
         $signingData = $signedInfo->canonicalize($this->c14nAlg);

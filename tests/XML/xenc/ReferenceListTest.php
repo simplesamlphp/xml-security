@@ -38,7 +38,7 @@ final class ReferenceListTest extends TestCase
         $this->testedClass = ReferenceList::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_ReferenceList.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_ReferenceList.xml',
         );
     }
 
@@ -52,11 +52,11 @@ final class ReferenceListTest extends TestCase
     {
         $transformData = new Transform(
             C::XPATH_URI,
-            new XPath('self::xenc:EncryptedData[@Id="example1"]')
+            new XPath('self::xenc:EncryptedData[@Id="example1"]'),
         );
         $transformKey = new Transform(
             C::XPATH_URI,
-            new XPath('self::xenc:EncryptedKey[@Id="example1"]')
+            new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
         );
 
         $referenceList = new ReferenceList(
@@ -65,12 +65,12 @@ final class ReferenceListTest extends TestCase
             ],
             [
                 new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])])
-            ]
+            ],
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($referenceList)
+            strval($referenceList),
         );
     }
 
@@ -92,7 +92,7 @@ final class ReferenceListTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($referenceList)
+            strval($referenceList),
         );
     }
 }

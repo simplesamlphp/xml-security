@@ -216,7 +216,7 @@ final class Reference extends AbstractDsElement
             empty($transforms) ? null : array_pop($transforms),
             $Id,
             $Type,
-            $URI
+            $URI,
         );
     }
 

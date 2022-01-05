@@ -31,7 +31,7 @@ class XPathTest extends TestCase
         $this->testedClass = XPath::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_XPath.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_XPath.xml',
         );
     }
 
@@ -41,8 +41,8 @@ class XPathTest extends TestCase
         $xpath = new XPath(
             'self::xenc:CipherValue[@Id="example1"]',
             [
-                'xenc' => 'http://www.w3.org/2001/04/xmlenc#'
-            ]
+                'xenc' => 'http://www.w3.org/2001/04/xmlenc#',
+            ],
         );
 
         $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
@@ -53,7 +53,7 @@ class XPathTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($xpath)
+            strval($xpath),
         );
     }
 
@@ -72,7 +72,7 @@ class XPathTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($xpath)
+            strval($xpath),
         );
     }
 }

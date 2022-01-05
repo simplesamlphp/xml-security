@@ -58,10 +58,10 @@ final class SignatureMethod extends AbstractDsElement
             $algorithm,
             array_merge(
                 array_keys(C::$RSA_DIGESTS),
-                array_keys(C::$HMAC_DIGESTS)
+                array_keys(C::$HMAC_DIGESTS),
             ),
             'Invalid signature method',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         $this->Algorithm = $algorithm;

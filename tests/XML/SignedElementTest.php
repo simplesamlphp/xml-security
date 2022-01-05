@@ -46,19 +46,19 @@ final class SignedElementTest extends TestCase
     public function setUp(): void
     {
         $this->signedDocumentWithComments = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml',
         )->documentElement;
 
         $this->signedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
         )->documentElement;
 
         $this->tamperedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedTampered.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedTampered.xml',
         )->documentElement;
 
         $this->certificate = file_get_contents(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt'
+            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt',
         );
     }
 
@@ -72,7 +72,7 @@ final class SignedElementTest extends TestCase
 
         $this->assertEquals(
             $this->signedDocument->ownerDocument->saveXML($this->signedDocument),
-            strval($customSigned)
+            strval($customSigned),
         );
     }
 
@@ -98,7 +98,7 @@ final class SignedElementTest extends TestCase
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
-            strval($verified)
+            strval($verified),
         );
         $this->assertEquals($certificate, $verified->getVerifyingKey());
     }
@@ -123,7 +123,7 @@ final class SignedElementTest extends TestCase
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
-            strval($verified)
+            strval($verified),
         );
         $validatingKey = $verified->getVerifyingKey();
         $this->assertInstanceOf(X509Certificate::class, $validatingKey);
@@ -196,7 +196,7 @@ final class SignedElementTest extends TestCase
         // verify first that our dumb object normally retains comments
         $this->assertEquals(
             $this->signedDocumentWithComments->ownerDocument->saveXML($this->signedDocumentWithComments),
-            strval($customSigned)
+            strval($customSigned),
         );
 
         $verified = $customSigned->verify($verifier);
@@ -204,7 +204,7 @@ final class SignedElementTest extends TestCase
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
             '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment --></ssp:Some></ssp:CustomSignable>',
-            strval($verified)
+            strval($verified),
         );
         $this->assertEquals($certificate, $verified->getVerifyingKey());
     }

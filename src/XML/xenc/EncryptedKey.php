@@ -136,14 +136,14 @@ class EncryptedKey extends AbstractEncryptedType
         Assert::notNull(
             $this->getCipherData()->getCipherValue(),
             'Decrypting keys by reference is not supported.',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         Assert::eq(
             $decryptor->getAlgorithmId(),
             $this->getEncryptionMethod()->getAlgorithm(),
             'Decryptor algorithm does not match algorithm used.',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         return $decryptor->decrypt(base64_decode($this->getCipherData()->getCipherValue()->getContent()));
@@ -187,16 +187,16 @@ class EncryptedKey extends AbstractEncryptedType
             $encryptor->getAlgorithmId(),
             $encryptionMethod->getAlgorithm(),
             'Encryptor algorithm and encryption method do not match.',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         return new self(
             new CipherData(
                 new CipherValue(
                     base64_encode(
-                        $encryptor->encrypt($keyToEncrypt->get())
-                    )
-                )
+                        $encryptor->encrypt($keyToEncrypt->get()),
+                    ),
+                ),
             ),
             $id,
             $type,
@@ -206,7 +206,7 @@ class EncryptedKey extends AbstractEncryptedType
             $carriedKeyName,
             $encryptionMethod,
             $keyInfo,
-            $referenceList
+            $referenceList,
         );
     }
 
@@ -229,7 +229,7 @@ class EncryptedKey extends AbstractEncryptedType
         Assert::maxCount(
             $encryptionMethod,
             1,
-            'No more than one EncryptionMethod element allowed in <xenc:EncryptedKey>.'
+            'No more than one EncryptionMethod element allowed in <xenc:EncryptedKey>.',
         );
 
         $keyInfo = KeyInfo::getChildrenOfClass($xml);
@@ -251,7 +251,7 @@ class EncryptedKey extends AbstractEncryptedType
             array_pop($carriedKeyNames),
             array_pop($encryptionMethod),
             array_pop($keyInfo),
-            array_pop($referenceLists)
+            array_pop($referenceLists),
         );
     }
 

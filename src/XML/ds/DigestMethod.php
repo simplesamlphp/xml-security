@@ -66,7 +66,7 @@ final class DigestMethod extends AbstractDsElement
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),
             'Invalid digest method',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         $this->Algorithm = $algorithm;

@@ -35,7 +35,7 @@ final class TransformTest extends TestCase
         $this->testedClass = Transform::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Transform.xml'
+            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Transform.xml',
         );
     }
 
@@ -46,18 +46,18 @@ final class TransformTest extends TestCase
     {
         $transform = new Transform(
             C::XPATH_URI,
-            new XPath('count(//. | //@* | //namespace::*)')
+            new XPath('count(//. | //@* | //namespace::*)'),
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($transform)
+            strval($transform),
         );
 
         $transform = new Transform(
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             null,
-            new InclusiveNamespaces(["dsig", "soap", "#default"])
+            new InclusiveNamespaces(["dsig", "soap", "#default"]),
         );
 
 
@@ -66,11 +66,11 @@ final class TransformTest extends TestCase
 
         $xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) .
-            '/resources/xml/ds_Transform_InclusiveNamespaces.xml'
+            '/resources/xml/ds_Transform_InclusiveNamespaces.xml',
         );
         $this->assertEquals(
             $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($transform)
+            strval($transform),
         );
     }
 
@@ -88,7 +88,7 @@ final class TransformTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($transform)
+            strval($transform),
         );
     }
 }

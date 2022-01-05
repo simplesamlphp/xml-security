@@ -63,7 +63,7 @@ final class X509Digest extends AbstractDsElement
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),
             'Invalid digest method',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         $this->algorithm = $algorithm;

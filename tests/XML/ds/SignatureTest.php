@@ -38,7 +38,7 @@ final class SignatureTest extends TestCase
         $this->testedClass = Signature::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Signature.xml'
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Signature.xml',
         );
     }
 
@@ -51,32 +51,32 @@ final class SignatureTest extends TestCase
         $signature = new Signature(
             SignedInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml',
+                )->documentElement,
             ),
             SignatureValue::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignatureValue.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignatureValue.xml',
+                )->documentElement,
             ),
             KeyInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml',
+                )->documentElement,
             ),
             [
                 new Chunk(
                     DOMDocumentFactory::fromString(
-                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>'
-                    )->documentElement
-                )
+                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>',
+                    )->documentElement,
+                ),
             ],
-            'def456'
+            'def456',
         );
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signature)
+            strval($signature),
         );
     }
 
@@ -88,27 +88,27 @@ final class SignatureTest extends TestCase
         $signature = new Signature(
             SignedInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml',
+                )->documentElement,
             ),
             SignatureValue::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignatureValue.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignatureValue.xml',
+                )->documentElement,
             ),
             KeyInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml'
-                )->documentElement
+                    dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_KeyInfo.xml',
+                )->documentElement,
             ),
             [
                 new Chunk(
                     DOMDocumentFactory::fromString(
-                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>'
-                    )->documentElement
-                )
+                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>',
+                    )->documentElement,
+                ),
             ],
-            'def456'
+            'def456',
         );
 
         $signatureElement = $signature->toXML();
@@ -150,7 +150,7 @@ final class SignatureTest extends TestCase
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signature)
+            strval($signature),
         );
     }
 }
