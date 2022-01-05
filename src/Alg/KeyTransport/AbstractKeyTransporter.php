@@ -89,13 +89,13 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
     /**
      * Encrypt a given key with this cipher and the loaded key.
      *
-     * @param string $key The original key to encrypt.
+     * @param string $plaintext The original key to encrypt.
      *
      * @return string The encrypted key (ciphertext).
      */
-    public function encrypt(string $key): string
+    public function encrypt(string $plaintext): string
     {
-        return $this->backend->encrypt($this->key, $key);
+        return $this->backend->encrypt($this->key, $plaintext);
     }
 
 
@@ -104,12 +104,12 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
      *
      * @note The class of the returned key will depend on the algorithm it is going to be used for.
      *
-     * @param string $key The encrypted key.
+     * @param string $ciphertext The encrypted key.
      *
      * @return string The decrypted key.
      */
-    public function decrypt(string $key): string
+    public function decrypt(string $ciphertext): string
     {
-        return $this->backend->decrypt($this->key, $key);
+        return $this->backend->decrypt($this->key, $ciphertext);
     }
 }
