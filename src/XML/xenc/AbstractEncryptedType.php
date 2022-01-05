@@ -228,7 +228,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\TooManyElementsException
      *   If too many child-elements of a type are specified
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'EncryptedData', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, EncryptedData::NS, InvalidDOMElementException::class);

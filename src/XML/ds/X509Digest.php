@@ -79,7 +79,7 @@ final class X509Digest extends AbstractDsElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'X509Digest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Digest::NS, InvalidDOMElementException::class);

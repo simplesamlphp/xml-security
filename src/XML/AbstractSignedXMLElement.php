@@ -90,7 +90,7 @@ abstract class AbstractSignedXMLElement extends AbstractXMLElement implements Si
      * @param \DOMElement $xml
      * @return self
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         $original = $xml->ownerDocument->cloneNode(true);
 

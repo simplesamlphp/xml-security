@@ -61,7 +61,7 @@ class InclusiveNamespaces extends AbstractEcElement
      * @param \DOMElement $xml The XML element we should load.
      * @return self
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         $prefixes = self::getAttribute($xml, 'PrefixList', '');
 

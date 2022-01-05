@@ -79,7 +79,7 @@ final class CanonicalizationMethod extends AbstractDsElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'CanonicalizationMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CanonicalizationMethod::NS, InvalidDOMElementException::class);

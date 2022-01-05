@@ -103,7 +103,7 @@ class XPath extends AbstractDsElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'XPath', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, self::NS, InvalidDOMElementException::class);

@@ -101,7 +101,7 @@ final class X509IssuerSerial extends AbstractDsElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'X509IssuerSerial', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509IssuerSerial::NS, InvalidDOMElementException::class);
