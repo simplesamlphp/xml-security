@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
@@ -28,6 +29,8 @@ use function strval;
  */
 final class X509IssuerSerialTest extends TestCase
 {
+    use SerializableXMLTestTrait;
+
     /** @var \DOMDocument */
     private DOMDocument $document;
 
@@ -45,12 +48,14 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey()
+        $this->testedClass = X509IssuerSerial::class;
+
+        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerSerial.xml'
         );
 
-        $this->document = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerSerial.xml'
+        $this->key = new Key\X509Certificate(
+            PEMCertificatesMock::getPlainPublicKey()
         );
 
         $details = $this->key->getCertificateDetails();
@@ -66,7 +71,7 @@ final class X509IssuerSerialTest extends TestCase
         $X509IssuerSerial = new X509IssuerSerial($this->issuer, $this->serial);
 
         $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($X509IssuerSerial)
         );
     }
@@ -101,21 +106,9 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509IssuerSerial = X509IssuerSerial::fromXML($this->document->documentElement);
+        $X509IssuerSerial = X509IssuerSerial::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals($this->issuer, $X509IssuerSerial->getIssuerName());
         $this->assertEquals($this->serial, $X509IssuerSerial->getSerialNumber());
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $this->assertEquals(
-            $this->document->saveXML($this->document->documentElement),
-            strval(unserialize(serialize(X509IssuerSerial::fromXML($this->document->documentElement))))
-        );
     }
 }
