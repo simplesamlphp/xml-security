@@ -33,7 +33,7 @@ class XML
         DOMElement $element,
         string $c14nMethod,
         array $xpaths = null,
-        array $prefixes = null
+        array $prefixes = null,
     ): string {
         $exclusive = false;
         $withComments = match ($c14nMethod) {
@@ -84,7 +84,7 @@ class XML
      */
     public static function processTransforms(
         Transforms $transforms,
-        DOMElement $data
+        DOMElement $data,
     ): string {
         $canonicalMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
         $arXPath = null;

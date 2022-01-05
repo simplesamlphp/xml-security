@@ -60,7 +60,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         CanonicalizationMethod $canonicalizationMethod,
         SignatureMethod $signatureMethod,
         array $references,
-        ?string $Id = null
+        ?string $Id = null,
     ) {
         $this->setCanonicalizationMethod($canonicalizationMethod);
         $this->setSignatureMethod($signatureMethod);

@@ -51,7 +51,7 @@ final class Signature extends AbstractDsElement
         SignatureValue $signatureValue,
         ?KeyInfo $keyInfo,
         array $objects = [],
-        ?string $Id = null
+        ?string $Id = null,
     ) {
         $this->setSignedInfo($signedInfo);
         $this->setSignatureValue($signatureValue);

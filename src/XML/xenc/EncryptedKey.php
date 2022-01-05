@@ -57,7 +57,7 @@ class EncryptedKey extends AbstractEncryptedType
         ?CarriedKeyName $carriedKeyName = null,
         ?EncryptionMethod $encryptionMethod = null,
         ?KeyInfo $keyInfo = null,
-        ?ReferenceList $referenceList = null
+        ?ReferenceList $referenceList = null,
     ) {
         parent::__construct($cipherData, $id, $type, $mimeType, $encoding, $encryptionMethod, $keyInfo);
         $this->setRecipient($recipient);
@@ -182,7 +182,7 @@ class EncryptedKey extends AbstractEncryptedType
         ?string $recipient = null,
         ?CarriedKeyName $carriedKeyName = null,
         ?KeyInfo $keyInfo = null,
-        ?ReferenceList $referenceList = null
+        ?ReferenceList $referenceList = null,
     ): EncryptedKey {
         Assert::eq(
             $encryptor->getAlgorithmId(),

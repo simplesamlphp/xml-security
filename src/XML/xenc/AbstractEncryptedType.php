@@ -65,7 +65,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
         ?string $mimeType = null,
         ?string $encoding = null,
         ?EncryptionMethod $encryptionMethod = null,
-        ?KeyInfo $keyInfo = null
+        ?KeyInfo $keyInfo = null,
     ) {
         $this->setCipherData($cipherData);
         $this->setEncoding($encoding);

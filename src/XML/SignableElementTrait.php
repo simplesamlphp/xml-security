@@ -102,7 +102,7 @@ trait SignableElementTrait
         string $digestAlg,
         Transforms $transforms,
         DOMElement $xml,
-        string $canonicalDocument
+        string $canonicalDocument,
     ): Reference {
         $id = $this->getId();
         $uri = null;

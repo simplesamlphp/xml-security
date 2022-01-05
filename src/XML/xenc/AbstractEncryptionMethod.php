@@ -50,7 +50,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         string $algorithm,
         ?int $keySize = null,
         ?string $oaepParams = null,
-        array $children = []
+        array $children = [],
     ) {
         $this->setAlgorithm($algorithm);
         $this->setKeySize($keySize);

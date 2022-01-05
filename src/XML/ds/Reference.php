@@ -55,7 +55,7 @@ final class Reference extends AbstractDsElement
         ?Transforms $transforms = null,
         ?string $Id = null,
         ?string $Type = null,
-        ?string $URI = null
+        ?string $URI = null,
     ) {
         $this->setTransforms($transforms);
         $this->setDigestMethod($digestMethod);

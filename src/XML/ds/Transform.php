@@ -53,7 +53,7 @@ class Transform extends AbstractDsElement
     public function __construct(
         string $algorithm,
         ?XPath $xpath = null,
-        ?InclusiveNamespaces $inclusiveNamespaces = null
+        ?InclusiveNamespaces $inclusiveNamespaces = null,
     ) {
         $this->setAlgorithm($algorithm);
         $this->setXPath($xpath);
