@@ -46,7 +46,7 @@ class PublicKey extends AsymmetricKey
      *
      * @param resource|string $key The PEM-encoded key material.
      */
-    public function __construct($key)
+    public function __construct(mixed $key)
     {
         parent::__construct(openssl_pkey_get_public($key));
     }

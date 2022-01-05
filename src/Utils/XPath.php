@@ -3,6 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Utils;
 
 use DOMDocument;
+use DOMElement;
 use DOMNode;
 use DOMXPath;
 use SimpleSAML\XML\Utils\XPath as XPathUtils;
@@ -43,7 +44,7 @@ class XPath extends XPathUtils
      *
      * @throws RuntimeException If no DOM document is available.
      */
-    public static function findElement(DOMNode $ref, string $name)
+    public static function findElement(DOMNode $ref, string $name): DOMElement|false
     {
         $doc = $ref instanceof DOMDocument ? $ref : $ref->ownerDocument;
         if ($doc === null) {

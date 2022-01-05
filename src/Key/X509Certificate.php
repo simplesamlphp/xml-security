@@ -54,7 +54,7 @@ class X509Certificate extends PublicKey
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct($cert)
+    final public function __construct(mixed $cert)
     {
         $resource = openssl_x509_read($cert);
         if ($resource === false) {
