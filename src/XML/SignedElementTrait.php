@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
+use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -74,7 +75,7 @@ trait SignedElementTrait
     /**
      * Make sure the given Reference points to the original XML given.
      */
-    private function validateReferenceUri(Reference $reference, \DOMElement $xml): void
+    private function validateReferenceUri(Reference $reference, DOMElement $xml): void
     {
         if (
             in_array(
