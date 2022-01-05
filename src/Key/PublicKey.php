@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use Webmozart\Assert\Assert;
+use SimpleSAML\Assert\Assert;
 
 use function base64_encode;
 use function chr;
