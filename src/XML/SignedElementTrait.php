@@ -15,6 +15,7 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
+use SimpleSAML\XMLSecurity\Key\AbstractKey;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
@@ -49,7 +50,7 @@ trait SignedElementTrait
      *
      * @var \SimpleSAML\XMLSecurity\Key\AbstractKey|null
      */
-    private ?Key\AbstractKey $validatingKey = null;
+    private ?AbstractKey $validatingKey = null;
 
 
     /**
@@ -206,7 +207,7 @@ trait SignedElementTrait
      *
      * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully verified this signature.
      */
-    public function getVerifyingKey(): ?Key\AbstractKey
+    public function getVerifyingKey(): ?AbstractKey
     {
         return $this->validatingKey;
     }
