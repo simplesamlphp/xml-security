@@ -19,10 +19,6 @@ use function file_get_contents;
  */
 abstract class AsymmetricKey extends AbstractKey
 {
-    /** @var resource */
-    protected $key_material;
-
-
     /**
      * Read a key from a given file.
      *
