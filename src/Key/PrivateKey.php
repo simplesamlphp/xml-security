@@ -31,11 +31,11 @@ class PrivateKey extends AsymmetricKey
      * @param string $file The file where the PEM-encoded private key is stored.
      * @param string $passphrase An optional passphrase used to decrypt the given key material.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\PrivateKey A new private key.
+     * @return static A new private key.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
-    public static function fromFile(string $file, string $passphrase = ""): PrivateKey
+    public static function fromFile(string $file, string $passphrase = ""): static
     {
         return new static(self::readFile($file), $passphrase);
     }

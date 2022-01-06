@@ -57,11 +57,11 @@ class PublicKey extends AsymmetricKey
      *
      * @param string $file The file where the PEM-encoded public key is stored.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\PublicKey A new public key.
+     * @return static A new public key.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
-    public static function fromFile(string $file): PublicKey
+    public static function fromFile(string $file): static
     {
         return new static(static::readFile($file));
     }

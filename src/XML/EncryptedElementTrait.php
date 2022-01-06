@@ -169,12 +169,11 @@ trait EncryptedElementTrait
 
     /**
      * @inheritDoc
-     * @return \SimpleSAML\XMLSecurity\XML\EncryptedElementInterface
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same(
             $xml->localName,
