@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class SignatureVerificationFailedException extends RuntimeException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'Signature verification failed.')
     {
-        parent::__construct($message ?: 'Signature verification failed.');
+        parent::__construct($message);
     }
 }

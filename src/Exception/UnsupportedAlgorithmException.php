@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class UnsupportedAlgorithmException extends RuntimeException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'Unsupported algorithm.')
     {
-        parent::__construct($message ?: 'Unsupported algorithm.');
+        parent::__construct($message);
     }
 }

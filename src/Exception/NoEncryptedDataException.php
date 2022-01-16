@@ -13,8 +13,11 @@ namespace SimpleSAML\XMLSecurity\Exception;
  */
 class NoEncryptedDataException extends RuntimeException
 {
-    public function __construct()
+    /**
+     * @param string $message
+     */
+    public function __construct(string $message = 'There is no EncryptedData in the document or element.')
     {
-        parent::__construct("There is no EncryptedData in the document or element.");
+        parent::__construct($message);
     }
 }

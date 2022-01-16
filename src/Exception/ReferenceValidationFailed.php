@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class ReferenceValidationFailedException extends SignatureVerificationFailedException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'Reference validation failed.')
     {
-        parent::__construct($message ?: 'Reference validation failed.');
+        parent::__construct($message);
     }
 }

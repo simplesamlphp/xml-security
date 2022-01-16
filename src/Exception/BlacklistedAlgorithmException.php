@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class BlacklistedAlgorithmException extends SignatureVerificationFailedException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'Blacklisted algorithm.')
     {
-        parent::__construct($message ?: 'Blacklisted algorithm.');
+        parent::__construct($message);
     }
 }

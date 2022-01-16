@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class IOException extends RuntimeException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'Generic I/O Exception.')
     {
-        parent::__construct($message ?: 'Generic I/O Exception.');
+        parent::__construct($message);
     }
 }

@@ -14,10 +14,10 @@ namespace SimpleSAML\XMLSecurity\Exception;
 class NoSignatureFoundException extends SignatureVerificationFailedException
 {
     /**
-     * @param string|null $message
+     * @param string $message
      */
-    public function __construct(?string $message = null)
+    public function __construct(string $message = 'There is no signature in the document or element.')
     {
-        parent::__construct($message ?: 'There is no signature in the document or element.');
+        parent::__construct($message);
     }
 }
