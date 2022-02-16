@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use Serializable;
 use SimpleSAML\XML\XMLElementInterface;
 
 /**
@@ -14,12 +13,12 @@ use SimpleSAML\XML\XMLElementInterface;
  * fromXML(), in order to guarantee that the original canonicalization of the object is the same as the one produced
  * by this interface.
  *
- * If the original DOM object is retained, please remember to implement the \Serializable interface so that the
+ * If the original DOM object is retained, please remember to implement the serialization magic methods so that the
  * result of serialisation is the original string representation of the object, since DOM objects are not serializable.
  *
  * @package simplesamlphp/xml-security
  */
-interface CanonicalizableElementInterface extends XMLElementInterface, Serializable
+interface CanonicalizableElementInterface extends XMLElementInterface
 {
     /**
      * Get the canonical (string) representation of this object.
