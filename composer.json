@@ -40,11 +40,11 @@
         "ext-spl": "*",
 
         "robrichards/xmlseclibs": "^3.1.1",
-        "simplesamlphp/assert": "~0.2.11",
-        "simplesamlphp/xml-common": "^0.8.4"
+        "simplesamlphp/assert": "~0.2.12",
+        "simplesamlphp/xml-common": "^0.8.5"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.1.5"
+        "simplesamlphp/simplesamlphp-test-framework": "^1.1.6"
     },
     "config": {
         "allow-plugins": {
