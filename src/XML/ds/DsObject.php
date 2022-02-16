@@ -164,7 +164,7 @@ final class DsObject extends AbstractDsElement
     public static function fromXML(DOMElement $xml): object
     {
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, DSObject::NS, InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
 
         $Id = DsObject::getAttribute($xml, 'Id');
         $MimeType = DsObject::getAttribute($xml, 'MimeType');
