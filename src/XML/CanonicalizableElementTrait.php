@@ -48,11 +48,11 @@ trait CanonicalizableElementTrait
     /**
      * Serialize this canonicalisable element.
      *
-     * @return string The serialized chunk.
+     * @return array The serialized chunk.
      */
-    public function serialize(): string
+    public function __serialize(): array
     {
         $xml = $this->getOriginalXML();
-        return $xml->ownerDocument->saveXML($xml);
+        return [$xml->ownerDocument->saveXML($xml)];
     }
 }
