@@ -32,7 +32,7 @@ abstract class AbstractReference extends AbstractXencElement
      * @param string $uri
      * @param \SimpleSAML\XML\XMLElementInterface[] $elements
      */
-    protected function __construct(string $uri, array $elements = [])
+    final public function __construct(string $uri, array $elements = [])
     {
         $this->setURI($uri);
         $this->setElements($elements);

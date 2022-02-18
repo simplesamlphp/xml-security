@@ -11,14 +11,4 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
  */
 class KeyReference extends AbstractReference
 {
-    /**
-     * KeyReference constructor.
-     *
-     * @param string $uri
-     * @param \SimpleSAML\XML\Chunk[] $references
-     */
-    public function __construct(string $uri, array $references = [])
-    {
-        parent::__construct($uri, $references);
-    }
 }
