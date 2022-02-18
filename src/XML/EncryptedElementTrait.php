@@ -212,6 +212,18 @@ trait EncryptedElementTrait
 
 
     /**
+     * Get the list of algorithms that are blacklisted for any encryption operation.
+     *
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use
+     * the defaults.
+     */
+    public function getBlacklistedAlgorithms(): ?array
+    {
+        return $this->blacklistedAlgorithms;
+    }
+
+
+    /**
      * Create a document structure for this element.
      *
      * The AbstractXMLElement class implements this method. If your object inherits from that class, you will already
@@ -230,13 +242,4 @@ trait EncryptedElementTrait
      * want to use the default.
      */
     abstract public function getEncryptionBackend(): ?EncryptionBackend;
-
-
-    /**
-     * Get the list of algorithms that are blacklisted for any encryption operation.
-     *
-     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
-     * defaults.
-     */
-    abstract public function getBlacklistedAlgorithms(): ?array;
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -37,7 +37,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
      * @var string[]
      */
     protected array $blacklist = [
-        Constants::BLOCK_ENC_3DES,
+        C::BLOCK_ENC_3DES,
     ];
 
 
