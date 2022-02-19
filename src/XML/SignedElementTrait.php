@@ -180,7 +180,6 @@ trait SignedElementTrait
         $signedInfo = $this->signature->getSignedInfo();
         $c14nAlg = $signedInfo->getCanonicalizationMethod()->getAlgorithm();
         $c14nSignedInfo = $signedInfo->canonicalize($c14nAlg);
-        /** @var SignedElementInterface $ref */
         $ref = $this->validateReference();
 
         if (
@@ -269,7 +268,6 @@ trait SignedElementTrait
                 continue;
             }
 
-            /** @var \SimpleSAML\XMLSecurity\XML\ds\X509Data $info */
             foreach ($info->getData() as $data) {
                 if (!$data instanceof X509Certificate) {
                     // not supported
