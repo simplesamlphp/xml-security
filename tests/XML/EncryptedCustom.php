@@ -8,7 +8,7 @@ use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
@@ -170,7 +170,7 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
          * the supported algorithms.
          */
         $algId = $this->getEncryptedData()->getEncryptionMethod()->getAlgorithm();
-        if (!isset(Constants::$BLOCK_CIPHER_ALGORITHMS[$algId])) {
+        if (!isset(C::$BLOCK_CIPHER_ALGORITHMS[$algId])) {
             throw new RuntimeException('Unknown or unsupported encryption algorithm.');
         }
 

@@ -202,13 +202,13 @@ a _signer_, pass it to `sign()`, and create the XML representation (which
 will do the actual signing) by calling `toXML()`:
 
 ```php
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
 $key = PrivateKey::fromFile('/path/to/key.pem');
 $signer = (new SignatureAlgorithmFactory())->getAlgorithm(
-    Constants::SIG_RSA_SHA256,
+    C::SIG_RSA_SHA256,
     $key
 );
 $myObject->sign($signer);
@@ -222,6 +222,7 @@ add the X509 certificate corresponding your private key to it, and specify the
 canonicalization algorithm to use:
 
 ```php
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data
@@ -240,7 +241,7 @@ $keyInfo = new KeyInfo(
 
 $customSignable->sign(
     $signer,
-    Constants::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+    C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
     $keyInfo
 );
 
@@ -274,7 +275,6 @@ You will need to instantiate a signature verifier with some key material and a
 signature algorithm, and use it to verify the signature itself:
 
 ```php
-use SimpleSAML\XMLSecurity\Constants;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 
@@ -618,12 +618,12 @@ shared key encryption, we just need to create an appropriate encryptor with
 a symmetric key:
 
 ```php
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
 $encryptor = (new EncryptionAlgorithmFactory())->getAlgorithm(
-    Constants::BLOCK_ENC_...,
+    C::BLOCK_ENC_...,
     new SymmetricKey('MY SHARED SECRET')
 );
 $myEncryptedObject = $myObject->encrypt($encryptor)
@@ -634,12 +634,12 @@ encryptor will need to implement a _key transport_ algorithm, and use a
 public key:
 
 ```php
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 
 $encryptor = (new KeyTransportAlgorithmFactory())->getAlgorithm(
-    Constants::KEY_TRANSPORT_...,
+    C::KEY_TRANSPORT_...,
     PublicKey::fromFile('/path/to/public-key.pem')
 );
 $myEncryptedObject = $myObject->encrypt($encryptor);

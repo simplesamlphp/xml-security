@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
@@ -59,7 +59,7 @@ class EncryptedCustomTest extends TestCase
 
         // encrypt
         $factory = new EncryptionAlgorithmFactory();
-        $encryptor = $factory->getAlgorithm(Constants::BLOCK_ENC_AES128, $sharedKey);
+        $encryptor = $factory->getAlgorithm(C::BLOCK_ENC_AES128, $sharedKey);
         $encryptedCustom = new EncryptedCustom($customSigned->encrypt($encryptor));
 
         // decrypt
@@ -79,11 +79,11 @@ class EncryptedCustomTest extends TestCase
 
         // encrypt
         $factory = new KeyTransportAlgorithmFactory();
-        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
         $encryptedCustom = new EncryptedCustom($customSigned->encrypt($encryptor));
 
         // decrypt
-        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
         $decryptedCustom = $encryptedCustom->decrypt($decryptor);
 
         $this->assertEquals($customSigned, $decryptedCustom);

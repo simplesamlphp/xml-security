@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
@@ -36,7 +36,7 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
      * @var string[]
      */
     protected array $blacklist = [
-        Constants::KEY_TRANSPORT_RSA_1_5,
+        C::KEY_TRANSPORT_RSA_1_5,
     ];
 
 

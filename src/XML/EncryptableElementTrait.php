@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
@@ -39,7 +39,7 @@ trait EncryptableElementTrait
      *
      * @var string
      */
-    protected string $blockCipherAlgId = Constants::BLOCK_ENC_AES256_GCM;
+    protected string $blockCipherAlgId = C::BLOCK_ENC_AES256_GCM;
 
     /**
      * The type of the encrypted data.
@@ -61,7 +61,7 @@ trait EncryptableElementTrait
     public function encrypt(EncryptionAlgorithmInterface $encryptor): EncryptedData
     {
         $keyInfo = null;
-        if (in_array($encryptor->getAlgorithmId(), Constants::$KEY_TRANSPORT_ALGORITHMS)) {
+        if (in_array($encryptor->getAlgorithmId(), C::$KEY_TRANSPORT_ALGORITHMS)) {
             // the encryptor uses a key transport algorithm, use that to generate a session key
             $sessionKey = SymmetricKey::generate($this->sessionKeyLen);
 

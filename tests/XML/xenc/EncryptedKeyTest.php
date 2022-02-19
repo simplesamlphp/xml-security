@@ -11,7 +11,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\RSA;
-use SimpleSAML\XMLSecurity\Constants;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
@@ -216,15 +216,15 @@ final class EncryptedKeyTest extends TestCase
     public function testPKCS1Encryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_RSA_1_5, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->pubKey);
         $symmetricKey = SymmetricKey::generate(8);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_RSA_1_5),
+            new EncryptionMethod(C::KEY_TRANSPORT_RSA_1_5),
         );
 
-        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_RSA_1_5, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
@@ -237,15 +237,15 @@ final class EncryptedKeyTest extends TestCase
     public function testOAEPEncryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->pubKey);
         $symmetricKey = SymmetricKey::generate(16);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP),
+            new EncryptionMethod(C::KEY_TRANSPORT_OAEP),
         );
 
-        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
@@ -258,15 +258,15 @@ final class EncryptedKeyTest extends TestCase
     public function testOAEMGF1PPEncryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
         $symmetricKey = SymmetricKey::generate(16);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(Constants::KEY_TRANSPORT_OAEP_MGF1P),
+            new EncryptionMethod(C::KEY_TRANSPORT_OAEP_MGF1P),
         );
 
-        $decryptor = $factory->getAlgorithm(Constants::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
