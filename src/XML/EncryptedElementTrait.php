@@ -219,7 +219,7 @@ trait EncryptedElementTrait
      */
     public function getBlacklistedAlgorithms(): ?array
     {
-        return $this->blacklistedAlgorithms;
+        return $this->blacklist;
     }
 
 
