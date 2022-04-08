@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
-use SimpleSAML\XMLSecurity\C;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
 /**
