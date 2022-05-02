@@ -22,7 +22,7 @@ use function strval;
  *
  * @covers \SimpleSAML\XMLSecurity\XML\AbstractSignedXMLElement
  * @covers \SimpleSAML\XMLSecurity\XML\SignedElementTrait
- * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSigned
+ * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
  *
  * @package simplesamlphp/xml-security
  */
