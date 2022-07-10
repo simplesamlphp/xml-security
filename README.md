@@ -492,7 +492,7 @@ schemes supported are:
   with the recipient's public key.
 
   In this case, the `$decryptor` will implement a _key transport_ algorithm
-  (which in turn is just an assymetric encryption algorithm like RSA), and the
+  (which in turn is just an asymetric encryption algorithm like RSA), and the
   key attached to it will be a `SimpleSAML\XMLSecurity\Key\PrivateKey` object
   with the recipient's private key.
 

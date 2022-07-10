@@ -81,7 +81,7 @@ openssl req -x509 -new -nodes -key $PEM_RSA_DIR/selfsigned.simplesamlphp.org_nop
   -sha256 -days $VALID_UNTIL -out $PEM_RSA_DIR/selfsigned.simplesamlphp.org.crt \
   -subj "${SUBJ}"
 
-## Corrupt certicate ##
+## Corrupt certificate ##
 
 # This sed-command will swap the first & last character
 sed 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $PEM_RSA_DIR/corrupted.simplesamlphp.org_nopasswd.key \

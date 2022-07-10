@@ -105,7 +105,7 @@ openssl req -x509 -newkey dsa:$DSA_PARAM -keyout $PEM_DSA_DIR/selfsigned.simples
 openssl dsa -aes256 -in $PEM_DSA_DIR/selfsigned.simplesamlphp.org_nopasswd.key \
   -out $PEM_DSA_DIR/selfsigned.simplesamlphp.org.key -passout pass:$PASSWORD
 
-## Corrupt certicate ##
+## Corrupt certificate ##
 
 # This sed-command will swap the first & last character
 sed 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $PEM_DSA_DIR/corrupted.simplesamlphp.org_nopasswd.key \
