@@ -142,10 +142,15 @@ trait SignedElementTrait
 
         $xp = XPath::getXPath($xml->ownerDocument);
         $sigNode = XPath::xpQuery($xml, 'child::ds:Signature', $xp);
-        Assert::count(
+        Assert::minCount(
             $sigNode,
             1,
-            'None or more than one signature found in object.',
+            NoSignatureFoundException::class,
+        );
+        Assert::maxCount(
+            $sigNode,
+            1,
+            'More than one signature found in object.',
             TooManyElementsException::class,
         );
         $xml->removeChild($sigNode[0]);
