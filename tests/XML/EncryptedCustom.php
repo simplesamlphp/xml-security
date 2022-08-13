@@ -175,7 +175,7 @@ final class EncryptedCustom extends AbstractXMLElement implements EncryptedEleme
         }
 
         // decrypt the encryption key with the decryptor we were provided
-        $encryptedKey = $this->getDecryptionKey();
+        $encryptedKey = $this->getEncryptedKey();
         $decryptionKey = $encryptedKey->decrypt($decryptor);
 
         /*

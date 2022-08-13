@@ -39,7 +39,7 @@ interface EncryptedElementInterface
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
      */
-    public function getDecryptionKey(): EncryptedKey;
+    public function getEncryptedKey(): EncryptedKey;
 
     /**
      * Get the EncryptedData object.

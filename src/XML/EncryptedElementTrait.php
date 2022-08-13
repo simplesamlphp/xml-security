@@ -83,7 +83,7 @@ trait EncryptedElementTrait
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
      */
-    public function getDecryptionKey(): EncryptedKey
+    public function getEncryptedKey(): EncryptedKey
     {
         return $this->encryptedKey;
 
@@ -152,7 +152,7 @@ trait EncryptedElementTrait
                 throw new RuntimeException('Cannot decrypt data with a session key and no EncryptionMethod.');
             }
 
-            $encryptedKey = $this->getDecryptionKey();
+            $encryptedKey = $this->getEncryptedKey();
             $decryptionKey = $encryptedKey->decrypt($decryptor);
 
             $factory = new EncryptionAlgorithmFactory($this->getBlacklistedAlgorithms());
