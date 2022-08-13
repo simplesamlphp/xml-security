@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\RSA;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
 
@@ -53,6 +54,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
             [
                 TripleDES::class,
                 AES::class,
+                RSA::class,
             ],
         );
     }
