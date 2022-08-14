@@ -552,10 +552,10 @@ use an appropriate decryptor instantiated with your private key in order to
 decrypt your objects:
 
 ```php
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
-$decryptor = (new EncryptionAlgorithmFactory())->getAlgorithm(
+$decryptor = (new KeyTransportAlgorithmFactory())->getAlgorithm(
     $myEncryptedObject->getEncryptedKey()->getEncryptionMethod()->getAlgorithm(),
     PrivateKey::fromFile('/path/to/private-key.pem')
 );
