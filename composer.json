@@ -1,7 +1,7 @@
 {
     "name": "simplesamlphp/xml-security",
     "description": "SimpleSAMLphp library for XML Security",
-    "license": "BSD-3-Clause",
+    "license": "LGPL-2.1-or-later",
     "keywords": [
         "xml",
         "xmldsig",
