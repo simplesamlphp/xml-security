@@ -36,7 +36,7 @@ interface SignableElementInterface extends CanonicalizableElementInterface
      */
     public function sign(
         SignatureAlgorithmInterface $signer,
-        string                      $canonicalizationAlg,
-        ?KeyInfo                    $keyInfo = null
+        string $canonicalizationAlg,
+        ?KeyInfo $keyInfo = null
     ): void;
 }

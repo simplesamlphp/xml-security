@@ -237,6 +237,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             case C::BLOCK_ENC_AES192_GCM:
             case C::BLOCK_ENC_AES256_GCM:
                 $this->useAuthTag = true;
+                // Intentional fall-thru
             default:
                 $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
                 $this->blocksize = C::$BLOCK_SIZES[$cipher];

@@ -119,7 +119,11 @@ final class EncryptedDataTest extends TestCase
 
         // Test ordering of EncryptedData contents
         /** @psalm-var \DOMElement[] $encryptedDataElements */
-        $encryptedDataElements = XPath::xpQuery($encryptedDataElement, './xenc:EncryptionMethod/following-sibling::*', $xpCache);
+        $encryptedDataElements = XPath::xpQuery(
+            $encryptedDataElement,
+            './xenc:EncryptionMethod/following-sibling::*',
+            $xpCache
+        );
         $this->assertCount(2, $encryptedDataElements);
         $this->assertEquals('ds:KeyInfo', $encryptedDataElements[0]->tagName);
         $this->assertEquals('xenc:CipherData', $encryptedDataElements[1]->tagName);

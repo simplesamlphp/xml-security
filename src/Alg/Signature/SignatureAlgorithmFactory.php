@@ -79,8 +79,8 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
      * @return \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface An object implementing the given
      * algorithm.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given algorithm
-     * is blacklisted, unknown or the given key is not suitable for it.
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given
+     * algorithm is blacklisted, unknown or the given key is not suitable for it.
      */
     public function getAlgorithm(string $algId, AbstractKey $key): SignatureAlgorithmInterface
     {

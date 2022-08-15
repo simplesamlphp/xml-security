@@ -86,7 +86,6 @@ trait EncryptedElementTrait
     public function getEncryptedKey(): EncryptedKey
     {
         return $this->encryptedKey;
-
     }
 
 

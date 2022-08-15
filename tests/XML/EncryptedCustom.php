@@ -25,12 +25,12 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
  */
 final class EncryptedCustom extends AbstractXMLElement implements EncryptedElementInterface
 {
+    /*
+     * By using this trait, we get a constructor out of the box that processes the EncryptedData and any possible
+     * EncryptedKey elements inside. If you need your own constructor, make sure to rename the one from the trait
+     * here so that you can call it later.
+     */
     use EncryptedElementTrait {
-        /*
-         * By using this trait, we get a constructor out of the box that processes the EncryptedData and any possible
-         * EncryptedKey elements inside. If you need your own constructor, make sure to rename the one from the trait
-         * here so that you can call it later.
-         */
         __construct as constructor;
     }
 

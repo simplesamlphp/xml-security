@@ -131,7 +131,10 @@ class PEMCertificatesMock
         string $file = self::PUBLIC_KEY,
         string $algorithm = self::ALG_RSA
     ): string {
-        return CertificateUtils::stripHeaders(self::loadPlainCertificateFile($file, $algorithm), CertificateUtils::PUBLIC_KEY_PATTERN);
+        return CertificateUtils::stripHeaders(
+            self::loadPlainCertificateFile($file, $algorithm),
+            CertificateUtils::PUBLIC_KEY_PATTERN
+        );
     }
 
 
@@ -144,6 +147,9 @@ class PEMCertificatesMock
         string $file = self::PRIVATE_KEY,
         string $algorithm = self::ALG_RSA
     ): string {
-        return CertificateUtils::stripHeaders(self::loadPlainCertificateFile($file, $algorithm), CertificateUtils::PRIVATE_KEY_PATTERN);
+        return CertificateUtils::stripHeaders(
+            self::loadPlainCertificateFile($file, $algorithm),
+            CertificateUtils::PRIVATE_KEY_PATTERN
+        );
     }
 }

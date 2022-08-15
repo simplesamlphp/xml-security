@@ -21,7 +21,6 @@ use function hex2bin;
  */
 final class OpenSSLTest extends TestCase
 {
-
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected PrivateKey $privKey;
 
