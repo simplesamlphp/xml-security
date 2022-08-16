@@ -12,6 +12,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
@@ -60,17 +61,13 @@ final class SignableElementTest extends TestCase
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
         );
 
-        $certificate = file_get_contents(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt',
-        );
+        $certificate = PEMCertificatesMock::loadPlainCertificateFile(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY);
         $certificateLines = explode("\n", trim($certificate));
         array_pop($certificateLines);
         array_shift($certificateLines);
         $this->certificate = join("\n", $certificateLines);
 
-        $this->key = PrivateKey::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org_nopasswd.key',
-        );
+        $this->key = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
     }
 
 

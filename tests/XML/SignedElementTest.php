@@ -58,7 +58,7 @@ final class SignedElementTest extends TestCase
         )->documentElement;
 
         $this->certificate = file_get_contents(
-            dirname(dirname(__FILE__)) . '/resources/certificates/rsa-pem/selfsigned.simplesamlphp.org.crt',
+            dirname(dirname(__FILE__)) . '/resources/certificates/selfsigned.simplesamlphp.org.crt',
         );
     }
 
