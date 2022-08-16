@@ -114,7 +114,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const SIG_HMAC_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha512';
     public const SIG_HMAC_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-ripemd160';
 
-    public static $RSA_DIGESTS = [
+    public static array $RSA_DIGESTS = [
         self::SIG_RSA_SHA1 => self::DIGEST_SHA1,
         self::SIG_RSA_SHA224 => self::DIGEST_SHA224,
         self::SIG_RSA_SHA256 => self::DIGEST_SHA256,
@@ -123,7 +123,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::SIG_RSA_RIPEMD160 => self::DIGEST_RIPEMD160,
     ];
 
-    public static $HMAC_DIGESTS = [
+    public static array $HMAC_DIGESTS = [
         self::SIG_HMAC_SHA1 => self::DIGEST_SHA1,
         self::SIG_HMAC_SHA224 => self::DIGEST_SHA224,
         self::SIG_HMAC_SHA256 => self::DIGEST_SHA256,
