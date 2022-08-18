@@ -276,11 +276,11 @@ signature algorithm, and use it to verify the signature itself:
 
 ```php
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
 
 $verifier = (new SignatureAlgorithmFactory())->getAlgorithm(
     $myObject->getSignature()->getSignedInfo()->getSignatureMethod()->getAlgorithm(),
-    new X509Certificate($pemEncodedCertificate) 
+    PublicKey::fromFile('/path/to/public-key.pem')
 );
 $verified = $myObject->verify($verifier);
 ```
