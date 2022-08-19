@@ -132,7 +132,7 @@ final class DsObject extends AbstractDsElement
      */
     private function setEncoding(?string $Encoding): void
     {
-        Assert::validURI($Encoding);
+        Assert::nullOrValidURI($Encoding);
         $this->Encoding = $Encoding;
     }
 
