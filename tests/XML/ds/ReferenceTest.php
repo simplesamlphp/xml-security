@@ -56,7 +56,7 @@ final class ReferenceTest extends TestCase
                 ],
             ),
             'abc123',
-            'someType',
+            'urn:some:type',
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
 
@@ -81,7 +81,7 @@ final class ReferenceTest extends TestCase
                 ]
             ),
             'abc123',
-            'someType',
+            'urn:some:type',
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
 
@@ -100,7 +100,7 @@ final class ReferenceTest extends TestCase
     {
         $reference = Reference::fromXML($this->xmlRepresentation->documentElement);
         $this->assertEquals('abc123', $reference->getId());
-        $this->assertEquals('someType', $reference->getType());
+        $this->assertEquals('urn:some:type', $reference->getType());
         $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $reference->getURI());
 
         $digestMethod = $reference->getDigestMethod();

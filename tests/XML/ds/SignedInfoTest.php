@@ -118,7 +118,7 @@ final class SignedInfoTest extends TestCase
     /**
      * Test that canonicalization works fine.
      */
-    public function testCanonicalizaation(): void
+    public function testCanonicalization(): void
     {
         $xml =  DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfoWithComments.xml',

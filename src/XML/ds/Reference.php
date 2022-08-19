@@ -152,6 +152,7 @@ final class Reference extends AbstractDsElement
      */
     private function setType(?string $Type): void
     {
+        Assert::nullOrValidURI($Type);
         $this->Type = $Type;
     }
 
@@ -170,6 +171,7 @@ final class Reference extends AbstractDsElement
      */
     private function setURI(?string $URI): void
     {
+        Assert::nullOrValidURI($URI);
         $this->URI = $URI;
     }
 

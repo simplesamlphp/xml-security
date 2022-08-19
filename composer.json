@@ -40,8 +40,8 @@
         "ext-openssl": "*",
         "ext-spl": "*",
 
-        "simplesamlphp/assert": "^0.3.3",
-        "simplesamlphp/xml-common": "^0.8.10"
+        "simplesamlphp/assert": "^0.5.0",
+        "simplesamlphp/xml-common": "^0.8.12"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "^1.2.1"

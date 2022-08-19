@@ -59,6 +59,7 @@ final class X509Digest extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
+        Assert::validURI($algorithm);
         Assert::oneOf(
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),

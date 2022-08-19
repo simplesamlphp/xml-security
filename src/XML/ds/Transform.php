@@ -78,6 +78,7 @@ class Transform extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
+        Assert::validURI($algorithm);
         $this->algorithm = $algorithm;
     }
 

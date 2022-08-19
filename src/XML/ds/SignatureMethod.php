@@ -54,6 +54,7 @@ final class SignatureMethod extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
+        Assert::validURI($algorithm);
         Assert::oneOf(
             $algorithm,
             array_merge(
