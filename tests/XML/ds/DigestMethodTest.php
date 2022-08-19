@@ -46,7 +46,7 @@ final class DigestMethodTest extends TestCase
     {
         $digestMethod = new DigestMethod(
             C::DIGEST_SHA256,
-            [new Chunk(DOMDocumentFactory::fromString('<some:Chunk>Random</some:Chunk>')->documentElement)],
+            [new Chunk(DOMDocumentFactory::fromString('<some:Chunk xmlns:some="urn:test:some">Random</some:Chunk>')->documentElement)],
         );
 
         $this->assertEquals(

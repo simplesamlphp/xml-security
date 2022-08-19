@@ -9,6 +9,7 @@ use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
@@ -92,7 +93,7 @@ final class KeyInfoTest extends TestCase
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<ds:KeySomething>Some unknown tag within the ds-namespace</ds:KeySomething>',
+                    '<ds:KeySomething xmlns:ds="'. C::NS_XDSIG . '">Some unknown tag within the ds-namespace</ds:KeySomething>',
                 )->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
             ],
