@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
@@ -78,7 +79,7 @@ class Transform extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
-        Assert::validURI($algorithm);
+        Assert::validURI($algorithm, SchemaViolationException::class);
         $this->algorithm = $algorithm;
     }
 

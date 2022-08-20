@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -62,7 +63,7 @@ final class DigestMethod extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
-        Assert::validURI($algorithm);
+        Assert::validURI($algorithm, SchemaViolationException::class);
         Assert::oneOf(
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),

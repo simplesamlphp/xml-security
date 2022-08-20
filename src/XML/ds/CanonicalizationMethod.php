@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -54,7 +55,7 @@ final class CanonicalizationMethod extends AbstractDsElement
      */
     private function setAlgorithm(string $algorithm): void
     {
-        Assert::validURI($algorithm);
+        Assert::validURI($algorithm, SchemaViolationException::class);
         Assert::oneOf(
             $algorithm,
             [
