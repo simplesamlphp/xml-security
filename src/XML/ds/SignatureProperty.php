@@ -101,7 +101,7 @@ final class SignatureProperty extends AbstractDsElement
     public static function fromXML(DOMElement $xml): self
     {
         Assert::same($xml->localName, 'SignatureProperty', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, Manifest::NS, InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, SignatureProperty::NS, InvalidDOMElementException::class);
 
         /** @psalm-var string $Target */
         $Target = self::getAttribute($xml, 'Target');
