@@ -16,6 +16,7 @@ use function array_pop;
 /**
  * Abstract class to be implemented by all signed classes
  *
+ * @psalm-consistent-constructor
  * @package simplesamlphp/xml-security
  */
 abstract class AbstractSignedXMLElement extends AbstractXMLElement implements SignedElementInterface

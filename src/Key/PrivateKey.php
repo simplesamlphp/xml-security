@@ -19,7 +19,7 @@ class PrivateKey extends AsymmetricKey
      * @param string|resource $key The PEM-encoded key material.
      * @param string $passphrase An optional passphrase used to decrypt the given key material.
      */
-    public function __construct($key, string $passphrase = "")
+    final public function __construct($key, string $passphrase = "")
     {
         parent::__construct(openssl_pkey_get_private($key, $passphrase));
     }

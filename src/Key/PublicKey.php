@@ -17,6 +17,7 @@ use function sprintf;
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *
+ * @psalm-consistent-constructor
  * @package simplesamlphp/xml-security
  */
 class PublicKey extends AsymmetricKey

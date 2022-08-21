@@ -46,7 +46,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @param string|null $oaepParams
      * @param \SimpleSAML\XML\Chunk[] $children
      */
-    public function __construct(
+    final public function __construct(
         string $algorithm,
         ?int $keySize = null,
         ?string $oaepParams = null,

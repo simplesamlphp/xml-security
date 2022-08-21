@@ -11,20 +11,4 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
  */
 class EncryptionMethod extends AbstractEncryptionMethod
 {
-    /**
-     * EncryptionMethod constructor.
-     *
-     * @param string $algorithm
-     * @param int|null $keySize
-     * @param string|null $oaepParams
-     * @param \SimpleSAML\XML\Chunk[] $children
-     */
-    public function __construct(
-        string $algorithm,
-        ?int $keySize = null,
-        ?string $oaepParams = null,
-        array $children = []
-    ) {
-        parent::__construct($algorithm, $keySize, $oaepParams, $children);
-    }
 }
