@@ -101,7 +101,7 @@ final class X509DataTest extends TestCase
         $x509data = new X509Data(
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString('<ds:X509UnknownTag xmlns:ds="'. C::NS_XDSIG .'">somevalue</ds:X509UnknownTag>')->documentElement,
+                    DOMDocumentFactory::fromString('<ds:X509UnknownTag xmlns:ds="' . C::NS_XDSIG . '">somevalue</ds:X509UnknownTag>')->documentElement,
                 ),
                 new X509Certificate($this->certificate),
                 new X509Digest($this->digest, C::DIGEST_SHA256),

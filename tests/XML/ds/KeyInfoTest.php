@@ -93,7 +93,7 @@ final class KeyInfoTest extends TestCase
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<ds:KeySomething xmlns:ds="'. C::NS_XDSIG . '">Some unknown tag within the ds-namespace</ds:KeySomething>',
+                    '<ds:KeySomething xmlns:ds="' . C::NS_XDSIG . '">Some unknown tag within the ds-namespace</ds:KeySomething>',
                 )->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
             ],
