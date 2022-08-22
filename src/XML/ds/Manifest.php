@@ -52,6 +52,7 @@ final class Manifest extends AbstractDsElement
      */
     protected function setReferences(array $references): void
     {
+        Assert::allIsInstanceOf($references, Reference::class);
         $this->references = $references;
     }
 
