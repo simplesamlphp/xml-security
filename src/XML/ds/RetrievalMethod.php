@@ -95,7 +95,9 @@ final class RetrievalMethod extends AbstractDsElement
      */
     private function setType(?string $Type): void
     {
-        Assert::validURI($Type, SchemaViolationException::class); // Covers the empty string
+        if ($Type !== null) {
+            Assert::validURI($Type, SchemaViolationException::class); // Covers the empty string
+        }
         $this->Type = $Type;
     }
 
