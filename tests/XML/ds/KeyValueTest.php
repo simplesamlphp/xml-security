@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
@@ -29,6 +30,14 @@ final class KeyValueTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
+
+    /** @var \DOMDocument $rsaKeyValue */
+    protected DOMDocument $rsaKeyValue;
+
+    /** @var \DOMDocument $cipherValue */
+    protected DOMDocument $cipherValue;
+
+
     /**
      */
     protected function setUp(): void
@@ -38,38 +47,130 @@ final class KeyValueTest extends TestCase
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyValue.xml',
         );
-    }
 
-
-    /**
-     */
-    public function testMarshalling(): void
-    {
-        $keyValue = new KeyValue(
-            new RSAKeyValue(
-                new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
-                new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
-            ),
+        $this->rsaKeyValue = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_RSAKeyValue.xml',
         );
 
-        $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyValue),
+        $this->cipherValue = DOMDocumentFactory::fromFile(
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherValue.xml',
         );
     }
 
 
     /**
      */
-    public function testUnmarshalling(): void
+    public function testMarshallingWithRSAKey(): void
     {
-        $keyValue = KeyValue::fromXML($this->xmlRepresentation->documentElement);
+        $keyValue = new KeyValue(RSAKeyValue::fromXML($this->rsaKeyValue->documentElement));
 
-        $RSAKeyValue = $keyValue->getRSAKeyValue();
-        $this->assertNotNull($RSAKeyValue);
+        $rsaKeyValue = $keyValue->getRSAKeyValue();
+        $this->assertInstanceOf(RSAKeyValue::class, $rsaKeyValue);
         $this->assertEmpty($keyValue->getElements());
 
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $RSAKeyValue->getModulus()->getContent());
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=', $RSAKeyValue->getExponent()->getContent());
+        $this->assertEquals($rsaKeyValue->getModulus()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==');
+        $this->assertEquals($rsaKeyValue->getExponent()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
+
+        $document = $this->xmlRepresentation;
+        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
+
+        $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
+    }
+
+
+    /**
+     */
+    public function testMarshallingWithOtherElement(): void
+    {
+        $keyValue = new KeyValue(null, Chunk::fromXML($this->cipherValue->documentElement));
+
+        $elements = $keyValue->getElements();
+        $this->assertEmpty($keyValue->getRSAKeyValue());
+        $this->assertCount(1, $elements);
+
+        $element = reset($elements);
+        $this->assertInstanceOf(Chunk::class, $element);
+        $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+
+        $document = $this->xmlRepresentation;
+        $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
+
+        $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
+    }
+
+
+    /**
+     */
+    public function testMarshallingEmpty(): void
+    {
+        $this->expectException(SchemaViolationException::class);
+        $this->expectExceptionMessage('A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other');
+
+        new KeyValue(null, null);
+    }
+
+
+    /**
+     */
+    public function testUnmarshallingWithRSAKey(): void
+    {
+        $document = $this->xmlRepresentation;
+        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
+
+        $keyValue = KeyValue::fromXML($document->documentElement);
+
+        $rsaKeyValue = $keyValue->getRSAKeyValue();
+        $this->assertNotNull($rsaKeyValue);
+        $this->assertEmpty($keyValue->getElements());
+
+        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $rsaKeyValue->getModulus()->getContent());
+        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=', $rsaKeyValue->getExponent()->getContent());
+    }
+
+
+    /**
+     */
+    public function testUnmarshallingWithOtherElement(): void
+    {
+        $document = $this->xmlRepresentation;
+        $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
+
+        $keyValue = KeyValue::fromXML($document->documentElement);
+
+        $elements = $keyValue->getElements();
+        $this->assertNull($keyValue->getRSAKeyValue());
+        $this->assertCount(1, $elements);
+
+        $element = reset($elements);
+        $this->assertInstanceOf(Chunk::class, $element);
+        $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+    }
+
+
+    /**
+     */
+    public function testUnmarshallingEmpty(): void
+    {
+        $document = $this->xmlRepresentation;
+
+        $this->expectException(SchemaViolationException::class);
+        $this->expectExceptionMessage('A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other');
+
+        KeyValue::fromXML($document->documentElement);
+    }
+
+
+    /**
+     * Test serialization / unserialization
+     */
+    public function testSerialization(): void
+    {
+        $document = $this->xmlRepresentation;
+        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
+
+        $this->assertXmlStringEqualsXmlString(
+            $this->xmlRepresentation->saveXML($document->documentElement),
+            strval(unserialize(serialize(KeyValue::fromXML($document->documentElement))))
+        );
     }
 }

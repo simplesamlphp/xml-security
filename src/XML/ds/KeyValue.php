@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\XMLElementInterface;
@@ -45,7 +46,8 @@ final class KeyValue extends AbstractDsElement
     {
         Assert::false(
             is_null($RSAKeyValue) && is_null($element),
-            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other'
+            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
+            SchemaViolationException::class,
         );
 
         $this->setRSAKeyValue($RSAKeyValue);
@@ -134,7 +136,7 @@ final class KeyValue extends AbstractDsElement
         }
 
         foreach ($this->elements as $element) {
-            $e->appendChild($e->ownerDocument->importNode($element->getXML(), true));
+            $e->appendChild($e->ownerDocument->importNode($element->toXML(), true));
         }
 
         return $e;
