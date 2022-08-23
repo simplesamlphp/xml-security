@@ -162,9 +162,12 @@ class Transform extends AbstractDsElement
         Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
 
+        /** @psalm-var string $alg */
         $alg = self::getAttribute($xml, 'Algorithm');
+
         $xpath = XPath::getChildrenOfClass($xml);
         Assert::maxCount($xpath, 1, 'Only one XPath element supported per Transform.', TooManyElementsException::class);
+
         $prefixes = InclusiveNamespaces::getChildrenOfClass($xml);
         Assert::maxCount(
             $prefixes,

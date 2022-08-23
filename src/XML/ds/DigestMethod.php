@@ -115,6 +115,7 @@ final class DigestMethod extends AbstractDsElement
         Assert::same($xml->localName, 'DigestMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DigestMethod::NS, InvalidDOMElementException::class);
 
+        /** @psalm-var string $Algorithm */
         $Algorithm = DigestMethod::getAttribute($xml, 'Algorithm');
 
         $elements = [];

@@ -84,6 +84,7 @@ final class SignatureMethod extends AbstractDsElement
         Assert::same($xml->localName, 'SignatureMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureMethod::NS, InvalidDOMElementException::class);
 
+        /** @psalm-var string $Algorithm */
         $Algorithm = SignatureMethod::getAttribute($xml, 'Algorithm');
 
         return new self($Algorithm);

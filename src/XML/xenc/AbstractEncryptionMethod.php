@@ -60,62 +60,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
 
     /**
-     * Initialize an EncryptionMethod object from an existing XML.
-     *
-     * @param \DOMElement $xml
-     * @return static
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   if the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingAttributeException
-     *   if the supplied element is missing one of the mandatory attributes
-     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
-     *   if too many child-elements of a type are specified
-     */
-    public static function fromXML(DOMElement $xml): self
-    {
-        Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
-
-        $algorithm = self::getAttribute($xml, 'Algorithm');
-        $keySize = null;
-        $oaepParams = null;
-        $children = [];
-
-        foreach ($xml->childNodes as $node) {
-            if (!$node instanceof DOMElement) {
-                continue;
-            } elseif ($node->namespaceURI === C::NS_XENC) {
-                if ($node->localName === 'KeySize') {
-                    Assert::null(
-                        $keySize,
-                        $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class,
-                    );
-                    Assert::numeric($node->textContent, $node->tagName . ' must be numerical.');
-                    $keySize = intval($node->textContent);
-                    continue;
-                }
-
-                if ($node->localName === 'OAEPParams') {
-                    Assert::null(
-                        $oaepParams,
-                        $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class,
-                    );
-                    $oaepParams = trim($node->textContent);
-                    continue;
-                }
-            }
-
-            $children[] = Chunk::fromXML($node);
-        }
-
-        return new static($algorithm, $keySize, $oaepParams, $children);
-    }
-
-
-    /**
      * Get the URI identifying the algorithm used by this encryption method.
      *
      * @return string
@@ -227,6 +171,63 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         );
 
         $this->children = $children;
+    }
+
+
+    /**
+     * Initialize an EncryptionMethod object from an existing XML.
+     *
+     * @param \DOMElement $xml
+     * @return static
+     *
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   if the qualified name of the supplied element is wrong
+     * @throws \SimpleSAML\XML\Exception\MissingAttributeException
+     *   if the supplied element is missing one of the mandatory attributes
+     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
+     *   if too many child-elements of a type are specified
+     */
+    public static function fromXML(DOMElement $xml): self
+    {
+        Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
+
+        /** @psalm-var string $algorithm */
+        $algorithm = self::getAttribute($xml, 'Algorithm');
+        $keySize = null;
+        $oaepParams = null;
+        $children = [];
+
+        foreach ($xml->childNodes as $node) {
+            if (!$node instanceof DOMElement) {
+                continue;
+            } elseif ($node->namespaceURI === C::NS_XENC) {
+                if ($node->localName === 'KeySize') {
+                    Assert::null(
+                        $keySize,
+                        $node->tagName . ' cannot be set more than once.',
+                        TooManyElementsException::class,
+                    );
+                    Assert::numeric($node->textContent, $node->tagName . ' must be numerical.');
+                    $keySize = intval($node->textContent);
+                    continue;
+                }
+
+                if ($node->localName === 'OAEPParams') {
+                    Assert::null(
+                        $oaepParams,
+                        $node->tagName . ' cannot be set more than once.',
+                        TooManyElementsException::class,
+                    );
+                    $oaepParams = trim($node->textContent);
+                    continue;
+                }
+            }
+
+            $children[] = Chunk::fromXML($node);
+        }
+
+        return new static($algorithm, $keySize, $oaepParams, $children);
     }
 
 
