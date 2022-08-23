@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
-use Exception;
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function array_unshift;
 use function chunk_split;
@@ -78,7 +78,7 @@ class Certificate
         $matches = [];
         $result = preg_match($pattern, $key, $matches);
         if ($result === false) {
-            throw new Exception('Could not find content matching the provided pattern.');
+            throw new InvalidArgumentException('Could not find content matching the provided pattern.');
         }
 
         /** @psalm-suppress EmptyArrayAccess */
