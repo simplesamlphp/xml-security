@@ -156,7 +156,7 @@ class EncryptedKey extends AbstractEncryptedType
      *
      * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $keyToEncrypt The key to encrypt.
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use.
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
      * @param string|null $id The Id attribute of this object. Optional.
      * @param string|null $type The Type attribute of this object. Optional.
