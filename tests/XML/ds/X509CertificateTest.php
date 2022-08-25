@@ -29,7 +29,6 @@ use function substr;
  */
 final class X509CertificateTest extends TestCase
 {
-    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /** @var string */
@@ -41,8 +40,6 @@ final class X509CertificateTest extends TestCase
     public function setUp(): void
     {
         $this->testedClass = X509Certificate::class;
-
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml',

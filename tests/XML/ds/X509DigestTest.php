@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -30,7 +29,6 @@ use function strval;
  */
 final class X509DigestTest extends TestCase
 {
-    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
@@ -45,8 +43,6 @@ final class X509DigestTest extends TestCase
     public function setUp(): void
     {
         $this->testedClass = X509Digest::class;
-
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Digest.xml',

@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
@@ -26,7 +25,6 @@ use function strval;
  */
 final class CipherValueTest extends TestCase
 {
-    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /**
@@ -34,8 +32,6 @@ final class CipherValueTest extends TestCase
     protected function setUp(): void
     {
         $this->testedClass = CipherValue::class;
-
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherValue.xml',

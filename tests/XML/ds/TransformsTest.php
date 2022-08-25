@@ -52,8 +52,7 @@ final class TransformsTest extends TestCase
                 new Transform(
                     C::XPATH_URI,
                     new XPath(
-                        'self::xenc:CipherValue[@Id="example1"]',
-                        ['xenc' => 'http://www.w3.org/2001/04/xmlenc#'],
+                        'count(//. | //@* | //namespace::*)',
                     ),
                 ),
             ],
