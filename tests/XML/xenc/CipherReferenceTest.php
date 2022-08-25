@@ -9,9 +9,9 @@ use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
+use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
 use function dirname;
 use function strval;
@@ -29,7 +29,7 @@ final class CipherReferenceTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms */
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\Transforms $transforms */
     private Transforms $transforms;
 
 
@@ -43,7 +43,7 @@ final class CipherReferenceTest extends TestCase
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml',
         );
 
-        $xpath = new XPath('self::xenc:CipherValue[@Id="example1"]');
+        $xpath = new XPath('count(//. | //@* | //namespace::*)');
         $transform = new Transform(C::XPATH_URI, $xpath);
         $this->transforms = new Transforms([$transform]);
     }
