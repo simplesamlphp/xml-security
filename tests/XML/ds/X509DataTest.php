@@ -105,12 +105,12 @@ final class X509DataTest extends TestCase
         $x509data = new X509Data(
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString('<ds:X509UnknownTag xmlns:ds="' . C::NS_XDSIG . '">somevalue</ds:X509UnknownTag>')->documentElement,
+                    DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement,
                 ),
                 new X509Certificate($this->certificate),
                 new X509Digest($this->digest, C::DIGEST_SHA256),
                 new X509SubjectName($this->certData['name']),
-                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
+                new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>')->documentElement)
             ],
         );
 
