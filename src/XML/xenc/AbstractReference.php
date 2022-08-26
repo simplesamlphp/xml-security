@@ -55,7 +55,7 @@ abstract class AbstractReference extends AbstractXencElement
      */
     protected function setURI(string $uri): void
     {
-        Assert::notEmpty($uri, 'The URI attribute of a reference cannot be empty.', InvalidArgumentException::class);
+        Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
         $this->uri = $uri;
     }
 

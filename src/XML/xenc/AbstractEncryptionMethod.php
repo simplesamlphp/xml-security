@@ -78,12 +78,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      */
     protected function setAlgorithm(string $algorithm): void
     {
-        Assert::notEmpty(
-            $algorithm,
-            'Cannot set an empty algorithm in ' . static::NS_PREFIX . ':EncryptionMethod.',
-            InvalidArgumentException::class,
-        );
-
+        Assert::validURI($algorithm, SchemaViolationException::class); // Covers the empty string
         $this->algorithm = $algorithm;
     }
 

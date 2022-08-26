@@ -58,7 +58,7 @@ final class EncryptedDataTest extends TestCase
             'MyID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
-            'SomeEncoding',
+            'urn:x-simplesamlphp:encoding',
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#aes128-cbc'),
             new KeyInfo(
                 [
@@ -92,7 +92,7 @@ final class EncryptedDataTest extends TestCase
             'MyID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
-            'SomeEncoding',
+            'urn:x-simplesamlphp:encoding',
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#aes128-cbc'),
             new KeyInfo(
                 [
@@ -161,7 +161,7 @@ final class EncryptedDataTest extends TestCase
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#Element', $encryptedData->getType());
         $this->assertEquals('text/plain', $encryptedData->getMimeType());
         $this->assertEquals('MyID', $encryptedData->getID());
-        $this->assertEquals('SomeEncoding', $encryptedData->getEncoding());
+        $this->assertEquals('urn:x-simplesamlphp:encoding', $encryptedData->getEncoding());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

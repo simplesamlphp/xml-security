@@ -78,7 +78,7 @@ final class EncryptedKeyTest extends TestCase
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
-            'someEncoding',
+            'urn:x-simplesamlphp:encoding',
             'some_ENTITY_ID',
             new CarriedKeyName('Name of the key'),
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
@@ -118,7 +118,7 @@ final class EncryptedKeyTest extends TestCase
             'Encrypted_KEY_ID',
             'http://www.w3.org/2001/04/xmlenc#Element',
             'text/plain',
-            'someEncoding',
+            'urn:x-simplesamlphp:encoding',
             'some_ENTITY_ID',
             new CarriedKeyName('Name of the key'),
             new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
@@ -197,7 +197,7 @@ final class EncryptedKeyTest extends TestCase
         $this->assertEquals('#Encrypted_DATA_ID', $dataRefs[0]->getURI());
 
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#Element', $encryptedKey->getType());
-        $this->assertEquals('someEncoding', $encryptedKey->getEncoding());
+        $this->assertEquals('urn:x-simplesamlphp:encoding', $encryptedKey->getEncoding());
         $this->assertEquals('text/plain', $encryptedKey->getMimeType());
         $this->assertEquals('Encrypted_KEY_ID', $encryptedKey->getID());
         $this->assertEquals('some_ENTITY_ID', $encryptedKey->getRecipient());

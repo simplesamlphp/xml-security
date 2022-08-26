@@ -1,4 +1,4 @@
-<xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="MyID" Type="http://www.w3.org/2001/04/xmlenc#Element" MimeType="text/plain" Encoding="SomeEncoding">
+<xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="MyID" Type="http://www.w3.org/2001/04/xmlenc#Element" MimeType="text/plain" Encoding="urn:x-simplesamlphp:encoding">
   <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
   <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
     <xenc:EncryptedKey>
