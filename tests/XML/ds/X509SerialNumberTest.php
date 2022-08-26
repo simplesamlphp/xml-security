@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
@@ -59,8 +59,7 @@ final class X509SerialNumberTest extends TestCase
     {
         $serialNumber = X509SerialNumber::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('xs:integer', $serialNumber->toXML()->getAttributeNS(C::NS_XSI, "type"));
-        $this->assertEquals(123456, $serialNumber->getContent());
+        $this->assertEquals('123456', $serialNumber->getContent());
     }
 
 
@@ -69,9 +68,9 @@ final class X509SerialNumberTest extends TestCase
     public function testUnmarshallingIncorrectTypeThrowsException(): void
     {
         $document = $this->xmlRepresentation;
-        $document->documentElement->setAttributeNS(C::NS_XSI, 'xsi:type', 'xs:string');
+        $document->documentElement->textContent = 'Not an integer';
 
-        $this->expectException(AssertionFailedException::class);
+        $this->expectException(SchemaViolationException::class);
         X509SerialNumber::fromXML($this->xmlRepresentation->documentElement);
     }
 }

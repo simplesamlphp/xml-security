@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -27,6 +28,7 @@ use function strval;
  */
 final class CipherReferenceTest extends TestCase
 {
+    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\Transforms $transforms */
@@ -38,6 +40,8 @@ final class CipherReferenceTest extends TestCase
     public function setup(): void
     {
         $this->testedClass = CipherReference::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml',

@@ -23,7 +23,6 @@ class XPathTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-
     /**
      */
     public function setUp(): void

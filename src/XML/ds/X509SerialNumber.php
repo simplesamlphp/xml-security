@@ -8,6 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\XMLStringElementTrait;
 
 /**
@@ -30,6 +31,19 @@ final class X509SerialNumber extends AbstractDsElement
 
 
     /**
+     * Validate the content of the element.
+     *
+     * @param string $content  The value to go in the XML textContent
+     * @throws \Exception on failure
+     * @return void
+     */
+    protected function validateContent(/** @scrutinizer ignore-unused */ string $content): void
+    {
+        Assert::integerish($content, SchemaViolationException::class);
+    }
+
+
+    /**
      * Convert XML into a X509SerialNumber
      *
      * @param \DOMElement $xml The XML element we should load
@@ -42,7 +56,6 @@ final class X509SerialNumber extends AbstractDsElement
     {
         Assert::same($xml->localName, 'X509SerialNumber', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509SerialNumber::NS, InvalidDOMElementException::class);
-        Assert::same($xml->getAttributeNS(C::NS_XSI, "type"), 'xs:integer');
 
         return new self($xml->textContent);
     }
@@ -57,8 +70,7 @@ final class X509SerialNumber extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->content;
-        $e->setAttributeNS(C::NS_XSI, 'xsi:type', 'xs:integer');
+        $e->textContent = $this->getContent();
 
         return $e;
     }

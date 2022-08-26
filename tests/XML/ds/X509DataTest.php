@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -15,7 +16,9 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
-use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -37,6 +40,7 @@ use function strval;
  */
 final class X509DataTest extends TestCase
 {
+    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /** @var string */
@@ -48,15 +52,14 @@ final class X509DataTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
     private Key\X509Certificate $key;
 
-    /** @var string */
-    private string $digest;
-
 
     /**
      */
     public function setUp(): void
     {
         $this->testedClass = X509Data::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml',
@@ -65,8 +68,6 @@ final class X509DataTest extends TestCase
         $this->key = new Key\X509Certificate(
             PEMCertificatesMock::getPlainPublicKey(),
         );
-
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
 
         $this->certificate = str_replace(
             [
@@ -101,12 +102,15 @@ final class X509DataTest extends TestCase
         $x509data = new X509Data(
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString('<ds:X509UnknownTag xmlns:ds="' . C::NS_XDSIG . '">somevalue</ds:X509UnknownTag>')->documentElement,
+                    DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement,
                 ),
                 new X509Certificate($this->certificate),
-                new X509Digest($this->digest, C::DIGEST_SHA256),
+                new X509IssuerSerial(
+                    new X509IssuerName('C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=noreply@simplesamlphp.org'),
+                    new X509SerialNumber('2'),
+                ),
                 new X509SubjectName($this->certData['name']),
-                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement)
+                new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>')->documentElement)
             ],
         );
 
@@ -126,7 +130,7 @@ final class X509DataTest extends TestCase
         $data = $x509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509Digest::class, $data[2]);
+        $this->assertInstanceOf(X509IssuerSerial::class, $data[2]);
         $this->assertInstanceOf(X509SubjectName::class, $data[3]);
         $this->assertInstanceOf(Chunk::class, $data[4]);
     }

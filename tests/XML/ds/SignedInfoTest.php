@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -26,14 +27,16 @@ use function strval;
  */
 final class SignedInfoTest extends TestCase
 {
+    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
-
 
     /**
      */
     public function setUp(): void
     {
         $this->testedClass = SignedInfo::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignedInfo.xml',
@@ -55,7 +58,7 @@ final class SignedInfoTest extends TestCase
                     )->documentElement,
                 ),
             ],
-            'abc123',
+            'cba321',
         );
 
         $this->assertEquals(
@@ -70,7 +73,7 @@ final class SignedInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $signedInfo = SignedInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('abc123', $signedInfo->getId());
+        $this->assertEquals('cba321', $signedInfo->getId());
 
         $this->assertEquals(
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,

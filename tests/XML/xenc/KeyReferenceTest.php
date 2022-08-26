@@ -29,7 +29,6 @@ final class KeyReferenceTest extends TestCase
 {
     use SerializableXMLTestTrait;
 
-
     /**
      */
     public function setup(): void
