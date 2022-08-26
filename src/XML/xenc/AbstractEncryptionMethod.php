@@ -208,7 +208,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
                     continue;
                 }
 
-                if ($node->localName === 'OAEPParams') {
+                if ($node->localName === 'OAEPparams') {
                     Assert::null(
                         $oaepParams,
                         $node->tagName . ' cannot be set more than once.',
@@ -244,7 +244,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         }
 
         if ($this->oaepParams !== null) {
-            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPParams', $this->oaepParams);
+            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPparams', $this->oaepParams);
             $e->appendChild($oaepParams);
         }
 

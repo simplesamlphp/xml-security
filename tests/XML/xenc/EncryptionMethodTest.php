@@ -104,7 +104,7 @@ final class EncryptionMethodTest extends TestCase
         $emElements = XPath::xpQuery($emElement, './xenc:KeySize/following-sibling::*', $xpCache);
 
         $this->assertCount(2, $emElements);
-        $this->assertEquals('xenc:OAEPParams', $emElements[0]->tagName);
+        $this->assertEquals('xenc:OAEPparams', $emElements[0]->tagName);
         $this->assertEquals('other:Element', $emElements[1]->tagName);
     }
 
