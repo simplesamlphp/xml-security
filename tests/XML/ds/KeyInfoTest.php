@@ -101,7 +101,7 @@ final class KeyInfoTest extends TestCase
                 )->documentElement),
                 new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
             ],
-            'abc123',
+            'fed654',
         );
 
         $this->assertEquals(
@@ -127,7 +127,7 @@ final class KeyInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $keyInfo = KeyInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('abc123', $keyInfo->getId());
+        $this->assertEquals('fed654', $keyInfo->getId());
 
         $info = $keyInfo->getInfo();
         $this->assertCount(4, $info);
@@ -135,7 +135,7 @@ final class KeyInfoTest extends TestCase
         $this->assertInstanceOf(X509Data::class, $info[1]);
         $this->assertInstanceOf(Chunk::class, $info[2]);
         $this->assertInstanceOf(Chunk::class, $info[3]);
-        $this->assertEquals('abc123', $keyInfo->getId());
+        $this->assertEquals('fed654', $keyInfo->getId());
     }
 
 

@@ -58,7 +58,7 @@ final class SignedInfoTest extends TestCase
                     )->documentElement,
                 ),
             ],
-            'abc123',
+            'cba321',
         );
 
         $this->assertEquals(
@@ -73,7 +73,7 @@ final class SignedInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $signedInfo = SignedInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('abc123', $signedInfo->getId());
+        $this->assertEquals('cba321', $signedInfo->getId());
 
         $this->assertEquals(
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,

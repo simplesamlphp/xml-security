@@ -155,6 +155,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
      */
     private function setId(?string $Id): void
     {
+        Assert::nullOrValidNCName($Id);
         $this->Id = $Id;
     }
 
