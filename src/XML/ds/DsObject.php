@@ -88,6 +88,7 @@ final class DsObject extends AbstractDsElement
      */
     private function setId(?string $Id): void
     {
+        Assert::nullOrValidNCName($Id);
         $this->Id = $Id;
     }
 
