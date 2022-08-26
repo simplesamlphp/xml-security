@@ -85,6 +85,7 @@ final class SignatureProperty extends AbstractDsElement
      */
     private function setId(?string $Id): void
     {
+        Assert::nullOrValidNCName($Id);
         $this->Id = $Id;
     }
 
