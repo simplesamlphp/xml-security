@@ -39,7 +39,7 @@ final class X509SerialNumber extends AbstractDsElement
      */
     protected function validateContent(/** @scrutinizer ignore-unused */ string $content): void
     {
-        Assert::numeric($content, SchemaViolationException::class);
+        Assert::integerish($content, SchemaViolationException::class);
     }
 
 
