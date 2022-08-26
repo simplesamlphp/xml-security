@@ -16,7 +16,9 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
-use SimpleSAML\XMLSecurity\XML\ds\X509Digest;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XMLSecurityDSig;
@@ -50,9 +52,6 @@ final class X509DataTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
     private Key\X509Certificate $key;
 
-    /** @var string */
-    private string $digest;
-
 
     /**
      */
@@ -69,8 +68,6 @@ final class X509DataTest extends TestCase
         $this->key = new Key\X509Certificate(
             PEMCertificatesMock::getPlainPublicKey(),
         );
-
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
 
         $this->certificate = str_replace(
             [
@@ -108,7 +105,10 @@ final class X509DataTest extends TestCase
                     DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement,
                 ),
                 new X509Certificate($this->certificate),
-                new X509Digest($this->digest, C::DIGEST_SHA256),
+                new X509IssuerSerial(
+                    new X509IssuerName('C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=noreply@simplesamlphp.org'),
+                    new X509SerialNumber('2'),
+                ),
                 new X509SubjectName($this->certData['name']),
                 new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>')->documentElement)
             ],
@@ -130,7 +130,7 @@ final class X509DataTest extends TestCase
         $data = $x509data->getData();
         $this->assertInstanceOf(Chunk::class, $data[0]);
         $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509Digest::class, $data[2]);
+        $this->assertInstanceOf(X509IssuerSerial::class, $data[2]);
         $this->assertInstanceOf(X509SubjectName::class, $data[3]);
         $this->assertInstanceOf(Chunk::class, $data[4]);
     }
