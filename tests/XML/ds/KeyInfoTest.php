@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableXMLTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Chunk;
@@ -34,6 +35,7 @@ use function strval;
  */
 final class KeyInfoTest extends TestCase
 {
+    use SchemaValidationTestTrait;
     use SerializableXMLTestTrait;
 
     /** @var string */
@@ -48,6 +50,8 @@ final class KeyInfoTest extends TestCase
     public function setUp(): void
     {
         $this->testedClass = KeyInfo::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfo.xml',
@@ -92,12 +96,9 @@ final class KeyInfoTest extends TestCase
                         new X509SubjectName($this->certData['name']),
                     ],
                 ),
-                new Chunk(DOMDocumentFactory::fromString(
-                    '<ds:KeySomething xmlns:ds="' . C::NS_XDSIG . '">Some unknown tag within the ds-namespace</ds:KeySomething>',
-                )->documentElement),
-                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
+                new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement),
             ],
-            'abc123',
+            'fed654',
         );
 
         $this->assertEquals(
@@ -123,15 +124,14 @@ final class KeyInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $keyInfo = KeyInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('abc123', $keyInfo->getId());
+        $this->assertEquals('fed654', $keyInfo->getId());
 
         $info = $keyInfo->getInfo();
-        $this->assertCount(4, $info);
+        $this->assertCount(3, $info);
         $this->assertInstanceOf(KeyName::class, $info[0]);
         $this->assertInstanceOf(X509Data::class, $info[1]);
         $this->assertInstanceOf(Chunk::class, $info[2]);
-        $this->assertInstanceOf(Chunk::class, $info[3]);
-        $this->assertEquals('abc123', $keyInfo->getId());
+        $this->assertEquals('fed654', $keyInfo->getId());
     }
 
 

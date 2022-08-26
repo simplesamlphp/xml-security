@@ -73,9 +73,10 @@ final class KeyInfo extends AbstractDsElement
      *
      * @param string|null $id
      */
-    private function setId(string $id = null): void
+    private function setId(string $Id = null): void
     {
-        $this->Id = $id;
+        Assert::nullOrValidNCName($Id);
+        $this->Id = $Id;
     }
 
 
