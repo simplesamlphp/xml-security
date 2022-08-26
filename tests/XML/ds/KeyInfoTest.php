@@ -96,10 +96,7 @@ final class KeyInfoTest extends TestCase
                         new X509SubjectName($this->certData['name']),
                     ],
                 ),
-                new Chunk(DOMDocumentFactory::fromString(
-                    '<ds:KeySomething xmlns:ds="' . C::NS_XDSIG . '">Some unknown tag within the ds-namespace</ds:KeySomething>',
-                )->documentElement),
-                new Chunk(DOMDocumentFactory::fromString('<some>Chunk</some>')->documentElement),
+                new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement),
             ],
             'fed654',
         );
@@ -130,11 +127,10 @@ final class KeyInfoTest extends TestCase
         $this->assertEquals('fed654', $keyInfo->getId());
 
         $info = $keyInfo->getInfo();
-        $this->assertCount(4, $info);
+        $this->assertCount(3, $info);
         $this->assertInstanceOf(KeyName::class, $info[0]);
         $this->assertInstanceOf(X509Data::class, $info[1]);
         $this->assertInstanceOf(Chunk::class, $info[2]);
-        $this->assertInstanceOf(Chunk::class, $info[3]);
         $this->assertEquals('fed654', $keyInfo->getId());
     }
 
