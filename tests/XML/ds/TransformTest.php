@@ -60,7 +60,7 @@ final class TransformTest extends TestCase
         $transform = new Transform(
             C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             null,
-            new InclusiveNamespaces(["dsig", "soap", "#default"]),
+            new InclusiveNamespaces(["dsig", "soap"]),
         );
 
 

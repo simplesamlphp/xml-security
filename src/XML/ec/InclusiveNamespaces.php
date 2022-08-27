@@ -56,6 +56,7 @@ class InclusiveNamespaces extends AbstractEcElement
             'Can only add string InclusiveNamespaces prefixes.',
             InvalidArgumentException::class
         );
+        Assert::allRegex($prefixes, '/^[a-z0-9._\\-:]*$/i', SchemaViolationException::class); // xsd:NMTOKEN
 
         $this->prefixes = $prefixes;
     }
