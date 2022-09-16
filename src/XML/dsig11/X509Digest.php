@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\ds;
+namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
@@ -13,11 +13,11 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XML\Base64StringElementTrait;
 
 /**
- * Class representing a ds:X509Digest element.
+ * Class representing a dsig11:X509Digest element.
  *
  * @package simplesaml/xml-security
  */
-final class X509Digest extends AbstractDsElement
+final class X509Digest extends AbstractDsig11Element
 {
     use Base64StringElementTrait;
 
