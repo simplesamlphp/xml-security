@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\ds;
+namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
@@ -12,11 +12,11 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
- * Class representing a ds:KeyInfoReference element.
+ * Class representing a dsig11:KeyInfoReference element.
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfoReference extends AbstractDsElement
+final class KeyInfoReference extends AbstractDsig11Element
 {
     /** @var string $URI */
     protected string $URI;
@@ -88,12 +88,12 @@ final class KeyInfoReference extends AbstractDsElement
      * Convert XML into a KeyInfoReference
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'KeyInfoReference', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyInfoReference::NS, InvalidDOMElementException::class);
@@ -102,7 +102,7 @@ final class KeyInfoReference extends AbstractDsElement
         $URI = KeyInfoReference::getAttribute($xml, 'URI');
         $Id = KeyInfoReference::getAttribute($xml, 'Id', null);
 
-        return new self($URI, $Id);
+        return new static($URI, $Id);
     }
 
 

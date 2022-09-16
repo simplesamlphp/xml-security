@@ -2,29 +2,31 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Test\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\KeyInfoReference;
+use SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference;
 
 use function dirname;
 use function strval;
 
 /**
- * Class \SimpleSAML\XMLSecurity\Test\XML\ds\KeyInfoReferenceTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\dsig11\KeyInfoReferenceTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\KeyInfoReference
+ * @covers \SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element
+ * @covers \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference
  *
  * @package simplesamlphp/xml-security
  */
 final class KeyInfoReferenceTest extends TestCase
 {
-    use SerializableXMLTestTrait;
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
 
     /**
      */
@@ -32,8 +34,10 @@ final class KeyInfoReferenceTest extends TestCase
     {
         $this->testedClass = KeyInfoReference::class;
 
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig11-schema.xsd';
+
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyInfoReference.xml',
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/dsig11_KeyInfoReference.xml',
         );
     }
 
