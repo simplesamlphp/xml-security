@@ -80,12 +80,12 @@ final class Manifest extends AbstractDsElement
      * Convert XML into a Manifest element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Manifest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Manifest::NS, InvalidDOMElementException::class);
@@ -101,7 +101,7 @@ final class Manifest extends AbstractDsElement
             MissingElementException::class,
         );
 
-        return new self(
+        return new static(
             $references,
             $Id,
         );
