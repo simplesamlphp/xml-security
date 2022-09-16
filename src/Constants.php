@@ -138,6 +138,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const NS_XDSIG = 'http://www.w3.org/2000/09/xmldsig#';
     public const NS_XDSIG11 = 'http://www.w3.org/2009/xmldsig11#';
     public const XMLDSIG_ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
+    public const XMLDSIG_MANIFEST = 'http://www.w3.org/2000/09/xmldsig#Manifest';
 
     public const NS_XENC = 'http://www.w3.org/2001/04/xmlenc#';
     public const XMLENC_CONTENT = 'http://www.w3.org/2001/04/xmlenc#Content';
