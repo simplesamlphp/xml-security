@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function explode;

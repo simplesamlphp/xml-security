@@ -12,7 +12,7 @@ use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -40,9 +40,9 @@ final class KeyValue extends AbstractDsElement
      * Initialize an KeyValue.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|null $RSAKeyValue
-     * @param \SimpleSAML\XML\XMLElementInterface|null $element
+     * @param \SimpleSAML\XML\ElementInterface|null $element
      */
-    public function __construct(?RSAKeyValue $RSAKeyValue, ?XMLElementInterface $element = null)
+    final public function __construct(?RSAKeyValue $RSAKeyValue, ?ElementInterface $element = null)
     {
         Assert::false(
             is_null($RSAKeyValue) && is_null($element),
@@ -84,12 +84,12 @@ final class KeyValue extends AbstractDsElement
      * Convert XML into a KeyValue
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'KeyValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyValue::NS, InvalidDOMElementException::class);
@@ -117,7 +117,7 @@ final class KeyValue extends AbstractDsElement
             TooManyElementsException::class
         );
 
-        return new self(array_pop($RSAKeyValue), array_pop($elements));
+        return new static(array_pop($RSAKeyValue), array_pop($elements));
     }
 
 

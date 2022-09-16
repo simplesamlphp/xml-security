@@ -31,7 +31,7 @@ final class RSAKeyValue extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\Modulus $modulus
      * @param \SimpleSAML\XMLSecurity\XML\ds\Exponent $exponent
      */
-    public function __construct(Modulus $modulus, Exponent $exponent)
+    final public function __construct(Modulus $modulus, Exponent $exponent)
     {
         $this->setModulus($modulus);
         $this->setExponent($exponent);
@@ -86,12 +86,12 @@ final class RSAKeyValue extends AbstractDsElement
      * Convert XML into a RSAKeyValue
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'RSAKeyValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, RSAKeyValue::NS, InvalidDOMElementException::class);
@@ -124,7 +124,7 @@ final class RSAKeyValue extends AbstractDsElement
             TooManyElementsException::class
         );
 
-        return new self(array_pop($modulus), array_pop($exponent));
+        return new static(array_pop($modulus), array_pop($exponent));
     }
 
 
