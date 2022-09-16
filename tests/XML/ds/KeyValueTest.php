@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -28,8 +29,12 @@ use function strval;
  */
 final class KeyValueTest extends TestCase
 {
+    use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
+
+    /** @var \DOMDocument $empty */
+    protected DOMDocument $empty;
 
     /** @var \DOMDocument $rsaKeyValue */
     protected DOMDocument $rsaKeyValue;
@@ -43,6 +48,10 @@ final class KeyValueTest extends TestCase
     protected function setUp(): void
     {
         $this->testedClass = KeyValue::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
+
+        $this->empty = DOMDocumentFactory::fromString('<ds:KeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>');
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_KeyValue.xml',
@@ -71,7 +80,7 @@ final class KeyValueTest extends TestCase
         $this->assertEquals($rsaKeyValue->getModulus()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==');
         $this->assertEquals($rsaKeyValue->getExponent()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
 
-        $document = $this->xmlRepresentation;
+        $document = $this->empty;
         $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
@@ -92,7 +101,7 @@ final class KeyValueTest extends TestCase
         $this->assertInstanceOf(Chunk::class, $element);
         $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
-        $document = $this->xmlRepresentation;
+        $document = $this->empty;
         $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
@@ -114,7 +123,7 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingWithRSAKey(): void
     {
-        $document = $this->xmlRepresentation;
+        $document = $this->empty;
         $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
 
         $keyValue = KeyValue::fromXML($document->documentElement);
@@ -132,7 +141,7 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingWithOtherElement(): void
     {
-        $document = $this->xmlRepresentation;
+        $document = $this->empty;
         $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
 
         $keyValue = KeyValue::fromXML($document->documentElement);
@@ -151,26 +160,11 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingEmpty(): void
     {
-        $document = $this->xmlRepresentation;
+        $document = $this->empty;
 
         $this->expectException(SchemaViolationException::class);
         $this->expectExceptionMessage('A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other');
 
         KeyValue::fromXML($document->documentElement);
-    }
-
-
-    /**
-     * Test serialization / unserialization
-     */
-    public function testSerialization(): void
-    {
-        $document = $this->xmlRepresentation;
-        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
-
-        $this->assertXmlStringEqualsXmlString(
-            $this->xmlRepresentation->saveXML($document->documentElement),
-            strval(unserialize(serialize(KeyValue::fromXML($document->documentElement))))
-        );
     }
 }
