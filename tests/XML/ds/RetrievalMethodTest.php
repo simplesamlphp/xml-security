@@ -6,7 +6,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMElement;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod;
@@ -28,7 +29,8 @@ use function strval;
  */
 final class RetrievalMethodTest extends TestCase
 {
-    use SerializableXMLTestTrait;
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
 
 
     /**
@@ -36,6 +38,8 @@ final class RetrievalMethodTest extends TestCase
     public function setUp(): void
     {
         $this->testedClass = RetrievalMethod::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_RetrievalMethod.xml',

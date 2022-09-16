@@ -33,7 +33,7 @@ final class RetrievalMethod extends AbstractDsElement
      * @param string $URI
      * @param string|null $Type
      */
-    public function __construct(
+    final public function __construct(
         ?Transforms $transforms,
         string $URI,
         ?string $Type = null
@@ -106,12 +106,12 @@ final class RetrievalMethod extends AbstractDsElement
      * Convert XML into a RetrievalMethod element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'RetrievalMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, RetrievalMethod::NS, InvalidDOMElementException::class);
@@ -129,7 +129,7 @@ final class RetrievalMethod extends AbstractDsElement
             TooManyElementsException::class,
         );
 
-        return new self(
+        return new static(
             array_pop($transforms),
             $URI,
             $Type
