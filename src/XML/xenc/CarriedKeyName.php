@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use SimpleSAML\XML\XMLStringElementTrait;
+use SimpleSAML\XML\StringElementTrait;
 
 /**
  * Class representing a xenc:CarriedKeyName element.
@@ -13,7 +13,7 @@ use SimpleSAML\XML\XMLStringElementTrait;
  */
 final class CarriedKeyName extends AbstractXencElement
 {
-    use XMLStringElementTrait;
+    use StringElementTrait;
 
 
     /**

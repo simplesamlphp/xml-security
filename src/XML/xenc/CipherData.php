@@ -96,7 +96,7 @@ class CipherData extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'CipherData', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CipherData::NS, InvalidDOMElementException::class);
@@ -117,7 +117,7 @@ class CipherData extends AbstractXencElement
             TooManyElementsException::class
         );
 
-        return new self(
+        return new static(
             empty($cv) ? null : array_pop($cv),
             empty($cr) ? null : array_pop($cr),
         );

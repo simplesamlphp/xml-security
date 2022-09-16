@@ -176,12 +176,12 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
      * Convert XML into a SignedInfo instance
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'SignedInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignedInfo::NS, InvalidDOMElementException::class);
@@ -224,7 +224,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
             MissingElementException::class,
         );
 
-        $signedInfo = new self(array_pop($canonicalizationMethod), array_pop($signatureMethod), $references, $Id);
+        $signedInfo = new static(array_pop($canonicalizationMethod), array_pop($signatureMethod), $references, $Id);
         $signedInfo->xml = $xml;
         return $signedInfo;
     }

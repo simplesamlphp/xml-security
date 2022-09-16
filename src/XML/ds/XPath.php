@@ -99,12 +99,12 @@ class XPath extends AbstractDsElement
      * Convert XML into a class instance
      *
      * @param DOMElement $xml
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'XPath', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, self::NS, InvalidDOMElementException::class);
@@ -118,7 +118,7 @@ class XPath extends AbstractDsElement
             }
         }
 
-        return new self($xml->textContent, $namespaces);
+        return new static($xml->textContent, $namespaces);
     }
 
 

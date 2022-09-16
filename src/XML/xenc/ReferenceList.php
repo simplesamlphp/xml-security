@@ -105,7 +105,7 @@ class ReferenceList extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'ReferenceList', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, ReferenceList::NS, InvalidDOMElementException::class);
@@ -113,7 +113,7 @@ class ReferenceList extends AbstractXencElement
         $dataReferences = DataReference::getChildrenOfClass($xml);
         $keyReferences = KeyReference::getChildrenOfClass($xml);
 
-        return new self($dataReferences, $keyReferences);
+        return new static($dataReferences, $keyReferences);
     }
 
 

@@ -96,12 +96,12 @@ final class X509IssuerSerial extends AbstractDsElement
      * Convert XML into a X509IssuerSerial
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'X509IssuerSerial', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509IssuerSerial::NS, InvalidDOMElementException::class);
@@ -115,7 +115,7 @@ final class X509IssuerSerial extends AbstractDsElement
         Assert::minCount($serial, 1, MissingElementException::class);
         Assert::maxCount($serial, 1, TooManyElementsException::class);
 
-        return new self(
+        return new static(
             array_pop($issuer),
             array_pop($serial),
         );

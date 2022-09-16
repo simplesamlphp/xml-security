@@ -65,19 +65,19 @@ final class Transforms extends AbstractDsElement
      * Convert XML into a Transforms element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Transforms', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Transforms::NS, InvalidDOMElementException::class);
 
         $transform = Transform::getChildrenOfClass($xml);
 
-        return new self($transform);
+        return new static($transform);
     }
 
 

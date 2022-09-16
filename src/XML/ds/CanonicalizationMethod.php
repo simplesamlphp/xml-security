@@ -76,12 +76,12 @@ final class CanonicalizationMethod extends AbstractDsElement
      * Convert XML into a CanonicalizationMethod
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'CanonicalizationMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CanonicalizationMethod::NS, InvalidDOMElementException::class);
@@ -89,7 +89,7 @@ final class CanonicalizationMethod extends AbstractDsElement
         /** @psalm-var string $Algorithm */
         $Algorithm = CanonicalizationMethod::getAttribute($xml, 'Algorithm');
 
-        return new self($Algorithm);
+        return new static($Algorithm);
     }
 
 

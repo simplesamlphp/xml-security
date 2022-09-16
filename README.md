@@ -95,9 +95,9 @@ namespace prefix:
 ```php
 namespace MyNamespace;
 
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 
-abstract class AbstractMyNSElement extends AbstractXMLElement
+abstract class AbstractMyNSElement extends AbstractElement
 {
     public const NS = 'my:namespace';
     
@@ -370,13 +370,13 @@ the `decrypt()` method, and a couple of getters required by the trait:
 
 ```php
 
-use SimpleSAML\XML\AbstractXMLElement;
-use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XML\AbstractElement;
+use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
 
-class MyEncryptedObject extends AbstractXMLElement
+class MyEncryptedObject extends AbstractElement
   implements EncryptedElementInterface
 {
     use EncryptedElementTrait;
@@ -403,7 +403,7 @@ class MyEncryptedObject extends AbstractXMLElement
 ```
 
 Note that the value returned by `decrypt()` here is your own `MyObject` class.
-This means `MyObject` needs to extend `SimpleSAML\XML\XMLElementInterface`, but
+This means `MyObject` needs to extend `SimpleSAML\XML\ElementInterface`, but
 it is also one of the reasons why the implementation of `decrypt()` is left to
 the application.
 
@@ -423,7 +423,7 @@ implementation of `decrypt()` will be suitable for most use cases:
 ```
 
 So what did just happen here? `MyObject` is supposed to implement
-`XMLElementInterface`, right? That means it must implement a `fromXML()` static
+`ElementInterface`, right? That means it must implement a `fromXML()` static
 method that creates a new instance of the class based on what's passed to it as
 a `DOMElement` object. The `DOMElement` itself was created with help from the
 `DOMDocumentFactory` class, which in turn took the `string` result of calling
@@ -452,11 +452,11 @@ in the trait by renaming the latter:
 
 ```php
 
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 
-class MyEncryptedObject extends AbstractXMLElement
+class MyEncryptedObject extends AbstractElement
   implements EncryptedElementInterface
 {
     use EncryptedElementTrait {
@@ -582,11 +582,11 @@ encrypt them in the first place. Doing so is as simple as implementing the
 `SimpleSAML\XMLSecurity\XML\EncryptableElementInterface`:
 
 ```php
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
 use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
 
-class MyObject extends AbstractXMLElement
+class MyObject extends AbstractElement
   implements EncryptableElementInterface
 {
     use EncryptableElementTrait;

@@ -218,7 +218,7 @@ class EncryptedKey extends AbstractEncryptedType
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'EncryptedKey', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, EncryptedKey::NS, InvalidDOMElementException::class);
@@ -263,7 +263,7 @@ class EncryptedKey extends AbstractEncryptedType
             TooManyElementsException::class,
         );
 
-        return new self(
+        return new static(
             $cipherData[0],
             self::getAttribute($xml, 'Id', null),
             self::getAttribute($xml, 'Type', null),

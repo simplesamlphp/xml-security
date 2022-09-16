@@ -155,9 +155,9 @@ class Transform extends AbstractDsElement
      * Convert XML into a Transform element.
      *
      * @param \DOMElement $xml The XML element we should load.
-     * @return self
+     * @return static
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
@@ -176,7 +176,7 @@ class Transform extends AbstractDsElement
             TooManyElementsException::class,
         );
 
-        return new self($alg, array_pop($xpath), array_pop($prefixes));
+        return new static($alg, array_pop($xpath), array_pop($prefixes));
     }
 
 

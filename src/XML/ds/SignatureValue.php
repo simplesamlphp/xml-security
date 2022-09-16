@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\XMLBase64ElementTrait;
+use SimpleSAML\XML\Base64StringElementTrait;
 
 /**
  * Class representing a ds:SignatureValue element.
@@ -16,7 +16,7 @@ use SimpleSAML\XML\XMLBase64ElementTrait;
  */
 final class SignatureValue extends AbstractDsElement
 {
-    use XMLBase64ElementTrait;
+    use Base64StringElementTrait;
 
     /** @var string|null */
     protected ?string $Id;
@@ -60,19 +60,19 @@ final class SignatureValue extends AbstractDsElement
      * Convert XML into a SignatureValue element
      *
      * @param \DOMElement $xml
-     * @return \SimpleSAML\XML\AbstractXMLElement
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'SignatureValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureValue::NS, InvalidDOMElementException::class);
 
         $Id = self::getAttribute($xml, 'Id', null);
 
-        return new self($xml->textContent, $Id);
+        return new static($xml->textContent, $Id);
     }
 
 

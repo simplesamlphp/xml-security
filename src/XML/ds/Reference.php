@@ -191,12 +191,12 @@ final class Reference extends AbstractDsElement
      * Convert XML into a Reference element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Reference', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Reference::NS, InvalidDOMElementException::class);
@@ -229,7 +229,7 @@ final class Reference extends AbstractDsElement
             MissingElementException::class,
         );
 
-        return new self(
+        return new static(
             array_pop($digestMethod),
             array_pop($digestValue),
             empty($transforms) ? null : array_pop($transforms),

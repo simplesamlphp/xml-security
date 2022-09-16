@@ -182,7 +182,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\TooManyElementsException
      *   if too many child-elements of a type are specified
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);

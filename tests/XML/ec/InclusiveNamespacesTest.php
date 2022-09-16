@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ec;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
@@ -24,7 +24,7 @@ use function strval;
 class InclusiveNamespacesTest extends TestCase
 {
     use SchemaValidationTestTrait;
-    use SerializableXMLTestTrait;
+    use SerializableElementTestTrait;
 
     /**
      */

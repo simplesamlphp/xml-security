@@ -85,12 +85,12 @@ final class X509Data extends AbstractDsElement
      * Convert XML into a X509Data
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'X509Data', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Data::NS, InvalidDOMElementException::class);
@@ -113,7 +113,7 @@ final class X509Data extends AbstractDsElement
             };
         }
 
-        return new self($data);
+        return new static($data);
     }
 
 
