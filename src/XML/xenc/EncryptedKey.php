@@ -47,7 +47,7 @@ class EncryptedKey extends AbstractEncryptedType
      * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
      *   The ReferenceList object of this EncryptedData. Optional.
      */
-    public function __construct(
+    final public function __construct(
         CipherData $cipherData,
         ?string $id = null,
         ?string $type = null,

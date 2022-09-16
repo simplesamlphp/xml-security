@@ -32,7 +32,7 @@ class ReferenceList extends AbstractXencElement
      * @param \SimpleSAML\XMLSecurity\XML\xenc\DataReference[] $dataReferences
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] $keyreferences
      */
-    public function __construct(array $dataReferences, array $keyreferences = [])
+    final public function __construct(array $dataReferences, array $keyreferences = [])
     {
         $this->setDataReferences($dataReferences);
         $this->setKeyReferences($keyreferences);

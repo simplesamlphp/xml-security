@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;

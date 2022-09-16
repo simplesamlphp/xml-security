@@ -50,7 +50,7 @@ class Transform extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $xpath
      * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $prefixes
      */
-    public function __construct(
+    final public function __construct(
         string $algorithm,
         ?XPath $xpath = null,
         ?InclusiveNamespaces $inclusiveNamespaces = null,

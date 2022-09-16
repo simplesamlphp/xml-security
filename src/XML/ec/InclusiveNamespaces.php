@@ -27,7 +27,7 @@ class InclusiveNamespaces extends AbstractEcElement
      *
      * @param string[] $prefixes
      */
-    public function __construct(array $prefixes)
+    final public function __construct(array $prefixes)
     {
         $this->setPrefixes($prefixes);
     }

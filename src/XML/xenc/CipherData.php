@@ -32,7 +32,7 @@ class CipherData extends AbstractXencElement
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null $cipherValue
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null $cipherReference
      */
-    public function __construct(?CipherValue $cipherValue, ?CipherReference $cipherReference = null)
+    final public function __construct(?CipherValue $cipherValue, ?CipherReference $cipherReference = null)
     {
         Assert::oneOf(
             null,

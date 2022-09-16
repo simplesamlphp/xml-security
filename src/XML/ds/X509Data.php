@@ -50,7 +50,7 @@ final class X509Data extends AbstractDsElement
      *
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     public function getData(): array

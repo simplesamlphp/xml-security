@@ -40,7 +40,7 @@ class XPath extends AbstractDsElement
      * @param string $expression The XPath expression itself.
      * @param string[] $namespaces A key - value array with namespace definitions.
      */
-    public function __construct(string $expression, array $namespaces = [])
+    final public function __construct(string $expression, array $namespaces = [])
     {
         $this->setExpression($expression);
         $this->setNamespaces($namespaces);
