@@ -35,7 +35,6 @@ class XML
         array $xpaths = null,
         array $prefixes = null,
     ): string {
-        $exclusive = false;
         $withComments = match ($c14nMethod) {
             C::C14N_EXCLUSIVE_WITH_COMMENTS, C::C14N_INCLUSIVE_WITH_COMMENTS => true,
             default => false,

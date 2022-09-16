@@ -53,9 +53,6 @@ class XPath extends XPathUtils
 
         $nodeset = self::getXPath($doc)->query('./' . $name, $ref);
 
-        if ($nodeset->length === 0) {
-            return false;
-        }
-        return $nodeset->item(0);
+        return $nodeset->item(0) ?? false;
     }
 }
