@@ -10,7 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XML\XMLBase64ElementTrait;
+use SimpleSAML\XML\Base64StringElementTrait;
 
 /**
  * Class representing a ds:X509Digest element.
@@ -19,7 +19,7 @@ use SimpleSAML\XML\XMLBase64ElementTrait;
  */
 final class X509Digest extends AbstractDsElement
 {
-    use XMLBase64ElementTrait;
+    use Base64StringElementTrait;
 
     /**
      * The digest algorithm.
@@ -76,12 +76,12 @@ final class X509Digest extends AbstractDsElement
      * Convert XML into a X509Digest
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'X509Digest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Digest::NS, InvalidDOMElementException::class);
@@ -89,7 +89,7 @@ final class X509Digest extends AbstractDsElement
         /** @psalm-var string $algorithm */
         $algorithm = self::getAttribute($xml, 'Algorithm');
 
-        return new self($xml->textContent, $algorithm);
+        return new static($xml->textContent, $algorithm);
     }
 
 

@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
@@ -25,7 +25,7 @@ use function dirname;
 final class CanonicalizationMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;
-    use SerializableXMLTestTrait;
+    use SerializableElementTestTrait;
 
     /**
      */

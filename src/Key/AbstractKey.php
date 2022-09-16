@@ -14,7 +14,7 @@ namespace SimpleSAML\XMLSecurity\Key;
 abstract class AbstractKey
 {
     /** @var mixed */
-    protected $key_material;
+    protected mixed $key_material;
 
 
     /**
@@ -22,7 +22,7 @@ abstract class AbstractKey
      *
      * @param mixed $key The associated key material.
      */
-    public function __construct($key)
+    public function __construct(mixed $key)
     {
         $this->key_material = $key;
     }
@@ -33,7 +33,7 @@ abstract class AbstractKey
      *
      * @return mixed The key material.
      */
-    public function get()
+    public function get(): mixed
     {
         return $this->key_material;
     }

@@ -8,7 +8,7 @@ use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
@@ -27,7 +27,7 @@ use function strval;
 final class DigestValueTest extends TestCase
 {
     use SchemaValidationTestTrait;
-    use SerializableXMLTestTrait;
+    use SerializableElementTestTrait;
 
     /**
      */

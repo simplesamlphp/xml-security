@@ -121,12 +121,12 @@ final class KeyInfo extends AbstractDsElement
      * Convert XML into a KeyInfo
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'KeyInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyInfo::NS, InvalidDOMElementException::class);
@@ -138,36 +138,24 @@ final class KeyInfo extends AbstractDsElement
             if (!($n instanceof DOMElement)) {
                 continue;
             } elseif ($n->namespaceURI === self::NS) {
-                switch ($n->localName) {
-                    case 'KeyName':
-                        $info[] = KeyName::fromXML($n);
-                        break;
-                    case 'X509Data':
-                        $info[] = X509Data::fromXML($n);
-                        break;
-                    default:
-                        $info[] = new Chunk($n);
-                        break;
-                }
+                $info[] = match ($n->localName) {
+                    'KeyName' => KeyName::fromXML($n),
+                    'X509Data' => X509Data::fromXML($n),
+                    default => new Chunk($n),
+                };
             } elseif ($n->namespaceURI === C::NS_XENC) {
-                switch ($n->localName) {
-                    case 'EncryptedData':
-                        $info[] = EncryptedData::fromXML($n);
-                        break;
-                    case 'EncryptedKey':
-                        $info[] = EncryptedKey::fromXML($n);
-                        break;
-                    default:
-                        $info[] = new Chunk($n);
-                        break;
-                }
+                $info[] = match ($n->localName) {
+                    'EncryptedData' => EncryptedData::fromXML($n),
+                    'EncryptedKey' => EncryptedKey::fromXML($n),
+                    default => new Chunk($n),
+                };
             } else {
                 $info[] = new Chunk($n);
                 break;
             }
         }
 
-        return new self($info, $Id);
+        return new static($info, $Id);
     }
 
     /**

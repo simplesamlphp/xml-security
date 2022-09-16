@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\Exception;
 
 use InvalidArgumentException as BuiltinInvalidArgumentException;
 
-use function get_class;
 use function gettype;
 use function is_object;
 use function sprintf;
@@ -26,12 +25,12 @@ class InvalidArgumentException extends BuiltinInvalidArgumentException
      *
      * @return \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
      */
-    public static function invalidType(string $expected, $parameter): self
+    public static function invalidType(string $expected, mixed $parameter): self
     {
         $message = sprintf(
             'Invalid Argument type: "%s" expected, "%s" given',
             $expected,
-            is_object($parameter) ? get_class($parameter) : gettype($parameter),
+            is_object($parameter) ? $parameter::class : gettype($parameter),
         );
 
         return new self($message);

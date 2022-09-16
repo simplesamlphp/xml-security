@@ -280,7 +280,7 @@ trait SignedElementTrait
 
                 try {
                     return $this->verifyInternal($verifier);
-                } catch (RuntimeException $e) {
+                } catch (RuntimeException) {
                     // failed to verify with this certificate, try with other, if any
                 }
             }

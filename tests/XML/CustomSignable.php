@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
@@ -23,7 +23,7 @@ use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
  *
  * @package simplesamlphp/xml-security
  */
-class CustomSignable extends AbstractXMLElement implements
+class CustomSignable extends AbstractElement implements
     SignableElementInterface,
     SignedElementInterface,
     EncryptableElementInterface
@@ -186,12 +186,12 @@ class CustomSignable extends AbstractXMLElement implements
      * Convert XML into a CustomSignable
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -200,7 +200,7 @@ class CustomSignable extends AbstractXMLElement implements
         $signature = Signature::getChildrenOfClass($xml);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 
-        $customSignable = new self($xml, $id);
+        $customSignable = new static($xml, $id);
         if (!empty($signature)) {
             $customSignable->signature = $signature[0];
         }

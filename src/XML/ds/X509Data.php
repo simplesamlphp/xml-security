@@ -50,7 +50,7 @@ final class X509Data extends AbstractDsElement
      *
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509Digest|
+     *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
      */
     public function getData(): array
@@ -85,12 +85,12 @@ final class X509Data extends AbstractDsElement
      * Convert XML into a X509Data
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'X509Data', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Data::NS, InvalidDOMElementException::class);
@@ -105,23 +105,15 @@ final class X509Data extends AbstractDsElement
                 continue;
             }
 
-            switch ($n->localName) {
-                case 'X509Certificate':
-                    $data[] = X509Certificate::fromXML($n);
-                    break;
-                case 'X509IssuerSerial':
-                    $data[] = X509IssuerSerial::fromXML($n);
-                    break;
-                case 'X509SubjectName':
-                    $data[] = X509SubjectName::fromXML($n);
-                    break;
-                default:
-                    $data[] = new Chunk($n);
-                    break;
-            }
+            $data[] = match ($n->localName) {
+                'X509Certificate' => X509Certificate::fromXML($n),
+                'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
+                'X509SubjectName' => X509SubjectName::fromXML($n),
+                default => new Chunk($n),
+            };
         }
 
-        return new self($data);
+        return new static($data);
     }
 
 

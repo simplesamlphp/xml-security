@@ -54,7 +54,7 @@ class X509Certificate extends PublicKey
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct($cert)
+    final public function __construct(mixed $cert)
     {
         $resource = openssl_x509_read($cert);
         if ($resource === false) {
@@ -164,10 +164,10 @@ class X509Certificate extends PublicKey
      *
      * @param string $file The file where the PEM-encoded certificate is stored.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\X509Certificate A new X509Certificate key.
+     * @return static A new X509Certificate key.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
-    public static function fromFile(string $file): X509Certificate
+    public static function fromFile(string $file): static
     {
         return new static(static::readFile($file));
     }

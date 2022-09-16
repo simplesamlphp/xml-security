@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
@@ -29,7 +29,7 @@ use function strval;
  */
 final class X509IssuerSerialTest extends TestCase
 {
-    use SerializableXMLTestTrait;
+    use SerializableElementTestTrait;
 
     /** @var \DOMDocument */
     private DOMDocument $document;

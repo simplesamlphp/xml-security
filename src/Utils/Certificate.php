@@ -54,7 +54,7 @@ class Certificate
      *
      * @return string
      */
-    public static function parseIssuer($issuer): string
+    public static function parseIssuer(array|string $issuer): string
     {
         if (is_array($issuer)) {
             $parts = [];

@@ -47,7 +47,7 @@ class EncryptedKey extends AbstractEncryptedType
      * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
      *   The ReferenceList object of this EncryptedData. Optional.
      */
-    public function __construct(
+    final public function __construct(
         CipherData $cipherData,
         ?string $id = null,
         ?string $type = null,
@@ -57,7 +57,7 @@ class EncryptedKey extends AbstractEncryptedType
         ?CarriedKeyName $carriedKeyName = null,
         ?EncryptionMethod $encryptionMethod = null,
         ?KeyInfo $keyInfo = null,
-        ?ReferenceList $referenceList = null
+        ?ReferenceList $referenceList = null,
     ) {
         parent::__construct($cipherData, $id, $type, $mimeType, $encoding, $encryptionMethod, $keyInfo);
         $this->setRecipient($recipient);
@@ -182,7 +182,7 @@ class EncryptedKey extends AbstractEncryptedType
         ?string $recipient = null,
         ?CarriedKeyName $carriedKeyName = null,
         ?KeyInfo $keyInfo = null,
-        ?ReferenceList $referenceList = null
+        ?ReferenceList $referenceList = null,
     ): EncryptedKey {
         Assert::eq(
             $encryptor->getAlgorithmId(),
@@ -218,7 +218,7 @@ class EncryptedKey extends AbstractEncryptedType
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'EncryptedKey', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, EncryptedKey::NS, InvalidDOMElementException::class);
@@ -263,7 +263,7 @@ class EncryptedKey extends AbstractEncryptedType
             TooManyElementsException::class,
         );
 
-        return new self(
+        return new static(
             $cipherData[0],
             self::getAttribute($xml, 'Id', null),
             self::getAttribute($xml, 'Type', null),

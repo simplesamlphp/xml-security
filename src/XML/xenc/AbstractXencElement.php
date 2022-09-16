@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSecurity\Constants as C;
 
 /**
@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractXencElement extends AbstractXMLElement
+abstract class AbstractXencElement extends AbstractElement
 {
     /** @var string */
     public const NS = C::NS_XENC;

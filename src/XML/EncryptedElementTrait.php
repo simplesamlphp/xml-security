@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
@@ -113,7 +113,7 @@ trait EncryptedElementTrait
      * Decrypt the data in any given element.
      *
      * Use this method to decrypt an EncryptedData XML elemento into a string. If the resulting plaintext represents
-     * an XML document which has a corresponding implementation extending \SimpleSAML\XML\XMLElementInterface, you
+     * an XML document which has a corresponding implementation extending \SimpleSAML\XML\ElementInterface, you
      * can call this method to build an object from the resulting plaintext:
      *
      *     $data = $this->decryptData($decryptor);
@@ -169,16 +169,15 @@ trait EncryptedElementTrait
 
     /**
      * @inheritDoc
-     * @return \SimpleSAML\XMLSecurity\XML\EncryptedElementInterface
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same(
             $xml->localName,
-            AbstractXMLElement::getClassName(static::class),
+            AbstractElement::getClassName(static::class),
             InvalidDOMElementException::class,
         );
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -189,7 +188,7 @@ trait EncryptedElementTrait
             1,
             sprintf(
                 'No more or less than one EncryptedData element allowed in %s.',
-                AbstractXMLElement::getClassName(static::class),
+                AbstractElement::getClassName(static::class),
             ),
             TooManyElementsException::class,
         );
@@ -213,7 +212,7 @@ trait EncryptedElementTrait
     /**
      * Create a document structure for this element.
      *
-     * The AbstractXMLElement class implements this method. If your object inherits from that class, you will already
+     * The AbstractElement class implements this method. If your object inherits from that class, you will already
      * have this method out of the box.
      *
      * @param \DOMElement|null $parent The element we should append to.

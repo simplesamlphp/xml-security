@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
@@ -23,7 +23,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
  *
  * @package simplesamlphp/xml-security
  */
-final class EncryptedCustom extends AbstractXMLElement implements EncryptedElementInterface
+final class EncryptedCustom extends AbstractElement implements EncryptedElementInterface
 {
     /*
      * By using this trait, we get a constructor out of the box that processes the EncryptedData and any possible

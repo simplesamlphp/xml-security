@@ -51,7 +51,7 @@ final class Signature extends AbstractDsElement
         SignatureValue $signatureValue,
         ?KeyInfo $keyInfo,
         array $objects = [],
-        ?string $Id = null
+        ?string $Id = null,
     ) {
         $this->setSignedInfo($signedInfo);
         $this->setSignatureValue($signatureValue);
@@ -175,12 +175,12 @@ final class Signature extends AbstractDsElement
      * Convert XML into a Signature element
      *
      * @param \DOMElement $xml
-     * @return \SimpleSAML\XML\AbstractXMLElement
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Signature', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Signature::NS, InvalidDOMElementException::class);
@@ -234,7 +234,7 @@ final class Signature extends AbstractDsElement
             }
         }
 
-        return new self(
+        return new static(
             array_pop($signedInfo),
             array_pop($signatureValue),
             empty($keyInfo) ? null : array_pop($keyInfo),

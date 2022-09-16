@@ -7,8 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
@@ -22,7 +23,7 @@ abstract class AbstractReference extends AbstractXencElement
     /** @var string */
     protected string $uri;
 
-    /** @var \SimpleSAML\XML\XMLElementInterface[] */
+    /** @var \SimpleSAML\XML\ElementInterface[] */
     protected array $elements;
 
 
@@ -30,7 +31,7 @@ abstract class AbstractReference extends AbstractXencElement
      * AbstractReference constructor.
      *
      * @param string $uri
-     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
+     * @param \SimpleSAML\XML\ElementInterface[] $elements
      */
     final public function __construct(string $uri, array $elements = [])
     {
@@ -63,7 +64,7 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * Collect the embedded elements
      *
-     * @return \SimpleSAML\XML\XMLElementInterface[]
+     * @return \SimpleSAML\XML\ElementInterface[]
      */
     public function getElements(): array
     {
@@ -74,13 +75,13 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * Set the value of the elements-property
      *
-     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
+     * @param \SimpleSAML\XML\ElementInterface[] $elements
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
-     *   if the supplied array contains anything other than XMLElementInterface objects
+     *   if the supplied array contains anything other than ElementInterface objects
      */
     private function setElements(array $elements): void
     {
-        Assert::allIsInstanceOf($elements, XMLElementInterface::class, InvalidArgumentException::class);
+        Assert::allIsInstanceOf($elements, ElementInterface::class, InvalidArgumentException::class);
         $this->elements = $elements;
     }
 
@@ -93,7 +94,7 @@ abstract class AbstractReference extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\MissingAttributeException
      *   if the supplied element is missing one of the mandatory attributes
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, static::getClassName(static::class), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);

@@ -34,9 +34,9 @@ class Random
     {
         try {
             return random_bytes($length);
-        } catch (Error $e) {
+        } catch (Error) {
             throw new InvalidArgumentException('Invalid length received to generate random bytes.');
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new RuntimeException(
                 'Cannot generate random bytes, no cryptographically secure random generator available.',
             );

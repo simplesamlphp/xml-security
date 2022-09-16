@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\XMLStringElementTrait;
+use SimpleSAML\XML\StringElementTrait;
 
 /**
  * Class representing a ds:X509SerialNumber element.
@@ -18,7 +18,7 @@ use SimpleSAML\XML\XMLStringElementTrait;
  */
 final class X509SerialNumber extends AbstractDsElement
 {
-    use XMLStringElementTrait;
+    use StringElementTrait;
 
 
     /**
@@ -47,17 +47,17 @@ final class X509SerialNumber extends AbstractDsElement
      * Convert XML into a X509SerialNumber
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'X509SerialNumber', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509SerialNumber::NS, InvalidDOMElementException::class);
 
-        return new self($xml->textContent);
+        return new static($xml->textContent);
     }
 
 

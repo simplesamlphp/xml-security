@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
@@ -21,9 +21,9 @@ interface EncryptedElementInterface
      * decrypt
      * the object.
      *
-     * @return \SimpleSAML\XML\XMLElementInterface The decrypted element.
+     * @return \SimpleSAML\XML\ElementInterface The decrypted element.
      */
-    public function decrypt(EncryptionAlgorithmInterface $decryptor): XMLElementInterface;
+    public function decrypt(EncryptionAlgorithmInterface $decryptor): ElementInterface;
 
 
     /**

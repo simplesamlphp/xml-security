@@ -105,12 +105,12 @@ final class DigestMethod extends AbstractDsElement
      * Convert XML into a DigestMethod
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'DigestMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DigestMethod::NS, InvalidDOMElementException::class);
@@ -127,7 +127,7 @@ final class DigestMethod extends AbstractDsElement
             $elements[] = new Chunk($elt);
         }
 
-        return new self($Algorithm, $elements);
+        return new static($Algorithm, $elements);
     }
 
 

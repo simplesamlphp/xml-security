@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -50,7 +51,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         string $algorithm,
         ?int $keySize = null,
         ?string $oaepParams = null,
-        array $children = []
+        array $children = [],
     ) {
         $this->setAlgorithm($algorithm);
         $this->setKeySize($keySize);
@@ -182,7 +183,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @throws \SimpleSAML\XML\Exception\TooManyElementsException
      *   if too many child-elements of a type are specified
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);

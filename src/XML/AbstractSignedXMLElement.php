@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\AbstractXMLElement;
+use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
@@ -19,7 +19,7 @@ use function array_pop;
  * @psalm-consistent-constructor
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractSignedXMLElement extends AbstractXMLElement implements SignedElementInterface
+abstract class AbstractSignedXMLElement extends AbstractElement implements SignedElementInterface
 {
     use SignedElementTrait;
 
@@ -89,9 +89,9 @@ abstract class AbstractSignedXMLElement extends AbstractXMLElement implements Si
      * Create a class from XML
      *
      * @param \DOMElement $xml
-     * @return self
+     * @return static
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         /** @var \DOMDocument $original */
         $original = $xml->ownerDocument->cloneNode(true);
