@@ -140,9 +140,10 @@ class Constants extends \SimpleSAML\XML\Constants
     public const XMLDSIG_ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
 
     public const NS_XENC = 'http://www.w3.org/2001/04/xmlenc#';
-    public const XMLENC_ELEMENT = 'http://www.w3.org/2001/04/xmlenc#Element';
-    public const XMLENC_EXI = 'http://www.w3.org/2009/xmlenc11#EXI';
     public const XMLENC_CONTENT = 'http://www.w3.org/2001/04/xmlenc#Content';
+    public const XMLENC_ELEMENT = 'http://www.w3.org/2001/04/xmlenc#Element';
+    public const XMLENC_ENCRYPTEDKEY = 'http://www.w3.org/2001/04/xmlenc#EncryptedKey';
+    public const XMLENC_EXI = 'http://www.w3.org/2009/xmlenc11#EXI';
 
     public const XPATH_URI = 'http://www.w3.org/TR/1999/REC-xpath-19991116';
 }
