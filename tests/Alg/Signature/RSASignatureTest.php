@@ -96,14 +96,16 @@ final class RSASignatureTest extends TestCase
             bin2hex($rsa->sign($this->plaintext)),
         );
 
-        // test RSA-RIPEMD160
-        $rsa = $this->factory->getAlgorithm(C::SIG_RSA_RIPEMD160, $this->privateKey);
-        $this->assertEquals(
-            'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c1141' .
-            'ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165789d738e' .
-            '88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
-            bin2hex($rsa->sign($this->plaintext)),
-        );
+        if (boolval(OPENSSL_VERSION_NUMBER >= hexdec('0x30000000')) === false) { // OpenSSL 3.0 disabled RIPEMD160 support
+            // test RSA-RIPEMD160
+            $rsa = $this->factory->getAlgorithm(C::SIG_RSA_RIPEMD160, $this->privateKey);
+            $this->assertEquals(
+                'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c1141' .
+                'ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165789d738e' .
+                '88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
+                bin2hex($rsa->sign($this->plaintext)),
+            );
+        }
     }
 
 
@@ -167,16 +169,18 @@ final class RSASignatureTest extends TestCase
             ),
         ));
 
-        // test RSA-RIPEMD160
-        $rsa = $this->factory->getAlgorithm(C::SIG_RSA_RIPEMD160, $this->publicKey);
-        $this->assertTrue($rsa->verify(
-            $this->plaintext,
-            hex2bin(
-                'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c' .
-                '1141ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165'.
-                '789d738e88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
-            ),
-        ));
+        if (boolval(OPENSSL_VERSION_NUMBER >= hexdec('0x30000000')) === false) { // OpenSSL 3.0 disabled RIPEMD160 support
+            // test RSA-RIPEMD160
+            $rsa = $this->factory->getAlgorithm(C::SIG_RSA_RIPEMD160, $this->publicKey);
+            $this->assertTrue($rsa->verify(
+                $this->plaintext,
+                hex2bin(
+                    'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c' .
+                    '1141ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165'.
+                    '789d738e88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
+                ),
+            ));
+        }
     }
 
 
