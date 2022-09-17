@@ -18,7 +18,7 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
  *
  * @package simplesamlphp/xml-security
  */
-class EncryptedKey extends AbstractEncryptedType
+final class EncryptedKey extends AbstractEncryptedType
 {
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null */
     protected ?CarriedKeyName $carriedKeyName;

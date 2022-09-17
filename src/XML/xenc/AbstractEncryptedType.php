@@ -6,11 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function count;
@@ -217,63 +213,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     {
         Assert::nullOrValidURI($type, SchemaViolationException::class); // Covers the empty string
         $this->type = $type;
-    }
-
-
-    /**
-     * @inheritDoc
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingElementException
-     *   If one of the mandatory child-elements is missing
-     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
-     *   If too many child-elements of a type are specified
-     */
-    public static function fromXML(DOMElement $xml): static
-    {
-        Assert::same($xml->localName, 'EncryptedData', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, EncryptedData::NS, InvalidDOMElementException::class);
-
-        $cipherData = CipherData::getChildrenOfClass($xml);
-        Assert::minCount(
-            $cipherData,
-            1,
-            'At least one CipherData element found in <xenc:EncryptedData>.',
-            MissingElementException::class,
-        );
-        Assert::maxCount(
-            $cipherData,
-            1,
-            'No or more than one CipherData element found in <xenc:EncryptedData>.',
-            TooManyElementsException::class,
-        );
-
-        $encryptionMethod = EncryptionMethod::getChildrenOfClass($xml);
-        Assert::maxCount(
-            $encryptionMethod,
-            1,
-            'No more than one EncryptionMethod element allowed in <xenc:EncryptedData>.',
-            TooManyElementsException::class,
-        );
-
-        $keyInfo = KeyInfo::getChildrenOfClass($xml);
-        Assert::maxCount(
-            $keyInfo,
-            1,
-            'No more than one KeyInfo element allowed in <xenc:EncryptedData>.',
-            TooManyElementsException::class,
-        );
-
-        return new static(
-            $cipherData[0],
-            self::getAttribute($xml, 'Id', null),
-            self::getAttribute($xml, 'Type', null),
-            self::getAttribute($xml, 'MimeType', null),
-            self::getAttribute($xml, 'Encoding', null),
-            count($encryptionMethod) === 1 ? $encryptionMethod[0] : null,
-            count($keyInfo) === 1 ? $keyInfo[0] : null,
-        );
     }
 
 

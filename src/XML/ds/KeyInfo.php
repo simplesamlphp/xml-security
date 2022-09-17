@@ -33,10 +33,13 @@ final class KeyInfo extends AbstractDsElement
      * Array with various elements describing this key.
      * Unknown elements will be represented by \SimpleSAML\XML\Chunk.
      *
-     * @var (\SimpleSAML\XML\Chunk|
+     * @var list<\SimpleSAML\XML\Chunk|
      *       \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *       \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *       \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[]
+     *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
+     *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey>
      */
     protected array $info = [];
 
@@ -44,10 +47,13 @@ final class KeyInfo extends AbstractDsElement
     /**
      * Initialize a KeyInfo element.
      *
-     * @param (\SimpleSAML\XML\Chunk|
+     * @param list<\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
+     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
+     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey> $info
      * @param string|null $Id
      */
     public function __construct(array $info, ?string $Id = null)
@@ -85,7 +91,10 @@ final class KeyInfo extends AbstractDsElement
      *
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *          \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *          \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[]
      */
     public function getInfo(): array
@@ -99,17 +108,29 @@ final class KeyInfo extends AbstractDsElement
      *
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
      * @throws \SimpleSAML\Assert\AssertionFailedException  if $info contains
-     *   anything other than KeyName, X509Data, EncryptedKey or Chunk
+     *   anything other than KeyName, KeyValue, RetrievalMethod, X509Data, EncryptedData, EncryptedKey or Chunk
      */
     private function setInfo(array $info): void
     {
         Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
         Assert::allIsInstanceOfAny(
             $info,
-            [Chunk::class, KeyName::class, X509Data::class, EncryptedKey::class],
+            [
+                Chunk::class,
+                KeyName::class,
+                KeyValue::class,
+                RetrievalMethod::class,
+                X509Data::class,
+                EncryptedData::class,
+                EncryptedKey::class,
+            ],
             'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.',
             InvalidArgumentException::class,
         );
@@ -140,6 +161,8 @@ final class KeyInfo extends AbstractDsElement
             } elseif ($n->namespaceURI === self::NS) {
                 $info[] = match ($n->localName) {
                     'KeyName' => KeyName::fromXML($n),
+                    'KeyValue' => KeyValue::fromXML($n),
+                    'RetrievalMethod' => RetrievalMethod::fromXML($n),
                     'X509Data' => X509Data::fromXML($n),
                     default => new Chunk($n),
                 };

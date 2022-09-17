@@ -125,6 +125,7 @@ abstract class AbstractReference extends AbstractXencElement
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('URI', $this->uri);
 
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
         foreach ($this->elements as $element) {
             $element->toXML($e);
         }

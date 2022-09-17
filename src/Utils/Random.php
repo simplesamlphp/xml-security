@@ -4,6 +4,7 @@ namespace SimpleSAML\XMLSecurity\Utils;
 
 use Error;
 use Exception;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
@@ -21,7 +22,7 @@ class Random
     /**
      * Generate a given amount of cryptographically secure random bytes.
      *
-     * @param int $length The amount of bytes required.
+     * @param positive-int $length The amount of bytes required.
      *
      * @return string A random string of $length length.
      *
@@ -32,6 +33,12 @@ class Random
      */
     public static function generateRandomBytes(int $length): string
     {
+        Assert::positiveInteger(
+            $length,
+            'Invalid length received to generate random bytes.',
+            InvalidArgumentException::class
+        );
+
         try {
             return random_bytes($length);
         } catch (Error) {
