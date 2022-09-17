@@ -175,6 +175,7 @@ final class DsObject extends AbstractDsElement
         $elements = [];
         foreach ($xml->childNodes as $elt) {
             if (!($elt instanceof DOMElement)) {
+                // @TODO: support mixed content
                 continue;
             }
 
