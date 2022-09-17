@@ -23,7 +23,7 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\dsig11\X509DigestTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsElement
+ * @covers \SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element
  * @covers \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
  *
  * @package simplesamlphp/xml-security
