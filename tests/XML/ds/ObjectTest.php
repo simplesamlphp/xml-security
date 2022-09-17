@@ -6,7 +6,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants;
@@ -22,7 +23,8 @@ use SimpleSAML\XMLSecurity\XML\ds\DsObject;
  */
 final class ObjectTest extends TestCase
 {
-    use SerializableXMLTestTrait;
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
 
 
     /**
@@ -30,6 +32,8 @@ final class ObjectTest extends TestCase
     protected function setUp(): void
     {
         $this->testedClass = DsObject::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Object.xml'

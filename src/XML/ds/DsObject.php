@@ -55,7 +55,7 @@ final class DsObject extends AbstractDsElement
      * @param string|null $Id
      * @param string|null $MimeType
      * @param string|null $Encoding
-     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
+     * @param \SimpleSAML\XML\ElementInterface[] $elements
      */
     public function __construct(
         ?string $Id = null,
@@ -158,12 +158,12 @@ final class DsObject extends AbstractDsElement
      * Convert XML into a ds:Object
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): object
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
@@ -181,7 +181,7 @@ final class DsObject extends AbstractDsElement
             $elements[] = new Chunk($elt);
         }
 
-        return new self($Id, $MimeType, $Encoding, $elements);
+        return new static($Id, $MimeType, $Encoding, $elements);
     }
 
 
@@ -207,6 +207,7 @@ final class DsObject extends AbstractDsElement
             $e->setAttribute('Encoding', $this->Encoding);
         }
 
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
         foreach ($this->elements as $elt) {
             $elt->toXML($e);
         }
