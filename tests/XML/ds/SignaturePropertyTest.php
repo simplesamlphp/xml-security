@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableXMLTestTrait;
+use SimpleSAML\Test\XML\SchemaValidationTestTrait;
+use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -24,7 +25,8 @@ use function strval;
  */
 final class SignaturePropertyTest extends TestCase
 {
-    use SerializableXMLTestTrait;
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
 
 
     /**
@@ -32,6 +34,8 @@ final class SignaturePropertyTest extends TestCase
     public function setUp(): void
     {
         $this->testedClass = SignatureProperty::class;
+
+        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_SignatureProperty.xml',

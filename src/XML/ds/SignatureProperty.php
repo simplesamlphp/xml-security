@@ -12,7 +12,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\XMLElementInterface;
+use SimpleSAML\XML\SerializableElementInterface;
 
 /**
  * Class representing a ds:SignatureProperty element.
@@ -37,7 +37,7 @@ final class SignatureProperty extends AbstractDsElement
     /**
      * Initialize a ds:SignatureProperty
      *
-     * @param \SimpleSAML\XML\XMLElementInterface[] $elements
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      * @param string $Target
      * @param string|null $Id
      */
@@ -94,12 +94,12 @@ final class SignatureProperty extends AbstractDsElement
      * Convert XML into a SignatureProperty element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return self
+     * @return static
      *
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): self
+    public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'SignatureProperty', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureProperty::NS, InvalidDOMElementException::class);
@@ -117,7 +117,7 @@ final class SignatureProperty extends AbstractDsElement
             $children[] = new Chunk($child);
         }
 
-        /** @psalm-var \SimpleSAML\XML\XMLElementInterface[] $children */
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $children */
         Assert::minCount(
             $children,
             1,
@@ -125,7 +125,7 @@ final class SignatureProperty extends AbstractDsElement
             MissingElementException::class,
         );
 
-        return new self(
+        return new static(
             $children,
             $Target,
             $Id,
@@ -148,8 +148,10 @@ final class SignatureProperty extends AbstractDsElement
             $e->setAttribute('Id', $this->Id);
         }
 
+        Assert::allImplementsInterface($this->elements, SerializableElementInterface::class);
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
         foreach ($this->elements as $element) {
-            $e->appendChild($e->ownerDocument->importNode($element->getXML(), true));
+            $e->appendChild($e->ownerDocument->importNode($element->toXML(), true));
         }
 
         return $e;
