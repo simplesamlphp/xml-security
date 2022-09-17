@@ -10,6 +10,7 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use TypeError;
 
 use function bin2hex;
@@ -157,7 +158,13 @@ final class HMACSignatureTest extends TestCase
      */
     public function testVerifyWithCertificate(): void
     {
-        $cert = X509Certificate::fromFile('tests/mycert.pem');
+        $cert = X509Certificate::fromFile(
+            dirname(dirname(dirname(__FILE__))) .
+            '/' .
+            PEMCertificatesMock::CERTIFICATE_DIR .
+            '/' .
+            PEMCertificatesMock::PUBLIC_KEY
+        );
 
         // test type errors when possible
         $this->expectException(TypeError::class);
@@ -170,7 +177,7 @@ final class HMACSignatureTest extends TestCase
      */
     public function testVerifyWithPublicKey(): void
     {
-        $key = PublicKey::fromFile('tests/pubkey.pem');
+        $key = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::OTHER_PUBLIC_KEY);
 
         // test type errors when possible
         $this->expectException(TypeError::class);
@@ -183,7 +190,7 @@ final class HMACSignatureTest extends TestCase
      */
     public function testVerifyWithPrivateKey(): void
     {
-        $key = PrivateKey::fromFile('tests/privkey.pem');
+        $key = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
 
         // test type errors when possible
         $this->expectException(TypeError::class);

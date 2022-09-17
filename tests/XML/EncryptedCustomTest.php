@@ -13,6 +13,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\EncryptedCustomTest
@@ -43,8 +44,8 @@ class EncryptedCustomTest extends TestCase
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
         )->documentElement;
 
-        $this->privKey = PrivateKey::fromFile(dirname(dirname(__FILE__)) . '/resources/keys/privkey.pem');
-        $this->pubKey = PublicKey::fromFile(dirname(dirname(__FILE__)) . '/resources/keys/pubkey.pem');
+        $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
+        $this->pubKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 

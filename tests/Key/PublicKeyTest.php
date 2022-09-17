@@ -5,6 +5,7 @@ namespace SimpleSAML\XMLSecurity\Test\Key;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Exception\IOException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function file_get_contents;
 use function openssl_pkey_get_details;
@@ -29,7 +30,7 @@ final class PublicKeyTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->f = file_get_contents('tests/pubkey.pem');
+        $this->f = PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY);
         $this->pubKey = openssl_pkey_get_details(openssl_pkey_get_public($this->f));
     }
 
@@ -49,7 +50,7 @@ final class PublicKeyTest extends TestCase
      */
     public function testFromFile(): void
     {
-        $k = PublicKey::fromFile('tests/pubkey.pem');
+        $k = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
         $keyDetails = openssl_pkey_get_details($k->get());
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }

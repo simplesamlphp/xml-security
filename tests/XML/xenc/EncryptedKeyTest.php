@@ -25,7 +25,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
-use SimpleSAML\XMLSecurity\XMLSecurityDsig;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function dirname;
 use function strval;
@@ -62,8 +62,8 @@ final class EncryptedKeyTest extends TestCase
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_EncryptedKey.xml',
         );
 
-        $this->privKey = PrivateKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/privkey.pem');
-        $this->pubKey = PublicKey::fromFile(dirname(dirname(dirname(__FILE__))) . '/pubkey.pem');
+        $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
+        $this->pubKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 

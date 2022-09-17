@@ -40,8 +40,6 @@ final class RSASignatureTest extends TestCase
     {
         $this->publicKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
         $this->privateKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
-//        $this->publicKey = PublicKey::fromFile('tests/pubkey.pem');
-//        $this->privateKey = PrivateKey::fromFile('tests/privkey.pem');
         $this->factory = new SignatureAlgorithmFactory([]);
     }
 

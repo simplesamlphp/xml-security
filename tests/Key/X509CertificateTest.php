@@ -7,6 +7,7 @@ use ReflectionMethod;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function file_get_contents;
 use function openssl_pkey_get_details;
@@ -37,7 +38,7 @@ final class X509CertificateTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->f = file_get_contents('tests/mycert.pem');
+        $this->f = PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY);
         $this->cert = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($this->f)));
         $this->c = new X509Certificate($this->f);
     }
@@ -104,7 +105,13 @@ final class X509CertificateTest extends TestCase
      */
     public function testFromFile(): void
     {
-        $c = X509Certificate::fromFile('tests/mycert.pem');
+        $c = X509Certificate::fromFile(
+            dirname(dirname(__FILE__)) .
+            '/' .
+            PEMCertificatesMock::CERTIFICATE_DIR .
+            '/' .
+            PEMCertificatesMock::PUBLIC_KEY
+        );
         $pubDetails = openssl_pkey_get_details($c->get());
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }

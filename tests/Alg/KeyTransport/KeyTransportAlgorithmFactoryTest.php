@@ -11,6 +11,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 /**
  * Tests for \SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportALgorithmFactory
@@ -25,7 +26,7 @@ class KeyTransportAlgorithmFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->pkey = PublicKey::fromFile('tests/pubkey.pem');
+        $this->pkey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 
