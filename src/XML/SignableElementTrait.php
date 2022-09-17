@@ -185,4 +185,12 @@ trait SignableElementTrait
         $this->signature = new Signature($signedInfo, new SignatureValue($signedData), $this->keyInfo);
         return DOMDocumentFactory::fromString($canonicalDocument)->documentElement;
     }
+
+    /**
+     * Get the list of algorithms that are blacklisted for any signing operation.
+     *
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
+     * defaults.
+     */
+    abstract public function getBlacklistedAlgorithms(): ?array;
 }

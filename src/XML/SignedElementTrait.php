@@ -293,4 +293,13 @@ trait SignedElementTrait
      * @return string|null
      */
     abstract public function getId(): ?string;
+
+
+    /**
+     * Get the list of algorithms that are blacklisted for any signing operation.
+     *
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
+     * defaults.
+     */
+    abstract public function getBlacklistedAlgorithms(): ?array;
 }
