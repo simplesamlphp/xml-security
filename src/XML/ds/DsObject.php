@@ -168,15 +168,21 @@ final class DsObject extends AbstractDsElement
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
 
-        $Id = DsObject::getAttribute($xml, 'Id');
-        $MimeType = DsObject::getAttribute($xml, 'MimeType');
-        $Encoding = DsObject::getAttribute($xml, 'Encoding');
+        $Id = DsObject::getAttribute($xml, 'Id', null);
+        $MimeType = DsObject::getAttribute($xml, 'MimeType', null);
+        $Encoding = DsObject::getAttribute($xml, 'Encoding', null);
 
         $elements = [];
         foreach ($xml->childNodes as $elt) {
             if (!($elt instanceof DOMElement)) {
                 // @TODO: support mixed content
                 continue;
+            } elseif ($elt->namespaceURI === self::NS) {
+                $elements[] = match ($elt->localName) {
+                    'SignatureProperties' => SignatureProperties::fromXML($elt),
+                    'Manifest' => Manifest::fromXML($elt),
+                    default => new Chunk($elt),
+                };
             }
 
             $elements[] = new Chunk($elt);

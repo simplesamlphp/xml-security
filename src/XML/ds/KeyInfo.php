@@ -10,6 +10,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 
@@ -158,12 +159,17 @@ final class KeyInfo extends AbstractDsElement
         foreach ($xml->childNodes as $n) {
             if (!($n instanceof DOMElement)) {
                 continue;
-            } elseif ($n->namespaceURI === self::NS) {
+            } elseif ($n->namespaceURI === C::NS_XDSIG) {
                 $info[] = match ($n->localName) {
                     'KeyName' => KeyName::fromXML($n),
                     'KeyValue' => KeyValue::fromXML($n),
                     'RetrievalMethod' => RetrievalMethod::fromXML($n),
                     'X509Data' => X509Data::fromXML($n),
+                    default => new Chunk($n),
+                };
+            } elseif ($n->namespaceURI === C::NS_XDSIG11) {
+                $info[] = match ($n->localName) {
+                    'KeyInfoReference' => KeyInfoReference::fromXML($n),
                     default => new Chunk($n),
                 };
             } elseif ($n->namespaceURI === C::NS_XENC) {

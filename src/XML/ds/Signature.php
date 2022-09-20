@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
@@ -30,7 +29,7 @@ final class Signature extends AbstractDsElement
     /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo */
     protected ?KeyInfo $keyInfo;
 
-    /** @var \SimpleSAML\XML\Chunk[] */
+    /** @var \SimpleSAML\XML\ds\DsObject[] */
     protected array $objects;
 
     /** @var string|null */
@@ -43,7 +42,7 @@ final class Signature extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
-     * @param \SimpleSAML\XML\Chunk[] $objects
+     * @param \SimpleSAML\XML\ds\DsObject[] $objects
      * @param string|null $Id
      */
     public function __construct(
@@ -141,7 +140,7 @@ final class Signature extends AbstractDsElement
     /**
      * Get the array of ds:Object elements attached to this signature.
      *
-     * @return \SimpleSAML\XML\Chunk[]
+     * @return \SimpleSAML\XML\ds\DsObject[]
      */
     public function getObjects(): array
     {
@@ -152,21 +151,11 @@ final class Signature extends AbstractDsElement
     /**
      * Set the array of ds:Object elements attached to this signature.
      *
-     * @param \SimpleSAML\XML\Chunk[] $objects
+     * @param \SimpleSAML\XML\ds\DsObject[] $objects
      */
     protected function setObjects(array $objects): void
     {
-        Assert::allIsInstanceOf($objects, Chunk::class);
-
-        foreach ($objects as $o) {
-            Assert::true(
-                $o->getNamespaceURI() === C::NS_XDSIG
-                && $o->getLocalName() === 'Object',
-                'Only elements of type ds:Object are allowed.',
-                InvalidDOMElementException::class,
-            );
-        }
-
+        Assert::allIsInstanceOf($objects, DsObject::class);
         $this->objects = $objects;
     }
 
@@ -223,16 +212,7 @@ final class Signature extends AbstractDsElement
             TooManyElementsException::class,
         );
 
-        $objects = [];
-        foreach ($xml->childNodes as $o) {
-            if (
-                $o instanceof DOMElement
-                && $o->namespaceURI === C::NS_XDSIG
-                && $o->localName === 'Object'
-            ) {
-                $objects[] = Chunk::fromXML($o);
-            }
-        }
+        $objects = DsObject::getChildrenOfClass($xml);
 
         return new static(
             array_pop($signedInfo),

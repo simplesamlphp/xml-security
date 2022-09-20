@@ -21,6 +21,6 @@
     <ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>
   </ds:KeyInfo>
   <ds:Object>
-    <some>Chunk</some>
+    <ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>
   </ds:Object>
 </ds:Signature>

@@ -10,6 +10,7 @@ use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\DsObject;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
@@ -68,11 +69,11 @@ final class SignatureTest extends TestCase
                 )->documentElement,
             ),
             [
-                new Chunk(
+                new DsObject(null, null, null, [new Chunk(
                     DOMDocumentFactory::fromString(
-                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>',
-                    )->documentElement,
-                ),
+                        '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+                    )->documentElement),
+                ]),
             ],
             'def456',
         );
@@ -105,11 +106,11 @@ final class SignatureTest extends TestCase
                 )->documentElement,
             ),
             [
-                new Chunk(
+                new DsObject(null, null, null, [new Chunk(
                     DOMDocumentFactory::fromString(
-                        '<ds:Object xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><some>Chunk</some></ds:Object>',
-                    )->documentElement,
-                ),
+                        '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+                    )->documentElement),
+                ]),
             ],
             'def456',
         );
