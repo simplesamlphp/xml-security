@@ -39,6 +39,7 @@ final class KeyInfo extends AbstractDsElement
      *       \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *       \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *       \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *       \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
      *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey>
      */
@@ -53,6 +54,7 @@ final class KeyInfo extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey> $info
      * @param string|null $Id
@@ -95,6 +97,7 @@ final class KeyInfo extends AbstractDsElement
      *          \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *          \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *          \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
      *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[]
      */
@@ -113,6 +116,7 @@ final class KeyInfo extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
      * @throws \SimpleSAML\Assert\AssertionFailedException  if $info contains

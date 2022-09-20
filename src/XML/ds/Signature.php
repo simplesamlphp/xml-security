@@ -29,7 +29,7 @@ final class Signature extends AbstractDsElement
     /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo */
     protected ?KeyInfo $keyInfo;
 
-    /** @var \SimpleSAML\XML\ds\DsObject[] */
+    /** @var \SimpleSAML\XMLSecurity\XML\ds\DsObject[] */
     protected array $objects;
 
     /** @var string|null */
@@ -42,7 +42,7 @@ final class Signature extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
-     * @param \SimpleSAML\XML\ds\DsObject[] $objects
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DsObject[] $objects
      * @param string|null $Id
      */
     public function __construct(
@@ -140,7 +140,7 @@ final class Signature extends AbstractDsElement
     /**
      * Get the array of ds:Object elements attached to this signature.
      *
-     * @return \SimpleSAML\XML\ds\DsObject[]
+     * @return \SimpleSAML\XMLSecurity\XML\ds\DsObject[]
      */
     public function getObjects(): array
     {
@@ -151,7 +151,7 @@ final class Signature extends AbstractDsElement
     /**
      * Set the array of ds:Object elements attached to this signature.
      *
-     * @param \SimpleSAML\XML\ds\DsObject[] $objects
+     * @param \SimpleSAML\XMLSecurity\XML\ds\DsObject[] $objects
      */
     protected function setObjects(array $objects): void
     {
