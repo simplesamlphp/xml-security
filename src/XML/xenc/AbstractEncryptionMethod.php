@@ -162,7 +162,10 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::allIsInstanceOf(
             $children,
             Chunk::class,
-            'All children elements of ' . static::NS_PREFIX . ':EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
+            sprintf(
+               'All children elements of %s:EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
+               static::NS_PREFIX
+            ),
             InvalidArgumentException::class,
         );
 

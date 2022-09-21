@@ -35,7 +35,8 @@ final class SignatureProperties extends AbstractDsElement
      * @param string $Target
      * @param string|null $Id
      */
-    public function __construct(array $signatureProperty, ?string $Id = null) {
+    public function __construct(array $signatureProperty, ?string $Id = null)
+    {
         $this->setSignatureProperty($signatureProperty);
         $this->setId($Id);
     }

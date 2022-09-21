@@ -53,7 +53,8 @@ final class ObjectTest extends TestCase
                 new Chunk(
                     DOMDocumentFactory::fromString(
                         '<ssp:data xmlns:ssp="urn:ssp:custom">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ssp:data>'
-                )->documentElement)
+                    )->documentElement
+                )
             ],
         );
 
