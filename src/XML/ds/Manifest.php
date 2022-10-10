@@ -92,7 +92,6 @@ final class Manifest extends AbstractDsElement
 
         $Id = self::getAttribute($xml, 'Id', null);
 
-        /** @psalm-var \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references */
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount(
             $references,

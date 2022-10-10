@@ -120,7 +120,6 @@ final class RetrievalMethod extends AbstractDsElement
         $URI = self::getAttribute($xml, 'URI');
         $Type = self::getAttribute($xml, 'Type', null);
 
-        /** @psalm-var \SimpleSAML\XMLSecurity\XML\ds\Transforms[] $transforms */
         $transforms = Transforms::getChildrenOfClass($xml);
         Assert::maxCount(
             $transforms,
