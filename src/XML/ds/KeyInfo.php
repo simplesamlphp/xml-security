@@ -184,7 +184,6 @@ final class KeyInfo extends AbstractDsElement
                 };
             } else {
                 $info[] = new Chunk($n);
-                break;
             }
         }
 
