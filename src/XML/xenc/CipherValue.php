@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use SimpleSAML\XML\Base64StringElementTrait;
+use SimpleSAML\XML\Base64ElementTrait;
 
 /**
  * Class representing a xenc:CipherValue element.
@@ -13,7 +13,7 @@ use SimpleSAML\XML\Base64StringElementTrait;
  */
 final class CipherValue extends AbstractXencElement
 {
-    use Base64StringElementTrait;
+    use Base64ElementTrait;
 
 
     /**

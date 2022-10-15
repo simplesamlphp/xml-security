@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use SimpleSAML\XML\Base64StringElementTrait;
+use SimpleSAML\XML\Base64ElementTrait;
 
 /**
  * Class representing a ds:DigestValue element.
@@ -13,7 +13,7 @@ use SimpleSAML\XML\Base64StringElementTrait;
  */
 final class DigestValue extends AbstractDsElement
 {
-    use Base64StringElementTrait;
+    use Base64ElementTrait;
 
 
     /**

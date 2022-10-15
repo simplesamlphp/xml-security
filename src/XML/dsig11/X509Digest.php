@@ -10,7 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XML\Base64StringElementTrait;
+use SimpleSAML\XML\Base64ElementTrait;
 
 /**
  * Class representing a dsig11:X509Digest element.
@@ -19,7 +19,7 @@ use SimpleSAML\XML\Base64StringElementTrait;
  */
 final class X509Digest extends AbstractDsig11Element
 {
-    use Base64StringElementTrait;
+    use Base64ElementTrait;
 
     /**
      * The digest algorithm.

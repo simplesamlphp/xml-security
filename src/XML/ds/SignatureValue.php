@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Base64StringElementTrait;
+use SimpleSAML\XML\Base64ElementTrait;
 
 /**
  * Class representing a ds:SignatureValue element.
@@ -16,7 +16,7 @@ use SimpleSAML\XML\Base64StringElementTrait;
  */
 final class SignatureValue extends AbstractDsElement
 {
-    use Base64StringElementTrait;
+    use Base64ElementTrait;
 
     /** @var string|null */
     protected ?string $Id;
