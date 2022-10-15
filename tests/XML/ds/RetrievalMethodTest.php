@@ -69,22 +69,6 @@ final class RetrievalMethodTest extends TestCase
     public function testUnmarshalling(): void
     {
         $retrievalMethod = retrievalMethod::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('#Encrypted_KEY_ID', $retrievalMethod->getURI());
-        $this->assertEquals(C::XMLENC_ENCRYPTEDKEY, $retrievalMethod->getType());
-
-        $transforms = $retrievalMethod->getTransforms();
-        $this->assertNotNull($transforms);
-
-        $transform = $transforms->getTransform();
-        $this->assertCount(1, $transform);
-
-        $transformElement = reset($transform);
-        $this->assertEquals(C::XPATH_URI, $transformElement->getAlgorithm());
-
-        $xpath = $transformElement->getXPath();
-        $this->assertNotNull($xpath);
-
-        $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

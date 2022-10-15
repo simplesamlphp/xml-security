@@ -108,7 +108,9 @@ final class X509IssuerSerialTest extends TestCase
     {
         $X509IssuerSerial = X509IssuerSerial::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals($this->issuer, $X509IssuerSerial->getIssuerName());
-        $this->assertEquals($this->serial, $X509IssuerSerial->getSerialNumber());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($X509IssuerSerial),
+        );
     }
 }

@@ -95,6 +95,10 @@ final class X509CertificateTest extends TestCase
     public function testUnmarshalling(): void
     {
         $x509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals($this->certificate, $x509cert->getContent());
+
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($x509cert),
+        );
     }
 }

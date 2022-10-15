@@ -129,9 +129,9 @@ class XPath extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->expression;
+        $e->textContent = $this->getExpression();
 
-        foreach ($this->namespaces as $prefix => $namespace) {
+        foreach ($this->getNamespaces() as $prefix => $namespace) {
             $e->setAttribute('xmlns:' . $prefix, $namespace);
         }
         return $e;

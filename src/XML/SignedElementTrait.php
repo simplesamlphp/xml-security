@@ -179,7 +179,7 @@ trait SignedElementTrait
         $ref = $this->validateReference();
 
         if (
-            $verifier->verify(
+            $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
                 base64_decode($this->signature->getSignatureValue()->getRawContent()), // the actual signature
             )
@@ -240,7 +240,7 @@ trait SignedElementTrait
             throw new NoSignatureFoundException();
         }
 
-        $keyInfo = $this->signature->getKeyInfo();
+        $keyInfo = $this->signature?->getKeyInfo();
         $algId = $this->signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
         if ($verifier === null && $keyInfo === null) {
             throw new InvalidArgumentException('No key or KeyInfo available for signature verification.');

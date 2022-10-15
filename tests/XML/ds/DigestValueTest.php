@@ -71,6 +71,9 @@ final class DigestValueTest extends TestCase
     {
         $digestValue = DigestValue::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($digestValue),
+        );
     }
 }

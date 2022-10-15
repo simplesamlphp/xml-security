@@ -201,7 +201,7 @@ final class KeyInfo extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
 
         if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+            $e->setAttribute('Id', $this->getId());
         }
 
         foreach ($this->info as $n) {

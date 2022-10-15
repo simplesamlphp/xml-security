@@ -87,12 +87,6 @@ final class ReferenceListTest extends TestCase
     {
         $referenceList = ReferenceList::fromXML($this->xmlRepresentation->documentElement);
 
-        $dataReferences = $referenceList->getDataReferences();
-        $this->assertCount(1, $dataReferences);
-
-        $keyReferences = $referenceList->getKeyReferences();
-        $this->assertCount(1, $keyReferences);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($referenceList),

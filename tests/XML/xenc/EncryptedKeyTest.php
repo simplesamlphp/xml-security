@@ -175,38 +175,6 @@ final class EncryptedKeyTest extends TestCase
     {
         $encryptedKey = EncryptedKey::fromXML($this->xmlRepresentation->documentElement);
 
-        $cipherData = $encryptedKey->getCipherData();
-        $this->assertEquals(
-            '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s4eHBdHejiL1bySDQT5diN/TVo8zz0A'
-            . 'mPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwM'
-            . 'iaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FOV3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4'
-            . 'JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==',
-            $cipherData->getCipherValue()->getContent(),
-        );
-
-        $encryptionMethod = $encryptedKey->getEncryptionMethod();
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#rsa-1_5', $encryptionMethod->getAlgorithm());
-
-        $keyInfo = $encryptedKey->getKeyInfo();
-        $info = $keyInfo->getInfo();
-        $this->assertCount(1, $info);
-
-        $encKey = $info[0];
-        $this->assertInstanceOf(EncryptedKey::class, $encKey);
-
-        $referenceList = $encryptedKey->getReferenceList();
-        $this->assertEmpty($referenceList->getKeyReferences());
-        $dataRefs = $referenceList->getDataReferences();
-        $this->assertCount(1, $dataRefs);
-        $this->assertEquals('#Encrypted_DATA_ID', $dataRefs[0]->getURI());
-
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#Element', $encryptedKey->getType());
-        $this->assertEquals('urn:x-simplesamlphp:encoding', $encryptedKey->getEncoding());
-        $this->assertEquals('text/plain', $encryptedKey->getMimeType());
-        $this->assertEquals('Encrypted_KEY_ID', $encryptedKey->getID());
-        $this->assertEquals('some_ENTITY_ID', $encryptedKey->getRecipient());
-        $this->assertEquals('Name of the key', $encryptedKey->getCarriedKeyName()->getContent());
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($encryptedKey),

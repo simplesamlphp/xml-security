@@ -13,6 +13,7 @@ use SimpleSAML\XML\Base64ElementTrait;
  * Class representing a ds:SignatureValue element.
  *
  * @package simplesaml/xml-security
+ * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class SignatureValue extends AbstractDsElement
 {
@@ -87,8 +88,8 @@ final class SignatureValue extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->getContent();
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
         return $e;

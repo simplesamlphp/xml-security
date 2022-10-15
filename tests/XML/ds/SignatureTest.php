@@ -70,11 +70,11 @@ final class SignatureTest extends TestCase
             ),
             [
                 new DsObject(
-                   elements:  [
+                    elements: [
                         new Chunk(
                             DOMDocumentFactory::fromString(
-                               '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
-                           )->documentElement
+                                '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+                            )->documentElement
                         ),
                     ]
                 ),
@@ -114,8 +114,8 @@ final class SignatureTest extends TestCase
                     elements: [
                         new Chunk(
                             DOMDocumentFactory::fromString(
-                               '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
-                           )->documentElement
+                                '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+                            )->documentElement
                         ),
                     ]
                 ),

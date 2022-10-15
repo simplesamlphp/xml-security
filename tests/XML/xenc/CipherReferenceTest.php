@@ -78,12 +78,6 @@ final class CipherReferenceTest extends TestCase
     {
         $cipherReference = CipherReference::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('#Cipher_VALUE_ID', $cipherReference->getURI());
-
-        $references = $cipherReference->getElements();
-        $this->assertCount(1, $references);
-        $this->assertEquals($this->transforms, $references[0]);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($cipherReference),

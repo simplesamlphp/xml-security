@@ -115,10 +115,10 @@ final class KeyInfoReference extends AbstractDsig11Element
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('URI', $this->URI);
+        $e->setAttribute('URI', $this->getURI());
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
         return $e;

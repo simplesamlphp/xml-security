@@ -91,7 +91,7 @@ final class Transforms extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        foreach ($this->transform as $t) {
+        foreach ($this->getTransform() as $t) {
             if (!$t->isEmptyElement()) {
                 $t->toXML($e);
             }

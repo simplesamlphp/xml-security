@@ -11,6 +11,8 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\KeySize;
+use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
 use SimpleSAML\XMLSecurity\Constants as C;
 
 use function dirname;
@@ -52,7 +54,7 @@ final class EncryptionMethodTest extends TestCase
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
         $chunk = Chunk::fromXML($chunkXml->documentElement);
 
-        $em = new EncryptionMethod($alg, 10, '9lWu3Q==', [$chunk]);
+        $em = new EncryptionMethod($alg, new KeySize('10'), new OAEPparams('9lWu3Q=='), [$chunk]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -88,7 +90,7 @@ final class EncryptionMethodTest extends TestCase
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
         $chunk = Chunk::fromXML($chunkXml->documentElement);
 
-        $em = new EncryptionMethod($alg, 10, '9lWu3Q==', [$chunk]);
+        $em = new EncryptionMethod($alg, new KeySize('10'), new OAEPparams('9lWu3Q=='), [$chunk]);
 
         // Marshall it to a \DOMElement
         $emElement = $em->toXML();
@@ -118,13 +120,11 @@ final class EncryptionMethodTest extends TestCase
     public function testUnmarshalling(): void
     {
         $em = EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
-        $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
-        $this->assertEquals($alg, $em->getAlgorithm());
-        $this->assertEquals(10, $em->getKeySize());
-        $this->assertEquals('9lWu3Q==', $em->getOAEPParams());
-        $this->assertCount(1, $em->getChildren());
-        $this->assertInstanceOf(Chunk::class, $em->getChildren()[0]);
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($em),
+        );
     }
 
 

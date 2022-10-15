@@ -13,11 +13,8 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
-use function base64_decode;
-use function base64_encode;
-use function intval;
-use function strval;
-use function trim;
+use function array_pop;
+use function sprintf;
 
 /**
  * A class implementing the xenc:AbstractEncryptionMethod element.
@@ -29,11 +26,11 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /** @var string */
     protected string $algorithm;
 
-    /** @var int|null */
-    protected ?int $keySize = null;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null */
+    protected ?KeySize $keySize = null;
 
-    /** @var string|null */
-    protected ?string $oaepParams = null;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null */
+    protected ?OAEPparams $oaepParams = null;
 
     /** @var \SimpleSAML\XML\Chunk[] */
     protected array $children = [];
@@ -43,14 +40,14 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * EncryptionMethod constructor.
      *
      * @param string $algorithm
-     * @param int|null $keySize
-     * @param string|null $oaepParams
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams
      * @param \SimpleSAML\XML\Chunk[] $children
      */
     final public function __construct(
         string $algorithm,
-        ?int $keySize = null,
-        ?string $oaepParams = null,
+        ?KeySize $keySize = null,
+        ?OAEPparams $oaepParams = null,
         array $children = [],
     ) {
         $this->setAlgorithm($algorithm);
@@ -87,9 +84,9 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * Get the size of the key used by this encryption method.
      *
-     * @return int|null
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null
      */
-    public function getKeySize(): ?int
+    public function getKeySize(): ?KeySize
     {
         return $this->keySize;
     }
@@ -98,20 +95,20 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * Set the size of the key used by this encryption method.
      *
-     * @param int|null $keySize
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
      */
-    protected function setKeySize(?int $keySize): void
+    protected function setKeySize(?KeySize $keySize): void
     {
         $this->keySize = $keySize;
     }
 
 
     /**
-     * Get the base64-encoded OAEP parameters.
+     * Get the OAEP parameters.
      *
-     * @return string
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null
      */
-    public function getOAEPParams(): ?string
+    public function getOAEPParams(): ?OAEPparams
     {
         return $this->oaepParams;
     }
@@ -120,22 +117,11 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * Set the OAEP parameters.
      *
-     * @param string|null $oaepParams The OAEP parameters, base64-encoded.
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams The OAEP parameters.
      * @throws \SimpleSAML\Assert\AssertionFailedException
      */
-    protected function setOAEPParams(?string $oaepParams): void
+    protected function setOAEPParams(?OAEPparams $oaepParams): void
     {
-        if ($oaepParams === null) {
-            return;
-        }
-
-        Assert::stringPlausibleBase64(
-            $oaepParams,
-            base64_encode(base64_decode($oaepParams, true)),
-            'OAEPParams must be base64-encoded.',
-            InvalidArgumentException::class,
-        );
-
         $this->oaepParams = $oaepParams;
     }
 
@@ -163,8 +149,8 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
             $children,
             Chunk::class,
             sprintf(
-               'All children elements of %s:EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
-               static::NS_PREFIX
+                'All children elements of %s:EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
+                static::NS_PREFIX
             ),
             InvalidArgumentException::class,
         );
@@ -193,32 +179,21 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
         /** @psalm-var string $algorithm */
         $algorithm = self::getAttribute($xml, 'Algorithm');
-        $keySize = null;
-        $oaepParams = null;
-        $children = [];
 
+        $keySize = KeySize::getChildrenOfClass($xml);
+        Assert::maxCount($keySize, 1, TooManyElementsException::class);
+
+        $oaepParams = OAEPparams::getChildrenOfClass($xml);
+        Assert::maxCount($oaepParams, 1, TooManyElementsException::class);
+
+        $children = [];
         foreach ($xml->childNodes as $node) {
             if (!$node instanceof DOMElement) {
                 continue;
             } elseif ($node->namespaceURI === C::NS_XENC) {
                 if ($node->localName === 'KeySize') {
-                    Assert::null(
-                        $keySize,
-                        $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class,
-                    );
-                    Assert::numeric($node->textContent, $node->tagName . ' must be numerical.');
-                    $keySize = intval($node->textContent);
                     continue;
-                }
-
-                if ($node->localName === 'OAEPparams') {
-                    Assert::null(
-                        $oaepParams,
-                        $node->tagName . ' cannot be set more than once.',
-                        TooManyElementsException::class,
-                    );
-                    $oaepParams = trim($node->textContent);
+                } elseif ($node->localName === 'OAEPparams') {
                     continue;
                 }
             }
@@ -226,7 +201,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
             $children[] = Chunk::fromXML($node);
         }
 
-        return new static($algorithm, $keySize, $oaepParams, $children);
+        return new static($algorithm, array_pop($keySize), array_pop($oaepParams), $children);
     }
 
 
@@ -240,19 +215,12 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     {
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
-        if ($this->keySize !== null) {
-            $keySize = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:KeySize', strval($this->keySize));
-            $e->appendChild($keySize);
-        }
+        $this->getKeySize()?->toXML($e);
+        $this->getOAEPparams()?->toXML($e);
 
-        if ($this->oaepParams !== null) {
-            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPparams', $this->oaepParams);
-            $e->appendChild($oaepParams);
-        }
-
-        foreach ($this->children as $child) {
+        foreach ($this->getChildren() as $child) {
             $child->toXML($e);
         }
 

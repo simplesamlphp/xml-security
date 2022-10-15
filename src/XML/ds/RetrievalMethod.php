@@ -145,15 +145,13 @@ final class RetrievalMethod extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('URI', $this->URI);
+        $e->setAttribute('URI', $this->getURI());
 
-        if ($this->Type !== null) {
-            $e->setAttribute('Type', $this->Type);
+        if ($this->getType() !== null) {
+            $e->setAttribute('Type', $this->getType());
         }
 
-        if ($this->transforms !== null) {
-            $this->transforms->toXML($e);
-        }
+        $this->getTransforms()?->toXML($e);
 
         return $e;
     }

@@ -132,13 +132,8 @@ class CipherData extends AbstractXencElement
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->cipherValue !== null) {
-            $this->cipherValue->toXML($e);
-        }
-
-        if ($this->cipherReference !== null) {
-            $this->cipherReference->toXML($e);
-        }
+        $this->getCipherValue()?->toXML($e);
+        $this->getCipherReference()?->toXML($e);
 
         return $e;
     }

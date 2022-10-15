@@ -10,6 +10,7 @@ use SimpleSAML\XML\Base64ElementTrait;
  * Class representing a ds:Exponent element.
  *
  * @package simplesaml/xml-security
+ * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class Exponent extends AbstractDsElement
 {

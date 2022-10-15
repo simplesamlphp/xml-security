@@ -240,14 +240,14 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        $this->canonicalizationMethod->toXML($e);
-        $this->signatureMethod->toXML($e);
+        $this->getCanonicalizationMethod()->toXML($e);
+        $this->getSignatureMethod()->toXML($e);
 
-        foreach ($this->references as $ref) {
+        foreach ($this->getReferences() as $ref) {
             $ref->toXML($e);
         }
 

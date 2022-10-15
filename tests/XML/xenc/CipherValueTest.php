@@ -67,6 +67,9 @@ final class CipherValueTest extends TestCase
     {
         $cipherValue = CipherValue::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $cipherValue->getContent());
+        $this->assertEquals(
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            strval($cipherValue),
+        );
     }
 }

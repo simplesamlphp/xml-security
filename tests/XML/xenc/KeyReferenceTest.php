@@ -78,11 +78,6 @@ final class KeyReferenceTest extends TestCase
     {
         $keyReference = KeyReference::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('#Encrypted_KEY_ID', $keyReference->getURI());
-
-        $references = $keyReference->getElements();
-        $this->assertCount(1, $references);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($keyReference),

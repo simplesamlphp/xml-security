@@ -71,17 +71,9 @@ final class ObjectTest extends TestCase
     {
         $obj = DsObject::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('abc123', $obj->getId());
-        $this->assertEquals('image/png', $obj->getMimeType());
-        $this->assertEquals('http://www.w3.org/2000/09/xmldsig#base64', $obj->getEncoding());
-        $this->assertFalse($obj->isEmptyElement());
-
-        $objElement = $obj->getElements();
-        $objElement = $objElement[0]->getXML();
-
         $this->assertEquals(
-            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-            $objElement->textContent
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($obj)
         );
     }
 

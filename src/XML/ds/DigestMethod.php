@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -19,17 +20,16 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class DigestMethod extends AbstractDsElement
 {
+    use ExtendableElementTrait;
+
+    public const NAMESPACE = C::XS_ANY_NS_OTHER;
+
     /**
      * The algorithm.
      *
      * @var string
      */
     protected string $Algorithm;
-
-    /**
-     * @var \SimpleSAML\XML\Chunk[]
-     */
-    protected array $elements;
 
 
     /**
@@ -76,32 +76,6 @@ final class DigestMethod extends AbstractDsElement
 
 
     /**
-     * Collect the embedded elements
-     *
-     * @return \SimpleSAML\XML\Chunk[]
-     */
-    public function getElements(): array
-    {
-        return $this->elements;
-    }
-
-
-    /**
-     * Set the value of the elements-property
-     *
-     * @param \SimpleSAML\XML\Chunk[] $elements
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     *   if the supplied array contains anything other than Chunk objects
-     */
-    private function setElements(array $elements): void
-    {
-        Assert::allIsInstanceOf($elements, Chunk::class, InvalidArgumentException::class);
-
-        $this->elements = $elements;
-    }
-
-
-    /**
      * Convert XML into a DigestMethod
      *
      * @param \DOMElement $xml The XML element we should load
@@ -140,10 +114,13 @@ final class DigestMethod extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->Algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $elt */
         foreach ($this->elements as $elt) {
-            $e->appendChild($e->ownerDocument->importNode($elt->getXML(), true));
+            if (!$elt->isEmptyElement()) {
+                $elt->toXML($e);
+            }
         }
 
         return $e;

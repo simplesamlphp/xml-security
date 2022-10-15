@@ -134,20 +134,22 @@ final class EncryptedKey extends AbstractEncryptedType
      */
     public function decrypt(EncryptionAlgorithmInterface $decryptor): string
     {
+        $cipherValue =  $this->getCipherData()->getCipherValue();
         Assert::notNull(
-            $this->getCipherData()->getCipherValue(),
+            $cipherValue,
             'Decrypting keys by reference is not supported.',
             InvalidArgumentException::class,
         );
 
         Assert::eq(
             $decryptor->getAlgorithmId(),
-            $this->getEncryptionMethod()->getAlgorithm(),
+            $this->getEncryptionMethod()?->getAlgorithm(),
             'Decryptor algorithm does not match algorithm used.',
             InvalidArgumentException::class,
         );
 
-        return $decryptor->decrypt(base64_decode($this->getCipherData()->getCipherValue()->getContent()));
+        /** @psalm-var \SimpleSAML\XMLSecurity\XML\xenc\CipherValue $cipherValue */
+        return $decryptor->decrypt(base64_decode($cipherValue->getContent()));
     }
 
 
@@ -286,17 +288,12 @@ final class EncryptedKey extends AbstractEncryptedType
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = parent::toXML($parent);
 
-        if ($this->referenceList !== null) {
-            $this->referenceList->toXML($e);
+        if ($this->getRecipient() !== null) {
+            $e->setAttribute('Recipient', $this->getRecipient());
         }
 
-        if ($this->carriedKeyName !== null) {
-            $this->carriedKeyName->toXML($e);
-        }
-
-        if ($this->recipient !== null) {
-            $e->setAttribute('Recipient', $this->recipient);
-        }
+        $this->getReferenceList()?->toXML($e);
+        $this->getCarriedKeyName()?->toXML($e);
 
         return $e;
     }

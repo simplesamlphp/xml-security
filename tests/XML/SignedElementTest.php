@@ -20,7 +20,6 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignedElementTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\AbstractSignedXMLElement
  * @covers \SimpleSAML\XMLSecurity\XML\SignedElementTrait
  * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
  *

@@ -91,7 +91,9 @@ final class RSAKeyValueTest extends TestCase
     {
         $RSAKeyValue = RSAKeyValue::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $RSAKeyValue->getModulus()->getContent());
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=', $RSAKeyValue->getExponent()->getContent());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($RSAKeyValue),
+        );
     }
 }

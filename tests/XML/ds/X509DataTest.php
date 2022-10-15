@@ -127,11 +127,9 @@ final class X509DataTest extends TestCase
     {
         $x509data = X509Data::fromXML($this->xmlRepresentation->documentElement);
 
-        $data = $x509data->getData();
-        $this->assertInstanceOf(Chunk::class, $data[0]);
-        $this->assertInstanceOf(X509Certificate::class, $data[1]);
-        $this->assertInstanceOf(X509IssuerSerial::class, $data[2]);
-        $this->assertInstanceOf(X509SubjectName::class, $data[3]);
-        $this->assertInstanceOf(Chunk::class, $data[4]);
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($x509data),
+        );
     }
 }

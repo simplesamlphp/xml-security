@@ -7,20 +7,20 @@ namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
+use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
 
 use function dirname;
 use function strval;
 
 /**
- * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CarriedKeyNameTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\OAEPparamsTest
  *
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName
+ * @covers \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams
  *
  * @package simplesamlphp/xml-security
  */
-final class CarriedKeyNameTest extends TestCase
+final class OAEPparamsTest extends TestCase
 {
     use SerializableElementTestTrait;
 
@@ -28,10 +28,10 @@ final class CarriedKeyNameTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->testedClass = CarriedKeyName::class;
+        $this->testedClass = OAEPparams::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CarriedKeyName.xml',
+            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_OAEPparams.xml',
         );
     }
 
@@ -40,11 +40,11 @@ final class CarriedKeyNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keyName = new CarriedKeyName('Some label');
+        $params = new OAEPparams('9lWu3Q==');
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyName),
+            strval($params),
         );
     }
 
@@ -53,11 +53,11 @@ final class CarriedKeyNameTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyName = CarriedKeyName::fromXML($this->xmlRepresentation->documentElement);
+        $params = OAEPparams::fromXML($this->xmlRepresentation->documentElement);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($keyName),
+            strval($params),
         );
     }
 }
