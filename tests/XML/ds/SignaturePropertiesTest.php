@@ -67,27 +67,10 @@ final class SignaturePropertiesTest extends TestCase
     public function testUnmarshalling(): void
     {
         $signatureProperties = SignatureProperties::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('def456', $signatureProperties->getId());
-
-        $signatureProperty = $signatureProperties->getSignatureProperty();
-        $this->assertCount(1, $signatureProperty);
-
-        $signatureProperty = array_pop($signatureProperty);
-        $this->assertEquals('https://simplesamlphp.org/some/target', $signatureProperty->getTarget());
-        $this->assertEquals('abc123', $signatureProperty->getId());
-
-        $children = $signatureProperty->getElements();
-        $this->assertCount(1, $children);
-
-        $child = $children[0];
-        $this->assertEquals('HSMSerialNumber', $child->getLocalName());
-        $this->assertEquals('ssp', $child->getPrefix());
-        $this->assertEquals('urn:x-simplesamlphp:namespace', $child->getNamespaceURI());
-        $this->assertEquals('1234567890', $child->getXML()->textContent);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
-            strval($signatureProperties),
+            strval($signatureProperties)
         );
     }
 }

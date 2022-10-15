@@ -61,7 +61,9 @@ final class KeyInfoReferenceTest extends TestCase
     {
         $KeyInfoReference = KeyInfoReference::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('#_e395489e5f8444f1aabb4b2ca98a23b793d211ddf0', $KeyInfoReference->getURI());
-        $this->assertEquals('abc123', $KeyInfoReference->getId());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($KeyInfoReference),
+        );
     }
 }

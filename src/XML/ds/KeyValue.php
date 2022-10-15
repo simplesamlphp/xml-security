@@ -131,13 +131,15 @@ final class KeyValue extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->RSAKeyValue !== null) {
-            $this->RSAKeyValue->toXML($e);
+        if ($this->getRSAKeyValue() !== null) {
+            $this->getRSAKeyValue()->toXML($e);
         }
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
-        foreach ($this->elements as $element) {
-            $e->appendChild($e->ownerDocument->importNode($element->toXML(), true));
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $elt */
+        foreach ($this->elements as $elt) {
+            if (!$elt->isEmptyElement()) {
+                $elt->toXML($e);
+            }
         }
 
         return $e;

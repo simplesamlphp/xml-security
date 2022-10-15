@@ -67,6 +67,9 @@ final class ExponentTest extends TestCase
     {
         $exponent = Exponent::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=', $exponent->getContent());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($exponent),
+        );
     }
 }

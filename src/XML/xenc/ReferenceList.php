@@ -23,21 +23,21 @@ class ReferenceList extends AbstractXencElement
     protected array $dataReferences;
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] */
-    protected array $keyreferences;
+    protected array $keyReferences;
 
 
     /**
      * ReferenceList constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\DataReference[] $dataReferences
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] $keyreferences
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] $keyReferences
      */
-    final public function __construct(array $dataReferences, array $keyreferences = [])
+    final public function __construct(array $dataReferences, array $keyReferences = [])
     {
         $this->setDataReferences($dataReferences);
-        $this->setKeyReferences($keyreferences);
+        $this->setKeyReferences($keyReferences);
         Assert::minCount(
-            array_merge($this->dataReferences, $this->keyreferences),
+            array_merge($this->dataReferences, $this->keyReferences),
             1,
             'At least one <xenc:DataReference> or <xenc:KeyReference> element required in <xenc:ReferenceList>.',
             MissingElementException::class,
@@ -79,7 +79,7 @@ class ReferenceList extends AbstractXencElement
      */
     public function getKeyReferences(): array
     {
-        return $this->keyreferences;
+        return $this->keyReferences;
     }
 
 
@@ -95,7 +95,7 @@ class ReferenceList extends AbstractXencElement
             InvalidArgumentException::class,
         );
 
-        $this->keyreferences = $keyReferences;
+        $this->keyReferences = $keyReferences;
     }
 
 
@@ -124,11 +124,11 @@ class ReferenceList extends AbstractXencElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        foreach ($this->dataReferences as $dref) {
+        foreach ($this->getDataReferences() as $dref) {
             $dref->toXML($e);
         }
 
-        foreach ($this->keyreferences as $kref) {
+        foreach ($this->getKeyReferences() as $kref) {
             $kref->toXML($e);
         }
 

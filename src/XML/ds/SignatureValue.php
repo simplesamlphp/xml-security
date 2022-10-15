@@ -87,8 +87,8 @@ final class SignatureValue extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->getContent();
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
         return $e;

@@ -78,28 +78,6 @@ final class ManifestTest extends TestCase
     public function testUnmarshalling(): void
     {
         $manifest = Manifest::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('abc123', $manifest->getId());
-
-        $references = $manifest->getReferences();
-        $this->assertCount(1, $references);
-
-        $reference = $references[0];
-        $this->assertEquals('abc123', $reference->getId());
-        $this->assertEquals(C::XMLDSIG_MANIFEST, $reference->getType());
-        $this->assertEquals('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153', $reference->getURI());
-
-        $digestMethod = $reference->getDigestMethod();
-        $this->assertEquals(C::DIGEST_SHA256, $digestMethod->getAlgorithm());
-
-        $digestValue = $reference->getDigestValue();
-        $this->assertEquals('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=', $digestValue->getContent());
-
-        $transforms = $reference->getTransforms();
-        $transform = $transforms->getTransform();
-        $this->assertCount(2, $transform);
-
-        $this->assertEquals(C::XMLDSIG_ENVELOPED, $transform[0]->getAlgorithm());
-        $this->assertEquals(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $transform[1]->getAlgorithm());
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

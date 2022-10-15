@@ -249,22 +249,22 @@ final class Reference extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
-        if ($this->Type !== null) {
-            $e->setAttribute('Type', $this->Type);
+        if ($this->getType() !== null) {
+            $e->setAttribute('Type', $this->getType());
         }
-        if ($this->URI !== null) {
-            $e->setAttribute('URI', $this->URI);
-        }
-
-        if ($this->transforms !== null) {
-            $this->transforms->toXML($e);
+        if ($this->getURI() !== null) {
+            $e->setAttribute('URI', $this->getURI());
         }
 
-        $this->digestMethod->toXML($e);
-        $this->digestValue->toXML($e);
+        if ($this->getTransforms() !== null) {
+            $this->getTransforms()->toXML($e);
+        }
+
+        $this->getDigestMethod()->toXML($e);
+        $this->getDigestValue()->toXML($e);
 
         return $e;
     }

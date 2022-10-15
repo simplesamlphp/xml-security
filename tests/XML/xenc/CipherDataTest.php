@@ -69,6 +69,9 @@ final class CipherDataTest extends TestCase
     {
         $cipherData = CipherData::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('c29tZSB0ZXh0', $cipherData->getCipherValue()->getContent());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($cipherData),
+        );
     }
 }

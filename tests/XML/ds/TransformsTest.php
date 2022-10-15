@@ -70,14 +70,6 @@ final class TransformsTest extends TestCase
     public function testUnmarshalling(): void
     {
         $transforms = Transforms::fromXML($this->xmlRepresentation->documentElement);
-        $transform = $transforms->getTransform();
-        $this->assertCount(1, $transform);
-
-        $transform = array_pop($transform);
-        $this->assertEquals(C::XPATH_URI, $transform->getAlgorithm());
-
-        $xpath = $transform->getXPath();
-        $this->assertInstanceOf(XPath::class, $xpath);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

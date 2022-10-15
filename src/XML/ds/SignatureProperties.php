@@ -121,11 +121,11 @@ final class SignatureProperties extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        foreach ($this->signatureProperty as $signatureProperty) {
+        foreach ($this->getSignatureProperty() as $signatureProperty) {
             $signatureProperty->toXML($e);
         }
 

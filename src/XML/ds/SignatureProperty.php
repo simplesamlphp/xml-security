@@ -142,16 +142,15 @@ final class SignatureProperty extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Target', $this->Target);
+        $e->setAttribute('Target', $this->getTarget());
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        Assert::allImplementsInterface($this->elements, SerializableElementInterface::class);
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
-        foreach ($this->elements as $element) {
-            $e->appendChild($e->ownerDocument->importNode($element->toXML(), true));
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $element */
+        foreach ($this->getElements() as $element) {
+            $element->toXML($e);
         }
 
         return $e;

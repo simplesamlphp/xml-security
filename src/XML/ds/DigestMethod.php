@@ -140,10 +140,12 @@ final class DigestMethod extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->Algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
         foreach ($this->elements as $elt) {
-            $e->appendChild($e->ownerDocument->importNode($elt->getXML(), true));
+            if (!$elt->isEmptyElement()) {
+                $elt->toXML($e);
+            }
         }
 
         return $e;

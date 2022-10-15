@@ -62,12 +62,6 @@ class InclusiveNamespacesTest extends TestCase
         $inclusiveNamespaces = InclusiveNamespaces::fromXML(
             $this->xmlRepresentation->documentElement,
         );
-        $prefixes = $inclusiveNamespaces->getPrefixes();
-        $this->assertCount(2, $prefixes);
-
-        $this->assertEquals('dsig', $prefixes[0]);
-        $this->assertEquals('soap', $prefixes[1]);
-
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

@@ -71,6 +71,7 @@ final class TransformTest extends TestCase
             dirname(dirname(dirname(__FILE__))) .
             '/resources/xml/ds_Transform_InclusiveNamespaces.xml',
         );
+
         $this->assertEquals(
             $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
             strval($transform),
@@ -83,11 +84,6 @@ final class TransformTest extends TestCase
     public function testUnmarshalling(): void
     {
         $transform = Transform::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals(C::XPATH_URI, $transform->getAlgorithm());
-
-        $xpath = $transform->getXPath();
-
-        $this->assertInstanceOf(XPath::class, $xpath);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),

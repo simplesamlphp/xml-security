@@ -102,8 +102,8 @@ final class X509Digest extends AbstractDsig11Element
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->content;
-        $e->setAttribute('Algorithm', $this->algorithm);
+        $e->textContent = $this->getContent();
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
         return $e;
     }

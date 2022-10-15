@@ -27,6 +27,7 @@ final class DsObject extends AbstractDsElement
     /** @var string */
     public const NAMESPACE = Constants::XS_ANY_NS_ANY;
 
+
     /**
      * The Id.
      *
@@ -203,20 +204,22 @@ final class DsObject extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
 
         if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+            $e->setAttribute('Id', $this->getId());
         }
 
         if ($this->MimeType !== null) {
-            $e->setAttribute('MimeType', $this->MimeType);
+            $e->setAttribute('MimeType', $this->getMimeType());
         }
 
         if ($this->Encoding !== null) {
-            $e->setAttribute('Encoding', $this->Encoding);
+            $e->setAttribute('Encoding', $this->getEncoding());
         }
 
         /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
         foreach ($this->elements as $elt) {
-            $elt->toXML($e);
+            if (!$elt->isEmptyElement()) {
+                $elt->toXML($e);
+            }
         }
 
         return $e;

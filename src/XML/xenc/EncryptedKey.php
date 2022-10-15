@@ -286,16 +286,16 @@ final class EncryptedKey extends AbstractEncryptedType
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = parent::toXML($parent);
 
-        if ($this->referenceList !== null) {
-            $this->referenceList->toXML($e);
+        if ($this->getReferenceList() !== null) {
+            $this->getReferenceList()->toXML($e);
         }
 
-        if ($this->carriedKeyName !== null) {
-            $this->carriedKeyName->toXML($e);
+        if ($this->getCarriedKeyName() !== null) {
+            $this->getCarriedKeyName()->toXML($e);
         }
 
-        if ($this->recipient !== null) {
-            $e->setAttribute('Recipient', $this->recipient);
+        if ($this->getRecipient() !== null) {
+            $e->setAttribute('Recipient', $this->getRecipient());
         }
 
         return $e;

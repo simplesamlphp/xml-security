@@ -118,13 +118,11 @@ final class EncryptionMethodTest extends TestCase
     public function testUnmarshalling(): void
     {
         $em = EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
-        $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
-        $this->assertEquals($alg, $em->getAlgorithm());
-        $this->assertEquals(10, $em->getKeySize());
-        $this->assertEquals('9lWu3Q==', $em->getOAEPParams());
-        $this->assertCount(1, $em->getChildren());
-        $this->assertInstanceOf(Chunk::class, $em->getChildren()[0]);
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($em),
+        );
     }
 
 

@@ -123,11 +123,11 @@ abstract class AbstractReference extends AbstractXencElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('URI', $this->uri);
+        $e->setAttribute('URI', $this->getUri());
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
-        foreach ($this->elements as $element) {
-            $element->toXML($e);
+        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $elt */
+        foreach ($this->getElements() as $elt) {
+            $elt->toXML($e);
         }
 
         return $e;

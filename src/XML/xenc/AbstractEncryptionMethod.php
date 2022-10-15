@@ -240,19 +240,19 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     {
         /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
-        if ($this->keySize !== null) {
-            $keySize = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:KeySize', strval($this->keySize));
+        if ($this->getKeySize() !== null) {
+            $keySize = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:KeySize', strval($this->getKeySize()));
             $e->appendChild($keySize);
         }
 
-        if ($this->oaepParams !== null) {
-            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPparams', $this->oaepParams);
+        if ($this->getOaepParams() !== null) {
+            $oaepParams = $e->ownerDocument->createElementNS(C::NS_XENC, 'xenc:OAEPparams', $this->getOaepParams());
             $e->appendChild($oaepParams);
         }
 
-        foreach ($this->children as $child) {
+        foreach ($this->getChildren() as $child) {
             $child->toXML($e);
         }
 

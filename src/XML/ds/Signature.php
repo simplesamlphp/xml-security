@@ -234,18 +234,18 @@ final class Signature extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        $this->signedInfo->toXML($e);
-        $this->signatureValue->toXML($e);
+        $this->getSignedInfo()->toXML($e);
+        $this->getSignatureValue()->toXML($e);
 
-        if ($this->keyInfo !== null) {
-            $this->keyInfo->toXML($e);
+        if ($this->getKeyInfo() !== null) {
+            $this->getKeyInfo()->toXML($e);
         }
 
-        foreach ($this->objects as $o) {
+        foreach ($this->getObjects() as $o) {
             $o->toXML($e);
         }
 

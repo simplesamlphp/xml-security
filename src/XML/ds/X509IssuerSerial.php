@@ -132,8 +132,8 @@ final class X509IssuerSerial extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        $this->X509IssuerName->toXML($e);
-        $this->X509SerialNumber->toXML($e);
+        $this->getIssuerName()->toXML($e);
+        $this->getSerialNumber()->toXML($e);
 
         return $e;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SchemaValidationTestTrait;
 use SimpleSAML\Test\XML\SerializableElementTestTrait;
@@ -73,19 +74,6 @@ final class SignedInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $signedInfo = SignedInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('cba321', $signedInfo->getId());
-
-        $this->assertEquals(
-            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-            $signedInfo->getCanonicalizationMethod()->getAlgorithm(),
-        );
-        $this->assertEquals(
-            C::SIG_RSA_SHA256,
-            $signedInfo->getSignatureMethod()->getAlgorithm(),
-        );
-
-        $references = $signedInfo->getReferences();
-        $this->assertCount(1, $references);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -97,7 +85,7 @@ final class SignedInfoTest extends TestCase
     /**
      *
      */
-    public function canonicalization(\DOMElement $xml, SignedInfo $signedInfo): void
+    private function canonicalization(DOMElement $xml, SignedInfo $signedInfo): void
     {
         $this->assertEquals(
             $xml->C14N(true, false),

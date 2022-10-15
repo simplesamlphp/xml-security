@@ -86,8 +86,8 @@ class InclusiveNamespaces extends AbstractEcElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if (!empty($this->prefixes)) {
-            $e->setAttribute('PrefixList', join(' ', $this->prefixes));
+        if (!empty($this->getPrefixes())) {
+            $e->setAttribute('PrefixList', join(' ', $this->getPrefixes()));
         }
 
         return $e;

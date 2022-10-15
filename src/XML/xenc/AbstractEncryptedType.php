@@ -223,31 +223,31 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->id !== null) {
-            $e->setAttribute('Id', $this->id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        if ($this->type !== null) {
-            $e->setAttribute('Type', $this->type);
+        if ($this->getType() !== null) {
+            $e->setAttribute('Type', $this->getType());
         }
 
-        if ($this->mimeType !== null) {
-            $e->setAttribute('MimeType', $this->mimeType);
+        if ($this->getMimeType() !== null) {
+            $e->setAttribute('MimeType', $this->getMimeType());
         }
 
-        if ($this->encoding !== null) {
-            $e->setAttribute('Encoding', $this->encoding);
+        if ($this->getEncoding() !== null) {
+            $e->setAttribute('Encoding', $this->getEncoding());
         }
 
-        if ($this->encryptionMethod !== null) {
-            $this->encryptionMethod->toXML($e);
+        if ($this->getEncryptionMethod() !== null) {
+            $this->getEncryptionMethod()?->toXML($e);
         }
 
-        if ($this->keyInfo !== null) {
-            $this->keyInfo->toXML($e);
+        if ($this->getKeyInfo() !== null) {
+            $this->getKeyInfo()?->toXML($e);
         }
 
-        $this->cipherData->toXML($e);
+        $this->getCipherData()->toXML($e);
 
         return $e;
     }

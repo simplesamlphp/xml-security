@@ -117,11 +117,11 @@ final class Manifest extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
-            $e->setAttribute('Id', $this->Id);
+        if ($this->getId() !== null) {
+            $e->setAttribute('Id', $this->getId());
         }
 
-        foreach ($this->references as $reference) {
+        foreach ($this->getReferences() as $reference) {
             $reference->toXML($e);
         }
 

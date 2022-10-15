@@ -100,7 +100,7 @@ final class SignatureMethod extends AbstractDsElement
     public function toXML(DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->Algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
         return $e;
     }

@@ -124,14 +124,11 @@ final class KeyInfoTest extends TestCase
     public function testUnmarshalling(): void
     {
         $keyInfo = KeyInfo::fromXML($this->xmlRepresentation->documentElement);
-        $this->assertEquals('fed654', $keyInfo->getId());
 
-        $info = $keyInfo->getInfo();
-        $this->assertCount(3, $info);
-        $this->assertInstanceOf(KeyName::class, $info[0]);
-        $this->assertInstanceOf(X509Data::class, $info[1]);
-        $this->assertInstanceOf(Chunk::class, $info[2]);
-        $this->assertEquals('fed654', $keyInfo->getId());
+        $this->assertEquals(
+            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            strval($keyInfo),
+        );
     }
 
 

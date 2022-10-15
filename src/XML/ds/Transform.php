@@ -190,18 +190,19 @@ class Transform extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        $e->setAttribute('Algorithm', $this->algorithm);
+        $algorithm = $this->getAlgorithm();
+        $e->setAttribute('Algorithm', $algorithm);
 
-        switch ($this->algorithm) {
+        switch ($algorithm) {
             case C::XPATH_URI:
-                if ($this->xpath !== null) {
-                    $this->xpath->toXML($e);
+                if ($this->getXpath() !== null) {
+                    $this->getXpath()->toXML($e);
                 }
                 break;
             case C::C14N_EXCLUSIVE_WITH_COMMENTS:
             case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
-                if ($this->inclusiveNamespaces !== null) {
-                    $this->inclusiveNamespaces->toXML($e);
+                if ($this->getInclusiveNamespaces() !== null) {
+                    $this->getInclusiveNamespaces()->toXML($e);
                 }
         }
 

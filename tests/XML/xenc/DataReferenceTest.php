@@ -78,11 +78,6 @@ final class DataReferenceTest extends TestCase
     {
         $dataReference = DataReference::fromXML($this->xmlRepresentation->documentElement);
 
-        $this->assertEquals('#Encrypted_DATA_ID', $dataReference->getURI());
-
-        $references = $dataReference->getElements();
-        $this->assertCount(1, $references);
-
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
             strval($dataReference),

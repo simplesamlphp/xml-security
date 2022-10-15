@@ -138,8 +138,8 @@ final class RSAKeyValue extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        $this->modulus->toXML($e);
-        $this->exponent->toXML($e);
+        $this->getModulus()->toXML($e);
+        $this->getExponent()->toXML($e);
 
         return $e;
     }
