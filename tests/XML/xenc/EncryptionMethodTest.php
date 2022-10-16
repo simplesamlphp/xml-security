@@ -54,7 +54,7 @@ final class EncryptionMethodTest extends TestCase
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
         $chunk = Chunk::fromXML($chunkXml->documentElement);
 
-        $em = new EncryptionMethod($alg, new KeySize('10'), new OAEPparams('9lWu3Q=='), [$chunk]);
+        $em = new EncryptionMethod($alg, new KeySize(10), new OAEPparams('9lWu3Q=='), [$chunk]);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
@@ -90,7 +90,7 @@ final class EncryptionMethodTest extends TestCase
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
         $chunk = Chunk::fromXML($chunkXml->documentElement);
 
-        $em = new EncryptionMethod($alg, new KeySize('10'), new OAEPparams('9lWu3Q=='), [$chunk]);
+        $em = new EncryptionMethod($alg, new KeySize(10), new OAEPparams('9lWu3Q=='), [$chunk]);
 
         // Marshall it to a \DOMElement
         $emElement = $em->toXML();

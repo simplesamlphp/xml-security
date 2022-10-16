@@ -40,7 +40,7 @@ final class KeySizeTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keySize = new KeySize('10');
+        $keySize = new KeySize(10);
 
         $this->assertEquals(
             $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
