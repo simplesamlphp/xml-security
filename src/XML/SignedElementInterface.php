@@ -36,8 +36,6 @@ interface SignedElementInterface extends CanonicalizableElementInterface
     /**
      * Retrieve the key used to verify the signature in this object.
      *
-     * Warning:
-     *
      * @return \SimpleSAML\XMLSecurity\Key\AbstractKey The key that verified the signature in this object.
      * @throws \Exception if an error occurs while trying to extract the public key from a certificate.
      */
