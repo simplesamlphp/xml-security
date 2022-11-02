@@ -13,6 +13,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
+use SimpleSAML\XMLSecurity\Exception\ReferenceValidationFailedException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key\AbstractKey;
@@ -90,7 +91,7 @@ trait SignedElementTrait
             )
             && !$reference->isXPointer()
         ) { // canonicalization with comments used, but reference wasn't an xpointer!
-            throw new RuntimeException('Invalid reference for canonicalization algorithm.');
+            throw new ReferenceValidationFailedException('Invalid reference for canonicalization algorithm.');
         }
 
         $id = $this->getId();
@@ -100,13 +101,13 @@ trait SignedElementTrait
             Assert::true(
                 $xml->isSameNode($xml->ownerDocument->documentElement),
                 'Cannot use document reference when element is not the root of the document.',
-                RuntimeException::class,
+                ReferenceValidationFailedException::class,
             );
         } else { // short-name or scheme-based xpointer
             Assert::notEmpty(
                 $id,
                 'Reference points to an element, but given element does not have an ID.',
-                RuntimeException::class,
+                ReferenceValidationFailedException::class,
             );
             Assert::oneOf(
                 $uri,
@@ -115,7 +116,7 @@ trait SignedElementTrait
                     '#xpointer(id(' . $id . '))',
                 ],
                 'Reference does not point to given element.',
-                RuntimeException::class,
+                ReferenceValidationFailedException::class,
             );
         }
     }
