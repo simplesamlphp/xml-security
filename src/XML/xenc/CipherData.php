@@ -105,7 +105,7 @@ class CipherData extends AbstractXencElement
         Assert::maxCount(
             $cv,
             1,
-            'More than one CipherValue element in <xenc:CipherData',
+            'More than one CipherValue element in <xenc:CipherData>',
             TooManyElementsException::class
         );
 
@@ -113,7 +113,7 @@ class CipherData extends AbstractXencElement
         Assert::maxCount(
             $cr,
             1,
-            'More than one CipherReference element in <xenc:CipherData',
+            'More than one CipherReference element in <xenc:CipherData>',
             TooManyElementsException::class
         );
 

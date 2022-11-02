@@ -62,7 +62,7 @@ final class SignatureMethod extends AbstractDsElement
                 array_keys(C::$RSA_DIGESTS),
                 array_keys(C::$HMAC_DIGESTS),
             ),
-            'Invalid signature method',
+            'Invalid signature method: %s',
             InvalidArgumentException::class,
         );
 

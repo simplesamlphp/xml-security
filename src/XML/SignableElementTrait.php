@@ -85,7 +85,7 @@ trait SignableElementTrait
                 C::C14N_EXCLUSIVE_WITH_COMMENTS,
                 C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
             ],
-            'Unsupported canonicalization algorithm',
+            'Unsupported canonicalization algorithm: %s',
             UnsupportedAlgorithmException::class,
         );
         $this->c14nAlg = $canonicalizationAlg;

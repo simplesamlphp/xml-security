@@ -65,7 +65,7 @@ final class X509Digest extends AbstractDsig11Element
         Assert::oneOf(
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),
-            'Invalid digest method',
+            'Invalid digest method: %s',
             InvalidArgumentException::class,
         );
 

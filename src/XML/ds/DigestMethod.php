@@ -67,7 +67,7 @@ final class DigestMethod extends AbstractDsElement
         Assert::oneOf(
             $algorithm,
             array_keys(C::$DIGEST_ALGORITHMS),
-            'Invalid digest method',
+            'Invalid digest method: %s',
             InvalidArgumentException::class,
         );
 
