@@ -48,7 +48,7 @@ class PEMCertificatesMock
     private static function buildKeysPath(string $file): string
     {
         $base = dirname(dirname(__FILE__));
-        return $base . DIRECTORY_SEPARATOR . self::KEYS_DIR . DIRECTORY_SEPARATOR . $file;
+        return 'file://' . $base . DIRECTORY_SEPARATOR . self::KEYS_DIR . DIRECTORY_SEPARATOR . $file;
     }
 
 
@@ -59,7 +59,7 @@ class PEMCertificatesMock
     private static function buildCertsPath(string $file): string
     {
         $base = dirname(dirname(__FILE__));
-        return $base . DIRECTORY_SEPARATOR . self::CERTS_DIR . DIRECTORY_SEPARATOR . $file;
+        return 'file://' . $base . DIRECTORY_SEPARATOR . self::CERTIFICATE_DIR . DIRECTORY_SEPARATOR . $file;
     }
 
 

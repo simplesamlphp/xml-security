@@ -40,7 +40,7 @@ final class PublicKeyTest extends TestCase
     public function testCreation(): void
     {
         $k = new PublicKey($this->f);
-        $keyDetails = openssl_pkey_get_details($k->get());
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 
@@ -51,7 +51,7 @@ final class PublicKeyTest extends TestCase
     public function testFromFile(): void
     {
         $k = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
-        $keyDetails = openssl_pkey_get_details($k->get());
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 
@@ -72,7 +72,7 @@ final class PublicKeyTest extends TestCase
     public function testFromDetails(): void
     {
         $k = PublicKey::fromDetails($this->pubKey['rsa']['n'], $this->pubKey['rsa']['e']);
-        $keyDetails = openssl_pkey_get_details($k->get());
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 }

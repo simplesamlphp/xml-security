@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use OpenSSLCertificate;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
@@ -50,12 +50,12 @@ class X509Certificate extends PublicKey
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param OpenSSLCertificate|string $cert The PEM-encoded certificate or the path to a file containing it.
+     * @param string $cert The PEM-encoded certificate or the path to a file containing it.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct(OpenSSLCertificate|string $cert)
+    final public function __construct(string $cert)
     {
         $resource = openssl_x509_read($cert);
         if ($resource === false) {
@@ -68,7 +68,7 @@ class X509Certificate extends PublicKey
         }
         $this->certificate = $certificate;
 
-        parent::__construct(openssl_pkey_get_public($this->certificate));
+        parent::__construct($certificate);
         $this->thumbprint[C::DIGEST_SHA1] = $this->getRawThumbprint();
 
         $this->parsed = openssl_x509_parse($this->certificate);
@@ -138,6 +138,6 @@ class X509Certificate extends PublicKey
      */
     public static function fromFile(string $file): static
     {
-        return new static(static::readFile($file));
+        return new static(PEM::fromFile($file)->string());
     }
 }

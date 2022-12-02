@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use OpenSSLAsymmetricKey;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 
 use function base64_encode;
 use function chr;
 use function chunk_split;
+use function openssl_pkey_export;
 use function openssl_pkey_get_public;
 use function ord;
 use function pack;
@@ -45,26 +46,11 @@ class PublicKey extends AsymmetricKey
     /**
      * Create a new public key from the PEM-encoded key material.
      *
-     * @param OpenSSLAsymmetricKey|string $key The PEM-encoded key material.
+     * @param string $key The PEM-encoded key material.
      */
-    public function __construct(OpenSSLAsymmetricKey|string $key)
+    public function __construct(string $key)
     {
-        parent::__construct(openssl_pkey_get_public($key));
-    }
-
-
-    /**
-     * Get a new public key from a file.
-     *
-     * @param string $file The file where the PEM-encoded public key is stored.
-     *
-     * @return static A new public key.
-     *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
-     */
-    public static function fromFile(string $file): static
-    {
-        return new static(static::readFile($file));
+        parent::__construct($key);
     }
 
 
@@ -143,5 +129,20 @@ class PublicKey extends AsymmetricKey
             ) .
             "-----END PUBLIC KEY-----\n",
         );
+    }
+
+
+    /**
+     * Get a new public key from a file.
+     *
+     * @param string $file The file where the PEM-encoded private key is stored.
+     *
+     * @return static A new public key.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
+     */
+    public static function fromFile(string $file): static
+    {
+        return new static(PEM::fromFile($file)->string());
     }
 }

@@ -49,7 +49,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testCreation(): void
     {
-        $pubDetails = openssl_pkey_get_details($this->c->get());
+        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($this->c->get()));
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }
 

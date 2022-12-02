@@ -66,6 +66,6 @@ class SymmetricKey extends AbstractKey
      */
     public function getLength(): int
     {
-        return strlen($this->key_material);
+        return strlen($this->get());
     }
 }
