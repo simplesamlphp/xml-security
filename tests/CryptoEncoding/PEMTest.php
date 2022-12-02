@@ -83,7 +83,7 @@ DATA;
     public function testInvalidPEMData(): void
     {
         $str = <<<'DATA'
-------BEGIN TEST-----
+-----BEGIN TEST-----
 %%%
 -----END TEST-----
 DATA;
