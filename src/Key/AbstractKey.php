@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use OpenSSLAsymmetricKey;
+
 /**
  * A class representing a key.
  *
@@ -13,16 +15,16 @@ namespace SimpleSAML\XMLSecurity\Key;
  */
 abstract class AbstractKey
 {
-    /** @var mixed */
-    protected mixed $key_material;
+    /** @var OpenSSLAsymmetricKey|string */
+    protected OpenSSLAsymmetricKey|string $key_material;
 
 
     /**
      * Build a new key with $key as its material.
      *
-     * @param mixed $key The associated key material.
+     * @param OpenSSLAsymmetricKey|string $key The associated key material.
      */
-    public function __construct(mixed $key)
+    public function __construct(OpenSSLAsymmetricKey|string $key)
     {
         $this->key_material = $key;
     }
@@ -31,9 +33,9 @@ abstract class AbstractKey
     /**
      * Return the key material associated with this key.
      *
-     * @return mixed The key material.
+     * @return OpenSSLAsymmetricKey|string The key material.
      */
-    public function get(): mixed
+    public function get(): OpenSSLAsymmetricKey|string
     {
         return $this->key_material;
     }

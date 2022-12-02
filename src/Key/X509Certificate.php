@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use OpenSSLCertificate;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -49,12 +50,12 @@ class X509Certificate extends PublicKey
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param string|resource $cert The PEM-encoded certificate or the path to a file containing it.
+     * @param OpenSSLCertificate|string $cert The PEM-encoded certificate or the path to a file containing it.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct(mixed $cert)
+    final public function __construct(OpenSSLCertificate|string $cert)
     {
         $resource = openssl_x509_read($cert);
         if ($resource === false) {

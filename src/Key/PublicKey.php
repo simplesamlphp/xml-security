@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use OpenSSLAsymmetricKey;
 use SimpleSAML\Assert\Assert;
 
 use function base64_encode;
@@ -44,9 +45,9 @@ class PublicKey extends AsymmetricKey
     /**
      * Create a new public key from the PEM-encoded key material.
      *
-     * @param resource|string $key The PEM-encoded key material.
+     * @param OpenSSLAsymmetricKey|string $key The PEM-encoded key material.
      */
-    public function __construct(mixed $key)
+    public function __construct(OpenSSLAsymmetricKey|string $key)
     {
         parent::__construct(openssl_pkey_get_public($key));
     }
