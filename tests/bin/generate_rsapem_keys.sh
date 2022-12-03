@@ -95,18 +95,16 @@ openssl x509 -pubkey -noout -in $CERTS_DIR/selfsigned.simplesamlphp.org.crt > $K
 # This sed-command will swap the first & last character
 sed 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $KEYS_DIR/corrupted.simplesamlphp.org_nopasswd.key \
   > $KEYS_DIR/corrupted.simplesamlphp.org.key
-sed 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $KEYS_DIR/corrupted.simplesamlphp.org.pub \
-  >> $KEYS_DIR/corrupted.simplesamlphp.org.pub
-sed 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $CERTS_DIR/corrupted.simplesamlphp.org.crt \
-  >> $CERTS_DIR/corrupted.simplesamlphp.org.crt
+sed -i 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $KEYS_DIR/corrupted.simplesamlphp.org.pub
+sed -i 's/^\(.\)\(.\+\)\(.\)$/\3\2\1/' $CERTS_DIR/corrupted.simplesamlphp.org.crt
 rm $KEYS_DIR/corrupted.simplesamlphp.org_nopasswd.key
 
 ## Break PEM structure ##
 
 # This sed-command will remove the spaces from the PEM header & footer, invalidating the PEM-structure
 sed 's/ //g' $KEYS_DIR/broken.simplesamlphp.org_nopasswd.key > $KEYS_DIR/broken.simplesamlphp.org.key
-sed 's/ //g' $KEYS_DIR/broken.simplesamlphp.org.pub >> $KEYS_DIR/broken.simplesamlphp.org.pub
-sed 's/ //g' $CERTS_DIR/broken.simplesamlphp.org.crt >> $CERTS_DIR/broken.simplesamlphp.org.crt
+sed -i 's/ //g' $KEYS_DIR/broken.simplesamlphp.org.pub
+sed -i 's/ //g' $CERTS_DIR/broken.simplesamlphp.org.crt
 rm $KEYS_DIR/broken.simplesamlphp.org_nopasswd.key
 
 ## Clean-up csr- and ca-files
