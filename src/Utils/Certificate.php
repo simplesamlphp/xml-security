@@ -20,7 +20,8 @@ class Certificate
     /**
      * The pattern that the contents of a certificate should adhere to
      */
-    public const PUBLIC_KEY_PATTERN = '/^-----BEGIN CERTIFICATE-----([^-]*)^-----END CERTIFICATE-----/m';
+    public const CERTIFICATE_PATTERN = '/^-----BEGIN CERTIFICATE-----([^-]*)^-----END CERTIFICATE-----/m';
+    public const PUBLIC_KEY_PATTERN = '/^-----BEGIN PUBLIC KEY-----([^-]*)^-----END PUBLIC KEY-----/m';
     public const PRIVATE_KEY_PATTERN = '/^-----BEGIN RSA PRIVATE KEY-----([^-]*)^-----END RSA PRIVATE KEY-----/m';
 
 
