@@ -1,1 +1,1 @@
-<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>
+<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>
