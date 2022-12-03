@@ -158,7 +158,7 @@ class PEMCertificatesMock
         string $file = self::CERTIFICATE
     ): string {
         return CertificateUtils::stripHeaders(
-            self::loadPlainKeyFile($file),
+            self::loadPlainCertificateFile($file),
             CertificateUtils::CERTIFICATE_PATTERN
         );
     }

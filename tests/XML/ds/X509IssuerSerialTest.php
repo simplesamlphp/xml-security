@@ -54,9 +54,7 @@ final class X509IssuerSerialTest extends TestCase
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerSerial.xml',
         );
 
-        $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey(),
-        );
+        $this->key = new Key\X509Certificate(PEMCertificatesMock::getPlainCertificate());
 
         $details = $this->key->getCertificateDetails();
         $this->issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));

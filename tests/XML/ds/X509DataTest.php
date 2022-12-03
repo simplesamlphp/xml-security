@@ -65,9 +65,7 @@ final class X509DataTest extends TestCase
             dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Data.xml',
         );
 
-        $this->key = new Key\X509Certificate(
-            PEMCertificatesMock::getPlainPublicKey(),
-        );
+        $this->key = new Key\X509Certificate(PEMCertificatesMock::getPlainCertificate());
 
         $this->certificate = str_replace(
             [
@@ -86,11 +84,11 @@ final class X509DataTest extends TestCase
                 "\n",
                 ''
             ],
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
 
         $this->certData = openssl_x509_parse(
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
     }
 

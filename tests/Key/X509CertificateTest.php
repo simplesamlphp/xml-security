@@ -38,7 +38,7 @@ final class X509CertificateTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->f = PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        $this->f = PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::CERTIFICATE);
         $this->cert = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($this->f)));
         $this->c = new X509Certificate($this->f);
     }
@@ -105,13 +105,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testFromFile(): void
     {
-        $c = X509Certificate::fromFile(
-            dirname(dirname(__FILE__)) .
-            '/' .
-            PEMCertificatesMock::CERTIFICATE_DIR .
-            '/' .
-            PEMCertificatesMock::PUBLIC_KEY
-        );
+        $c = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
         $pubDetails = openssl_pkey_get_details($c->get());
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }

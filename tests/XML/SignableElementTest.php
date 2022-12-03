@@ -58,10 +58,10 @@ final class SignableElementTest extends TestCase
         );
 
         $this->signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSigned.xml',
         );
 
-        $certificate = PEMCertificatesMock::loadPlainCertificateFile(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY);
+        $certificate = PEMCertificatesMock::loadPlainCertificateFile(PEMCertificatesMock::SELFSIGNED_CERTIFICATE);
         $certificateLines = explode("\n", trim($certificate));
         array_pop($certificateLines);
         array_shift($certificateLines);
@@ -107,8 +107,8 @@ final class SignableElementTest extends TestCase
     public function testSigningElement(): void
     {
         $xml = DOMDocumentFactory::fromString(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom" id="_1234"><ssp:Some><!-- comment -->Chunk' .
-            '<!-- comment --></ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace" id="_1234"><ssp:Chunk><!--comment-->Some' .
+            '<!--comment--></ssp:Chunk></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -124,7 +124,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedElement.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedWithId.xml',
         );
 
         $this->assertEquals(
@@ -143,8 +143,8 @@ final class SignableElementTest extends TestCase
     public function testSigningDocumentWithComments(): void
     {
         $xml = DOMDocumentFactory::fromString(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment -->' .
-            '</ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk><!--comment-->Some<!--comment-->' .
+            '</ssp:Chunk></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -160,7 +160,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
         );
 
         $this->assertEquals(
@@ -179,8 +179,8 @@ final class SignableElementTest extends TestCase
     public function testSigningElementWithIdAndComments(): void
     {
         $xml = DOMDocumentFactory::fromString(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom" id="_1234"><ssp:Some><!-- comment -->Chunk' .
-            '<!-- comment --></ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace" id="_1234"><ssp:Chunk><!--comment-->Some' .
+            '<!--comment--></ssp:Chunk></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -196,7 +196,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithCommentsAndId.xml'
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml'
         );
 
         $this->assertEquals(

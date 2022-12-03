@@ -41,7 +41,7 @@ class EncryptedCustomTest extends TestCase
     public function setUp(): void
     {
         $this->signedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSigned.xml',
         )->documentElement;
 
         $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);

@@ -62,7 +62,7 @@ final class X509CertificateTest extends TestCase
                 "\n",
                 ''
             ],
-            PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY),
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
     }
 

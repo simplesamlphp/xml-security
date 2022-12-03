@@ -158,13 +158,7 @@ final class HMACSignatureTest extends TestCase
      */
     public function testVerifyWithCertificate(): void
     {
-        $cert = X509Certificate::fromFile(
-            dirname(dirname(dirname(__FILE__))) .
-            '/' .
-            PEMCertificatesMock::CERTIFICATE_DIR .
-            '/' .
-            PEMCertificatesMock::PUBLIC_KEY
-        );
+        $cert = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
 
         // test type errors when possible
         $this->expectException(TypeError::class);

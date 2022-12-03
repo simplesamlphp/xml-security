@@ -45,15 +45,15 @@ final class SignedElementTest extends TestCase
     public function setUp(): void
     {
         $this->signedDocumentWithComments = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedWithComments.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
         )->documentElement;
 
         $this->signedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSigned.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSigned.xml',
         )->documentElement;
 
         $this->tamperedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignedTampered.xml',
+            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedTampered.xml',
         )->documentElement;
 
         $this->certificate = file_get_contents(
@@ -96,7 +96,7 @@ final class SignedElementTest extends TestCase
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>',
             strval($verified),
         );
         $this->assertEquals($certificate, $verified->getVerifyingKey());
@@ -121,7 +121,7 @@ final class SignedElementTest extends TestCase
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some>Chunk</ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>',
             strval($verified),
         );
         $validatingKey = $verified->getVerifyingKey();
@@ -202,7 +202,7 @@ final class SignedElementTest extends TestCase
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
-            '<ssp:CustomSignable xmlns:ssp="urn:ssp:custom"><ssp:Some><!-- comment -->Chunk<!-- comment --></ssp:Some></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk><!--comment-->Some<!--comment--></ssp:Chunk></ssp:CustomSignable>',
             strval($verified),
         );
         $this->assertEquals($certificate, $verified->getVerifyingKey());

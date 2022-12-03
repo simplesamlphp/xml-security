@@ -52,45 +52,45 @@ final class RSASignatureTest extends TestCase
         // test RSA-SHA1
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA1, $this->privateKey);
         $this->assertEquals(
-            '9b4ce267d4532a21979ee2c1cc00ab4de0e0161493429fcb868374a6db5a06c6d6dda315125d17e0f89c496f76010be1f065233' .
-            '12711cd1ea9f06eaa010722ea7b729a2371c83fefdf40c78b510701084d5bf507e6f7d2cd64ff633dd9c46236f4dbfe0730c3e5' .
-            'c2e7464457f3bd1203a5cbe626da6a94773761d23d9b0d964e',
+            '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a3c12' .
+            'a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be937ae35f4b' .
+            '1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
             bin2hex($rsa->sign($this->plaintext)),
         );
 
         // test RSA-SHA224
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA224, $this->privateKey);
         $this->assertEquals(
-            '12a53e78208ed48f80ef25e4462c3bd146ac11c8eedd65442e1c58c71fef87826ebdea0bc004beddd6979537ebd14531cf4bc84' .
-            '09a5f5fe6ee70767faa21c6afb88475943c1cbcbf3bb2a52d95de78c0b2d503bdddd84a56a3737dd268b10b696e3182b2429c94' .
-            'db685ca1a7bd5777dd8f746bb1027af8bc77c7f7eb309bd3fc',
+            '9f4bda98aefef8d289595e24663c02108d5273208eb9e530a5a2518082b9e357146517cb630dbaba5f9db7ac297e8b9b1b9248b' .
+            'c4b2fbdf009450f4a0759080055b8d3b944d1781fcb03b1fe5039d59a293c54a3e5e8288ecfab9c3a3127f22816753e4aae835d' .
+            'e395d52f30768d1d5003e3b124272e89a401909d34c24b9b8f',
             bin2hex($rsa->sign($this->plaintext)),
         );
 
         // test RSA-SHA256
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA256, $this->privateKey);
         $this->assertEquals(
-            'a35c0d5530fbec5c09c53b73b6fe748a02046fab167f1a5363e4eed2429a02091e51c1ba656b42febac83b2ab1f3c029e7420fd' .
-            '67ac400d3ca702bf5ff665c15ed870a6839a956bc35f7b58b43255b82b873625106e6397cc633dbfa2f6906d05c532affa3c403' .
-            'a8f1176662cc9d574d191ba8b73c799fba2109edc989ff53f0',
+            '397f0972d3d52b354298e8f1803efe6b6a77c2213605ab88ff3a38a336e14673c59f69103c1377c5ddf8f9314409ecd865f48b5' .
+            '63af2e9ad31121846b0f565fa01898d9ab438ea5278734200400e62cc2bdd31ba86c7b98f8c51dbb22241fbe0535fe2291e9421' .
+            '5450ca7fbe4cc8d18420cacce720ac39e09397019c67b8bb2e',
             bin2hex($rsa->sign($this->plaintext)),
         );
 
         // test RSA-SHA384
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA384, $this->privateKey);
         $this->assertEquals(
-            '68d62a600468a2ca0c144744ff8c59069f134fe88a8ee12c13f1030bafa1faaa2cefd11a6936fd6e75e378837b432a0a09e7d27' .
-            '48dfef48cc646b8cbbd6467c442cffe8daa319a16ef7f94fda7abade5d147b97edd77d24eef5d73431b03a52f1913c7381e7d92' .
-            '4cf180b7fb67048ea18847a6f93e64f54f407726ea345fb9df',
+            '6f281ee29c08fa72aaf4f01b095f004608ed82351a160db91933f24118837d43864449862a60eda305d68169a7af12ebe1055b8' .
+            '1e5e6a5effca3fd26f0f0db879d83c28a2ef833c021f1b523be2e6947749dbd7daf2d405e341858e95293c724244fc36fccfc05' .
+            '27ce1d33e4ff9152e8fbe71eafa0867d076315cb8eb41a5fe5',
             bin2hex($rsa->sign($this->plaintext)),
         );
 
         // test RSA-SHA512
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA512, $this->privateKey);
         $this->assertEquals(
-            'a3bc97ac307d238c1545213ae3e1e90c72cb15be636202f9441c742fe5ad1775d0acd5e0ba9ea1a139fb4dbf217e0bb5f2b95ba' .
-            '7d07a0a057775439efdec78c723fc7e5eae3977467366c8f3793195cdd982d0ec36a68c2001e8d22d35dcd7ed3845050f03de8f' .
-            'bb7193ae0fdfb64a826e58ed9a8d1c91c543bdf110eac1ead6',
+            'ce7c0840a26d6bb15e2d386aef8338fff631ca4f1fda22d21b19ee928ed87c7de9ea94f546bcace5dc8cd640a164667686cf836' .
+            'bbcbce0f5bbd7c33d9e4262499a8c5c7d8159d090dd4c02fc49eab7e4522ba46258e50ee3278792bba13321780c64980fdd5034' .
+            'f79285c07c5f765637950877feb03f94420799bb67b7b9a2ac',
             bin2hex($rsa->sign($this->plaintext)),
         );
 
@@ -98,9 +98,9 @@ final class RSASignatureTest extends TestCase
             // test RSA-RIPEMD160
             $rsa = $this->factory->getAlgorithm(C::SIG_RSA_RIPEMD160, $this->privateKey);
             $this->assertEquals(
-                'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c1141' .
-                'ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165789d738e' .
-                '88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
+                '783d2c86bf73b02838be76f832fe1c75e03e9c3ad9055d19737a342c59385744b2332f65f1eac5f5dd0fb88ae7d145ac16d3e83' .
+                '916a3be078e426a5ef5ed034a7f69f65ef5e62f6aecac9a896fa9edf473e482fd84ccc93c6677f146bf490af320ae41f4a3fb0f' .
+                'a859e68c130a6d321ead6eb0167d1da24a49d97c030d3e8554',
                 bin2hex($rsa->sign($this->plaintext)),
             );
         }
@@ -117,9 +117,9 @@ final class RSASignatureTest extends TestCase
         $this->assertTrue($rsa->verify(
             $this->plaintext,
             hex2bin(
-                '9b4ce267d4532a21979ee2c1cc00ab4de0e0161493429fcb868374a6db5a06c6d6dda315125d17e0f89c496f76010be1f06' .
-                '523312711cd1ea9f06eaa010722ea7b729a2371c83fefdf40c78b510701084d5bf507e6f7d2cd64ff633dd9c46236f4dbfe' .
-                '0730c3e5c2e7464457f3bd1203a5cbe626da6a94773761d23d9b0d964e',
+                '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a' .
+                '3c12a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be93' .
+                '7ae35f4b1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
             ),
         ));
 
@@ -128,9 +128,9 @@ final class RSASignatureTest extends TestCase
         $this->assertTrue($rsa->verify(
             $this->plaintext,
             hex2bin(
-                '12a53e78208ed48f80ef25e4462c3bd146ac11c8eedd65442e1c58c71fef87826ebdea0bc004beddd6979537ebd14531cf4' .
-                'bc8409a5f5fe6ee70767faa21c6afb88475943c1cbcbf3bb2a52d95de78c0b2d503bdddd84a56a3737dd268b10b696e3182' .
-                'b2429c94db685ca1a7bd5777dd8f746bb1027af8bc77c7f7eb309bd3fc',
+                '9f4bda98aefef8d289595e24663c02108d5273208eb9e530a5a2518082b9e357146517cb630dbaba5f9db7ac297e8b9b1b9248b' .
+                'c4b2fbdf009450f4a0759080055b8d3b944d1781fcb03b1fe5039d59a293c54a3e5e8288ecfab9c3a3127f22816753e4aae835d' .
+                'e395d52f30768d1d5003e3b124272e89a401909d34c24b9b8f',
             ),
         ));
 
@@ -139,9 +139,9 @@ final class RSASignatureTest extends TestCase
         $this->assertTrue($rsa->verify(
             $this->plaintext,
             hex2bin(
-                'a35c0d5530fbec5c09c53b73b6fe748a02046fab167f1a5363e4eed2429a02091e51c1ba656b42febac83b2ab1f3c029e74' .
-                '20fd67ac400d3ca702bf5ff665c15ed870a6839a956bc35f7b58b43255b82b873625106e6397cc633dbfa2f6906d05c532a' .
-                'ffa3c403a8f1176662cc9d574d191ba8b73c799fba2109edc989ff53f0',
+                '397f0972d3d52b354298e8f1803efe6b6a77c2213605ab88ff3a38a336e14673c59f69103c1377c5ddf8f9314409ecd865f48b5' .
+                '63af2e9ad31121846b0f565fa01898d9ab438ea5278734200400e62cc2bdd31ba86c7b98f8c51dbb22241fbe0535fe2291e9421' .
+                '5450ca7fbe4cc8d18420cacce720ac39e09397019c67b8bb2e',
             ),
         ));
 
@@ -150,9 +150,9 @@ final class RSASignatureTest extends TestCase
         $this->assertTrue($rsa->verify(
             $this->plaintext,
             hex2bin(
-                '68d62a600468a2ca0c144744ff8c59069f134fe88a8ee12c13f1030bafa1faaa2cefd11a6936fd6e75e378837b432a0a09e' .
-                '7d2748dfef48cc646b8cbbd6467c442cffe8daa319a16ef7f94fda7abade5d147b97edd77d24eef5d73431b03a52f1913c7' .
-                '381e7d924cf180b7fb67048ea18847a6f93e64f54f407726ea345fb9df',
+                '6f281ee29c08fa72aaf4f01b095f004608ed82351a160db91933f24118837d43864449862a60eda305d68169a7af12ebe1055b8' .
+                '1e5e6a5effca3fd26f0f0db879d83c28a2ef833c021f1b523be2e6947749dbd7daf2d405e341858e95293c724244fc36fccfc05' .
+                '27ce1d33e4ff9152e8fbe71eafa0867d076315cb8eb41a5fe5',
             ),
         ));
 
@@ -161,9 +161,9 @@ final class RSASignatureTest extends TestCase
         $this->assertTrue($rsa->verify(
             $this->plaintext,
             hex2bin(
-                'a3bc97ac307d238c1545213ae3e1e90c72cb15be636202f9441c742fe5ad1775d0acd5e0ba9ea1a139fb4dbf217e0bb5f2b' .
-                '95ba7d07a0a057775439efdec78c723fc7e5eae3977467366c8f3793195cdd982d0ec36a68c2001e8d22d35dcd7ed384505' .
-                '0f03de8fbb7193ae0fdfb64a826e58ed9a8d1c91c543bdf110eac1ead6',
+                'ce7c0840a26d6bb15e2d386aef8338fff631ca4f1fda22d21b19ee928ed87c7de9ea94f546bcace5dc8cd640a164667686cf836' .
+                'bbcbce0f5bbd7c33d9e4262499a8c5c7d8159d090dd4c02fc49eab7e4522ba46258e50ee3278792bba13321780c64980fdd5034' .
+                'f79285c07c5f765637950877feb03f94420799bb67b7b9a2ac',
             ),
         ));
 
@@ -173,9 +173,9 @@ final class RSASignatureTest extends TestCase
             $this->assertTrue($rsa->verify(
                 $this->plaintext,
                 hex2bin(
-                    'a1ea231e886d4d53e3939f1b8d604db0b74547827a2cd552bbfbd9a07e3f997446606bcb3da052865ed4c7e225ce4c7a02c' .
-                    '1141ce3ce7079a8f08dd6af07bff9979cb4998e76e36ee5508149c9487b38e7c88056ecad6f16d71eab25173e2d924b7165' .
-                    '789d738e88cc0371c63da53182365757e29ae48f6330c6fcaa1011812f',
+                    '783d2c86bf73b02838be76f832fe1c75e03e9c3ad9055d19737a342c59385744b2332f65f1eac5f5dd0fb88ae7d145ac16d3e83' .
+                    '916a3be078e426a5ef5ed034a7f69f65ef5e62f6aecac9a896fa9edf473e482fd84ccc93c6677f146bf490af320ae41f4a3fb0f' .
+                    'a859e68c130a6d321ead6eb0167d1da24a49d97c030d3e8554',
                 ),
             ));
         }

@@ -33,7 +33,7 @@ class CustomSignable extends AbstractElement implements
     use EncryptableElementTrait;
 
     /** @var string */
-    public const NS = 'urn:ssp:custom';
+    public const NS = 'urn:x-simplesamlphp:namespace';
 
     /** @var string */
     public const NS_PREFIX = 'ssp';
