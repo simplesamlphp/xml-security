@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 
 use function openssl_pkey_export;
@@ -40,6 +41,13 @@ class PrivateKey extends AsymmetricKey
     public static function fromFile(string $file, string $passphrase = ''): static
     {
         openssl_pkey_export(openssl_pkey_get_private($file, $passphrase), $decrypted);
-        return new static(PEM::fromString($decrypted)->string());
+        $pem = PEM::fromString($decrypted);
+
+        Assert::oneOf(
+            $pem->type(),
+            [PEM::TYPE_PRIVATE_KEY, PEM::TYPE_RSA_PRIVATE_KEY],
+            "PEM structure has the wrong type %s."
+        );
+        return new static($pem->string());
     }
 }

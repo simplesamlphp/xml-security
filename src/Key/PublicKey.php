@@ -143,6 +143,12 @@ class PublicKey extends AsymmetricKey
      */
     public static function fromFile(string $file): static
     {
-        return new static(PEM::fromFile($file)->string());
+        $pem = PEM::fromFile($file);
+        Assert::oneOf(
+            $pem->type(),
+            [PEM::TYPE_PUBLIC_KEY, PEM::TYPE_RSA_PUBLIC_KEY],
+            "PEM structure has the wrong type %s."
+        );
+        return new static($pem->string());
     }
 }

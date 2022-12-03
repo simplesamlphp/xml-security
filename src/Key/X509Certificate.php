@@ -138,6 +138,9 @@ class X509Certificate extends PublicKey
      */
     public static function fromFile(string $file): static
     {
-        return new static(PEM::fromFile($file)->string());
+        $pem = PEM::fromFile($file);
+        Assert::oneOf($pem->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
+
+        return new static($pem->string());
     }
 }
