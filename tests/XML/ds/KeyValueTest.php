@@ -113,7 +113,9 @@ final class KeyValueTest extends TestCase
     public function testMarshallingEmpty(): void
     {
         $this->expectException(SchemaViolationException::class);
-        $this->expectExceptionMessage('A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other');
+        $this->expectExceptionMessage(
+            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other'
+        );
 
         new KeyValue(null, null);
     }
@@ -163,7 +165,9 @@ final class KeyValueTest extends TestCase
         $document = $this->empty;
 
         $this->expectException(SchemaViolationException::class);
-        $this->expectExceptionMessage('A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other');
+        $this->expectExceptionMessage(
+            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other'
+        );
 
         KeyValue::fromXML($document->documentElement);
     }

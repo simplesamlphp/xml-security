@@ -100,15 +100,22 @@ final class X509DataTest extends TestCase
         $x509data = new X509Data(
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>')->documentElement,
+                    DOMDocumentFactory::fromString(
+                        '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>'
+                    )->documentElement,
                 ),
                 new X509Certificate($this->certificate),
                 new X509IssuerSerial(
-                    new X509IssuerName('C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=noreply@simplesamlphp.org'),
+                    new X509IssuerName(sprintf(
+                        'C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=%s',
+                        'noreply@simplesamlphp.org'
+                    )),
                     new X509SerialNumber('2'),
                 ),
                 new X509SubjectName($this->certData['name']),
-                new Chunk(DOMDocumentFactory::fromString('<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>')->documentElement)
+                new Chunk(DOMDocumentFactory::fromString(
+                    '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>'
+                )->documentElement)
             ],
         );
 

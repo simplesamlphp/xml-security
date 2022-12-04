@@ -45,15 +45,17 @@ final class ObjectTest extends TestCase
      */
     public function testMarshalling(): void
     {
+        $img = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         $obj = new DsObject(
             'abc123',
             'image/png',
             'http://www.w3.org/2000/09/xmldsig#base64',
             [
                 new Chunk(
-                    DOMDocumentFactory::fromString(
-                        '<ssp:data xmlns:ssp="urn:ssp:custom">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=</ssp:data>'
-                    )->documentElement
+                    DOMDocumentFactory::fromString(sprintf(
+                        '<ssp:data xmlns:ssp="urn:ssp:custom">%s</ssp:data>',
+                        $img
+                    ))->documentElement
                 )
             ],
         );

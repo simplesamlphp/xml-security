@@ -27,7 +27,9 @@ $signer = (new SignatureAlgorithmFactory())->getAlgorithm(
 
 $keyInfo = new KeyInfo([
     new X509Data([
-         new X509Certificate(PEMCertificatesMock::getPlainCertificateContents(PEMCertificatesMock::SELFSIGNED_CERTIFICATE))
+         new X509Certificate(PEMCertificatesMock::getPlainCertificateContents(
+             PEMCertificatesMock::SELFSIGNED_CERTIFICATE
+         ))
     ])
 ]);
 

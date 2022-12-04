@@ -52,7 +52,11 @@ final class SignaturePropertiesTest extends TestCase
             '<ssp:HSMSerialNumber xmlns:ssp="urn:x-simplesamlphp:namespace">1234567890</ssp:HSMSerialNumber>'
         );
 
-        $signatureProperty = new SignatureProperty([new Chunk($document->documentElement)], 'https://simplesamlphp.org/some/target', 'abc123');
+        $signatureProperty = new SignatureProperty(
+            [new Chunk($document->documentElement)],
+            'https://simplesamlphp.org/some/target',
+            'abc123'
+        );
         $signatureProperties = new SignatureProperties([$signatureProperty], 'def456');
 
         $this->assertEquals(
