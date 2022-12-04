@@ -59,7 +59,7 @@ class PEMCertificatesMock
     private static function buildCertsPath(string $file): string
     {
         $base = dirname(dirname(__FILE__));
-        return 'file://' . $base . DIRECTORY_SEPARATOR . self::CERTIFICATE_DIR . DIRECTORY_SEPARATOR . $file;
+        return 'file://' . $base . DIRECTORY_SEPARATOR . self::CERTS_DIR . DIRECTORY_SEPARATOR . $file;
     }
 
 
@@ -98,7 +98,7 @@ class PEMCertificatesMock
      * @param string $file The file to use
      * @return \SimpleSAML\XMLSecurity\Key\PublicKey
      */
-    public static function getPublicKey(string $file): X509Certificate
+    public static function getPublicKey(string $file): PublicKey
     {
         $path = self::buildKeysPath($file);
         return PublicKey::fromFile($path);

@@ -98,7 +98,7 @@ final class X509CertificateTest extends TestCase
     public function testFromFile(): void
     {
         $c = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
-        $pubDetails = openssl_pkey_get_details($c->get());
+        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($c->get()));
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }
 }
