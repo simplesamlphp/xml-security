@@ -64,7 +64,6 @@ class RSAKeyTransportTest extends TestCase
         $encrypted = $rsa->encrypt($this->plaintext);
         $this->assertNotEmpty($encrypted);
         $this->assertEquals(128, strlen($encrypted));
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privateKey);
     }
 
 
