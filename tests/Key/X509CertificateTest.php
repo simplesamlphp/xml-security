@@ -77,16 +77,8 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetRawThumbprint(): void
     {
-        if (!function_exists('openssl_x509_fingerprint')) {
-            $this->markTestSkipped();
-        }
-
         $f = openssl_x509_fingerprint($this->f);
         $this->assertEquals($f, $this->c->getRawThumbprint());
-
-        $m = new ReflectionMethod(X509Certificate::class, 'manuallyComputeThumbprint');
-        $m->setAccessible(true);
-        $this->assertEquals($f, $m->invokeArgs($this->c, [C::DIGEST_SHA1]));
     }
 
 
