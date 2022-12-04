@@ -199,7 +199,7 @@ final class EncryptedKeyTest extends TestCase
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
-        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
+        $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));
     }
 
 
@@ -220,7 +220,7 @@ final class EncryptedKeyTest extends TestCase
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
-        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
+        $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));
     }
 
 
@@ -241,6 +241,6 @@ final class EncryptedKeyTest extends TestCase
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
-        $this->assertEquals(bin2hex($symmetricKey->get()), bin2hex($decryptedKey));
+        $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));
     }
 }

@@ -3,6 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 
 use function file_get_contents;
@@ -38,8 +39,8 @@ final class PrivateKeyTest extends TestCase
      */
     public function testCreation(): void
     {
-        $k = new PrivateKey($this->f);
-        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->get()));
+        $k = new PrivateKey(PEM::fromString($this->f));
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
         $this->assertEquals($this->privKey['key'], $keyDetails['key']);
     }
 
@@ -50,7 +51,7 @@ final class PrivateKeyTest extends TestCase
     public function testFromFile(): void
     {
         $k = PrivateKey::fromFile('file://./tests/resources/keys/privkey.pem');
-        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->get()));
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
         $this->assertEquals($this->privKey['key'], $keyDetails['key']);
     }
 }

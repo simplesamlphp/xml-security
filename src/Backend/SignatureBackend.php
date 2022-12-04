@@ -2,7 +2,7 @@
 
 namespace SimpleSAML\XMLSecurity\Backend;
 
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * Interface for backends implementing digital signatures.
@@ -24,24 +24,24 @@ interface SignatureBackend
     /**
      * Sign a given plaintext with this cipher and a given key.
      *
-     * @param AbstractKey $key The key to use to sign.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to sign.
      * @param string $plaintext The original text to sign.
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while signing the plaintext.
      */
-    public function sign(AbstractKey $key, string $plaintext): string;
+    public function sign(KeyInterface $key, string $plaintext): string;
 
 
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to verify.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(AbstractKey $key, string $plaintext, string $signature): bool;
+    public function verify(KeyInterface $key, string $plaintext, string $signature): bool;
 }

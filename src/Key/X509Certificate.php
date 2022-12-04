@@ -4,41 +4,34 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use OpenSSLCertificate;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 
-use function array_map;
-use function array_pop;
-use function array_shift;
-use function base64_encode;
-use function explode;
-use function function_exists;
-use function hash;
-use function implode;
 use function openssl_error_string;
+use function openssl_pkey_get_details;
 use function openssl_pkey_get_public;
-use function openssl_x509_export;
 use function openssl_x509_fingerprint;
 use function openssl_x509_parse;
-use function openssl_x509_read;
-use function trim;
 
 /**
  * A class modeling X509 certificates.
  *
  * @package simplesamlphp/xml-security
  */
-class X509Certificate extends PublicKey
+class X509Certificate
 {
     public const PEM_HEADER = '-----BEGIN CERTIFICATE-----';
     public const PEM_FOOTER = '-----END CERTIFICATE-----';
 
-    /** @var string */
-    protected string $certificate;
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    protected PEM $material;
+
+    /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
+    protected PublicKey $publicKey;
 
     /** @var array */
     protected array $thumbprint = [];
@@ -50,28 +43,66 @@ class X509Certificate extends PublicKey
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param string $cert The PEM-encoded certificate or the path to a file containing it.
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $cert The PEM-encoded certificate or the path to a file containing it.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the certificate cannot be read from $cert.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct(string $cert)
+    final public function __construct(PEM $cert)
     {
-        $resource = openssl_x509_read($cert);
-        if ($resource === false) {
-            throw new InvalidArgumentException('Cannot read certificate: ' . openssl_error_string());
+        Assert::oneOf($cert->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
+        $this->material = $cert;
+
+        if (($key = openssl_pkey_get_public($cert->string())) === false) {
+            throw new RuntimeException('Failed to read key: ' . openssl_error_string());
         }
 
-        $certificate = null;
-        if (!openssl_x509_export($resource, $certificate)) {
-            throw new RuntimeException('Cannot export certificate to PEM: ' . openssl_error_string());
-        }
-        $this->certificate = $certificate;
+        // Some OpenSSL functions will add errors to the list even if they succeed
+        while (openssl_error_string() !== false);
 
-        parent::__construct($certificate);
+        if (($details = openssl_pkey_get_details($key)) === false) {
+            throw new RuntimeException('Failed to export key: ' . openssl_error_string());
+        }
+
+        // Some OpenSSL functions will add errors to the list even if they succeed
+        while (openssl_error_string() !== false);
+
+        $this->publicKey = new PublicKey(PEM::fromString($details['key']));
+
         $this->thumbprint[C::DIGEST_SHA1] = $this->getRawThumbprint();
+        $this->parsed = openssl_x509_parse($cert->string());
+    }
 
-        $this->parsed = openssl_x509_parse($this->certificate);
+
+    /**
+     * Return the public key associated with this certificate.
+     *
+     * @return \SimpleSAML\XMLSecurity\Key\PublicKey The public key.
+     */
+    public function getPublicKey(): PublicKey
+    {
+        return $this->publicKey;
+    }
+
+
+    /**
+     * Return the key material associated with this key.
+     *
+     * @return string The key material.
+     */
+    public function getMaterial(): string
+    {
+        return $this->material->string();
+    }
+
+
+    /**
+     * Return the raw PEM-object associated with this key.
+     *
+     * @return \SimpleSAML\XMLSecurity\CryptoEncoding\PEM The raw material.
+     */
+    public function getPEM(): PEM
+    {
+        return $this->material;
     }
 
 
@@ -81,8 +112,6 @@ class X509Certificate extends PublicKey
      * @param string $alg The digest algorithm to use. Defaults to SHA1.
      *
      * @return string The thumbprint associated with the given certificate.
-     *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If $alg is not a valid digest identifier.
      */
     public function getRawThumbprint(string $alg = C::DIGEST_SHA1): string
     {
@@ -98,20 +127,9 @@ class X509Certificate extends PublicKey
         );
 
         return $this->thumbprint[$alg] = openssl_x509_fingerprint(
-            $this->certificate,
+            $this->material->string(),
             C::$DIGEST_ALGORITHMS[$alg],
         );
-    }
-
-
-    /**
-     * Get the certificate this key originated from.
-     *
-     * @return string The certificate.
-     */
-    public function getCertificate(): string
-    {
-        return $this->certificate;
     }
 
 
@@ -134,13 +152,9 @@ class X509Certificate extends PublicKey
      * @param string $file The file where the PEM-encoded certificate is stored.
      *
      * @return static A new X509Certificate key.
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
     public static function fromFile(string $file): static
     {
-        $pem = PEM::fromFile($file);
-        Assert::oneOf($pem->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
-
-        return new static($pem->string());
+        return new static(PEM::fromFile($file));
     }
 }

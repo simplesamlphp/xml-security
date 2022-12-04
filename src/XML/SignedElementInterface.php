@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML;
 
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
 /**
@@ -28,7 +28,7 @@ interface SignedElementInterface extends CanonicalizableElementInterface
     /**
      * Retrieve the signature in this object, if any.
      *
-     * @return Signature|null
+     * @return \SimpleSAML\XMLSecurity\XML\ds\Signature|null
      */
     public function getSignature(): ?Signature;
 
@@ -36,10 +36,10 @@ interface SignedElementInterface extends CanonicalizableElementInterface
     /**
      * Retrieve the key used to verify the signature in this object.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey The key that verified the signature in this object.
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface The key that verified the signature in this object.
      * @throws \Exception if an error occurs while trying to extract the public key from a certificate.
      */
-    public function getVerifyingKey(): ?AbstractKey;
+    public function getVerifyingKey(): ?KeyInterface;
 
 
     /**

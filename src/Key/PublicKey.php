@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
+use OpenSSLAsymmetricKey;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
 use function base64_encode;
 use function chr;
 use function chunk_split;
-use function openssl_pkey_export;
-use function openssl_pkey_get_public;
+use function openssl_error_string;
 use function ord;
 use function pack;
 use function sprintf;
@@ -46,10 +47,16 @@ class PublicKey extends AsymmetricKey
     /**
      * Create a new public key from the PEM-encoded key material.
      *
-     * @param string $key The PEM-encoded key material.
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The PEM-encoded key material.
      */
-    public function __construct(string $key)
+    public function __construct(PEM $key)
     {
+        Assert::oneOf(
+            $key->type(),
+            [PEM::TYPE_PUBLIC_KEY, PEM::TYPE_RSA_PUBLIC_KEY],
+            "PEM structure has the wrong type %s."
+        );
+
         parent::__construct($key);
     }
 
@@ -107,7 +114,7 @@ class PublicKey extends AsymmetricKey
      */
     public static function fromDetails(string $modulus, string $exponent): PublicKey
     {
-        return new static(
+        return new static(PEM::fromString(
             "-----BEGIN PUBLIC KEY-----\n" .
             chunk_split(
                 base64_encode(
@@ -128,7 +135,7 @@ class PublicKey extends AsymmetricKey
                 "\n",
             ) .
             "-----END PUBLIC KEY-----\n",
-        );
+        ));
     }
 
 
@@ -143,12 +150,6 @@ class PublicKey extends AsymmetricKey
      */
     public static function fromFile(string $file): static
     {
-        $pem = PEM::fromFile($file);
-        Assert::oneOf(
-            $pem->type(),
-            [PEM::TYPE_PUBLIC_KEY, PEM::TYPE_RSA_PUBLIC_KEY],
-            "PEM structure has the wrong type %s."
-        );
-        return new static($pem->string());
+        return new static(PEM::fromFile($file));
     }
 }

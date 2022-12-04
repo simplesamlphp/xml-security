@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * An abstract class that implements a generic digital signature algorithm.
@@ -16,8 +16,8 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
  */
 abstract class AbstractSigner implements SignatureAlgorithmInterface
 {
-    /** @var \SimpleSAML\XMLSecurity\Key\AbstractKey */
-    private AbstractKey $key;
+    /** @var \SimpleSAML\XMLSecurity\Key\KeyInterface */
+    private KeyInterface $key;
 
     /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
@@ -39,11 +39,11 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
      *
      * WARNING: remember to adjust the type of the key to the one that works with your algorithm!
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The signing key.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The signing key.
      * @param string $algId The identifier of this algorithm.
      * @param string $digest The identifier of the digest algorithm to use.
      */
-    public function __construct(AbstractKey $key, string $algId, string $digest)
+    public function __construct(KeyInterface $key, string $algId, string $digest)
     {
         Assert::oneOf(
             $algId,
@@ -79,9 +79,9 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
 
 
     /**
-     * @return AbstractKey
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface
      */
-    public function getKey(): AbstractKey
+    public function getKey(): KeyInterface
     {
         return $this->key;
     }

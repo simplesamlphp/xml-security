@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * An abstract class implementing an algorithm factory.
@@ -70,14 +70,14 @@ abstract class AbstractAlgorithmFactory
      * Get a new object implementing the given algorithm.
      *
      * @param string $algId The identifier of the algorithm desired.
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use with the given algorithm.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
      *
      * @return \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface An object implementing the given algorithm.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
      * is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, AbstractKey $key): AlgorithmInterface
+    public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
     {
         Assert::true(
             !in_array($algId, $this->blacklist, true),

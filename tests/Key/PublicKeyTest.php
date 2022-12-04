@@ -3,6 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\IOException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -39,8 +40,8 @@ final class PublicKeyTest extends TestCase
      */
     public function testCreation(): void
     {
-        $k = new PublicKey($this->f);
-        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
+        $k = new PublicKey(PEM::fromString($this->f));
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 
@@ -51,7 +52,7 @@ final class PublicKeyTest extends TestCase
     public function testFromFile(): void
     {
         $k = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
-        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 
@@ -72,7 +73,7 @@ final class PublicKeyTest extends TestCase
     public function testFromDetails(): void
     {
         $k = PublicKey::fromDetails($this->pubKey['rsa']['n'], $this->pubKey['rsa']['e']);
-        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->get()));
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
         $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
     }
 }

@@ -3,7 +3,7 @@
 namespace SimpleSAML\XMLSecurity\Backend;
 
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * Interface for backends implementing encryption.
@@ -27,25 +27,25 @@ interface EncryptionBackend
     /**
      * Encrypt a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to encrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to encrypt.
      * @param string $plaintext The original text to encrypt.
      *
      * @return string The encrypted plaintext (ciphertext).
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while encrypting the plaintext.
      */
-    public function encrypt(AbstractKey $key, string $plaintext): string;
+    public function encrypt(KeyInterface $key, string $plaintext): string;
 
 
     /**
      * Decrypt a given ciphertext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to decrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to decrypt.
      * @param string $ciphertext The encrypted text to decrypt.
      *
      * @return string The decrypted ciphertext (plaintext).
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while decrypting the ciphertext.
      */
-    public function decrypt(AbstractKey $key, string $ciphertext): string;
+    public function decrypt(KeyInterface $key, string $ciphertext): string;
 }

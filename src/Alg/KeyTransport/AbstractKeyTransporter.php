@@ -8,7 +8,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * An abstract class that implements a generic key transport algorithm.
@@ -17,8 +17,8 @@ use SimpleSAML\XMLSecurity\Key\AbstractKey;
  */
 abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
 {
-    /** @var \SimpleSAML\XMLSecurity\Key\AbstractKey */
-    private AbstractKey $key;
+    /** @var \SimpleSAML\XMLSecurity\Key\KeyInterface */
+    private KeyInterface $key;
 
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend */
     protected EncryptionBackend $backend;
@@ -37,10 +37,10 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
      *
      * WARNING: remember to adjust the type of the key to the one that works with your algorithm!
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The encryption key.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The encryption key.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(AbstractKey $key, string $algId)
+    public function __construct(KeyInterface $key, string $algId)
     {
         Assert::oneOf(
             $algId,
@@ -64,9 +64,9 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
 
 
     /**
-     * @return AbstractKey
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface
      */
-    public function getKey(): AbstractKey
+    public function getKey(): KeyInterface
     {
         return $this->key;
     }

@@ -20,14 +20,40 @@ use function strlen;
  *
  * @package simplesamlphp/xml-security
  */
-class SymmetricKey extends AbstractKey
+class SymmetricKey implements KeyInterface
 {
+    /** @var string */
+    protected string $material;
+
+
+    /**
+     * Build a new key with $key as its material.
+     *
+     * @param string $key The associated key material.
+     */
+    public function __construct(string $key)
+    {
+        $this->material = $key;
+    }
+
+
+    /**
+     * Return the key material associated with this key.
+     *
+     * @return string The key material.
+     */
+    public function getMaterial(): string
+    {
+        return $this->material;
+    }
+
+
     /**
      * Generate a random, binary secret key of a given length.
      *
      * If the key is intended to be used with 3DES in CBC mode, pass true in $parityBits.
      *
-     * @param int $length The length of the secret we want, in bytes.
+     * @param positive-int $length The length of the secret we want, in bytes.
      * @param bool $parityBits Whether the key should be suitable for its use in 3DES in CBC mode or not.
      *
      * @return \SimpleSAML\XMLSecurity\Key\SymmetricKey A cryptographically-secure random symmetric key.
@@ -66,6 +92,6 @@ class SymmetricKey extends AbstractKey
      */
     public function getLength(): int
     {
-        return strlen($this->get());
+        return strlen($this->getMaterial());
     }
 }
