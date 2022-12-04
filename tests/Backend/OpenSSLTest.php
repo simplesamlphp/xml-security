@@ -39,8 +39,12 @@ final class OpenSSLTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->privKey = PrivateKey::fromFile('file://' . dirname(dirname(dirname(__FILE__))) . '/tests/resources/keys/privkey.pem');
-        $this->pubKey = PublicKey::fromFile('file://' . dirname(dirname(dirname(__FILE__))) . '/tests/resources/keys/pubkey.pem');
+        $this->privKey = PrivateKey::fromFile(
+            file://' . dirname(dirname(dirname(__FILE__))) . '/tests/resources/keys/privkey.pem'
+        );
+        $this->pubKey = PublicKey::fromFile(dirname(
+            file://' . dirname(dirname(__FILE__))) . '/tests/resources/keys/pubkey.pem'
+        );
         $this->sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
         $this->backend = new OpenSSL();
         $this->backend->setDigestAlg(C::DIGEST_SHA256);

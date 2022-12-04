@@ -143,8 +143,8 @@ final class SignableElementTest extends TestCase
     public function testSigningDocumentWithComments(): void
     {
         $xml = DOMDocumentFactory::fromString(
-            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk><!--comment-->Some<!--comment-->' .
-            '</ssp:Chunk></ssp:CustomSignable>',
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk><!--comment-->Some' .
+            '<!--comment--></ssp:Chunk></ssp:CustomSignable>',
         );
         $customSignable = CustomSignable::fromXML($xml->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
