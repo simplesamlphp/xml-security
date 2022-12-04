@@ -69,12 +69,16 @@ class RSAKeyTransportTest extends TestCase
 
     /**
      * Test decrypting with RSA.
+     *
+     * NOTE: if you change the key material, you have to replace $ciphertext with a
+     *       base64 encoded version of the $encrypted var from ::testEncrypt
      */
     public function testDecrypt(): void
     {
         // test RSA-OAEP-MGF1P
-        $ciphertext = "j/siG2qn4/YQWVXRN6QuwTz1nm1l7fhCO1tqC0j6wkBhubeMbpvoF2rhRPXloy/1IYtHLubuWyrdYrXrxX/eyrPHonsSb0Y"
-                    . "/RUMYS4/s157o2vaJB2RYE1D9A5GACsJiDwD2NGrTecymySUjB84gwp32yMfoISlc9+vneTgfNnk=";
+        $ciphertext = "0Ok/N3BV5LUxmr8IDXQQhtzQEJzD5uSN5kOVjzPkzesjlSVR9qv819MPBL8yfSMdUSQWVq1N/w" .
+                      "A6fgclGb/keGZOtjSkHZnZEZvXEOQItFjS6MbQc+TzNmRd6FSkuPUmwQ1V+NwxTPCIwXSSd0Aj" .
+                      "7oHb7xRdBhoFuDrSbYAvATQ=";
         $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privateKey);
         $plaintext = $rsa->decrypt(base64_decode($ciphertext));
         $this->assertEquals($this->plaintext, $plaintext);
@@ -85,8 +89,9 @@ class RSAKeyTransportTest extends TestCase
         $this->assertEquals($this->plaintext, $plaintext);
 
         // test RSA-1.5
-        $ciphertext = "XACuRtMaqFyalcp6/wxA6dKM6kpNHTs/yLlj28vV5JshXLFbBAm8YlxeuuniE6m2+DBN78WdIb+2mJYDNSeKitO7NYug7"
-                    . "hKK0occdolFHEZMgX8Nf+cqPCOeclvwyWwMzA+oGrIywhBEpD5kojjhR4UcbGKB5ghmPVKEzJi5cf0=";
+        $ciphertext = "ZAnYBqqM5T/kg+P8fb3UfDU1gyUIpndpqQN2qpmJso2z6His6WOkh5JFVN/wz+agvyR54kMmII" .
+                      "afiDsy5izSk6+QZ5kMOgRLrmnh+RYZXjvCL6i1NXzaLw8yZLBvlP01SNMv/BBq640yzbG9U2ZN" .
+                      "nxBLDvBmbJBxzt6XCowXQS8=";
         $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->privateKey);
         $plaintext = $rsa->decrypt(base64_decode($ciphertext));
         $this->assertEquals($this->plaintext, $plaintext);

@@ -39,7 +39,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
     // asymmetric encryption options
     /** @var int */
-    protected int $padding = OPENSSL_PKCS1_PADDING;
+    protected int $padding = OPENSSL_PKCS1_OAEP_PADDING;
 
     // symmetric encryption options
     /** @var string */
