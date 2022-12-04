@@ -17,6 +17,7 @@ CERTS_DIR="${DESTINATION}/certificates"
 KEYS_DIR="${DESTINATION}/keys"
 
 declare -a CERTS=(
+  "selfsigned"
   "signed"
   "other"
   "expired"
@@ -64,31 +65,18 @@ do
     openssl x509 -req -in $KEYS_DIR/$CERT.simplesamlphp.org.csr -CA $CERTS_DIR/simplesamlphp.org-ca.crt \
       -CAkey $KEYS_DIR/simplesamlphp.org-ca_nopasswd.key -CAserial $DESTINATION/serial.txt \
       -out $CERTS_DIR/$CERT.simplesamlphp.org.crt -days 0 -passin pass:$PASSWORD
-
-    openssl x509 -pubkey -noout -in $CERTS_DIR/$CERT.simplesamlphp.org.crt > $KEYS_DIR/$CERT.simplesamlphp.org.pub
+  elif [[ "$CERT" == "selfsigned" ]]; then
+    openssl req -x509 -new -nodes -key $KEYS_DIR/selfsigned.simplesamlphp.org_nopasswd.key \
+      -sha256 -days $VALID_UNTIL -out $CERTS_DIR/selfsigned.simplesamlphp.org.crt \
+      -subj "${SUBJ}"
   else
     openssl x509 -req -in $KEYS_DIR/$CERT.simplesamlphp.org.csr -CA $CERTS_DIR/simplesamlphp.org-ca.crt \
       -CAkey $KEYS_DIR/simplesamlphp.org-ca_nopasswd.key -CAserial $DESTINATION/serial.txt \
       -out $CERTS_DIR/$CERT.simplesamlphp.org.crt -days $VALID_UNTIL -passin pass:$PASSWORD
-
-    openssl x509 -pubkey -noout -in $CERTS_DIR/$CERT.simplesamlphp.org.crt > $KEYS_DIR/$CERT.simplesamlphp.org.pub
   fi
+
+  openssl x509 -pubkey -noout -in $CERTS_DIR/$CERT.simplesamlphp.org.crt > $KEYS_DIR/$CERT.simplesamlphp.org.pub
 done
-
-## Self-signed certificate
-
-SUBJ="/CN=selfsigned.simplesamlphp.org/O=SimpleSAMLphp\ HQ/L=Honolulu/ST=Hawaii/C=US"
-
-openssl genrsa -out $KEYS_DIR/selfsigned.simplesamlphp.org_nopasswd.key $KEYSIZE
-
-openssl rsa -aes256 -in $KEYS_DIR/selfsigned.simplesamlphp.org_nopasswd.key \
-  -out $KEYS_DIR/selfsigned.simplesamlphp.org.key -passout pass:$PASSWORD
-
-openssl req -x509 -new -nodes -key $KEYS_DIR/selfsigned.simplesamlphp.org_nopasswd.key \
-  -sha256 -days $VALID_UNTIL -out $CERTS_DIR/selfsigned.simplesamlphp.org.crt \
-  -subj "${SUBJ}"
-
-openssl x509 -pubkey -noout -in $CERTS_DIR/selfsigned.simplesamlphp.org.crt > $KEYS_DIR/selfsigned.simplesamlphp.org.pub
 
 ## Corrupt certificate ##
 
