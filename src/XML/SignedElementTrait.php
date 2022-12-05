@@ -273,9 +273,10 @@ trait SignedElementTrait
                 }
 
                 // build a valid PEM for the certificate
-                $cert = Key\X509Certificate::PEM_HEADER . "\n" .
-                        $data->getRawContent() . "\n" .
-                        Key\X509Certificate::PEM_FOOTER;
+                $cert = sprintf(
+                    "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----",
+                    $data->getRawContent()
+                );
 
                 $cert = new Key\X509Certificate(PEM::fromString($cert));
                 $verifier = $factory->getAlgorithm($algId, $cert->getPublicKey());

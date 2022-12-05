@@ -24,9 +24,6 @@ use function openssl_x509_parse;
  */
 class X509Certificate
 {
-    public const PEM_HEADER = '-----BEGIN CERTIFICATE-----';
-    public const PEM_FOOTER = '-----END CERTIFICATE-----';
-
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     protected PEM $material;
 
