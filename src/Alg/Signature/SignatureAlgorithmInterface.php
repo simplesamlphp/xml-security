@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\AlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * An interface representing algorithms that can be used for digital signatures.
@@ -26,9 +26,9 @@ interface SignatureAlgorithmInterface extends AlgorithmInterface
     /**
      * Get the key to use with this signature algorithm.
      *
-     * @return AbstractKey
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface
      */
-    public function getKey(): AbstractKey;
+    public function getKey(): KeyInterface;
 
 
     /**

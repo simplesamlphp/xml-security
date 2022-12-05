@@ -10,7 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 /**
@@ -156,7 +156,7 @@ final class EncryptedKey extends AbstractEncryptedType
     /**
      * Create an EncryptedKey by encrypting a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $keyToEncrypt The key to encrypt.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $keyToEncrypt The key to encrypt.
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
@@ -174,7 +174,7 @@ final class EncryptedKey extends AbstractEncryptedType
      * @return EncryptedKey The new EncryptedKey object.
      */
     public static function fromKey(
-        AbstractKey $keyToEncrypt,
+        KeyInterface $keyToEncrypt,
         EncryptionAlgorithmInterface $encryptor,
         EncryptionMethod $encryptionMethod,
         ?string $id = null,
@@ -197,7 +197,7 @@ final class EncryptedKey extends AbstractEncryptedType
             new CipherData(
                 new CipherValue(
                     base64_encode(
-                        $encryptor->encrypt($keyToEncrypt->get()),
+                        $encryptor->encrypt($keyToEncrypt->getMaterial()),
                     ),
                 ),
             ),

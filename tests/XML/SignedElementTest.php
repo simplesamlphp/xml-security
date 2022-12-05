@@ -9,9 +9,12 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function dirname;
 use function file_get_contents;
@@ -27,8 +30,8 @@ use function strval;
  */
 final class SignedElementTest extends TestCase
 {
-    /** @var string */
-    private string $certificate;
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    private PEM $certificate;
 
     /** @var \DOMElement */
     private DOMElement $signedDocumentWithComments;
@@ -56,8 +59,8 @@ final class SignedElementTest extends TestCase
             dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedTampered.xml',
         )->documentElement;
 
-        $this->certificate = file_get_contents(
-            dirname(dirname(__FILE__)) . '/resources/certificates/selfsigned.simplesamlphp.org.crt',
+        $this->certificate = PEM::fromString(
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE)
         );
     }
 
@@ -90,7 +93,7 @@ final class SignedElementTest extends TestCase
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
-        $verifier = $factory->getAlgorithm($sigAlg, $certificate);
+        $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
         $verified = $customSigned->verify($verifier);
         $this->assertInstanceOf(CustomSignable::class, $verified);
@@ -100,7 +103,7 @@ final class SignedElementTest extends TestCase
             '</ssp:Chunk></ssp:CustomSignable>',
             strval($verified),
         );
-        $this->assertEquals($certificate, $verified->getVerifyingKey());
+        $this->assertEquals($certificate->getPublicKey(), $verified->getVerifyingKey());
     }
 
 
@@ -127,9 +130,8 @@ final class SignedElementTest extends TestCase
             strval($verified),
         );
         $validatingKey = $verified->getVerifyingKey();
-        $this->assertInstanceOf(X509Certificate::class, $validatingKey);
-        /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate $validatingKey */
-        $this->assertEquals($certificate->getCertificate(), $validatingKey->getCertificate());
+        $this->assertInstanceOf(PublicKey::class, $validatingKey);
+        $this->assertEquals($certificate->getPublicKey(), $validatingKey);
     }
 
 
@@ -166,7 +168,7 @@ final class SignedElementTest extends TestCase
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
-        $verifier = $factory->getAlgorithm($sigAlg, $certificate);
+        $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
         $this->expectException(RuntimeException::class);
         $this->expectDeprecationMessage('Failed to verify signature.');
@@ -192,7 +194,7 @@ final class SignedElementTest extends TestCase
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
-        $verifier = $factory->getAlgorithm($sigAlg, $certificate);
+        $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
         // verify first that our dumb object normally retains comments
         $this->assertEquals(
@@ -208,6 +210,6 @@ final class SignedElementTest extends TestCase
             '<!--comment--></ssp:Chunk></ssp:CustomSignable>',
             strval($verified),
         );
-        $this->assertEquals($certificate, $verified->getVerifyingKey());
+        $this->assertEquals($certificate->getPublicKey(), $verified->getVerifyingKey());
     }
 }

@@ -5,7 +5,7 @@ namespace SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\Utils\Security;
 
 use function hash_hmac;
@@ -53,28 +53,28 @@ final class HMAC implements SignatureBackend
     /**
      * Sign a given plaintext with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to sign.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to sign.
      * @param string $plaintext The original text to sign.
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      */
-    public function sign(AbstractKey $key, string $plaintext): string
+    public function sign(KeyInterface $key, string $plaintext): string
     {
-        return hash_hmac($this->digest, $plaintext, $key->get(), true);
+        return hash_hmac($this->digest, $plaintext, $key->getMaterial(), true);
     }
 
 
     /**
      * Verify a signature with this cipher and a given key.
      *
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use to verify the signature.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to verify the signature.
      * @param string $plaintext The original signed text.
      * @param string $signature The (binary) signature to verify.
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(AbstractKey $key, string $plaintext, string $signature): bool
+    public function verify(KeyInterface $key, string $plaintext, string $signature): bool
     {
-        return Security::compareStrings(hash_hmac($this->digest, $plaintext, $key->get(), true), $signature);
+        return Security::compareStrings(hash_hmac($this->digest, $plaintext, $key->getMaterial(), true), $signature);
     }
 }

@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSecurity\Exception\IOException;
-
-use function error_clear_last;
-use function file_get_contents;
+use OpenSSLAsymmetricKey;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 
 /**
  * A class representing an asymmetric key.
@@ -17,28 +14,41 @@ use function file_get_contents;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AsymmetricKey extends AbstractKey
+abstract class AsymmetricKey implements KeyInterface
 {
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    protected PEM $material;
+
+
     /**
-     * Read a key from a given file.
+     * Build a new key with $key as its material.
      *
-     * @param string $file The path to a file where the key is stored.
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The associated key material.
+     */
+    public function __construct(PEM $key)
+    {
+        $this->material = $key;
+    }
+
+
+    /**
+     * Return the key material associated with this key.
      *
      * @return string The key material.
-     *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given file cannot be read.
      */
-    protected static function readFile(string $file): string
+    public function getMaterial(): string
     {
-        error_clear_last();
-        $key = @file_get_contents($file);
+        return $this->material->string();
+    }
 
-        if ($key === false) {
-            $e = error_get_last();
-            $error = $e['message'] ?: "Check that the file exists and can be read.";
-            throw new IOException("File '$file' was not loaded;  $error");
-        }
 
-        return $key;
+    /**
+     * Return the raw PEM-object associated with this key.
+     *
+     * @return \SimpleSAML\XMLSecurity\CryptoEncoding\PEM The raw material.
+     */
+    public function getPEM(): PEM
+    {
+        return $this->material;
     }
 }

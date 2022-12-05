@@ -5,6 +5,7 @@ namespace SimpleSAML\XMLSecurity\Test\Key;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -40,7 +41,7 @@ final class X509CertificateTest extends TestCase
     {
         $this->f = PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::CERTIFICATE);
         $this->cert = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($this->f)));
-        $this->c = new X509Certificate($this->f);
+        $this->c = new X509Certificate(PEM::fromString($this->f));
     }
 
 
@@ -49,7 +50,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testCreation(): void
     {
-        $pubDetails = openssl_pkey_get_details($this->c->get());
+        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($this->c->getMaterial()));
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }
 
@@ -59,7 +60,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetCertificate(): void
     {
-        $this->assertEquals($this->f, $this->c->getCertificate());
+        $this->assertEquals($this->f, $this->c->getMaterial());
     }
 
 
@@ -98,7 +99,7 @@ final class X509CertificateTest extends TestCase
     public function testFromFile(): void
     {
         $c = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
-        $pubDetails = openssl_pkey_get_details($c->get());
+        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($c->getMaterial()));
         $this->assertEquals($this->cert['key'], $pubDetails['key']);
     }
 }

@@ -14,6 +14,7 @@ use function dirname;
 use function file_get_contents;
 use function preg_match;
 use function preg_replace;
+use function trim;
 
 /**
  * Class \SimpleSAML\TestUtils\PEMCertificatesMock
@@ -48,7 +49,7 @@ class PEMCertificatesMock
     private static function buildKeysPath(string $file): string
     {
         $base = dirname(dirname(__FILE__));
-        return $base . DIRECTORY_SEPARATOR . self::KEYS_DIR . DIRECTORY_SEPARATOR . $file;
+        return 'file://' . $base . DIRECTORY_SEPARATOR . self::KEYS_DIR . DIRECTORY_SEPARATOR . $file;
     }
 
 
@@ -59,7 +60,7 @@ class PEMCertificatesMock
     private static function buildCertsPath(string $file): string
     {
         $base = dirname(dirname(__FILE__));
-        return $base . DIRECTORY_SEPARATOR . self::CERTS_DIR . DIRECTORY_SEPARATOR . $file;
+        return 'file://' . $base . DIRECTORY_SEPARATOR . self::CERTS_DIR . DIRECTORY_SEPARATOR . $file;
     }
 
 
@@ -69,7 +70,7 @@ class PEMCertificatesMock
      */
     public static function loadPlainCertificateFile(string $file): string
     {
-        return file_get_contents(self::buildCertsPath($file));
+        return trim(file_get_contents(self::buildCertsPath($file)));
     }
 
 
@@ -79,7 +80,7 @@ class PEMCertificatesMock
      */
     public static function loadPlainKeyFile(string $file): string
     {
-        return file_get_contents(self::buildKeysPath($file));
+        return trim(file_get_contents(self::buildKeysPath($file)));
     }
 
 

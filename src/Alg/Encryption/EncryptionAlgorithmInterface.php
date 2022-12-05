@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\XMLSecurity\Alg\AlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * An interface representing algorithms that can be used for encryption.
@@ -18,9 +18,9 @@ interface EncryptionAlgorithmInterface extends AlgorithmInterface
     /**
      * Get the key to use with this encryption algorithm.
      *
-     * @return AbstractKey
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface
      */
-    public function getKey(): AbstractKey;
+    public function getKey(): KeyInterface;
 
 
     /**

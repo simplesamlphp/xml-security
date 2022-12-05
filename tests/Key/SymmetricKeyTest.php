@@ -18,7 +18,7 @@ final class SymmetricKeyTest extends TestCase
     public function testCreation(): void
     {
         $k = new SymmetricKey('secret_key_material');
-        $this->assertEquals('secret_key_material', $k->get());
+        $this->assertEquals('secret_key_material', $k->getMaterial());
         $this->assertEquals(19, $k->getLength());
     }
 
@@ -32,6 +32,6 @@ final class SymmetricKeyTest extends TestCase
         $k2 = SymmetricKey::generate(24, true);
         $this->assertEquals(24, $k1->getLength());
         $this->assertEquals(24, $k2->getLength());
-        $this->assertNotEquals($k1->get(), $k2->get());
+        $this->assertNotEquals($k1->getMaterial(), $k2->getMaterial());
     }
 }

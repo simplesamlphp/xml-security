@@ -11,12 +11,13 @@ use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\ReferenceValidationFailedException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
@@ -49,9 +50,9 @@ trait SignedElementTrait
     /**
      * The key that successfully verifies the signature in this object.
      *
-     * @var \SimpleSAML\XMLSecurity\Key\AbstractKey|null
+     * @var \SimpleSAML\XMLSecurity\Key\KeyInterface|null
      */
-    private ?AbstractKey $validatingKey = null;
+    private ?KeyInterface $validatingKey = null;
 
 
     /**
@@ -201,9 +202,9 @@ trait SignedElementTrait
     /**
      * Retrieve certificates that sign this element.
      *
-     * @return \SimpleSAML\XMLSecurity\Key\AbstractKey|null The key that successfully verified this signature.
+     * @return \SimpleSAML\XMLSecurity\Key\KeyInterface|null The key that successfully verified this signature.
      */
-    public function getVerifyingKey(): ?AbstractKey
+    public function getVerifyingKey(): ?KeyInterface
     {
         return $this->validatingKey;
     }
@@ -272,12 +273,13 @@ trait SignedElementTrait
                 }
 
                 // build a valid PEM for the certificate
-                $cert = Key\X509Certificate::PEM_HEADER . "\n" .
-                        $data->getRawContent() . "\n" .
-                        Key\X509Certificate::PEM_FOOTER;
+                $cert = sprintf(
+                    "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----",
+                    $data->getRawContent()
+                );
 
-                $key = new Key\X509Certificate($cert);
-                $verifier = $factory->getAlgorithm($algId, $key);
+                $cert = new Key\X509Certificate(PEM::fromString($cert));
+                $verifier = $factory->getAlgorithm($algId, $cert->getPublicKey());
 
                 try {
                     return $this->verifyInternal($verifier);

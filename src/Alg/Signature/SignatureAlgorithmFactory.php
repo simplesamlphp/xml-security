@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Key\AbstractKey;
+use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
  * Factory class to create and configure digital signature algorithms.
@@ -74,7 +74,7 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
      * Get a new object implementing the given digital signature algorithm.
      *
      * @param string $algId The identifier of the algorithm desired.
-     * @param \SimpleSAML\XMLSecurity\Key\AbstractKey $key The key to use with the given algorithm.
+     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
      *
      * @return \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface An object implementing the given
      * algorithm.
@@ -82,7 +82,7 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
      * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given
      * algorithm is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, AbstractKey $key): SignatureAlgorithmInterface
+    public function getAlgorithm(string $algId, KeyInterface $key): SignatureAlgorithmInterface
     {
         return parent::getAlgorithm($algId, $key);
     }
