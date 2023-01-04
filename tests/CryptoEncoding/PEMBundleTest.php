@@ -12,6 +12,8 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle;
 use SimpleSAML\XMLSecurity\Exception\IOException;
 use UnexpectedValueException;
 
+use function dirname;
+
 /**
  * @group pem
  *
@@ -26,7 +28,7 @@ class PEMBundleTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->base_dir = dirname(dirname(__FILE__));
+        $this->base_dir = dirname(__FILE__, 2);
     }
 
 

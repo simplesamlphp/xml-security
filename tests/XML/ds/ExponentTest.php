@@ -34,7 +34,7 @@ final class ExponentTest extends TestCase
         $this->testedClass = Exponent::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_Exponent.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_Exponent.xml',
         );
     }
 

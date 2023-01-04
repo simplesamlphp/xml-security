@@ -10,6 +10,7 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use UnexpectedValueException;
 
 use function base64_encode;
+use function dirname;
 use function file_get_contents;
 
 /**
@@ -26,7 +27,7 @@ class PEMTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->base_dir = dirname(dirname(__FILE__));
+        $this->base_dir = dirname(__FILE__, 2);
     }
 
 

@@ -42,7 +42,7 @@ final class X509CertificateTest extends TestCase
         $this->testedClass = X509Certificate::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509Certificate.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_X509Certificate.xml',
         );
 
         $this->certificate = str_replace(

@@ -48,15 +48,15 @@ final class SignedElementTest extends TestCase
     public function setUp(): void
     {
         $this->signedDocumentWithComments = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
         )->documentElement;
 
         $this->signedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSigned.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSigned.xml',
         )->documentElement;
 
         $this->tamperedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSignedTampered.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedTampered.xml',
         )->documentElement;
 
         $this->certificate = PEM::fromString(

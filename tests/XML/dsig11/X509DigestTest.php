@@ -47,10 +47,10 @@ final class X509DigestTest extends TestCase
     {
         $this->testedClass = X509Digest::class;
 
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig11-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig11-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/dsig11_X509Digest.xml',
+            dirname(__FILE__, 3) . '/resources/xml/dsig11_X509Digest.xml',
         );
         $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
 

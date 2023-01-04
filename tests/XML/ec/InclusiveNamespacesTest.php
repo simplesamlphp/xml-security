@@ -30,12 +30,12 @@ class InclusiveNamespacesTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/exc-c14n.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/schemas/exc-c14n.xsd';
 
         $this->testedClass = InclusiveNamespaces::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ec_InclusiveNamespaces.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ec_InclusiveNamespaces.xml',
         );
     }
 

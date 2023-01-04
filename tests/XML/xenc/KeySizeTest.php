@@ -31,7 +31,7 @@ final class KeySizeTest extends TestCase
         $this->testedClass = KeySize::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_KeySize.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_KeySize.xml',
         );
     }
 

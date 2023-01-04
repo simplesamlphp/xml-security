@@ -35,10 +35,10 @@ final class DigestValueTest extends TestCase
     {
         $this->testedClass = DigestValue::class;
 
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_DigestValue.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_DigestValue.xml',
         );
     }
 

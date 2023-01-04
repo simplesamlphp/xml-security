@@ -30,7 +30,7 @@ class XPathTest extends TestCase
         $this->testedClass = XPath::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_XPath.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_XPath.xml',
         );
     }
 

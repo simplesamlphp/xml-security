@@ -15,6 +15,8 @@ use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
+use function dirname;
+
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\EncryptedCustomTest
  *
@@ -41,7 +43,7 @@ class EncryptedCustomTest extends TestCase
     public function setUp(): void
     {
         $this->signedDocument = DOMDocumentFactory::fromFile(
-            dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignableSigned.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSigned.xml',
         )->documentElement;
 
         $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);

@@ -35,10 +35,10 @@ final class TransformTest extends TestCase
     {
         $this->testedClass = Transform::class;
 
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) . '/resources/xml/ds_Transform.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_Transform.xml',
         );
     }
 
@@ -68,8 +68,7 @@ final class TransformTest extends TestCase
         $this->assertNull($transform->getXPath());
 
         $xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(__FILE__))) .
-            '/resources/xml/ds_Transform_InclusiveNamespaces.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_Transform_InclusiveNamespaces.xml',
         );
 
         $this->assertEquals(

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once(dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php');
+require_once(dirname(__FILE__, 3) . '/vendor/autoload.php');
 
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
-$document = DOMDocumentFactory::fromFile(dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignable.xml');
+$document = DOMDocumentFactory::fromFile(dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml');
 $document->documentElement->setAttribute('id', '_1234');
 
 $chunks = $document->documentElement->getElementsByTagNameNS("urn:x-simplesamlphp:namespace", "Chunk");

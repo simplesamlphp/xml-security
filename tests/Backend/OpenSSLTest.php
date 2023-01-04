@@ -11,6 +11,7 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
+use dirname;
 use function bin2hex;
 use function hex2bin;
 
@@ -40,10 +41,10 @@ final class OpenSSLTest extends TestCase
     protected function setUp(): void
     {
         $this->privKey = PrivateKey::fromFile(
-            'file://' . dirname(dirname(dirname(__FILE__))) . '/tests/resources/keys/privkey.pem'
+            'file://' . dirname(__FILE__, 2) . '/resources/keys/privkey.pem'
         );
-        $this->pubKey = PublicKey::fromFile(dirname(
-            'file://' . dirname(dirname(__FILE__))) . '/tests/resources/keys/pubkey.pem'
+        $this->pubKey = PublicKey::fromFile(
+            'file://' . dirname(__FILE__, 2) . '/resources/keys/pubkey.pem'
         );
         $this->sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
         $this->backend = new OpenSSL();

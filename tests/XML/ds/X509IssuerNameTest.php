@@ -34,7 +34,7 @@ final class X509IssuerNameTest extends TestCase
         $this->testedClass = X509IssuerName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/ds_X509IssuerName.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_X509IssuerName.xml',
         );
     }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once(dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php');
+require_once(dirname(__FILE__, 3) . '/vendor/autoload.php');
 
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 
-$document = DOMDocumentFactory::fromFile(dirname(dirname(__FILE__)) . '/resources/xml/custom_CustomSignable.xml');
+$document = DOMDocumentFactory::fromFile(dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml');
 
 $signer = (new SignatureAlgorithmFactory())->getAlgorithm(
     C::SIG_RSA_SHA256,

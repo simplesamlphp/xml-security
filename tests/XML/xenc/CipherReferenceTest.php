@@ -41,10 +41,10 @@ final class CipherReferenceTest extends TestCase
     {
         $this->testedClass = CipherReference::class;
 
-        $this->schema = dirname(dirname(dirname(dirname(__FILE__)))) . '/schemas/xenc-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/tests/resources/xml/xenc_CipherReference.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_CipherReference.xml',
         );
 
         $xpath = new XPath('count(//. | //@* | //namespace::*)');
