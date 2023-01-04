@@ -50,13 +50,16 @@ final class RSASignatureTest extends TestCase
     public function testSign(): void
     {
         // test RSA-SHA1
-        $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA1, $this->privateKey);
-        $this->assertEquals(
-            '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a3c12' .
-            'a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be937ae35f4b' .
-            '1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
-            bin2hex($rsa->sign($this->plaintext)),
-        );
+        if (boolval(OPENSSL_VERSION_NUMBER >= hexdec('0x30000000')) === false) {
+            // OpenSSL 3.0 disabled SHA1 support
+            $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA1, $this->privateKey);
+            $this->assertEquals(
+                 '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a3c12' .
+                'a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be937ae35f4b' .
+                '1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
+                bin2hex($rsa->sign($this->plaintext)),
+            );
+        }
 
         // test RSA-SHA224
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA224, $this->privateKey);
@@ -114,15 +117,18 @@ final class RSASignatureTest extends TestCase
     public function testVerify(): void
     {
         // test RSA-SHA1
-        $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA1, $this->publicKey);
-        $this->assertTrue($rsa->verify(
-            $this->plaintext,
-            hex2bin(
-                '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a' .
-                '3c12a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be93' .
-                '7ae35f4b1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
-            ),
-        ));
+        if (boolval(OPENSSL_VERSION_NUMBER >= hexdec('0x30000000')) === false) {
+            // OpenSSL 3.0 disabled SHA1 support
+            $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA1, $this->publicKey);
+            $this->assertTrue($rsa->verify(
+                $this->plaintext,
+                hex2bin(
+                    '75780000a403f4280d361c246a1c23e650d59c8cabbe4064e1848bace35ba8931a7c397caacf8af36c10ead3bed5252109a' .
+                    '3c12a54b3f867950ae75ea29864babef465eabdda826d81c367583725012dfa68a1b51119425e3e6e9490c778db81b5be93' .
+                    '7ae35f4b1393944b7260d4ebd3c100bf59ae42d4506c82cae6550d68b8',
+                ),
+            ));
+        }
 
         // test RSA-SHA224
         $rsa = $this->factory->getAlgorithm(C::SIG_RSA_SHA224, $this->publicKey);
