@@ -20,16 +20,6 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
  */
 final class EncryptedKey extends AbstractEncryptedType
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null */
-    protected ?CarriedKeyName $carriedKeyName;
-
-    /** @var string|null */
-    protected ?string $recipient;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null */
-    protected ?ReferenceList $referenceList;
-
-
     /**
      * EncryptedKey constructor.
      *
@@ -53,16 +43,13 @@ final class EncryptedKey extends AbstractEncryptedType
         ?string $type = null,
         ?string $mimeType = null,
         ?string $encoding = null,
-        ?string $recipient = null,
-        ?CarriedKeyName $carriedKeyName = null,
+        protected ?string $recipient = null,
+        protected ?CarriedKeyName $carriedKeyName = null,
         ?EncryptionMethod $encryptionMethod = null,
         ?KeyInfo $keyInfo = null,
-        ?ReferenceList $referenceList = null,
+        protected ?ReferenceList $referenceList = null,
     ) {
         parent::__construct($cipherData, $id, $type, $mimeType, $encoding, $encryptionMethod, $keyInfo);
-        $this->setRecipient($recipient);
-        $this->setReferenceList($referenceList);
-        $this->setCarriedKeyName($carriedKeyName);
     }
 
 
@@ -78,15 +65,6 @@ final class EncryptedKey extends AbstractEncryptedType
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
-     */
-    protected function setCarriedKeyName(?CarriedKeyName $carriedKeyName): void
-    {
-        $this->carriedKeyName = $carriedKeyName;
-    }
-
-
-    /**
      * Get the value of the Recipient attribute.
      *
      * @return string|null
@@ -98,15 +76,6 @@ final class EncryptedKey extends AbstractEncryptedType
 
 
     /**
-     * @param string|null $recipient
-     */
-    protected function setRecipient(?string $recipient): void
-    {
-        $this->recipient = $recipient;
-    }
-
-
-    /**
      * Get the ReferenceList object.
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null
@@ -114,15 +83,6 @@ final class EncryptedKey extends AbstractEncryptedType
     public function getReferenceList(): ?ReferenceList
     {
         return $this->referenceList;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
-     */
-    protected function setReferenceList(?ReferenceList $referenceList): void
-    {
-        $this->referenceList = $referenceList;
     }
 
 

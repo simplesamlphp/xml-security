@@ -16,20 +16,8 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  */
 abstract class AbstractSigner implements SignatureAlgorithmInterface
 {
-    /** @var \SimpleSAML\XMLSecurity\Key\KeyInterface */
-    private KeyInterface $key;
-
     /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
-
-    /** @var string */
-    protected string $default_backend;
-
-    /** @var string */
-    protected string $digest;
-
-    /** @var string */
-    protected string $algId;
 
 
     /**
@@ -43,8 +31,11 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
      * @param string $algId The identifier of this algorithm.
      * @param string $digest The identifier of the digest algorithm to use.
      */
-    public function __construct(KeyInterface $key, string $algId, string $digest)
-    {
+    public function __construct(
+        private KeyInterface $key,
+        protected string $algId,
+        protected string $digest,
+    ) {
         Assert::oneOf(
             $algId,
             static::getSupportedAlgorithms(),
@@ -52,10 +43,7 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
             UnsupportedAlgorithmException::class,
         );
 
-        $this->key = $key;
-        $this->algId = $algId;
-        $this->digest = $digest;
-        $this->backend = new $this->default_backend();
+        $this->backend = new (static::DEFAULT_BACKEND)();
         $this->backend->setDigestAlg($digest);
     }
 

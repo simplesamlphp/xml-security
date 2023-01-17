@@ -20,28 +20,6 @@ use function count;
  */
 abstract class AbstractEncryptedType extends AbstractXencElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherData */
-    protected CipherData $cipherData;
-
-    /** @var string|null */
-    protected ?string $encoding;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null */
-    protected ?EncryptionMethod $encryptionMethod;
-
-    /** @var string|null */
-    protected ?string $id;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null */
-    protected ?KeyInfo $keyInfo;
-
-    /** @var string|null */
-    protected ?string $mimeType;
-
-    /** @var string|null */
-    protected ?string $type;
-
-
     /**
      * EncryptedData constructor.
      *
@@ -55,21 +33,17 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
      */
     public function __construct(
-        CipherData $cipherData,
-        ?string $id = null,
-        ?string $type = null,
-        ?string $mimeType = null,
-        ?string $encoding = null,
-        ?EncryptionMethod $encryptionMethod = null,
-        ?KeyInfo $keyInfo = null,
+        protected CipherData $cipherData,
+        protected ?string $id = null,
+        protected ?string $type = null,
+        protected ?string $mimeType = null,
+        protected ?string $encoding = null,
+        protected ?EncryptionMethod $encryptionMethod = null,
+        protected ?KeyInfo $keyInfo = null,
     ) {
-        $this->setCipherData($cipherData);
-        $this->setEncoding($encoding);
-        $this->setID($id);
-        $this->setMimeType($mimeType);
-        $this->setType($type);
-        $this->setEncryptionMethod($encryptionMethod);
-        $this->setKeyInfo($keyInfo);
+        Assert::nullOrValidNCName($id, SchemaViolationException::class); // Covers the empty string
+        Assert::nullOrValidURI($type, SchemaViolationException::class); // Covers the empty string
+        Assert::nullOrValidURI($encoding, SchemaViolationException::class); // Covers the empty string
     }
 
 
@@ -85,15 +59,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherData $cipherData
-     */
-    protected function setCipherData(CipherData $cipherData): void
-    {
-        $this->cipherData = $cipherData;
-    }
-
-
-    /**
      * Get the value of the Encoding attribute.
      *
      * @return string|null
@@ -101,16 +66,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     public function getEncoding(): ?string
     {
         return $this->encoding;
-    }
-
-
-    /**
-     * @param string|null $encoding
-     */
-    protected function setEncoding(?string $encoding): void
-    {
-        Assert::nullOrValidURI($encoding, SchemaViolationException::class); // Covers the empty string
-        $this->encoding = $encoding;
     }
 
 
@@ -126,15 +81,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
-     */
-    protected function setEncryptionMethod(?EncryptionMethod $encryptionMethod): void
-    {
-        $this->encryptionMethod = $encryptionMethod;
-    }
-
-
-    /**
      * Get the value of the Id attribute.
      *
      * @return string
@@ -142,16 +88,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     public function getID(): ?string
     {
         return $this->id;
-    }
-
-
-    /**
-     * @param string|null $id
-     */
-    protected function setID(?string $id): void
-    {
-        Assert::nullOrValidNCName($id, SchemaViolationException::class); // Covers the empty string
-        $this->id = $id;
     }
 
 
@@ -167,15 +103,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
-     */
-    protected function setKeyInfo(?KeyInfo $keyInfo): void
-    {
-        $this->keyInfo = $keyInfo;
-    }
-
-
-    /**
      * Get the value of the MimeType attribute.
      *
      * @return string
@@ -187,15 +114,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
 
 
     /**
-     * @param string|null $mimeType
-     */
-    protected function setMimeType(?string $mimeType): void
-    {
-        $this->mimeType = $mimeType;
-    }
-
-
-    /**
      * Get the value of the Type attribute.
      *
      * @return string|null
@@ -203,16 +121,6 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     public function getType(): ?string
     {
         return $this->type;
-    }
-
-
-    /**
-     * @param string|null $type
-     */
-    protected function setType(?string $type): void
-    {
-        Assert::nullOrValidURI($type, SchemaViolationException::class); // Covers the empty string
-        $this->type = $type;
     }
 
 

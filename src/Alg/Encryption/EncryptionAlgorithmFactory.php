@@ -16,6 +16,17 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
 final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
 {
     /**
+     * An array of blacklisted algorithms.
+     *
+     * Defaults to 3DES.
+     *
+     * @var string[]
+     */
+    private const DEFAULT_BLACKLIST = [
+        C::BLOCK_ENC_3DES,
+    ];
+
+    /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
      * @var string[]
@@ -29,27 +40,16 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
      */
     protected static bool $initialized = false;
 
-    /**
-     * An array of blacklisted algorithms.
-     *
-     * Defaults to 3DES.
-     *
-     * @var string[]
-     */
-    protected array $blacklist = [
-        C::BLOCK_ENC_3DES,
-    ];
-
 
     /**
      * Build a factory that creates encryption algorithms.
      *
      * @param array|null $blacklist A list of algorithms forbidden for their use.
      */
-    public function __construct(array $blacklist = null)
+    public function __construct(?array $blacklist = null)
     {
         parent::__construct(
-            $blacklist,
+            $blacklist ?? self::DEFAULT_BLACKLIST,
             [
                 TripleDES::class,
                 AES::class,

@@ -17,18 +17,15 @@ use SimpleSAML\XMLSecurity\XML\ds\Transform;
  */
 final class Transforms extends AbstractXencElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transform[] */
-    protected array $transform;
-
-
     /**
      * Initialize a xenc:Transforms
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transform[] $transform
      */
-    public function __construct(array $transform)
-    {
-        $this->setTransform($transform);
+    public function __construct(
+        protected array $transform,
+    ) {
+        Assert::allIsInstanceOf($transform, Transform::class, InvalidArgumentException::class);
     }
 
 
@@ -38,16 +35,6 @@ final class Transforms extends AbstractXencElement
     public function getTransform(): array
     {
         return $this->transform;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Transform[] $transform
-     */
-    protected function setTransform(array $transform): void
-    {
-        Assert::allIsInstanceOf($transform, Transform::class, InvalidArgumentException::class);
-        $this->transform = $transform;
     }
 
 

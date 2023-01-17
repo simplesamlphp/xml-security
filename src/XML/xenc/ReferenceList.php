@@ -19,28 +19,35 @@ use function array_merge;
  */
 class ReferenceList extends AbstractXencElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\DataReference[] */
-    protected array $dataReferences;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] */
-    protected array $keyReferences;
-
-
     /**
      * ReferenceList constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\DataReference[] $dataReferences
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] $keyReferences
      */
-    final public function __construct(array $dataReferences, array $keyReferences = [])
-    {
-        $this->setDataReferences($dataReferences);
-        $this->setKeyReferences($keyReferences);
+    final public function __construct(
+        protected array $dataReferences,
+        protected array $keyReferences = [],
+    ) {
         Assert::minCount(
-            array_merge($this->dataReferences, $this->keyReferences),
+            array_merge($dataReferences, $keyReferences),
             1,
             'At least one <xenc:DataReference> or <xenc:KeyReference> element required in <xenc:ReferenceList>.',
             MissingElementException::class,
+        );
+
+        Assert::allIsInstanceOf(
+            $dataReferences,
+            DataReference::class,
+            'All data references must be an instance of <xenc:DataReference>.',
+            InvalidArgumentException::class,
+        );
+
+        Assert::allIsInstanceOf(
+            $keyReferences,
+            KeyReference::class,
+            'All key references must be an instance of <xenc:KeyReference>.',
+            InvalidArgumentException::class,
         );
     }
 
@@ -57,22 +64,6 @@ class ReferenceList extends AbstractXencElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\DataReference[] $dataReferences
-     */
-    protected function setDataReferences(array $dataReferences): void
-    {
-        Assert::allIsInstanceOf(
-            $dataReferences,
-            DataReference::class,
-            'All data references must be an instance of <xenc:DataReference>.',
-            InvalidArgumentException::class,
-        );
-
-        $this->dataReferences = $dataReferences;
-    }
-
-
-    /**
      * Get the list of KeyReference objects.
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[]
@@ -80,22 +71,6 @@ class ReferenceList extends AbstractXencElement
     public function getKeyReferences(): array
     {
         return $this->keyReferences;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeyReference[] $keyReferences
-     */
-    protected function setKeyReferences(array $keyReferences): void
-    {
-        Assert::allIsInstanceOf(
-            $keyReferences,
-            KeyReference::class,
-            'All key references must be an instance of <xenc:KeyReference>.',
-            InvalidArgumentException::class,
-        );
-
-        $this->keyReferences = $keyReferences;
     }
 
 

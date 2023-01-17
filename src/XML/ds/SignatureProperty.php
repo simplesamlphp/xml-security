@@ -27,12 +27,6 @@ final class SignatureProperty extends AbstractDsElement
     /** The namespace-attribute for the xs:any element */
     public const NAMESPACE = C::XS_ANY_NS_OTHER;
 
-    /** @var string $Target */
-    protected string $Target;
-
-    /** @var string|null $Id */
-    protected ?string $Id;
-
 
     /**
      * Initialize a ds:SignatureProperty
@@ -43,12 +37,13 @@ final class SignatureProperty extends AbstractDsElement
      */
     public function __construct(
         array $elements,
-        string $Target,
-        ?string $Id = null
+        protected string $Target,
+        protected ?string $Id = null,
     ) {
+        Assert::validURI($Target, SchemaViolationException::class); // Covers the empty string
+        Assert::nullOrValidNCName($Id);
+
         $this->setElements($elements);
-        $this->setTarget($Target);
-        $this->setId($Id);
     }
 
 
@@ -62,31 +57,11 @@ final class SignatureProperty extends AbstractDsElement
 
 
     /**
-     * @param string $Target
-     */
-    protected function setTarget(string $Target): void
-    {
-        Assert::validURI($Target, SchemaViolationException::class); // Covers the empty string
-        $this->Target = $Target;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * @param string|null $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 

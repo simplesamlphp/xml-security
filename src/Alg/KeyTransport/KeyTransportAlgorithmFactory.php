@@ -15,6 +15,17 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
 class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
 {
     /**
+     * An array of blacklisted algorithms.
+     *
+     * Defaults to RSA 1.5.
+     *
+     * @var string[]
+     */
+    private const DEFAULT_BLACKLIST = [
+        C::KEY_TRANSPORT_RSA_1_5,
+    ];
+
+    /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
      * @var string[]
@@ -28,17 +39,6 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
      */
     protected static bool $initialized = false;
 
-    /**
-     * An array of blacklisted algorithms.
-     *
-     * Defaults to RSA 1.5.
-     *
-     * @var string[]
-     */
-    protected array $blacklist = [
-        C::KEY_TRANSPORT_RSA_1_5,
-    ];
-
 
     /**
      * Build a factory that creates key transport algorithms.
@@ -47,7 +47,7 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
      */
     public function __construct(array $blacklist = null)
     {
-        parent::__construct($blacklist, [RSA::class]);
+        parent::__construct($blacklist ?? self::DEFAULT_BLACKLIST, [RSA::class]);
     }
 
     /**

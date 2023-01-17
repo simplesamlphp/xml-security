@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSecurity\Backend\HMAC as HMAC_Backend;
+use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -16,7 +16,7 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 final class HMAC extends AbstractSigner implements SignatureAlgorithmInterface
 {
     /** @var string */
-    protected string $default_backend = HMAC_Backend::class;
+    protected const DEFAULT_BACKEND = Backend\HMAC::class;
 
 
     /**

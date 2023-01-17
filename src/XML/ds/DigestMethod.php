@@ -25,22 +25,23 @@ final class DigestMethod extends AbstractDsElement
     public const NAMESPACE = C::XS_ANY_NS_OTHER;
 
     /**
-     * The algorithm.
-     *
-     * @var string
-     */
-    protected string $Algorithm;
-
-
-    /**
      * Initialize a DigestMethod element.
      *
-     * @param string $algorithm
+     * @param string $Algorithm
      * @param \SimpleSAML\XML\Chunk[] $elements
      */
-    public function __construct(string $algorithm, array $elements = [])
-    {
-        $this->setAlgorithm($algorithm);
+    public function __construct(
+        protected string $Algorithm,
+        array $elements = [],
+    ) {
+        Assert::validURI($Algorithm, SchemaViolationException::class);
+        Assert::oneOf(
+            $Algorithm,
+            array_keys(C::$DIGEST_ALGORITHMS),
+            'Invalid digest method: %s',
+            InvalidArgumentException::class,
+        );
+
         $this->setElements($elements);
     }
 
@@ -53,25 +54,6 @@ final class DigestMethod extends AbstractDsElement
     public function getAlgorithm(): string
     {
         return $this->Algorithm;
-    }
-
-
-    /**
-     * Set the value of the Algorithm-property
-     *
-     * @param string $algorithm
-     */
-    private function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class);
-        Assert::oneOf(
-            $algorithm,
-            array_keys(C::$DIGEST_ALGORITHMS),
-            'Invalid digest method: %s',
-            InvalidArgumentException::class,
-        );
-
-        $this->Algorithm = $algorithm;
     }
 
 

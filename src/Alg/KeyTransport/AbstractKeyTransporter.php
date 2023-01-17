@@ -17,17 +17,8 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  */
 abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
 {
-    /** @var \SimpleSAML\XMLSecurity\Key\KeyInterface */
-    private KeyInterface $key;
-
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend */
     protected EncryptionBackend $backend;
-
-    /** @var string */
-    protected string $default_backend;
-
-    /** @var string */
-    protected string $algId;
 
 
     /**
@@ -40,17 +31,17 @@ abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
      * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The encryption key.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(KeyInterface $key, string $algId)
-    {
+    public function __construct(
+        private KeyInterface $key,
+        protected string $algId,
+    ) {
         Assert::oneOf(
             $algId,
             static::getSupportedAlgorithms(),
             'Unsupported algorithm for ' . static::class,
             UnsupportedAlgorithmException::class,
         );
-        $this->key = $key;
-        $this->algId = $algId;
-        $this->setBackend(new $this->default_backend());
+        $this->setBackend(new (static::DEFAULT_BACKEND)());
     }
 
 

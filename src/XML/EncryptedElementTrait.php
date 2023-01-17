@@ -28,14 +28,6 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 trait EncryptedElementTrait
 {
     /**
-     * The current encrypted ID.
-     *
-     * @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    protected EncryptedData $encryptedData;
-
-    /**
      * @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
      */
     protected EncryptedKey $encryptedKey;
@@ -46,14 +38,9 @@ trait EncryptedElementTrait
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData The EncryptedData object.
      */
-    public function __construct(EncryptedData $encryptedData)
-    {
-        $this->setEncryptedData($encryptedData);
-
-        if ($this->encryptedData === null) {
-            return;
-        }
-
+    public function __construct(
+        protected EncryptedData $encryptedData,
+    ) {
         $keyInfo = $this->encryptedData->getKeyInfo();
         if ($keyInfo === null) {
             return;
@@ -97,15 +84,6 @@ trait EncryptedElementTrait
     public function getEncryptedData(): EncryptedData
     {
         return $this->encryptedData;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData
-     */
-    protected function setEncryptedData(EncryptedData $encryptedData): void
-    {
-        $this->encryptedData = $encryptedData;
     }
 
 

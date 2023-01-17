@@ -22,18 +22,14 @@ use function strlen;
  */
 class SymmetricKey implements KeyInterface
 {
-    /** @var string */
-    protected string $material;
-
-
     /**
      * Build a new key with $key as its material.
      *
-     * @param string $key The associated key material.
+     * @param string $material The associated key material.
      */
-    public function __construct(string $key)
-    {
-        $this->material = $key;
+    public function __construct(
+        protected string $material,
+    ) {
     }
 
 

@@ -21,13 +21,6 @@ use SimpleSAML\XML\SerializableElementInterface;
  */
 final class SignatureProperties extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\SignatureProperty[] $signatureProperty */
-    protected array $signatureProperty;
-
-    /** @var string|null $Id */
-    protected ?string $Id;
-
-
     /**
      * Initialize a ds:SignatureProperties
      *
@@ -35,10 +28,12 @@ final class SignatureProperties extends AbstractDsElement
      * @param string $Target
      * @param string|null $Id
      */
-    public function __construct(array $signatureProperty, ?string $Id = null)
-    {
-        $this->setSignatureProperty($signatureProperty);
-        $this->setId($Id);
+    public function __construct(
+        protected array $signatureProperty,
+        protected ?string $Id = null,
+    ) {
+        Assert::allIsInstanceOf($signatureProperty, SignatureProperty::class, SchemaViolationException::class);
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -52,31 +47,11 @@ final class SignatureProperties extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureProperty[] $signatureProperty
-     */
-    protected function setSignatureProperty(array $signatureProperty): void
-    {
-        Assert::allIsInstanceOf($signatureProperty, SignatureProperty::class, SchemaViolationException::class);
-        $this->signatureProperty = $signatureProperty;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * @param string|null $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 

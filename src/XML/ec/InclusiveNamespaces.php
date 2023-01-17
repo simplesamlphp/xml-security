@@ -19,18 +19,20 @@ use function join;
  */
 class InclusiveNamespaces extends AbstractEcElement
 {
-    /** @var string[] */
-    protected array $prefixes;
-
-
     /**
      * Initialize the InclusiveNamespaces element.
      *
      * @param string[] $prefixes
      */
-    final public function __construct(array $prefixes)
-    {
-        $this->setPrefixes($prefixes);
+    final public function __construct(
+        protected array $prefixes,
+    ) {
+        Assert::allString(
+            $prefixes,
+            'Can only add string InclusiveNamespaces prefixes.',
+            InvalidArgumentException::class
+        );
+        Assert::allRegex($prefixes, '/^[a-z0-9._\\-:]*$/i', SchemaViolationException::class); // xsd:NMTOKEN
     }
 
 
@@ -42,24 +44,6 @@ class InclusiveNamespaces extends AbstractEcElement
     public function getPrefixes(): array
     {
         return $this->prefixes;
-    }
-
-
-    /**
-     * Set the prefixes to specify in this element.
-     *
-     * @param string[] $prefixes
-     */
-    private function setPrefixes(array $prefixes): void
-    {
-        Assert::allString(
-            $prefixes,
-            'Can only add string InclusiveNamespaces prefixes.',
-            InvalidArgumentException::class
-        );
-        Assert::allRegex($prefixes, '/^[a-z0-9._\\-:]*$/i', SchemaViolationException::class); // xsd:NMTOKEN
-
-        $this->prefixes = $prefixes;
     }
 
 

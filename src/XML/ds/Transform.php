@@ -22,28 +22,6 @@ use function array_pop;
 class Transform extends AbstractDsElement
 {
     /**
-     * The algorithm used for this transform.
-     *
-     * @var string
-     */
-    protected string $algorithm;
-
-    /**
-     * An XPath object.
-     *
-     * @var \SimpleSAML\XMLSecurity\XML\ds\XPath|null
-     */
-    protected ?XPath $xpath = null;
-
-    /**
-     * An InclusiveNamespaces object.
-     *
-     * @var \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null
-     */
-    protected ?InclusiveNamespaces $inclusiveNamespaces = null;
-
-
-    /**
      * Initialize the Transform element.
      *
      * @param string $algorithm
@@ -51,13 +29,34 @@ class Transform extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $prefixes
      */
     final public function __construct(
-        string $algorithm,
-        ?XPath $xpath = null,
-        ?InclusiveNamespaces $inclusiveNamespaces = null,
+        protected string $algorithm,
+        protected ?XPath $xpath = null,
+        protected ?InclusiveNamespaces $inclusiveNamespaces = null,
     ) {
-        $this->setAlgorithm($algorithm);
-        $this->setXPath($xpath);
-        $this->setInclusiveNamespaces($inclusiveNamespaces);
+        Assert::validURI($algorithm, SchemaViolationException::class);
+
+        if ($xpath !== null) {
+            Assert::nullOrEq(
+                $this->algorithm,
+                C::XPATH_URI,
+                sprintf('Transform algorithm "%s" required if XPath provided.', C::XPATH_URI),
+            );
+        }
+
+        if ($inclusiveNamespaces !== null) {
+            Assert::oneOf(
+                $this->algorithm,
+                [
+                    C::C14N_INCLUSIVE_WITH_COMMENTS,
+                    C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+                ],
+                sprintf(
+                    'Transform algorithm "%s" or "%s" required if InclusiveNamespaces provided.',
+                    C::C14N_EXCLUSIVE_WITH_COMMENTS,
+                    C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+                ),
+            );
+        }
     }
 
 
@@ -73,18 +72,6 @@ class Transform extends AbstractDsElement
 
 
     /**
-     * Set the value of the algorithm property.
-     *
-     * @param string $algorithm
-     */
-    private function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class);
-        $this->algorithm = $algorithm;
-    }
-
-
-    /**
      * Get the XPath associated with this transform.
      *
      * @return \SimpleSAML\XMLSecurity\XML\ds\XPath|null
@@ -96,26 +83,6 @@ class Transform extends AbstractDsElement
 
 
     /**
-     * Set and validate the XPath object.
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $XPath
-     */
-    private function setXPath(?XPath $xpath): void
-    {
-        if ($xpath === null) {
-            return;
-        }
-
-        Assert::nullOrEq(
-            $this->algorithm,
-            C::XPATH_URI,
-            sprintf('Transform algorithm "%s" required if XPath provided.', C::XPATH_URI),
-        );
-        $this->xpath = $xpath;
-    }
-
-
-    /**
      * Get the InclusiveNamespaces associated with this transform.
      *
      * @return \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null
@@ -123,34 +90,6 @@ class Transform extends AbstractDsElement
     public function getInclusiveNamespaces(): ?InclusiveNamespaces
     {
         return $this->inclusiveNamespaces;
-    }
-
-
-    /**
-     * Set and validate the InclusiveNamespaces object.
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $inclusiveNamespaces
-     */
-    private function setInclusiveNamespaces(?InclusiveNamespaces $inclusiveNamespaces): void
-    {
-        if ($inclusiveNamespaces === null) {
-            return;
-        }
-
-        Assert::oneOf(
-            $this->algorithm,
-            [
-                C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-            ],
-            sprintf(
-                'Transform algorithm "%s" or "%s" required if InclusiveNamespaces provided.',
-                C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
-            ),
-        );
-
-        $this->inclusiveNamespaces = $inclusiveNamespaces;
     }
 
 

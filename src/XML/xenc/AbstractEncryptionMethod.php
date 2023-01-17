@@ -10,6 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -23,17 +24,10 @@ use function sprintf;
  */
 abstract class AbstractEncryptionMethod extends AbstractXencElement
 {
-    /** @var string */
-    protected string $algorithm;
+    use ExtendableElementTrait;
 
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null */
-    protected ?KeySize $keySize = null;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null */
-    protected ?OAEPparams $oaepParams = null;
-
-    /** @var \SimpleSAML\XML\Chunk[] */
-    protected array $children = [];
+    /** The namespace-attribute for the xs:any element */
+    public const NAMESPACE = C::XS_ANY_NS_OTHER;
 
 
     /**
@@ -45,15 +39,14 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @param \SimpleSAML\XML\Chunk[] $children
      */
     final public function __construct(
-        string $algorithm,
-        ?KeySize $keySize = null,
-        ?OAEPparams $oaepParams = null,
-        array $children = [],
+        protected string $algorithm,
+        protected ?KeySize $keySize = null,
+        protected ?OAEPparams $oaepParams = null,
+        protected array $children = [],
     ) {
-        $this->setAlgorithm($algorithm);
-        $this->setKeySize($keySize);
-        $this->setOAEPParams($oaepParams);
-        $this->setChildren($children);
+        Assert::validURI($algorithm, SchemaViolationException::class); // Covers the empty string
+
+        $this->setElements($children);
     }
 
 
@@ -69,19 +62,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
 
     /**
-     * Set the URI identifying the algorithm used by this encryption method.
-     *
-     * @param string $algorithm
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     */
-    protected function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class); // Covers the empty string
-        $this->algorithm = $algorithm;
-    }
-
-
-    /**
      * Get the size of the key used by this encryption method.
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null
@@ -93,17 +73,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
 
     /**
-     * Set the size of the key used by this encryption method.
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
-     */
-    protected function setKeySize(?KeySize $keySize): void
-    {
-        $this->keySize = $keySize;
-    }
-
-
-    /**
      * Get the OAEP parameters.
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null
@@ -111,51 +80,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     public function getOAEPParams(): ?OAEPparams
     {
         return $this->oaepParams;
-    }
-
-
-    /**
-     * Set the OAEP parameters.
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams The OAEP parameters.
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     */
-    protected function setOAEPParams(?OAEPparams $oaepParams): void
-    {
-        $this->oaepParams = $oaepParams;
-    }
-
-
-    /**
-     * Get the children elements of this encryption method as chunks.
-     *
-     * @return \SimpleSAML\XML\Chunk[]
-     */
-    public function getChildren(): array
-    {
-        return $this->children;
-    }
-
-
-    /**
-     * Set an array of chunks as children of this encryption method.
-     *
-     * @param \SimpleSAML\XML\Chunk[] $children
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     */
-    protected function setChildren(array $children): void
-    {
-        Assert::allIsInstanceOf(
-            $children,
-            Chunk::class,
-            sprintf(
-                'All children elements of %s:EncryptionMethod must be of type \SimpleSAML\XML\Chunk.',
-                static::NS_PREFIX
-            ),
-            InvalidArgumentException::class,
-        );
-
-        $this->children = $children;
     }
 
 
@@ -220,7 +144,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $this->getKeySize()?->toXML($e);
         $this->getOAEPparams()?->toXML($e);
 
-        foreach ($this->getChildren() as $child) {
+        foreach ($this->getElements() as $child) {
             $child->toXML($e);
         }
 

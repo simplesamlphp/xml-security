@@ -9,6 +9,6 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
  *
  * @package simplesamlphp/xml-security
  */
-class EncryptionMethod extends AbstractEncryptionMethod
+final class EncryptionMethod extends AbstractEncryptionMethod
 {
 }

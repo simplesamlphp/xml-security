@@ -20,30 +20,17 @@ use function str_replace;
 class XPath extends AbstractDsElement
 {
     /**
-     * The XPath expression.
-     *
-     * @var string
-     */
-    protected string $expression;
-
-    /**
-     * A key-value array with namespaces, indexed by the prefixes used in the XPath expression.
-     *
-     * @var string[]
-     */
-    protected array $namespaces = [];
-
-
-    /**
      * Construct an XPath element.
      *
      * @param string $expression The XPath expression itself.
      * @param string[] $namespaces A key - value array with namespace definitions.
      */
-    final public function __construct(string $expression, array $namespaces = [])
-    {
-        $this->setExpression($expression);
-        $this->setNamespaces($namespaces);
+    final public function __construct(
+        protected string $expression,
+        protected array $namespaces = [],
+    ) {
+        Assert::allString($namespaces, InvalidArgumentException::class);
+        Assert::allString(array_keys($namespaces, InvalidArgumentException::class));
     }
 
 
@@ -59,17 +46,6 @@ class XPath extends AbstractDsElement
 
 
     /**
-     * Set the xpath expression itself.
-     *
-     * @param string $expression
-     */
-    private function setExpression(string $expression): void
-    {
-        $this->expression = $expression;
-    }
-
-
-    /**
      * Get the list of namespaces used in this XPath expression, with their corresponding prefix as
      * the keys of each element in the array.
      *
@@ -78,20 +54,6 @@ class XPath extends AbstractDsElement
     public function getNamespaces(): array
     {
         return $this->namespaces;
-    }
-
-
-    /**
-     * Set the list of namespaces used in this XPath expression.
-     *
-     * @param string[] $namespaces
-     */
-    private function setNamespaces(array $namespaces): void
-    {
-        Assert::allString($namespaces, InvalidArgumentException::class);
-        Assert::allString(array_keys($namespaces, InvalidArgumentException::class));
-
-        $this->namespaces = $namespaces;
     }
 
 

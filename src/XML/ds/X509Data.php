@@ -18,20 +18,6 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 final class X509Data extends AbstractDsElement
 {
     /**
-     * The various X509 data elements.
-     *
-     * Array with various elements describing this certificate.
-     * Unknown elements will be represented by \SimpleSAML\XML\Chunk.
-     *
-     * @var (\SimpleSAML\XML\Chunk|
-     *       \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *       \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *       \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
-     */
-    protected array $data = [];
-
-
-    /**
      * Initialize a X509Data.
      *
      * @param (\SimpleSAML\XML\Chunk|
@@ -39,9 +25,14 @@ final class X509Data extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
      */
-    public function __construct(array $data)
-    {
-        $this->setData($data);
+    public function __construct(
+        protected array $data,
+    ) {
+        Assert::allIsInstanceOfAny(
+            $data,
+            [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class],
+            InvalidArgumentException::class,
+        );
     }
 
 
@@ -56,28 +47,6 @@ final class X509Data extends AbstractDsElement
     public function getData(): array
     {
         return $this->data;
-    }
-
-
-    /**
-     * Set the value of the data-property
-     *
-     * @param (\SimpleSAML\XML\Chunk|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
-     * @throws \SimpleSAML\Assert\AssertionFailedException
-     *     if $data contains anything other than X509Certificate or Chunk
-     */
-    private function setData(array $data): void
-    {
-        Assert::allIsInstanceOfAny(
-            $data,
-            [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class],
-            InvalidArgumentException::class,
-        );
-
-        $this->data = $data;
     }
 
 

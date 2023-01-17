@@ -19,21 +19,23 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 final class SignatureMethod extends AbstractDsElement
 {
     /**
-     * The algorithm.
-     *
-     * @var string
-     */
-    protected string $Algorithm;
-
-
-    /**
      * Initialize a SignatureMethod element.
      *
-     * @param string $algorithm
+     * @param string $Algorithm
      */
-    public function __construct(string $algorithm)
-    {
-        $this->setAlgorithm($algorithm);
+    public function __construct(
+        protected string $Algorithm,
+    ) {
+        Assert::validURI($Algorithm, SchemaViolationException::class);
+        Assert::oneOf(
+            $Algorithm,
+            array_merge(
+                array_keys(C::$RSA_DIGESTS),
+                array_keys(C::$HMAC_DIGESTS),
+            ),
+            'Invalid signature method: %s',
+            InvalidArgumentException::class,
+        );
     }
 
 
@@ -45,28 +47,6 @@ final class SignatureMethod extends AbstractDsElement
     public function getAlgorithm(): string
     {
         return $this->Algorithm;
-    }
-
-
-    /**
-     * Set the value of the Algorithm-property
-     *
-     * @param string $algorithm
-     */
-    private function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class);
-        Assert::oneOf(
-            $algorithm,
-            array_merge(
-                array_keys(C::$RSA_DIGESTS),
-                array_keys(C::$HMAC_DIGESTS),
-            ),
-            'Invalid signature method: %s',
-            InvalidArgumentException::class,
-        );
-
-        $this->Algorithm = $algorithm;
     }
 
 

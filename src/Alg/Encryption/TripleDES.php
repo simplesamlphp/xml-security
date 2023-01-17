@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
-use SimpleSAML\XMLSecurity\Backend\OpenSSL;
+use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -16,7 +16,7 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 class TripleDES extends AbstractEncryptor
 {
     /** @var string */
-    protected string $default_backend = OpenSSL::class;
+    protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
 
 
     /**

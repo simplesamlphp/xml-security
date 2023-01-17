@@ -22,16 +22,19 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  */
 abstract class AbstractAlgorithmFactory
 {
-    protected static array $cache = [];
-    protected static bool $initialized = false;
-
-
     /**
-     * An array of blacklisted algorithms.
+     * A cache of algorithm implementations indexed by algorithm ID.
      *
      * @var string[]
      */
-    protected array $blacklist = [];
+    protected static array $cache = [];
+
+    /**
+     * Whether the factory has been initialized or not.
+     *
+     * @var bool
+     */
+    protected static bool $initialized = false;
 
 
     /**
@@ -40,12 +43,10 @@ abstract class AbstractAlgorithmFactory
      * @param string[]|null $blacklist A list of algorithms forbidden for their use.
      * @param string[]|null $defaults A list of known implementations.
      */
-    public function __construct(array $blacklist = null, array $defaults = null)
-    {
-        if ($blacklist !== null) {
-            $this->blacklist = $blacklist;
-        }
-
+    public function __construct(
+        protected ?array $blacklist = null,
+        ?array $defaults = null,
+    ) {
         // initialize the cache for supported algorithms per known implementation
         if (!static::$initialized && $defaults !== null) {
             foreach ($defaults as $algorithm) {
@@ -79,8 +80,8 @@ abstract class AbstractAlgorithmFactory
      */
     public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
     {
-        Assert::true(
-            !in_array($algId, $this->blacklist, true),
+        Assert::false(
+            in_array($algId, $this->blacklist, true),
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
             BlacklistedAlgorithmException::class,
         );

@@ -16,13 +16,6 @@ use SimpleSAML\XML\Exception\MissingElementException;
  */
 final class Manifest extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Reference[] */
-    protected array $references;
-
-    /** @var string|null $Id */
-    protected ?string $Id;
-
-
     /**
      * Initialize a ds:Manifest
      *
@@ -30,11 +23,11 @@ final class Manifest extends AbstractDsElement
      * @param string|null $Id
      */
     public function __construct(
-        array $references,
-        ?string $Id = null
+        protected array $references,
+        protected ?string $Id = null,
     ) {
-        $this->setReferences($references);
-        $this->setId($Id);
+        Assert::allIsInstanceOf($references, Reference::class);
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -48,31 +41,11 @@ final class Manifest extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references
-     */
-    protected function setReferences(array $references): void
-    {
-        Assert::allIsInstanceOf($references, Reference::class);
-        $this->references = $references;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * @param string|null $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 

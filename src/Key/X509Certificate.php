@@ -24,9 +24,6 @@ use function openssl_x509_parse;
  */
 class X509Certificate
 {
-    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
-    protected PEM $material;
-
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
     protected PublicKey $publicKey;
 
@@ -44,12 +41,12 @@ class X509Certificate
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
-    final public function __construct(PEM $cert)
-    {
-        Assert::oneOf($cert->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
-        $this->material = $cert;
+    final public function __construct(
+        protected PEM $material,
+    ) {
+        Assert::oneOf($material->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
 
-        if (($key = openssl_pkey_get_public($cert->string())) === false) {
+        if (($key = openssl_pkey_get_public($material->string())) === false) {
             throw new RuntimeException('Failed to read key: ' . openssl_error_string());
         }
 
@@ -66,7 +63,7 @@ class X509Certificate
         $this->publicKey = new PublicKey(PEM::fromString($details['key']));
 
         $this->thumbprint[C::DIGEST_SHA1] = $this->getRawThumbprint();
-        $this->parsed = openssl_x509_parse($cert->string());
+        $this->parsed = openssl_x509_parse($material->string());
     }
 
 

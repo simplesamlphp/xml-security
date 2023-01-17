@@ -22,13 +22,6 @@ final class X509Digest extends AbstractDsig11Element
 {
     use Base64ElementTrait;
 
-    /**
-     * The digest algorithm.
-     *
-     * @var string
-     */
-    protected string $algorithm;
-
 
     /**
      * Initialize a X509Digest element.
@@ -36,10 +29,19 @@ final class X509Digest extends AbstractDsig11Element
      * @param string $digest
      * @param string $algorithm
      */
-    public function __construct(string $digest, string $algorithm)
-    {
+    public function __construct(
+        string $digest,
+        protected string $algorithm,
+    ) {
+        Assert::validURI($algorithm, SchemaViolationException::class);
+        Assert::oneOf(
+            $algorithm,
+            array_keys(C::$DIGEST_ALGORITHMS),
+            'Invalid digest method: %s',
+            InvalidArgumentException::class,
+        );
+
         $this->setContent($digest);
-        $this->setAlgorithm($algorithm);
     }
 
 
@@ -51,25 +53,6 @@ final class X509Digest extends AbstractDsig11Element
     public function getAlgorithm(): string
     {
         return $this->algorithm;
-    }
-
-
-    /**
-     * Set the value of the algorithm-property
-     *
-     * @param string $algorithm
-     */
-    private function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class);
-        Assert::oneOf(
-            $algorithm,
-            array_keys(C::$DIGEST_ALGORITHMS),
-            'Invalid digest method: %s',
-            InvalidArgumentException::class,
-        );
-
-        $this->algorithm = $algorithm;
     }
 
 

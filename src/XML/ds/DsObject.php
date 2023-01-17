@@ -29,28 +29,6 @@ final class DsObject extends AbstractDsElement
 
 
     /**
-     * The Id.
-     *
-     * @var string|null
-     */
-    protected ?string $Id;
-
-    /**
-     * The MIME type.
-     *
-     * @var string|null
-     */
-    protected ?string $MimeType;
-
-    /**
-     * The encoding.
-     *
-     * @var string|null
-     */
-    protected ?string $Encoding;
-
-
-    /**
      * Initialize a ds:Object element.
      *
      * @param string|null $Id
@@ -59,14 +37,14 @@ final class DsObject extends AbstractDsElement
      * @param \SimpleSAML\XML\ElementInterface[] $elements
      */
     public function __construct(
-        ?string $Id = null,
-        ?string $MimeType = null,
-        ?string $Encoding = null,
-        array $elements = []
+        protected ?string $Id = null,
+        protected ?string $MimeType = null,
+        protected ?string $Encoding = null,
+        array $elements = [],
     ) {
-        $this->setId($Id);
-        $this->setMimeType($MimeType);
-        $this->setEncoding($Encoding);
+        Assert::nullOrValidNCName($Id);
+        Assert::nullOrValidURI($Encoding);
+
         $this->setElements($elements);
     }
 
@@ -83,18 +61,6 @@ final class DsObject extends AbstractDsElement
 
 
     /**
-     * Set the value of the Id-property
-     *
-     * @param string $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
-    }
-
-
-    /**
      * Collect the value of the MimeType-property
      *
      * @return string|null
@@ -106,17 +72,6 @@ final class DsObject extends AbstractDsElement
 
 
     /**
-     * Set the value of the MimeType-property
-     *
-     * @param string|null $MimeType
-     */
-    private function setMimeType(?string $MimeType): void
-    {
-        $this->MimeType = $MimeType;
-    }
-
-
-    /**
      * Collect the value of the Encoding-property
      *
      * @return string|null
@@ -124,18 +79,6 @@ final class DsObject extends AbstractDsElement
     public function getEncoding(): ?string
     {
         return $this->Encoding;
-    }
-
-
-    /**
-     * Set the value of the Encoding-property
-     *
-     * @param string|null $Encoding
-     */
-    private function setEncoding(?string $Encoding): void
-    {
-        Assert::nullOrValidURI($Encoding);
-        $this->Encoding = $Encoding;
     }
 
 

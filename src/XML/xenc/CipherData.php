@@ -19,21 +19,16 @@ use function array_pop;
  */
 class CipherData extends AbstractXencElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null */
-    protected ?CipherValue $cipherValue = null;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null */
-    protected ?CipherReference $cipherReference = null;
-
-
     /**
      * CipherData constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null $cipherValue
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null $cipherReference
      */
-    final public function __construct(?CipherValue $cipherValue, ?CipherReference $cipherReference = null)
-    {
+    final public function __construct(
+        protected ?CipherValue $cipherValue,
+        protected ?CipherReference $cipherReference = null,
+    ) {
         Assert::oneOf(
             null,
             [$cipherValue, $cipherReference],
@@ -44,9 +39,6 @@ class CipherData extends AbstractXencElement
             is_null($cipherValue) && is_null($cipherReference),
             'You need either a CipherValue or a CipherReference',
         );
-
-        $this->setCipherValue($cipherValue);
-        $this->setCipherReference($cipherReference);
     }
 
 
@@ -62,15 +54,6 @@ class CipherData extends AbstractXencElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherValue|null $cipherValue
-     */
-    protected function setCipherValue(?CipherValue $cipherValue): void
-    {
-        $this->cipherValue = $cipherValue;
-    }
-
-
-    /**
      * Get the CipherReference element inside this CipherData object.
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null
@@ -78,15 +61,6 @@ class CipherData extends AbstractXencElement
     public function getCipherReference(): ?CipherReference
     {
         return $this->cipherReference;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherReference|null $cipherReference
-     */
-    protected function setCipherReference(?CipherReference $cipherReference): void
-    {
-        $this->cipherReference = $cipherReference;
     }
 
 

@@ -29,12 +29,6 @@ final class KeyValue extends AbstractDsElement
     /** The namespace-attribute for the xs:any element */
     public const NAMESPACE = C::XS_ANY_NS_OTHER;
 
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|null $RSAKeyValue */
-    protected ?RSAKeyValue $RSAKeyValue;
-
-    // DSA is not supported
-    //protected ?DSAKeyValue $DSAKeyValue;
-
 
     /**
      * Initialize an KeyValue.
@@ -42,15 +36,15 @@ final class KeyValue extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|null $RSAKeyValue
      * @param \SimpleSAML\XML\ElementInterface|null $element
      */
-    final public function __construct(?RSAKeyValue $RSAKeyValue, ?ElementInterface $element = null)
-    {
+    final public function __construct(
+        protected ?RSAKeyValue $RSAKeyValue,
+        ?ElementInterface $element = null,
+    ) {
         Assert::false(
             is_null($RSAKeyValue) && is_null($element),
             'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
             SchemaViolationException::class,
         );
-
-        $this->setRSAKeyValue($RSAKeyValue);
 
         if ($element !== null) {
             $this->setElements([$element]);
@@ -66,17 +60,6 @@ final class KeyValue extends AbstractDsElement
     public function getRSAKeyValue(): ?RSAKeyValue
     {
         return $this->RSAKeyValue;
-    }
-
-
-    /**
-     * Set the value of the RSAKeyValue-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue $RSAKeyValue
-     */
-    private function setRSAKeyValue(?RSAKeyValue $RSAKeyValue): void
-    {
-        $this->RSAKeyValue = $RSAKeyValue;
     }
 
 

@@ -51,20 +51,6 @@ class PEM
         '[\r\n]+-----END \\1-----' .     // footer
         '/ms';
 
-    /**
-     * Content type.
-     *
-     * @var string
-     */
-    protected string $type;
-
-    /**
-     * Payload.
-     *
-     * @var string
-     */
-    protected string $data;
-
 
     /**
      * Constructor.
@@ -72,10 +58,10 @@ class PEM
      * @param string $type Content type
      * @param string $data Payload
      */
-    public function __construct(string $type, string $data)
-    {
-        $this->type = $type;
-        $this->data = $data;
+    public function __construct(
+        protected string $type,
+        protected string $data,
+    ) {
     }
 
 

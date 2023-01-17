@@ -11,7 +11,7 @@ use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
-use dirname;
+use function dirname;
 use function bin2hex;
 use function hex2bin;
 

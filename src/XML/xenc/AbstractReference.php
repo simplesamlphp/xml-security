@@ -9,8 +9,9 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\ElementInterface;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
 /**
@@ -20,11 +21,10 @@ use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
  */
 abstract class AbstractReference extends AbstractXencElement
 {
-    /** @var string */
-    protected string $uri;
+    use ExtendableElementTrait;
 
-    /** @var \SimpleSAML\XML\ElementInterface[] */
-    protected array $elements;
+    /** The namespace-attribute for the xs:any element */
+    public const NAMESPACE = C::XS_ANY_NS_OTHER;
 
 
     /**
@@ -33,9 +33,12 @@ abstract class AbstractReference extends AbstractXencElement
      * @param string $uri
      * @param \SimpleSAML\XML\ElementInterface[] $elements
      */
-    final public function __construct(string $uri, array $elements = [])
-    {
-        $this->setURI($uri);
+    final public function __construct(
+        protected string $uri,
+        array $elements = [],
+    ) {
+        Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
+
         $this->setElements($elements);
     }
 
@@ -48,41 +51,6 @@ abstract class AbstractReference extends AbstractXencElement
     public function getURI(): string
     {
         return $this->uri;
-    }
-
-
-    /**
-     * @param string $uri
-     */
-    protected function setURI(string $uri): void
-    {
-        Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
-        $this->uri = $uri;
-    }
-
-
-    /**
-     * Collect the embedded elements
-     *
-     * @return \SimpleSAML\XML\ElementInterface[]
-     */
-    public function getElements(): array
-    {
-        return $this->elements;
-    }
-
-
-    /**
-     * Set the value of the elements-property
-     *
-     * @param \SimpleSAML\XML\ElementInterface[] $elements
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException
-     *   if the supplied array contains anything other than ElementInterface objects
-     */
-    private function setElements(array $elements): void
-    {
-        Assert::allIsInstanceOf($elements, ElementInterface::class, InvalidArgumentException::class);
-        $this->elements = $elements;
     }
 
 
@@ -104,11 +72,7 @@ abstract class AbstractReference extends AbstractXencElement
 
         $elements = [];
         foreach ($xml->childNodes as $element) {
-            if (!($element instanceof DOMElement)) {
-                continue;
-            } elseif ($element->namespaceURI === Transforms::NS && $element->localName === 'Transforms') {
-                $elements[] = Transforms::fromXML($element);
-            } else {
+            if ($element instanceof DOMElement) {
                 $elements[] = new Chunk($element);
             }
         }

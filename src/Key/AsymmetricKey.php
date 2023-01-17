@@ -16,18 +16,14 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
  */
 abstract class AsymmetricKey implements KeyInterface
 {
-    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
-    protected PEM $material;
-
-
     /**
      * Build a new key with $key as its material.
      *
-     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The associated key material.
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $material The associated key material.
      */
-    public function __construct(PEM $key)
-    {
-        $this->material = $key;
+    public function __construct(
+        protected PEM $material,
+    ) {
     }
 
 

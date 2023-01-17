@@ -17,26 +17,13 @@ use SimpleSAML\XML\Exception\SchemaViolationException;
  */
 final class KeySize extends AbstractXencElement
 {
-    /** @var int */
-    protected int $keySize;
-
-
     /**
      * @param int $keySize
      */
-    public function __construct(int $keySize)
-    {
-        $this->setKeySize($keySize);
-    }
-
-
-    /**
-     * @param int $keySize
-     */
-    protected function setKeySize(int $keySize): void
-    {
+    public function __construct(
+        protected int $keySize,
+    ) {
         Assert::positiveInteger($keySize, SchemaViolationException::class);
-        $this->keySize = $keySize;
     }
 
 

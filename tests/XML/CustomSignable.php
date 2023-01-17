@@ -38,12 +38,6 @@ class CustomSignable extends AbstractElement implements
     /** @var string */
     public const NS_PREFIX = 'ssp';
 
-    /** @var string|null */
-    public ?string $id = null;
-
-    /** @var \DOMElement $xml */
-    protected DOMElement $xml;
-
     /** @var bool */
     protected bool $formatOutput = false;
 
@@ -61,10 +55,10 @@ class CustomSignable extends AbstractElement implements
      *
      * @param \DOMElement $xml
      */
-    private function __construct(DOMElement $xml, ?string $id)
-    {
-        $this->setXML($xml);
-        $this->id = $id;
+    private function __construct(
+        protected DOMElement $xml,
+        protected ?string $id
+    ) {
     }
 
 
@@ -98,17 +92,6 @@ class CustomSignable extends AbstractElement implements
     public function getXML(): DOMElement
     {
         return $this->xml;
-    }
-
-
-    /**
-     * Set the XML element.
-     *
-     * @param \DOMElement $xml
-     */
-    private function setXML(DOMElement $xml): void
-    {
-        $this->xml = $xml;
     }
 
 

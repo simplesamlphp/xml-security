@@ -19,21 +19,25 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 final class CanonicalizationMethod extends AbstractDsElement
 {
     /**
-     * The algorithm.
-     *
-     * @var string
-     */
-    protected string $Algorithm;
-
-
-    /**
      * Initialize a CanonicalizationMethod element.
      *
-     * @param string $algorithm
+     * @param string $Algorithm
      */
-    public function __construct(string $algorithm)
-    {
-        $this->setAlgorithm($algorithm);
+    public function __construct(
+        protected string $Algorithm,
+    ) {
+        Assert::validURI($Algorithm, SchemaViolationException::class);
+        Assert::oneOf(
+            $Algorithm,
+            [
+                C::C14N_EXCLUSIVE_WITH_COMMENTS,
+                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+                C::C14N_INCLUSIVE_WITH_COMMENTS,
+                C::C14N_INCLUSIVE_WITHOUT_COMMENTS,
+            ],
+            'Invalid canonicalization method: %s',
+            InvalidArgumentException::class,
+        );
     }
 
 
@@ -45,30 +49,6 @@ final class CanonicalizationMethod extends AbstractDsElement
     public function getAlgorithm(): string
     {
         return $this->Algorithm;
-    }
-
-
-    /**
-     * Set the value of the Algorithm-property
-     *
-     * @param string $algorithm
-     */
-    private function setAlgorithm(string $algorithm): void
-    {
-        Assert::validURI($algorithm, SchemaViolationException::class);
-        Assert::oneOf(
-            $algorithm,
-            [
-                C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-                C::C14N_INCLUSIVE_WITH_COMMENTS,
-                C::C14N_INCLUSIVE_WITHOUT_COMMENTS,
-            ],
-            'Invalid canonicalization method: %s',
-            InvalidArgumentException::class,
-        );
-
-        $this->Algorithm = $algorithm;
     }
 
 

@@ -18,23 +18,16 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class RSAKeyValue extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Modulus $modulus */
-    protected Modulus $modulus;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Exponent $exponent */
-    protected Exponent $exponent;
-
-
     /**
      * Initialize an RSAKeyValue.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Modulus $modulus
      * @param \SimpleSAML\XMLSecurity\XML\ds\Exponent $exponent
      */
-    final public function __construct(Modulus $modulus, Exponent $exponent)
-    {
-        $this->setModulus($modulus);
-        $this->setExponent($exponent);
+    final public function __construct(
+        protected Modulus $modulus,
+        protected Exponent $exponent,
+    ) {
     }
 
 
@@ -50,17 +43,6 @@ final class RSAKeyValue extends AbstractDsElement
 
 
     /**
-     * Set the value of the modulus-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Modulus $modulus
-     */
-    private function setModulus(Modulus $modulus): void
-    {
-        $this->modulus = $modulus;
-    }
-
-
-    /**
      * Collect the value of the exponent-property
      *
      * @return \SimpleSAML\XMLSecurity\XML\ds\Exponent
@@ -68,17 +50,6 @@ final class RSAKeyValue extends AbstractDsElement
     public function getExponent(): Exponent
     {
         return $this->exponent;
-    }
-
-
-    /**
-     * Set the value of the exponent-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Exponent $exponent
-     */
-    private function setExponent(Exponent $exponent): void
-    {
-        $this->exponent = $exponent;
     }
 
 

@@ -22,31 +22,6 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 final class KeyInfo extends AbstractDsElement
 {
     /**
-     * The Id attribute on this element.
-     *
-     * @var string|null
-     */
-    protected ?string $Id = null;
-
-    /**
-     * The various key information elements.
-     *
-     * Array with various elements describing this key.
-     * Unknown elements will be represented by \SimpleSAML\XML\Chunk.
-     *
-     * @var list<\SimpleSAML\XML\Chunk|
-     *       \SimpleSAML\XMLSecurity\XML\ds\KeyName|
-     *       \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
-     *       \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
-     *       \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *       \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
-     *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
-     *       \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey>
-     */
-    protected array $info = [];
-
-
-    /**
      * Initialize a KeyInfo element.
      *
      * @param list<\SimpleSAML\XML\Chunk|
@@ -59,10 +34,26 @@ final class KeyInfo extends AbstractDsElement
      *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey> $info
      * @param string|null $Id
      */
-    public function __construct(array $info, ?string $Id = null)
-    {
-        $this->setInfo($info);
-        $this->setId($Id);
+    public function __construct(
+        protected array $info,
+        protected ?string $Id = null,
+    ) {
+        Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
+        Assert::allIsInstanceOfAny(
+            $info,
+            [
+                Chunk::class,
+                KeyName::class,
+                KeyValue::class,
+                RetrievalMethod::class,
+                X509Data::class,
+                EncryptedData::class,
+                EncryptedKey::class,
+            ],
+            'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.',
+            InvalidArgumentException::class,
+        );
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -74,18 +65,6 @@ final class KeyInfo extends AbstractDsElement
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * Set the value of the Id-property
-     *
-     * @param string|null $id
-     */
-    private function setId(string $Id = null): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 
@@ -104,42 +83,6 @@ final class KeyInfo extends AbstractDsElement
     public function getInfo(): array
     {
         return $this->info;
-    }
-
-
-    /**
-     * Set the value of the info-property
-     *
-     * @param (\SimpleSAML\XML\Chunk|
-     *         \SimpleSAML\XMLSecurity\XML\ds\KeyName|
-     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
-     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
-     *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
-     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
-     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[] $info
-     * @throws \SimpleSAML\Assert\AssertionFailedException  if $info contains
-     *   anything other than KeyName, KeyValue, RetrievalMethod, X509Data, EncryptedData, EncryptedKey or Chunk
-     */
-    private function setInfo(array $info): void
-    {
-        Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
-        Assert::allIsInstanceOfAny(
-            $info,
-            [
-                Chunk::class,
-                KeyName::class,
-                KeyValue::class,
-                RetrievalMethod::class,
-                X509Data::class,
-                EncryptedData::class,
-                EncryptedKey::class,
-            ],
-            'KeyInfo can only contain instances of KeyName, X509Data, EncryptedKey or Chunk.',
-            InvalidArgumentException::class,
-        );
-        $this->info = $info;
     }
 
 
@@ -189,6 +132,7 @@ final class KeyInfo extends AbstractDsElement
 
         return new static($info, $Id);
     }
+
 
     /**
      * Convert this KeyInfo to XML.

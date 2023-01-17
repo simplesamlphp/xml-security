@@ -24,25 +24,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
 {
     use CanonicalizableElementTrait;
 
-    /** @var string|null */
-    protected ?string $Id;
-
-    /**
-     * @var \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod
-     */
-    protected CanonicalizationMethod $canonicalizationMethod;
-
-    /**
-     * @var \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod
-     */
-    protected SignatureMethod $signatureMethod;
-
-    /**
-     * @var \SimpleSAML\XMLSecurity\XML\ds\Reference[]
-     */
-    protected array $references;
-
-    /**
+    /*
      * @var DOMElement
      */
     protected ?DOMElement $xml = null;
@@ -57,15 +39,13 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
      * @param string|null $Id
      */
     public function __construct(
-        CanonicalizationMethod $canonicalizationMethod,
-        SignatureMethod $signatureMethod,
-        array $references,
-        ?string $Id = null,
+        protected CanonicalizationMethod $canonicalizationMethod,
+        protected SignatureMethod $signatureMethod,
+        protected array $references,
+        protected ?string $Id = null,
     ) {
-        $this->setCanonicalizationMethod($canonicalizationMethod);
-        $this->setSignatureMethod($signatureMethod);
-        $this->setReferences($references);
-        $this->setId($Id);
+        Assert::allIsInstanceOf($references, Reference::class, InvalidArgumentException::class);
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -81,17 +61,6 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
 
 
     /**
-     * Set the value of the canonicalizationMethod-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod $canonicalizationMethod
-     */
-    private function setCanonicalizationMethod(CanonicalizationMethod $canonicalizationMethod): void
-    {
-        $this->canonicalizationMethod = $canonicalizationMethod;
-    }
-
-
-    /**
      * Collect the value of the signatureMethod-property
      *
      * @return \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod
@@ -99,17 +68,6 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
     public function getSignatureMethod(): SignatureMethod
     {
         return $this->signatureMethod;
-    }
-
-
-    /**
-     * Set the value of the signatureMethod-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod $signatureMethod
-     */
-    private function setSignatureMethod(SignatureMethod $signatureMethod): void
-    {
-        $this->signatureMethod = $signatureMethod;
     }
 
 
@@ -125,19 +83,6 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
 
 
     /**
-     * Set the value of the references-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references
-     */
-    private function setReferences(array $references): void
-    {
-        Assert::allIsInstanceOf($references, Reference::class, InvalidArgumentException::class);
-
-        $this->references = $references;
-    }
-
-
-    /**
      * Collect the value of the Id-property
      *
      * @return string|null
@@ -149,18 +94,6 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
 
 
     /**
-     * Set the value of the Id-property
-     *
-     * @param string|null $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
-    }
-
-
-    /**
      * @inheritDoc
      */
     protected function getOriginalXML(): DOMElement
@@ -168,6 +101,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         if ($this->xml !== null) {
             return $this->xml;
         }
+
         return $this->toXML();
     }
 

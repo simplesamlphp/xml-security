@@ -17,15 +17,6 @@ use SimpleSAML\XML\Exception\TooManyElementsException;
  */
 final class RetrievalMethod extends AbstractDsElement
 {
-    protected ?Transforms $transforms;
-
-    /** @var string $URI */
-    protected string $URI;
-
-    /** @var string|null $Type */
-    protected ?string $Type;
-
-
     /**
      * Initialize a ds:RetrievalMethod
      *
@@ -34,13 +25,12 @@ final class RetrievalMethod extends AbstractDsElement
      * @param string|null $Type
      */
     final public function __construct(
-        ?Transforms $transforms,
-        string $URI,
-        ?string $Type = null
+        protected ?Transforms $transforms,
+        protected string $URI,
+        protected ?string $Type = null,
     ) {
-        $this->setTransforms($transforms);
-        $this->setURI($URI);
-        $this->setType($Type);
+        Assert::validURI($URI, SchemaViolationException::class); // Covers the empty string
+        Assert::nullOrValidURI($Type, SchemaViolationException::class); // Covers the empty string
     }
 
 
@@ -54,15 +44,6 @@ final class RetrievalMethod extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     */
-    protected function setTransforms(?Transforms $transforms): void
-    {
-        $this->transforms = $transforms;
-    }
-
-
-    /**
      * @return string
      */
     public function getURI(): string
@@ -72,33 +53,11 @@ final class RetrievalMethod extends AbstractDsElement
 
 
     /**
-     * @param string $URI
-     */
-    private function setURI(string $URI): void
-    {
-        Assert::validURI($URI, SchemaViolationException::class); // Covers the empty string
-        $this->URI = $URI;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getType(): ?string
     {
         return $this->Type;
-    }
-
-
-    /**
-     * @param string|null $Type
-     */
-    private function setType(?string $Type): void
-    {
-        if ($Type !== null) {
-            Assert::validURI($Type, SchemaViolationException::class); // Covers the empty string
-        }
-        $this->Type = $Type;
     }
 
 

@@ -18,23 +18,18 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class KeyInfoReference extends AbstractDsig11Element
 {
-    /** @var string $URI */
-    protected string $URI;
-
-    /** @var string|null $Id */
-    protected ?string $Id = null;
-
-
     /**
      * Initialize a KeyInfoReference element.
      *
      * @param string $URI
      * @param string|null $Id
      */
-    public function __construct(string $URI, ?string $Id = null)
-    {
-        $this->setURI($URI);
-        $this->setId($Id);
+    public function __construct(
+        protected string $URI,
+        protected ?string $Id = null,
+    ) {
+        Assert::validURI($URI, SchemaViolationException::class);
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -50,18 +45,6 @@ final class KeyInfoReference extends AbstractDsig11Element
 
 
     /**
-     * Set the value of the URI-property
-     *
-     * @param string $URI
-     */
-    private function setURI(string $URI): void
-    {
-        Assert::validURI($URI, SchemaViolationException::class);
-        $this->URI = $URI;
-    }
-
-
-    /**
      * Collect the value of the Id-property
      *
      * @return string|null
@@ -69,18 +52,6 @@ final class KeyInfoReference extends AbstractDsig11Element
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * Set the value of the Id-property
-     *
-     * @param string $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 

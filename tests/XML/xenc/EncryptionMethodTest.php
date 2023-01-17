@@ -76,7 +76,7 @@ final class EncryptionMethodTest extends TestCase
 
         $this->assertNull($em->getKeySize());
         $this->assertNull($em->getOAEPParams());
-        $this->assertEmpty($em->getChildren());
+        $this->assertEmpty($em->getElements());
         $this->assertEquals(
             $document->saveXML($document->documentElement),
             strval($em),
@@ -154,7 +154,7 @@ XML
         $em = EncryptionMethod::fromXML($document->documentElement);
         $this->assertNull($em->getKeySize());
         $this->assertNull($em->getOAEPParams());
-        $this->assertEmpty($em->getChildren());
+        $this->assertEmpty($em->getElements());
         $this->assertEquals(
             $document->saveXML($document->documentElement),
             strval($em),

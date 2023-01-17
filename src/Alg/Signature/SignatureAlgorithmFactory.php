@@ -16,6 +16,18 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
 final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
 {
     /**
+     * An array of blacklisted algorithms.
+     *
+     * Defaults to RSA-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
+     *
+     * @var string[]
+     */
+    private const DEFAULT_BLACKLIST = [
+        C::SIG_RSA_SHA1,
+        C::SIG_HMAC_SHA1,
+    ];
+
+    /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
      * @var string[]
@@ -29,18 +41,6 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
      */
     protected static bool $initialized = false;
 
-    /**
-     * An array of blacklisted algorithms.
-     *
-     * Defaults to RSA-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
-     *
-     * @var string[]
-     */
-    protected array $blacklist = [
-        C::SIG_RSA_SHA1,
-        C::SIG_HMAC_SHA1,
-    ];
-
 
     /**
      * Build a factory that creates signature algorithms.
@@ -50,7 +50,7 @@ final class SignatureAlgorithmFactory extends AbstractAlgorithmFactory
     public function __construct(array $blacklist = null)
     {
         parent::__construct(
-            $blacklist,
+            $blacklist ?? self::DEFAULT_BLACKLIST,
             [
                 RSA::class,
                 HMAC::class,

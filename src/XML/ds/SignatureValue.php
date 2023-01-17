@@ -19,18 +19,18 @@ final class SignatureValue extends AbstractDsElement
 {
     use Base64ElementTrait;
 
-    /** @var string|null */
-    protected ?string $Id;
-
 
     /**
      * @param string $content
-     * @param string|null $id
+     * @param string|null $Id
      */
-    public function __construct(string $content, ?string $id = null)
-    {
+    public function __construct(
+        string $content,
+        protected ?string $Id = null,
+    ) {
+        Assert::nullOrValidNCName($Id);
+
         $this->setContent($content);
-        $this->setId($id);
     }
 
 
@@ -42,18 +42,6 @@ final class SignatureValue extends AbstractDsElement
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * Set the Id used for this signature value.
-     *
-     * @param string|null $Id
-     */
-    protected function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 

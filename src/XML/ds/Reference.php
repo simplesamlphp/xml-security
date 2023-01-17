@@ -19,25 +19,6 @@ use function array_pop;
  */
 final class Reference extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\Transforms|null */
-    protected ?Transforms $transforms;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\DigestMethod */
-    protected DigestMethod $digestMethod;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\DigestValue */
-    protected DigestValue $digestValue;
-
-    /** @var string|null $Id */
-    protected ?string $Id;
-
-    /** @var string|null $type */
-    protected ?string $Type;
-
-    /** @var string|null $URI */
-    protected ?string $URI;
-
-
     /**
      * Initialize a ds:Reference
      *
@@ -49,19 +30,16 @@ final class Reference extends AbstractDsElement
      * @param string|null $URI
      */
     public function __construct(
-        DigestMethod $digestMethod,
-        DigestValue $digestValue,
-        ?Transforms $transforms = null,
-        ?string $Id = null,
-        ?string $Type = null,
-        ?string $URI = null,
+        protected DigestMethod $digestMethod,
+        protected DigestValue $digestValue,
+        protected ?Transforms $transforms = null,
+        protected ?string $Id = null,
+        protected ?string $Type = null,
+        protected ?string $URI = null,
     ) {
-        $this->setTransforms($transforms);
-        $this->setDigestMethod($digestMethod);
-        $this->setDigestValue($digestValue);
-        $this->setId($Id);
-        $this->setType($Type);
-        $this->setURI($URI);
+        Assert::nullOrValidNCName($Id);
+        Assert::nullOrValidURI($Type);
+        Assert::nullOrValidURI($URI);
     }
 
 
@@ -75,29 +53,11 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     */
-    protected function setTransforms(?Transforms $transforms): void
-    {
-        $this->transforms = $transforms;
-    }
-
-
-    /**
      * @return \SimpleSAML\XMLSecurity\XML\ds\DigestMethod
      */
     public function getDigestMethod(): DigestMethod
     {
         return $this->digestMethod;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
-     */
-    private function setDigestMethod(DigestMethod $digestMethod): void
-    {
-        $this->digestMethod = $digestMethod;
     }
 
 
@@ -111,30 +71,11 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
-     */
-    private function setDigestValue(DigestValue $digestValue): void
-    {
-        $this->digestValue = $digestValue;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getId(): ?string
     {
         return $this->Id;
-    }
-
-
-    /**
-     * @param string|null $Id
-     */
-    private function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
     }
 
 
@@ -148,31 +89,11 @@ final class Reference extends AbstractDsElement
 
 
     /**
-     * @param string|null $Type
-     */
-    private function setType(?string $Type): void
-    {
-        Assert::nullOrValidURI($Type);
-        $this->Type = $Type;
-    }
-
-
-    /**
      * @return string|null
      */
     public function getURI(): ?string
     {
         return $this->URI;
-    }
-
-
-    /**
-     * @param string|null $URI
-     */
-    private function setURI(?string $URI): void
-    {
-        Assert::nullOrValidURI($URI);
-        $this->URI = $URI;
     }
 
 

@@ -20,22 +20,6 @@ use function array_pop;
  */
 final class Signature extends AbstractDsElement
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\SignedInfo */
-    protected SignedInfo $signedInfo;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\SignatureValue */
-    protected SignatureValue $signatureValue;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo */
-    protected ?KeyInfo $keyInfo;
-
-    /** @var \SimpleSAML\XMLSecurity\XML\ds\DsObject[] */
-    protected array $objects;
-
-    /** @var string|null */
-    protected ?string $Id;
-
-
     /**
      * Signature constructor.
      *
@@ -46,17 +30,14 @@ final class Signature extends AbstractDsElement
      * @param string|null $Id
      */
     public function __construct(
-        SignedInfo $signedInfo,
-        SignatureValue $signatureValue,
-        ?KeyInfo $keyInfo,
-        array $objects = [],
-        ?string $Id = null,
+        protected SignedInfo $signedInfo,
+        protected SignatureValue $signatureValue,
+        protected ?KeyInfo $keyInfo,
+        protected array $objects = [],
+        protected ?string $Id = null,
     ) {
-        $this->setSignedInfo($signedInfo);
-        $this->setSignatureValue($signatureValue);
-        $this->setKeyInfo($keyInfo);
-        $this->setObjects($objects);
-        $this->setId($Id);
+        Assert::allIsInstanceOf($objects, DsObject::class);
+        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -72,27 +53,6 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * Set the Id used for this signature.
-     *
-     * @param string|null $Id
-     */
-    protected function setId(?string $Id): void
-    {
-        Assert::nullOrValidNCName($Id);
-        $this->Id = $Id;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
-     */
-    protected function setSignedInfo(SignedInfo $signedInfo): void
-    {
-        $this->signedInfo = $signedInfo;
-    }
-
-
-    /**
      * @return \SimpleSAML\XMLSecurity\XML\ds\SignedInfo
      */
     public function getSignedInfo(): SignedInfo
@@ -102,29 +62,11 @@ final class Signature extends AbstractDsElement
 
 
     /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
-     */
-    protected function setSignatureValue(SignatureValue $signatureValue): void
-    {
-        $this->signatureValue = $signatureValue;
-    }
-
-
-    /**
      * @return \SimpleSAML\XMLSecurity\XML\ds\SignatureValue
      */
     public function getSignatureValue(): SignatureValue
     {
         return $this->signatureValue;
-    }
-
-
-    /**
-     * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
-     */
-    protected function setKeyInfo(?KeyInfo $keyInfo): void
-    {
-        $this->keyInfo = $keyInfo;
     }
 
 
@@ -145,18 +87,6 @@ final class Signature extends AbstractDsElement
     public function getObjects(): array
     {
         return $this->objects;
-    }
-
-
-    /**
-     * Set the array of ds:Object elements attached to this signature.
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\DsObject[] $objects
-     */
-    protected function setObjects(array $objects): void
-    {
-        Assert::allIsInstanceOf($objects, DsObject::class);
-        $this->objects = $objects;
     }
 
 

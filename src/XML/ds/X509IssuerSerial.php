@@ -21,30 +21,15 @@ use function array_pop;
 final class X509IssuerSerial extends AbstractDsElement
 {
     /**
-     * The Issuer's name.
-     *
-     * @var \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName
-     */
-    protected X509IssuerName $X509IssuerName;
-
-    /**
-     * The serial number.
-     *
-     * @var \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber
-     */
-    protected X509SerialNumber $X509SerialNumber;
-
-
-    /**
      * Initialize a X509SubjectName element.
      *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName $name
-     * @param \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber $serial
+     * @param \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName $X509IssuerName
+     * @param \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber $X509SerialNumber
      */
-    public function __construct(X509IssuerName $name, X509SerialNumber $serial)
-    {
-        $this->setIssuerName($name);
-        $this->setSerialNumber($serial);
+    public function __construct(
+        protected X509IssuerName $X509IssuerName,
+        protected X509SerialNumber $X509SerialNumber,
+    ) {
     }
 
 
@@ -60,17 +45,6 @@ final class X509IssuerSerial extends AbstractDsElement
 
 
     /**
-     * Set the value of the X509IssuerName-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName $name
-     */
-    private function setIssuerName(X509IssuerName $name): void
-    {
-        $this->X509IssuerName = $name;
-    }
-
-
-    /**
      * Collect the value of the X509SerialNumber-property
      *
      * @return \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber
@@ -78,17 +52,6 @@ final class X509IssuerSerial extends AbstractDsElement
     public function getSerialNumber(): X509SerialNumber
     {
         return $this->X509SerialNumber;
-    }
-
-
-    /**
-     * Set the value of the X509SerialNumber-property
-     *
-     * @param \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber $serial
-     */
-    private function setSerialNumber(X509SerialNumber $serial): void
-    {
-        $this->X509SerialNumber = $serial;
     }
 
 
