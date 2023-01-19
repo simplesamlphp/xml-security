@@ -46,7 +46,7 @@ class PEMCertificatesMock
      * @param string $file The file to use
      * @return string
      */
-    private static function buildKeysPath(string $file): string
+    public static function buildKeysPath(string $file): string
     {
         $base = dirname(__FILE__, 2);
         return 'file://' . $base . DIRECTORY_SEPARATOR . self::KEYS_DIR . DIRECTORY_SEPARATOR . $file;
@@ -57,7 +57,7 @@ class PEMCertificatesMock
      * @param string $file The file to use
      * @return string
      */
-    private static function buildCertsPath(string $file): string
+    public static function buildCertsPath(string $file): string
     {
         $base = dirname(__FILE__, 2);
         return 'file://' . $base . DIRECTORY_SEPARATOR . self::CERTS_DIR . DIRECTORY_SEPARATOR . $file;
