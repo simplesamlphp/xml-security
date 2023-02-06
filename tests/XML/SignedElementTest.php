@@ -149,7 +149,7 @@ final class SignedElementTest extends TestCase
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
 
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessage('Failed to verify signature.');
+        $this->expectExceptionMessage('Failed to verify signature.');
         $customSigned->verify();
     }
 
@@ -171,7 +171,7 @@ final class SignedElementTest extends TestCase
         $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessage('Failed to verify signature.');
+        $this->expectExceptionMessage('Failed to verify signature.');
         $customSigned->verify($verifier);
     }
 
