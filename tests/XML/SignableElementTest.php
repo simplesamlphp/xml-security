@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\XML\SerializableElementTestTrait;
-use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
@@ -215,7 +214,7 @@ final class SignableElementTest extends TestCase
      */
     public function testSigningDocumentWithoutRoot(): void
     {
-        $doc = DOMDocumentFactory::create();
+        $doc = new DOMDocument();
         $node = $doc->importNode($this->xmlRepresentation->documentElement, true);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
