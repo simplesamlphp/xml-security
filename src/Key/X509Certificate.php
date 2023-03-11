@@ -37,7 +37,8 @@ class X509Certificate
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $cert The PEM-encoded certificate or the path to a file containing it.
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $cert
+     *   The PEM-encoded certificate or the path to a file containing it.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
      */
