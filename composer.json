@@ -37,14 +37,16 @@
     "require": {
         "php": "^8.0",
         "ext-dom": "*",
+        "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-spl": "*",
+        "ext-xml": "*",
 
         "simplesamlphp/assert": "^1.0.1",
         "simplesamlphp/xml-common": "^1.6.0"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.3.2"
+        "simplesamlphp/simplesamlphp-test-framework": "^1.4.1"
     },
     "config": {
         "allow-plugins": {
