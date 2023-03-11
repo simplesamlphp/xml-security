@@ -23,8 +23,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SimpleSAML\\XMLSecurity\\": "src",
-            "SimpleSAML\\XMLSecurity\\TestUtils\\": "tests/TestUtils"
+            "SimpleSAML\\XMLSecurity\\": "src"
         }
     },
     "autoload-dev": {
@@ -44,8 +43,8 @@
         "ext-spl": "*",
         "ext-xml": "*",
 
-        "simplesamlphp/assert": "^1.0.1",
-        "simplesamlphp/xml-common": "^1.6.0"
+        "simplesamlphp/assert": "^1.0.2",
+        "simplesamlphp/xml-common": "^1.7.0"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "^1.4.1"
