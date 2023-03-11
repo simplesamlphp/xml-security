@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference;
 
@@ -34,10 +34,10 @@ final class KeyInfoReferenceTest extends TestCase
     {
         $this->testedClass = KeyInfoReference::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig11-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/dsig11_KeyInfoReference.xml',
+            dirname(__FILE__, 4) . '/resources/xml/dsig11_KeyInfoReference.xml',
         );
     }
 

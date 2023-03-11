@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 
 use function dirname;
@@ -30,7 +30,7 @@ class XPathTest extends TestCase
         $this->testedClass = XPath::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_XPath.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_XPath.xml',
         );
     }
 

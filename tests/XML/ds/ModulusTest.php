@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
 
@@ -34,7 +34,7 @@ final class ModulusTest extends TestCase
         $this->testedClass = Modulus::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_Modulus.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_Modulus.xml',
         );
     }
 

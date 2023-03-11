@@ -6,8 +6,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
@@ -52,7 +52,7 @@ final class X509IssuerSerialTest extends TestCase
         $this->testedClass = X509IssuerSerial::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_X509IssuerSerial.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_X509IssuerSerial.xml',
         );
 
         $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));

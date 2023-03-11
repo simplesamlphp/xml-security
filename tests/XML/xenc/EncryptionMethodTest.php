@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\KeySize;
@@ -37,7 +37,7 @@ final class EncryptionMethodTest extends TestCase
         $this->testedClass = EncryptionMethod::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptionMethod.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_EncryptionMethod.xml',
         );
     }
 

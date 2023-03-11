@@ -7,9 +7,9 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -42,7 +42,7 @@ final class X509CertificateTest extends TestCase
         $this->testedClass = X509Certificate::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_X509Certificate.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_X509Certificate.xml',
         );
 
         $this->certificate = str_replace(

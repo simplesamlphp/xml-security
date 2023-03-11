@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
@@ -17,7 +17,6 @@ use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
-use SimpleSAML\XMLSecurity\XMLSecurityDsig;
 
 use function dirname;
 use function strval;
@@ -42,10 +41,10 @@ final class EncryptedDataTest extends TestCase
     {
         $this->testedClass = EncryptedData::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xenc-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedData.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_EncryptedData.xml',
         );
     }
 

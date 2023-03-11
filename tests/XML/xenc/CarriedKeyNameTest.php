@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
 
 use function dirname;
@@ -31,7 +31,7 @@ final class CarriedKeyNameTest extends TestCase
         $this->testedClass = CarriedKeyName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_CarriedKeyName.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_CarriedKeyName.xml',
         );
     }
 

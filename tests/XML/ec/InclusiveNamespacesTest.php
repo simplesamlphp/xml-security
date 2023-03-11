@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ec;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
 use function dirname;
@@ -30,12 +30,12 @@ class InclusiveNamespacesTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->schema = dirname(__FILE__, 4) . '/schemas/exc-c14n.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/exc-c14n.xsd';
 
         $this->testedClass = InclusiveNamespaces::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ec_InclusiveNamespaces.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ec_InclusiveNamespaces.xml',
         );
     }
 

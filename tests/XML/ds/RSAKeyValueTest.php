@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XML\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
@@ -37,10 +37,10 @@ final class RSAKeyValueTest extends TestCase
     {
         $this->testedClass = RSAKeyValue::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_RSAKeyValue.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_RSAKeyValue.xml',
         );
     }
 

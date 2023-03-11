@@ -27,7 +27,7 @@ class PEMTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->base_dir = dirname(__FILE__, 2);
+        $this->base_dir = dirname(__FILE__, 3);
     }
 
 

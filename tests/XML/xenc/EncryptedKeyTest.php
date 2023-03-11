@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\RSA;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -56,10 +56,10 @@ final class EncryptedKeyTest extends TestCase
     {
         $this->testedClass = EncryptedKey::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xenc-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedKey.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_EncryptedKey.xml',
         );
 
         $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);

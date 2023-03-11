@@ -7,10 +7,9 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 use function dirname;
 use function strval;
@@ -34,7 +33,7 @@ final class X509IssuerNameTest extends TestCase
         $this->testedClass = X509IssuerName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_X509IssuerName.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_X509IssuerName.xml',
         );
     }
 

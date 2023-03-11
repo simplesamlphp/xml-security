@@ -6,11 +6,11 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
@@ -49,20 +49,20 @@ final class KeyValueTest extends TestCase
     {
         $this->testedClass = KeyValue::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->empty = DOMDocumentFactory::fromString('<ds:KeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>');
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_KeyValue.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_KeyValue.xml',
         );
 
         $this->rsaKeyValue = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_RSAKeyValue.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_RSAKeyValue.xml',
         );
 
         $this->cipherValue = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_CipherValue.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_CipherValue.xml',
         );
     }
 

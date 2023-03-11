@@ -8,8 +8,8 @@ use DOMDocument;
 use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\TestUtils\SignedElementTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 
 use function dirname;
 use function strval;
@@ -38,7 +38,7 @@ final class CustomSignableTest extends TestCase
         $this->testedClass = CustomSignable::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml',
+            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignable.xml',
         );
     }
 

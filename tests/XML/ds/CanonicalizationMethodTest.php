@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 
@@ -33,10 +33,10 @@ final class CanonicalizationMethodTest extends TestCase
     {
         $this->testedClass = CanonicalizationMethod::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_CanonicalizationMethod.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_CanonicalizationMethod.xml',
         );
     }
 

@@ -7,10 +7,10 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
-use SimpleSAML\Test\XML\SchemaValidationTestTrait;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
@@ -22,7 +22,6 @@ use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 use function base64_encode;
 use function dirname;
@@ -60,10 +59,10 @@ final class X509DataTest extends TestCase
     {
         $this->testedClass = X509Data::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/schemas/xmldsig1-schema.xsd';
+        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_X509Data.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_X509Data.xml',
         );
 
         $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));

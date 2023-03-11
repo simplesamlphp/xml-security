@@ -29,7 +29,7 @@ final class PrivateKeyTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->f = file_get_contents('tests/resources/keys/privkey.pem');
+        $this->f = file_get_contents('resources/keys/privkey.pem');
         $this->privKey = openssl_pkey_get_details(openssl_pkey_get_private($this->f));
     }
 
@@ -50,7 +50,7 @@ final class PrivateKeyTest extends TestCase
      */
     public function testFromFile(): void
     {
-        $k = PrivateKey::fromFile('file://./tests/resources/keys/privkey.pem');
+        $k = PrivateKey::fromFile('file://./resources/keys/privkey.pem');
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
         $this->assertEquals($this->privKey['key'], $keyDetails['key']);
     }

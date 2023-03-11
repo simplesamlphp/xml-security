@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
@@ -36,7 +36,7 @@ final class KeyReferenceTest extends TestCase
         $this->testedClass = KeyReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_KeyReference.xml',
+            dirname(__FILE__, 4) . '/resources/xml/xenc_KeyReference.xml',
         );
     }
 

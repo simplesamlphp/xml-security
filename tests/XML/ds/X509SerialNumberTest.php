@@ -6,12 +6,11 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Test\XML\SerializableElementTestTrait;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
-use SimpleSAML\XMLSecurity\XMLSecurityDSig;
 
 use function dirname;
 use function strval;
@@ -35,7 +34,7 @@ final class X509SerialNumberTest extends TestCase
         $this->testedClass = X509SerialNumber::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_X509SerialNumber.xml',
+            dirname(__FILE__, 4) . '/resources/xml/ds_X509SerialNumber.xml',
         );
     }
 
