@@ -37,8 +37,10 @@
     "require": {
         "php": "^8.0",
         "ext-dom": "*",
+        "ext-hash": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
+        "ext-pcre": "*",
         "ext-spl": "*",
         "ext-xml": "*",
 
