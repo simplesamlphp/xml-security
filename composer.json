@@ -41,7 +41,6 @@
         "ext-openssl": "*",
         "ext-pcre": "*",
         "ext-spl": "*",
-        "ext-xml": "*",
 
         "simplesamlphp/assert": "^1.0.3",
         "simplesamlphp/xml-common": "^1.7.2"
