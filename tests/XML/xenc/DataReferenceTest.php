@@ -37,7 +37,7 @@ final class DataReferenceTest extends TestCase
         $this->testedClass = DataReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_DataReference.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_DataReference.xml',
         );
     }
 

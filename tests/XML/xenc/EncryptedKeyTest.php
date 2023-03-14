@@ -59,7 +59,7 @@ final class EncryptedKeyTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_EncryptedKey.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedKey.xml',
         );
 
         $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);

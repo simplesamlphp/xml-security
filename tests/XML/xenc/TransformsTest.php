@@ -35,7 +35,7 @@ final class TransformsTest extends TestCase
         $this->testedClass = Transforms::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_Transforms.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_Transforms.xml',
         );
     }
 

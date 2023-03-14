@@ -54,11 +54,11 @@ final class SignableElementTest extends TestCase
         $this->testedClass = CustomSignable::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignable.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml',
         );
 
         $this->signed = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignableSigned.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSigned.xml',
         );
 
         $certificate = PEMCertificatesMock::loadPlainCertificateFile(PEMCertificatesMock::SELFSIGNED_CERTIFICATE);
@@ -124,7 +124,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignableSignedWithId.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithId.xml',
         );
 
         $this->assertEquals(
@@ -160,7 +160,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
         );
 
         $this->assertEquals(
@@ -196,7 +196,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml'
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml'
         );
 
         $this->assertEquals(

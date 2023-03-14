@@ -40,7 +40,7 @@ final class SignedInfoTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_SignedInfo.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfo.xml',
         );
     }
 
@@ -55,7 +55,7 @@ final class SignedInfoTest extends TestCase
             [
                 Reference::fromXML(
                     DOMDocumentFactory::fromFile(
-                        dirname(__FILE__, 4) . '/resources/xml/ds_Reference.xml',
+                        dirname(__FILE__, 3) . '/resources/xml/ds_Reference.xml',
                     )->documentElement,
                 ),
             ],
@@ -112,7 +112,7 @@ final class SignedInfoTest extends TestCase
     public function testCanonicalization(): void
     {
         $xml =  DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_SignedInfoWithComments.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfoWithComments.xml',
         )->documentElement;
         $signedInfo = SignedInfo::fromXML($xml);
         $this->canonicalization($xml, $signedInfo);
@@ -125,7 +125,7 @@ final class SignedInfoTest extends TestCase
     public function testCanonicalizationAfterSerialization(): void
     {
         $xml =  DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_SignedInfoWithComments.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfoWithComments.xml',
         )->documentElement;
         $signedInfo = unserialize(serialize(SignedInfo::fromXML($xml)));
         $this->canonicalization($xml, $signedInfo);

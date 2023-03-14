@@ -32,7 +32,7 @@ final class X509SubjectNameTest extends TestCase
         $this->testedClass = X509SubjectName::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_X509SubjectName.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_X509SubjectName.xml',
         );
     }
 

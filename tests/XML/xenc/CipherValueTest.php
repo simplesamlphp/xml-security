@@ -34,7 +34,7 @@ final class CipherValueTest extends TestCase
         $this->testedClass = CipherValue::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_CipherValue.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_CipherValue.xml',
         );
     }
 

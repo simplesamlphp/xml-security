@@ -42,7 +42,7 @@ final class SignatureTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_Signature.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_Signature.xml',
         );
     }
 
@@ -55,17 +55,17 @@ final class SignatureTest extends TestCase
         $signature = new Signature(
             SignedInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_SignedInfo.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfo.xml',
                 )->documentElement,
             ),
             SignatureValue::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_SignatureValue.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_SignatureValue.xml',
                 )->documentElement,
             ),
             KeyInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_KeyInfo.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_KeyInfo.xml',
                 )->documentElement,
             ),
             [
@@ -96,17 +96,17 @@ final class SignatureTest extends TestCase
         $signature = new Signature(
             SignedInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_SignedInfo.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfo.xml',
                 )->documentElement,
             ),
             SignatureValue::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_SignatureValue.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_SignatureValue.xml',
                 )->documentElement,
             ),
             KeyInfo::fromXML(
                 DOMDocumentFactory::fromFile(
-                    dirname(__FILE__, 4) . '/resources/xml/ds_KeyInfo.xml',
+                    dirname(__FILE__, 3) . '/resources/xml/ds_KeyInfo.xml',
                 )->documentElement,
             ),
             [

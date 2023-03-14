@@ -62,7 +62,7 @@ final class X509DataTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_X509Data.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_X509Data.xml',
         );
 
         $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));

@@ -37,7 +37,7 @@ final class KeyInfoReferenceTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/dsig11_KeyInfoReference.xml',
+            dirname(__FILE__, 3) . '/resources/xml/dsig11_KeyInfoReference.xml',
         );
     }
 

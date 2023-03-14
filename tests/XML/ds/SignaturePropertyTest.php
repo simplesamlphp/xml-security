@@ -38,7 +38,7 @@ final class SignaturePropertyTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ds_SignatureProperty.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ds_SignatureProperty.xml',
         );
     }
 

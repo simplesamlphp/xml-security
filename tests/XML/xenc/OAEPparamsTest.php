@@ -31,7 +31,7 @@ final class OAEPparamsTest extends TestCase
         $this->testedClass = OAEPparams::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_OAEPparams.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_OAEPparams.xml',
         );
     }
 

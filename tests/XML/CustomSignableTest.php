@@ -38,7 +38,7 @@ final class CustomSignableTest extends TestCase
         $this->testedClass = CustomSignable::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/custom_CustomSignable.xml',
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml',
         );
     }
 

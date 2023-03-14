@@ -35,7 +35,7 @@ class InclusiveNamespacesTest extends TestCase
         $this->testedClass = InclusiveNamespaces::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/ec_InclusiveNamespaces.xml',
+            dirname(__FILE__, 3) . '/resources/xml/ec_InclusiveNamespaces.xml',
         );
     }
 

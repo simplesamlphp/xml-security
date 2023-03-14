@@ -36,7 +36,7 @@ final class KeyReferenceTest extends TestCase
         $this->testedClass = KeyReference::class;
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_KeyReference.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_KeyReference.xml',
         );
     }
 

@@ -41,7 +41,7 @@ final class ReferenceListTest extends TestCase
         $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
         $this->xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 4) . '/resources/xml/xenc_ReferenceList.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_ReferenceList.xml',
         );
     }
 
