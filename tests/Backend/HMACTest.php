@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleSAML\XMLSecurity\Test\Backend;
 
 use PHPUnit\Framework\TestCase;

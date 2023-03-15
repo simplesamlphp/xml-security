@@ -89,12 +89,10 @@ final class DsObject extends AbstractDsElement
      */
     public function isEmptyElement(): bool
     {
-        return (
-            empty($this->elements)
+        return empty($this->elements)
             && empty($this->Id)
             && empty($this->MimeType)
-            && empty($this->Encoding)
-        );
+            && empty($this->Encoding);
     }
 
 
