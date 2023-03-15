@@ -26,6 +26,7 @@ use function openssl_sign;
 use function openssl_verify;
 use function ord;
 use function str_repeat;
+use function strval;
 use function substr;
 
 /**
@@ -167,7 +168,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             $key->getMaterial(),
             $options,
             $iv,
-            $authTag,
+            strval($authTag), /** @TODO remove strval when minimal php-version becomes >=8.1 */
         );
 
         if ($plaintext === false) {
