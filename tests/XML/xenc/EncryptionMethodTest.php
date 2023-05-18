@@ -103,6 +103,7 @@ final class EncryptionMethodTest extends TestCase
         $this->assertEquals('10', $keySizeElements[0]->textContent);
 
         // Test ordering of EncryptionMethod contents
+        /** @var \DOMElement[] $emElements */
         $emElements = XPath::xpQuery($emElement, './xenc:KeySize/following-sibling::*', $xpCache);
 
         $this->assertCount(2, $emElements);

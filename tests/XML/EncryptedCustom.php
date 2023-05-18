@@ -42,10 +42,10 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
     /** @var string */
     public const NS_PREFIX = 'ssp';
 
-    /** @var EncryptionBackend */
-    private EncryptionBackend $backend;
+    /** @var EncryptionBackend|null $backend */
+    private ?EncryptionBackend $backend = null;
 
-    /** @var string[] */
+    /** @var string[] $blacklistedAlgs */
     private array $blacklistedAlgs = [];
 
 
@@ -160,10 +160,6 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
     {
         if (!$this->hasDecryptionKey()) {
             throw new RuntimeException('EncryptedCustom without encryption key.');
-        }
-
-        if ($this->getEncryptedData() === null) {
-            throw new RuntimeException('No encrypted data.');
         }
 
         /*

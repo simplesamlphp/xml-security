@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
@@ -16,6 +17,9 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  */
 abstract class AbstractSigner implements SignatureAlgorithmInterface
 {
+    /** @var string */
+    protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
+
     /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
 
@@ -43,7 +47,9 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
             UnsupportedAlgorithmException::class,
         );
 
-        $this->backend = new (static::DEFAULT_BACKEND)();
+        /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend $backend */
+        $backend = new (static::DEFAULT_BACKEND)();
+        $this->setBackend($backend);
         $this->backend->setDigestAlg($digest);
     }
 

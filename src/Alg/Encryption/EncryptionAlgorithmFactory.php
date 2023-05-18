@@ -46,7 +46,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
      *
      * @param array|null $blacklist A list of algorithms forbidden for their use.
      */
-    public function __construct(?array $blacklist = null)
+    public function __construct(array $blacklist = null)
     {
         parent::__construct(
             $blacklist ?? self::DEFAULT_BLACKLIST,

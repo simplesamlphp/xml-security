@@ -56,9 +56,7 @@ final class CipherReference extends AbstractXencElement
         Assert::same($xml->localName, static::getClassName(static::class), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $URI */
         $URI = self::getAttribute($xml, 'URI');
-
         $transforms = Transforms::getChildrenOfClass($xml);
 
         return new static($URI, $transforms);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
@@ -16,6 +17,9 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  */
 abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
 {
+    /** @var string */
+    protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
+
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend */
     protected EncryptionBackend $backend;
 
@@ -40,7 +44,10 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
             'Unsupported algorithm for ' . static::class,
             UnsupportedAlgorithmException::class,
         );
-        $this->setBackend(new (static::DEFAULT_BACKEND)());
+
+        /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend $backend */
+        $backend = new (static::DEFAULT_BACKEND)();
+        $this->setBackend($backend);
     }
 
 

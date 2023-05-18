@@ -156,6 +156,7 @@ final class EncryptedKeyTest extends TestCase
         $this->assertCount(1, $encryptedKeyElements);
 
         // Test ordering of EncryptedKey contents
+        /** @var \DOMElement[] $encryptedKeyElements */
         $encryptedKeyElements = XPath::xpQuery(
             $encryptedKeyElement,
             './xenc:ReferenceList/following-sibling::*',

@@ -19,8 +19,8 @@ use function openssl_pkey_get_private;
  */
 final class PrivateKeyTest extends TestCase
 {
-    /** @var resource */
-    protected $privKey;
+    /** @var array */
+    protected $privKey = [];
 
     /** @var string */
     protected string $f;

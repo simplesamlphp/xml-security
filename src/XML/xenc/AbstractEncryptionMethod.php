@@ -101,7 +101,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         Assert::same($xml->localName, 'EncryptionMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $algorithm */
         $algorithm = self::getAttribute($xml, 'Algorithm');
 
         $keySize = KeySize::getChildrenOfClass($xml);
@@ -145,6 +144,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $this->getOAEPparams()?->toXML($e);
 
         foreach ($this->getElements() as $child) {
+            /** @var \SimpleSAML\XML\SerializableElementInterface $child */
             $child->toXML($e);
         }
 

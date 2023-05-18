@@ -67,7 +67,6 @@ abstract class AbstractReference extends AbstractXencElement
         Assert::same($xml->localName, static::getClassName(static::class), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $URI */
         $URI = self::getAttribute($xml, 'URI');
 
         $elements = [];

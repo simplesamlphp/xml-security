@@ -104,7 +104,6 @@ class Transform extends AbstractDsElement
         Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $alg */
         $alg = self::getAttribute($xml, 'Algorithm');
 
         $xpath = XPath::getChildrenOfClass($xml);

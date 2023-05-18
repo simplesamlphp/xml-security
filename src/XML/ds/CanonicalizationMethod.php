@@ -66,7 +66,6 @@ final class CanonicalizationMethod extends AbstractDsElement
         Assert::same($xml->localName, 'CanonicalizationMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, CanonicalizationMethod::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $Algorithm */
         $Algorithm = CanonicalizationMethod::getAttribute($xml, 'Algorithm');
 
         return new static($Algorithm);

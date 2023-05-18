@@ -69,7 +69,6 @@ final class KeyInfoReference extends AbstractDsig11Element
         Assert::same($xml->localName, 'KeyInfoReference', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyInfoReference::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $URI */
         $URI = KeyInfoReference::getAttribute($xml, 'URI');
         $Id = KeyInfoReference::getOptionalAttribute($xml, 'Id', null);
 

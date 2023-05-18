@@ -144,11 +144,11 @@ final class KeyInfo extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
+        if ($this->getId() !== null) {
             $e->setAttribute('Id', $this->getId());
         }
 
-        foreach ($this->info as $n) {
+        foreach ($this->getInfo() as $n) {
             $n->toXML($e);
         }
 

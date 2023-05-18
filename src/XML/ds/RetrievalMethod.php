@@ -75,7 +75,6 @@ final class RetrievalMethod extends AbstractDsElement
         Assert::same($xml->localName, 'RetrievalMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, RetrievalMethod::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $URI */
         $URI = self::getAttribute($xml, 'URI');
         $Type = self::getOptionalAttribute($xml, 'Type', null);
 

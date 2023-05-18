@@ -50,7 +50,6 @@ abstract class AbstractAlgorithmFactory
         // initialize the cache for supported algorithms per known implementation
         if (!static::$initialized && $defaults !== null) {
             foreach ($defaults as $algorithm) {
-                /** @var \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface $algorithm */
                 foreach ($algorithm::getSupportedAlgorithms() as $algId) {
                     if (array_key_exists($algId, static::$cache)) {
                         /*
@@ -81,7 +80,7 @@ abstract class AbstractAlgorithmFactory
     public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
     {
         Assert::false(
-            in_array($algId, $this->blacklist, true),
+            ($this->blacklist !== null) && in_array($algId, $this->blacklist, true),
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
             BlacklistedAlgorithmException::class,
         );
@@ -92,6 +91,7 @@ abstract class AbstractAlgorithmFactory
             UnsupportedAlgorithmException::class,
         );
 
+        /** @psalm-var AlgorithmInterface */
         return new static::$cache[$algId]($key, $algId);
     }
 
@@ -107,7 +107,7 @@ abstract class AbstractAlgorithmFactory
     /**
      * Register an implementation of some algorithm(s) for its use.
      *
-     * @param string $className
+     * @param class-string $className
      */
     public static function registerAlgorithm(string $className): void
     {
@@ -118,7 +118,6 @@ abstract class AbstractAlgorithmFactory
             'Cannot register algorithm "' . $className . '", must implement ' . $parent . '.',
         );
 
-        /** @var \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface $className */
         foreach ($className::getSupportedAlgorithms() as $algId) {
             static::$cache[$algId] = $className;
         }

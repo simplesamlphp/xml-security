@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Signature;
 
-use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 
@@ -15,10 +14,6 @@ use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
  */
 final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
 {
-    /** @var string */
-    protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
-
-
     /**
      * RSA constructor.
      *

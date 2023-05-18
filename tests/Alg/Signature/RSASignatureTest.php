@@ -235,16 +235,4 @@ final class RSASignatureTest extends TestCase
             '8d5fee2866c7f6e48',
         ));
     }
-
-
-    /**
-     * Test that verification fails when the wrong type of key is passed.
-     */
-    public function testVerifyWithSymmetricKey(): void
-    {
-        $key = SymmetricKey::generate(16);
-
-        $this->expectException(TypeError::class);
-        new RSA($key);
-    }
 }

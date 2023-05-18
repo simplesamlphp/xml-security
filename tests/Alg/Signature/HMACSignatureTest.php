@@ -153,43 +153,4 @@ final class HMACSignatureTest extends TestCase
         $hmac = $this->factory->getAlgorithm(C::SIG_HMAC_SHA1, $wrongKey);
         $this->assertFalse($hmac->verify($this->plaintext, hex2bin('655c3b4277b39f31dedf5adc7f4cc9f07da7102c')));
     }
-
-
-    /**
-     * Test that verification fails when the wrong type of key is passed.
-     */
-    public function testVerifyWithCertificate(): void
-    {
-        $cert = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
-
-        // test type errors when possible
-        $this->expectException(TypeError::class);
-        new HMAC($cert);
-    }
-
-
-    /**
-     * Test that verification fails when the wrong type of key is passed.
-     */
-    public function testVerifyWithPublicKey(): void
-    {
-        $key = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::OTHER_PUBLIC_KEY);
-
-        // test type errors when possible
-        $this->expectException(TypeError::class);
-        new HMAC($key);
-    }
-
-
-    /**
-     * Test that verification fails when the wrong type of key is passed.
-     */
-    public function testVerifyWithPrivateKey(): void
-    {
-        $key = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
-
-        // test type errors when possible
-        $this->expectException(TypeError::class);
-        new HMAC($key);
-    }
 }

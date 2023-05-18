@@ -52,15 +52,15 @@ class XML
         ) {
             // check for any PI or comments as they would have been excluded
             $current = $element;
-            while ($refNode = $current->previousSibling) {
+            for ($refNode = $current->previousSibling; $refNode !== null; $current = $refNode) {
                 if (
                     (($refNode->nodeType === XML_COMMENT_NODE) && $withComments)
                     || $refNode->nodeType === XML_PI_NODE
                 ) {
                     break;
                 }
-                $current = $refNode;
             }
+
             if ($refNode === null) {
                 $element = $element->ownerDocument;
             }

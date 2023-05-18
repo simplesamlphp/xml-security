@@ -144,15 +144,15 @@ final class DsObject extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
 
-        if ($this->Id !== null) {
+        if ($this->getId() !== null) {
             $e->setAttribute('Id', $this->getId());
         }
 
-        if ($this->MimeType !== null) {
+        if ($this->getMimeType() !== null) {
             $e->setAttribute('MimeType', $this->getMimeType());
         }
 
-        if ($this->Encoding !== null) {
+        if ($this->getEncoding() !== null) {
             $e->setAttribute('Encoding', $this->getEncoding());
         }
 

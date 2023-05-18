@@ -70,7 +70,6 @@ final class X509Digest extends AbstractDsig11Element
         Assert::same($xml->localName, 'X509Digest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Digest::NS, InvalidDOMElementException::class);
 
-        /** @psalm-var string $algorithm */
         $algorithm = self::getAttribute($xml, 'Algorithm');
 
         return new static($xml->textContent, $algorithm);
