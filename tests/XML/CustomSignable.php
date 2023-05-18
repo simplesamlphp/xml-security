@@ -179,7 +179,7 @@ class CustomSignable extends AbstractElement implements
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        $id = self::getAttribute($xml, 'id', null);
+        $id = self::getOptionalAttribute($xml, 'id', null);
         $signature = Signature::getChildrenOfClass($xml);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 

@@ -120,7 +120,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         Assert::same($xml->localName, 'SignedInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignedInfo::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         $canonicalizationMethod = CanonicalizationMethod::getChildrenOfClass($xml);
         Assert::minCount(

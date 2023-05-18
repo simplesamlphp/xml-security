@@ -227,11 +227,11 @@ final class EncryptedKey extends AbstractEncryptedType
 
         return new static(
             $cipherData[0],
-            self::getAttribute($xml, 'Id', null),
-            self::getAttribute($xml, 'Type', null),
-            self::getAttribute($xml, 'MimeType', null),
-            self::getAttribute($xml, 'Encoding', null),
-            self::getAttribute($xml, 'Recipient', null),
+            self::getOptionalAttribute($xml, 'Id', null),
+            self::getOptionalAttribute($xml, 'Type', null),
+            self::getOptionalAttribute($xml, 'MimeType', null),
+            self::getOptionalAttribute($xml, 'Encoding', null),
+            self::getOptionalAttribute($xml, 'Recipient', null),
             array_pop($carriedKeyNames),
             array_pop($encryptionMethod),
             array_pop($keyInfo),

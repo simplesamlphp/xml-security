@@ -55,7 +55,7 @@ class InclusiveNamespaces extends AbstractEcElement
      */
     public static function fromXML(DOMElement $xml): static
     {
-        $prefixes = self::getAttribute($xml, 'PrefixList', '');
+        $prefixes = self::getOptionalAttribute($xml, 'PrefixList', '');
 
         return new static(array_filter(explode(' ', $prefixes)));
     }

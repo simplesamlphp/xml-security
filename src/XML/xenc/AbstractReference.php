@@ -24,7 +24,7 @@ abstract class AbstractReference extends AbstractXencElement
     use ExtendableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const NAMESPACE = C::XS_ANY_NS_OTHER;
+    public const XS_ANY_ELT_NAMESPACE = C::XS_ANY_NS_OTHER;
 
 
     /**

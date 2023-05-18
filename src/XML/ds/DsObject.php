@@ -25,7 +25,7 @@ final class DsObject extends AbstractDsElement
     public const LOCALNAME = 'Object';
 
     /** @var string */
-    public const NAMESPACE = Constants::XS_ANY_NS_ANY;
+    public const XS_ANY_ELT_NAMESPACE = Constants::XS_ANY_NS_ANY;
 
 
     /**
@@ -110,9 +110,9 @@ final class DsObject extends AbstractDsElement
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
 
-        $Id = DsObject::getAttribute($xml, 'Id', null);
-        $MimeType = DsObject::getAttribute($xml, 'MimeType', null);
-        $Encoding = DsObject::getAttribute($xml, 'Encoding', null);
+        $Id = DsObject::getOptionalAttribute($xml, 'Id', null);
+        $MimeType = DsObject::getOptionalAttribute($xml, 'MimeType', null);
+        $Encoding = DsObject::getOptionalAttribute($xml, 'Encoding', null);
 
         $elements = [];
         foreach ($xml->childNodes as $elt) {

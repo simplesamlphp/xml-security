@@ -25,7 +25,7 @@ final class SignatureProperty extends AbstractDsElement
 
 
     /** The namespace-attribute for the xs:any element */
-    public const NAMESPACE = C::XS_ANY_NS_OTHER;
+    public const XS_ANY_ELT_NAMESPACE = C::XS_ANY_NS_OTHER;
 
 
     /**
@@ -81,7 +81,7 @@ final class SignatureProperty extends AbstractDsElement
 
         /** @psalm-var string $Target */
         $Target = self::getAttribute($xml, 'Target');
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         $children = [];
         foreach ($xml->childNodes as $child) {

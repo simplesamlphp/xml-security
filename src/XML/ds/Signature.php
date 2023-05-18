@@ -104,7 +104,7 @@ final class Signature extends AbstractDsElement
         Assert::same($xml->localName, 'Signature', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Signature::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         $signedInfo = SignedInfo::getChildrenOfClass($xml);
         Assert::minCount(

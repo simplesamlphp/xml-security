@@ -69,10 +69,10 @@ final class EncryptedData extends AbstractEncryptedType
 
         return new static(
             $cipherData[0],
-            self::getAttribute($xml, 'Id', null),
-            self::getAttribute($xml, 'Type', null),
-            self::getAttribute($xml, 'MimeType', null),
-            self::getAttribute($xml, 'Encoding', null),
+            self::getOptionalAttribute($xml, 'Id', null),
+            self::getOptionalAttribute($xml, 'Type', null),
+            self::getOptionalAttribute($xml, 'MimeType', null),
+            self::getOptionalAttribute($xml, 'Encoding', null),
             count($encryptionMethod) === 1 ? $encryptionMethod[0] : null,
             count($keyInfo) === 1 ? $keyInfo[0] : null,
         );

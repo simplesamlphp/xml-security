@@ -59,7 +59,7 @@ final class SignatureValue extends AbstractDsElement
         Assert::same($xml->localName, 'SignatureValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureValue::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         return new static($xml->textContent, $Id);
     }

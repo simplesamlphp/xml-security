@@ -63,7 +63,7 @@ final class Manifest extends AbstractDsElement
         Assert::same($xml->localName, 'Manifest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Manifest::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount(

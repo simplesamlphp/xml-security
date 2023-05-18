@@ -100,7 +100,7 @@ final class KeyInfo extends AbstractDsElement
         Assert::same($xml->localName, 'KeyInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyInfo::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
         $info = [];
 
         foreach ($xml->childNodes as $n) {

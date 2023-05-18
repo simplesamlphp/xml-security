@@ -71,7 +71,7 @@ final class KeyInfoReference extends AbstractDsig11Element
 
         /** @psalm-var string $URI */
         $URI = KeyInfoReference::getAttribute($xml, 'URI');
-        $Id = KeyInfoReference::getAttribute($xml, 'Id', null);
+        $Id = KeyInfoReference::getOptionalAttribute($xml, 'Id', null);
 
         return new static($URI, $Id);
     }

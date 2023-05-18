@@ -70,7 +70,7 @@ final class SignatureProperties extends AbstractDsElement
         Assert::same($xml->namespaceURI, SignatureProperties::NS, InvalidDOMElementException::class);
 
         $signatureProperty = SignatureProperty::getChildrenOfClass($xml);
-        $Id = self::getAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         Assert::minCount(
             $signatureProperty,

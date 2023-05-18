@@ -122,9 +122,9 @@ final class Reference extends AbstractDsElement
         Assert::same($xml->localName, 'Reference', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Reference::NS, InvalidDOMElementException::class);
 
-        $Id = self::getAttribute($xml, 'Id', null);
-        $Type = self::getAttribute($xml, 'Type', null);
-        $URI = self::getAttribute($xml, 'URI', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', null);
+        $Type = self::getOptionalAttribute($xml, 'Type', null);
+        $URI = self::getOptionalAttribute($xml, 'URI', null);
 
         $transforms = Transforms::getChildrenOfClass($xml);
         Assert::maxCount(
