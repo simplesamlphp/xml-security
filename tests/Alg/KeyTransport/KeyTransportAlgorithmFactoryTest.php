@@ -21,12 +21,12 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 class KeyTransportAlgorithmFactoryTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
-    protected PublicKey $pkey;
+    protected static PublicKey $pkey;
 
 
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->pkey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        self::$pkey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 
@@ -37,7 +37,7 @@ class KeyTransportAlgorithmFactoryTest extends TestCase
     {
         $factory = new KeyTransportAlgorithmFactory([]);
         $this->expectException(UnsupportedAlgorithmException::class);
-        $factory->getAlgorithm('Unsupported algorithm identifier', $this->pkey);
+        $factory->getAlgorithm('Unsupported algorithm identifier', self::$pkey);
     }
 
 
@@ -47,16 +47,16 @@ class KeyTransportAlgorithmFactoryTest extends TestCase
     public function testDefaultBlacklistedAlgorithm(): void
     {
         $factory = new KeyTransportAlgorithmFactory();
-        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->pkey);
+        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$pkey);
         $this->assertInstanceOf(RSA::class, $algorithm);
         $this->assertEquals(C::KEY_TRANSPORT_OAEP, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pkey);
+        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$pkey);
         $this->assertInstanceOf(RSA::class, $algorithm);
         $this->assertEquals(C::KEY_TRANSPORT_OAEP_MGF1P, $algorithm->getAlgorithmId());
 
         $this->expectException(BlacklistedAlgorithmException::class);
-        $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->pkey);
+        $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$pkey);
     }
 
 
@@ -66,16 +66,16 @@ class KeyTransportAlgorithmFactoryTest extends TestCase
     public function testBlacklistedAlgorithm(): void
     {
         $factory = new KeyTransportAlgorithmFactory([C::KEY_TRANSPORT_OAEP_MGF1P]);
-        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->pkey);
+        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$pkey);
         $this->assertInstanceOf(RSA::class, $algorithm);
         $this->assertEquals(C::KEY_TRANSPORT_OAEP, $algorithm->getAlgorithmId());
-        $this->assertEquals($this->pkey, $algorithm->getKey());
+        $this->assertEquals(self::$pkey, $algorithm->getKey());
 
-        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->pkey);
+        $algorithm = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$pkey);
         $this->assertInstanceOf(RSA::class, $algorithm);
         $this->assertEquals(C::KEY_TRANSPORT_RSA_1_5, $algorithm->getAlgorithmId());
 
         $this->expectException(BlacklistedAlgorithmException::class);
-        $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pkey);
+        $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$pkey);
     }
 }

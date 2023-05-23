@@ -28,13 +28,13 @@ final class KeyNameTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = KeyName::class;
+        self::$testedClass = KeyName::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_KeyName.xml',
         );
     }
@@ -47,7 +47,7 @@ final class KeyNameTest extends TestCase
         $keyName = new KeyName('testkey');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyName),
         );
     }
@@ -57,10 +57,10 @@ final class KeyNameTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyName = KeyName::fromXML($this->xmlRepresentation->documentElement);
+        $keyName = KeyName::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyName),
         );
     }

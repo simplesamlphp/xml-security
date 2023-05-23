@@ -34,13 +34,13 @@ final class ReferenceListTest extends TestCase
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = ReferenceList::class;
+        self::$testedClass = ReferenceList::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_ReferenceList.xml',
         );
     }
@@ -72,7 +72,7 @@ final class ReferenceListTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($referenceList),
         );
     }
@@ -85,10 +85,10 @@ final class ReferenceListTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $referenceList = ReferenceList::fromXML($this->xmlRepresentation->documentElement);
+        $referenceList = ReferenceList::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($referenceList),
         );
     }

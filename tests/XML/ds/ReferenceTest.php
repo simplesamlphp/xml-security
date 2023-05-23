@@ -33,13 +33,13 @@ final class ReferenceTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = Reference::class;
+        self::$testedClass = Reference::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Reference.xml',
         );
     }
@@ -64,7 +64,7 @@ final class ReferenceTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($reference),
         );
     }
@@ -102,10 +102,10 @@ final class ReferenceTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $reference = Reference::fromXML($this->xmlRepresentation->documentElement);
+        $reference = Reference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($reference),
         );
     }

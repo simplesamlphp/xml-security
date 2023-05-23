@@ -29,11 +29,11 @@ final class ModulusTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = Modulus::class;
+        self::$testedClass = Modulus::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Modulus.xml',
         );
     }
@@ -46,7 +46,7 @@ final class ModulusTest extends TestCase
         $modulus = new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==');
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($modulus),
         );
     }
@@ -65,7 +65,7 @@ final class ModulusTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $modulus = Modulus::fromXML($this->xmlRepresentation->documentElement);
+        $modulus = Modulus::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $modulus->getContent());
     }

@@ -27,13 +27,14 @@ final class X509SerialNumberTest extends TestCase
 {
     use SerializableElementTestTrait;
 
+
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = X509SerialNumber::class;
+        self::$testedClass = X509SerialNumber::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509SerialNumber.xml',
         );
     }
@@ -46,7 +47,7 @@ final class X509SerialNumberTest extends TestCase
         $serialNumber = new X509SerialNumber('123456');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($serialNumber),
         );
     }
@@ -56,10 +57,10 @@ final class X509SerialNumberTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $serialNumber = X509SerialNumber::fromXML($this->xmlRepresentation->documentElement);
+        $serialNumber = X509SerialNumber::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($serialNumber),
         );
     }
@@ -69,10 +70,10 @@ final class X509SerialNumberTest extends TestCase
      */
     public function testUnmarshallingIncorrectTypeThrowsException(): void
     {
-        $document = $this->xmlRepresentation;
+        $document = clone self::$xmlRepresentation;
         $document->documentElement->textContent = 'Not an integer';
 
         $this->expectException(SchemaViolationException::class);
-        X509SerialNumber::fromXML($this->xmlRepresentation->documentElement);
+        X509SerialNumber::fromXML($document->documentElement);
     }
 }

@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\Alg\Encryption;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -17,16 +18,20 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 class AESEncryptionTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $skey;
+    protected static SymmetricKey $skey;
 
-    /** @var EncryptionAlgorithmFactory */
-    protected EncryptionAlgorithmFactory $factory;
+    /** @var \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory */
+    protected static EncryptionAlgorithmFactory $factory;
+
+    /** @var \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface */
+    protected static EncryptionAlgorithmInterface $algo;
 
 
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->skey = new SymmetricKey(hex2bin('7392d8ec40a862fbb02786bab41481b2'));
-        $this->factory = new EncryptionAlgorithmFactory([]);
+        self::$skey = new SymmetricKey(hex2bin('7392d8ec40a862fbb02786bab41481b2'));
+        self::$factory = new EncryptionAlgorithmFactory([]);
+        self::$algo = self::$factory->getAlgorithm(C::BLOCK_ENC_AES128, self::$skey);
     }
 
 
@@ -35,8 +40,7 @@ class AESEncryptionTest extends TestCase
      */
     public function testEncrypt(): void
     {
-        $aes = $this->factory->getAlgorithm(C::BLOCK_ENC_AES128, $this->skey);
-        $ciphertext = $aes->encrypt('plaintext');
+        $ciphertext = self::$algo->encrypt('plaintext');
         $this->assertNotEmpty($ciphertext);
         $this->assertEquals(32, strlen($ciphertext));
     }
@@ -48,8 +52,7 @@ class AESEncryptionTest extends TestCase
     public function testDecrypt(): void
     {
         $ciphertext = "r0YRkEixBnAKU032/ux7avHcVTH1CIIyKaPA2qr4KlIs0LVZp5CuwQKRRi6lji4cnaFbH4jETtJhMSEfbpSdvg==";
-        $aes = $this->factory->getAlgorithm(C::BLOCK_ENC_AES128, $this->skey);
-        $plaintext = $aes->decrypt(base64_decode($ciphertext));
+        $plaintext = self::$algo->decrypt(base64_decode($ciphertext));
         $this->assertEquals("\n  <Value>\n\tHello, World!\n  </Value>\n", $plaintext);
     }
 }

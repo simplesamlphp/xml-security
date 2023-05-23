@@ -22,16 +22,16 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 final class SignatureAlgorithmFactoryTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $skey;
+    protected static SymmetricKey $skey;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
-    protected PublicKey $pkey;
+    protected static PublicKey $pkey;
 
 
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->skey = SymmetricKey::generate(16);
-        $this->pkey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        self::$skey = SymmetricKey::generate(16);
+        self::$pkey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 
@@ -43,12 +43,12 @@ final class SignatureAlgorithmFactoryTest extends TestCase
         $factory = new SignatureAlgorithmFactory([]);
 
         foreach (C::$HMAC_DIGESTS as $signature => $digest) {
-            $alg = $factory->getAlgorithm($signature, $this->skey);
+            $alg = $factory->getAlgorithm($signature, self::$skey);
             $this->assertEquals($digest, $alg->getDigest());
         }
 
         foreach (C::$RSA_DIGESTS as $signature => $digest) {
-            $alg = $factory->getAlgorithm($signature, $this->pkey);
+            $alg = $factory->getAlgorithm($signature, self::$pkey);
             $this->assertEquals($digest, $alg->getDigest());
         }
     }
@@ -61,7 +61,7 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     {
         $factory = new SignatureAlgorithmFactory([]);
         $this->expectException(UnsupportedAlgorithmException::class);
-        $factory->getAlgorithm('Unsupported algorithm identifier', $this->skey);
+        $factory->getAlgorithm('Unsupported algorithm identifier', self::$skey);
     }
 
 
@@ -71,12 +71,12 @@ final class SignatureAlgorithmFactoryTest extends TestCase
     public function testBlacklistedAlgorithm(): void
     {
         $factory = new SignatureAlgorithmFactory([C::SIG_RSA_SHA1]);
-        $algorithm = $factory->getAlgorithm(C::SIG_HMAC_SHA1, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::SIG_HMAC_SHA1, self::$skey);
         $this->assertInstanceOf(HMAC::class, $algorithm);
         $this->assertEquals(C::SIG_HMAC_SHA1, $algorithm->getAlgorithmId());
-        $this->assertEquals($this->skey, $algorithm->getKey());
+        $this->assertEquals(self::$skey, $algorithm->getKey());
 
         $this->expectException(BlacklistedAlgorithmException::class);
-        $factory->getAlgorithm(C::SIG_RSA_SHA1, $this->pkey);
+        $factory->getAlgorithm(C::SIG_RSA_SHA1, self::$pkey);
     }
 }

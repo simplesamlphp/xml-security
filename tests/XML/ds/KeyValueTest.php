@@ -34,34 +34,34 @@ final class KeyValueTest extends TestCase
 
 
     /** @var \DOMDocument $empty */
-    protected DOMDocument $empty;
+    protected static DOMDocument $empty;
 
     /** @var \DOMDocument $rsaKeyValue */
-    protected DOMDocument $rsaKeyValue;
+    protected static DOMDocument $rsaKeyValue;
 
     /** @var \DOMDocument $cipherValue */
-    protected DOMDocument $cipherValue;
+    protected static DOMDocument $cipherValue;
 
 
     /**
      */
     protected function setUp(): void
     {
-        $this->testedClass = KeyValue::class;
+        self::$testedClass = KeyValue::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->empty = DOMDocumentFactory::fromString('<ds:KeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>');
+        self::$empty = DOMDocumentFactory::fromString('<ds:KeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>');
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_KeyValue.xml',
         );
 
-        $this->rsaKeyValue = DOMDocumentFactory::fromFile(
+        self::$rsaKeyValue = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_RSAKeyValue.xml',
         );
 
-        $this->cipherValue = DOMDocumentFactory::fromFile(
+        self::$cipherValue = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_CipherValue.xml',
         );
     }
@@ -71,7 +71,7 @@ final class KeyValueTest extends TestCase
      */
     public function testMarshallingWithRSAKey(): void
     {
-        $keyValue = new KeyValue(RSAKeyValue::fromXML($this->rsaKeyValue->documentElement));
+        $keyValue = new KeyValue(RSAKeyValue::fromXML(self::$rsaKeyValue->documentElement));
 
         $rsaKeyValue = $keyValue->getRSAKeyValue();
         $this->assertInstanceOf(RSAKeyValue::class, $rsaKeyValue);
@@ -80,8 +80,8 @@ final class KeyValueTest extends TestCase
         $this->assertEquals($rsaKeyValue->getModulus()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==');
         $this->assertEquals($rsaKeyValue->getExponent()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
 
-        $document = $this->empty;
-        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
+        $document = self::$empty;
+        $document->documentElement->appendChild($document->importNode(self::$rsaKeyValue->documentElement, true));
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
     }
@@ -91,7 +91,7 @@ final class KeyValueTest extends TestCase
      */
     public function testMarshallingWithOtherElement(): void
     {
-        $keyValue = new KeyValue(null, Chunk::fromXML($this->cipherValue->documentElement));
+        $keyValue = new KeyValue(null, Chunk::fromXML(self::$cipherValue->documentElement));
 
         $elements = $keyValue->getElements();
         $this->assertEmpty($keyValue->getRSAKeyValue());
@@ -101,8 +101,8 @@ final class KeyValueTest extends TestCase
         $this->assertInstanceOf(Chunk::class, $element);
         $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
-        $document = $this->empty;
-        $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
+        $document = self::$empty;
+        $document->documentElement->appendChild($document->importNode(self::$cipherValue->documentElement, true));
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
     }
@@ -125,8 +125,8 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingWithRSAKey(): void
     {
-        $document = $this->empty;
-        $document->documentElement->appendChild($document->importNode($this->rsaKeyValue->documentElement, true));
+        $document = self::$empty;
+        $document->documentElement->appendChild($document->importNode(self::$rsaKeyValue->documentElement, true));
 
         $keyValue = KeyValue::fromXML($document->documentElement);
 
@@ -143,8 +143,8 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingWithOtherElement(): void
     {
-        $document = $this->empty;
-        $document->documentElement->appendChild($document->importNode($this->cipherValue->documentElement, true));
+        $document = self::$empty;
+        $document->documentElement->appendChild($document->importNode(self::$cipherValue->documentElement, true));
 
         $keyValue = KeyValue::fromXML($document->documentElement);
 
@@ -162,7 +162,7 @@ final class KeyValueTest extends TestCase
      */
     public function testUnmarshallingEmpty(): void
     {
-        $document = $this->empty;
+        $document = self::$empty;
 
         $this->expectException(SchemaViolationException::class);
         $this->expectExceptionMessage(

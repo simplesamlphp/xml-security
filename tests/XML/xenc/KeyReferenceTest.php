@@ -31,11 +31,11 @@ final class KeyReferenceTest extends TestCase
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = KeyReference::class;
+        self::$testedClass = KeyReference::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_KeyReference.xml',
         );
     }
@@ -63,7 +63,7 @@ final class KeyReferenceTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyReference),
         );
     }
@@ -76,10 +76,10 @@ final class KeyReferenceTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyReference = KeyReference::fromXML($this->xmlRepresentation->documentElement);
+        $keyReference = KeyReference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyReference),
         );
     }

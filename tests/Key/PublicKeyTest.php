@@ -22,19 +22,19 @@ use function openssl_pkey_get_public;
 final class PublicKeyTest extends TestCase
 {
     /** @var array */
-    protected $pubKey = [];
+    protected static $pubKey = [];
 
     /** @var string */
-    protected string $f;
+    protected static string $f;
 
 
     /**
      * Initialize the test by loading the file ourselves.
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->f = PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY);
-        $this->pubKey = openssl_pkey_get_details(openssl_pkey_get_public($this->f));
+        self::$f = PEMCertificatesMock::getPlainPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        self::$pubKey = openssl_pkey_get_details(openssl_pkey_get_public(self::$f));
     }
 
     /**
@@ -42,9 +42,9 @@ final class PublicKeyTest extends TestCase
      */
     public function testCreation(): void
     {
-        $k = new PublicKey(PEM::fromString($this->f));
+        $k = new PublicKey(PEM::fromString(self::$f));
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
-        $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
+        $this->assertEquals(self::$pubKey['key'], $keyDetails['key']);
     }
 
 
@@ -55,7 +55,7 @@ final class PublicKeyTest extends TestCase
     {
         $k = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
-        $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
+        $this->assertEquals(self::$pubKey['key'], $keyDetails['key']);
     }
 
 
@@ -74,8 +74,8 @@ final class PublicKeyTest extends TestCase
      */
     public function testFromDetails(): void
     {
-        $k = PublicKey::fromDetails($this->pubKey['rsa']['n'], $this->pubKey['rsa']['e']);
+        $k = PublicKey::fromDetails(self::$pubKey['rsa']['n'], self::$pubKey['rsa']['e']);
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_public($k->getMaterial()));
-        $this->assertEquals($this->pubKey['key'], $keyDetails['key']);
+        $this->assertEquals(self::$pubKey['key'], $keyDetails['key']);
     }
 }

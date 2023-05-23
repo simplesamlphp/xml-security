@@ -29,11 +29,11 @@ final class ExponentTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = Exponent::class;
+        self::$testedClass = Exponent::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Exponent.xml',
         );
     }
@@ -46,7 +46,7 @@ final class ExponentTest extends TestCase
         $exponent = new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($exponent),
         );
     }
@@ -65,10 +65,10 @@ final class ExponentTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $exponent = Exponent::fromXML($this->xmlRepresentation->documentElement);
+        $exponent = Exponent::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($exponent),
         );
     }

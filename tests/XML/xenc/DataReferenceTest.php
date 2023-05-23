@@ -32,11 +32,11 @@ final class DataReferenceTest extends TestCase
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = DataReference::class;
+        self::$testedClass = DataReference::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_DataReference.xml',
         );
     }
@@ -63,7 +63,7 @@ final class DataReferenceTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($dataReference),
         );
     }
@@ -76,10 +76,10 @@ final class DataReferenceTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $dataReference = DataReference::fromXML($this->xmlRepresentation->documentElement);
+        $dataReference = DataReference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($dataReference),
         );
     }

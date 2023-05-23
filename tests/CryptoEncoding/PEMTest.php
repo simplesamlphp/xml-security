@@ -20,20 +20,20 @@ use function file_get_contents;
  */
 class PEMTest extends TestCase
 {
-    private string $base_dir;
+    private static string $baseDir;
 
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->base_dir = dirname(__FILE__, 3);
+        self::$baseDir = dirname(__FILE__, 3);
     }
 
 
     public function testFromString(): void
     {
-        $str = file_get_contents($this->base_dir . '/resources/keys/pubkey.pem');
+        $str = file_get_contents(self::$baseDir . '/resources/keys/pubkey.pem');
         $pem = PEM::fromString($str);
         $this->assertInstanceOf(PEM::class, $pem);
     }
@@ -44,7 +44,7 @@ class PEMTest extends TestCase
      */
     public function testFromFile(): PEM
     {
-        $pem = PEM::fromFile($this->base_dir . '/resources/keys/pubkey.pem');
+        $pem = PEM::fromFile(self::$baseDir . '/resources/keys/pubkey.pem');
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }

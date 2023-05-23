@@ -31,13 +31,13 @@ final class DigestValueTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = DigestValue::class;
+        self::$testedClass = DigestValue::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_DigestValue.xml',
         );
     }
@@ -50,7 +50,7 @@ final class DigestValueTest extends TestCase
         $digestValue = new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($digestValue),
         );
     }
@@ -69,10 +69,10 @@ final class DigestValueTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $digestValue = DigestValue::fromXML($this->xmlRepresentation->documentElement);
+        $digestValue = DigestValue::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($digestValue),
         );
     }

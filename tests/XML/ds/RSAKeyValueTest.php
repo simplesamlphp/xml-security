@@ -33,13 +33,13 @@ final class RSAKeyValueTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = RSAKeyValue::class;
+        self::$testedClass = RSAKeyValue::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_RSAKeyValue.xml',
         );
     }
@@ -55,7 +55,7 @@ final class RSAKeyValueTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($RSAKeyValue),
         );
     }
@@ -89,10 +89,10 @@ final class RSAKeyValueTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $RSAKeyValue = RSAKeyValue::fromXML($this->xmlRepresentation->documentElement);
+        $RSAKeyValue = RSAKeyValue::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($RSAKeyValue),
         );
     }

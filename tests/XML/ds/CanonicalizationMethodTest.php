@@ -29,13 +29,13 @@ final class CanonicalizationMethodTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CanonicalizationMethod::class;
+        self::$testedClass = CanonicalizationMethod::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_CanonicalizationMethod.xml',
         );
     }
@@ -48,7 +48,7 @@ final class CanonicalizationMethodTest extends TestCase
         $canonicalizationMethod = new CanonicalizationMethod(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($canonicalizationMethod),
         );
     }
@@ -58,7 +58,7 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $canonicalizationMethod = CanonicalizationMethod::fromXML($this->xmlRepresentation->documentElement);
+        $canonicalizationMethod = CanonicalizationMethod::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethod->getAlgorithm());
     }

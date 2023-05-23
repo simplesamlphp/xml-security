@@ -27,23 +27,23 @@ use function openssl_x509_read;
 final class X509CertificateTest extends TestCase
 {
     /** @var array */
-    protected $cert = [];
+    protected static $cert = [];
 
     /** @var string */
-    protected string $f;
+    protected static string $f;
 
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
-    protected X509Certificate $c;
+    protected static X509Certificate $c;
 
 
     /**
      * Initialize the test by loading the file ourselves.
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->f = PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::CERTIFICATE);
-        $this->cert = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($this->f)));
-        $this->c = new X509Certificate(PEM::fromString($this->f));
+        self::$f = PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::CERTIFICATE);
+        self::$cert = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read(self::$f)));
+        self::$c = new X509Certificate(PEM::fromString(self::$f));
     }
 
 
@@ -52,8 +52,8 @@ final class X509CertificateTest extends TestCase
      */
     public function testCreation(): void
     {
-        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($this->c->getMaterial()));
-        $this->assertEquals($this->cert['key'], $pubDetails['key']);
+        $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public(self::$c->getMaterial()));
+        $this->assertEquals(self::$cert['key'], $pubDetails['key']);
     }
 
 
@@ -62,7 +62,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetCertificate(): void
     {
-        $this->assertEquals($this->f, $this->c->getMaterial());
+        $this->assertEquals(self::$f, self::$c->getMaterial());
     }
 
 
@@ -71,7 +71,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetCertificateDetails(): void
     {
-        $this->assertEquals(openssl_x509_parse($this->f), $this->c->getCertificateDetails());
+        $this->assertEquals(openssl_x509_parse(self::$f), self::$c->getCertificateDetails());
     }
 
 
@@ -80,8 +80,8 @@ final class X509CertificateTest extends TestCase
      */
     public function testGetRawThumbprint(): void
     {
-        $f = openssl_x509_fingerprint($this->f);
-        $this->assertEquals($f, $this->c->getRawThumbprint());
+        $f = openssl_x509_fingerprint(self::$f);
+        $this->assertEquals($f, self::$c->getRawThumbprint());
     }
 
 
@@ -91,7 +91,7 @@ final class X509CertificateTest extends TestCase
     public function testGetRawThumbprintWithWrongAlg(): void
     {
         $this->expectException(UnsupportedAlgorithmException::class);
-        $this->c->getRawThumbprint('invalid');
+        self::$c->getRawThumbprint('invalid');
     }
 
 
@@ -102,6 +102,6 @@ final class X509CertificateTest extends TestCase
     {
         $c = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
         $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($c->getMaterial()));
-        $this->assertEquals($this->cert['key'], $pubDetails['key']);
+        $this->assertEquals(self::$cert['key'], $pubDetails['key']);
     }
 }

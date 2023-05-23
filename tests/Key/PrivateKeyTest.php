@@ -20,19 +20,19 @@ use function openssl_pkey_get_private;
 final class PrivateKeyTest extends TestCase
 {
     /** @var array */
-    protected $privKey = [];
+    protected static $privKey = [];
 
     /** @var string */
-    protected string $f;
+    protected static string $f;
 
 
     /**
      * Initialize the test by loading the file ourselves.
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->f = file_get_contents('resources/keys/privkey.pem');
-        $this->privKey = openssl_pkey_get_details(openssl_pkey_get_private($this->f));
+        self::$f = file_get_contents('resources/keys/privkey.pem');
+        self::$privKey = openssl_pkey_get_details(openssl_pkey_get_private(self::$f));
     }
 
 
@@ -41,9 +41,9 @@ final class PrivateKeyTest extends TestCase
      */
     public function testCreation(): void
     {
-        $k = new PrivateKey(PEM::fromString($this->f));
+        $k = new PrivateKey(PEM::fromString(self::$f));
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
-        $this->assertEquals($this->privKey['key'], $keyDetails['key']);
+        $this->assertEquals(self::$privKey['key'], $keyDetails['key']);
     }
 
 
@@ -54,6 +54,6 @@ final class PrivateKeyTest extends TestCase
     {
         $k = PrivateKey::fromFile('file://./resources/keys/privkey.pem');
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
-        $this->assertEquals($this->privKey['key'], $keyDetails['key']);
+        $this->assertEquals(self::$privKey['key'], $keyDetails['key']);
     }
 }

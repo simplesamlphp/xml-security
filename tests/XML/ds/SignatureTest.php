@@ -35,13 +35,13 @@ final class SignatureTest extends TestCase
     /**
      * Set up the test.
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = Signature::class;
+        self::$testedClass = Signature::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Signature.xml',
         );
     }
@@ -83,7 +83,7 @@ final class SignatureTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signature),
         );
     }
@@ -145,7 +145,7 @@ final class SignatureTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $signature = Signature::fromXML($this->xmlRepresentation->documentElement);
+        $signature = Signature::fromXML(self::$xmlRepresentation->documentElement);
         $this->assertEquals('def456', $signature->getId());
 
         $signedInfo = $signature->getSignedInfo();
@@ -161,7 +161,7 @@ final class SignatureTest extends TestCase
         $this->assertCount(1, $objects);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signature),
         );
     }

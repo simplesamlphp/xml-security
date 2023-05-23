@@ -31,13 +31,13 @@ final class SignaturePropertyTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = SignatureProperty::class;
+        self::$testedClass = SignatureProperty::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_SignatureProperty.xml',
         );
     }
@@ -58,7 +58,7 @@ final class SignaturePropertyTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signatureProperty)
         );
     }
@@ -68,10 +68,10 @@ final class SignaturePropertyTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $signatureProperty = SignatureProperty::fromXML($this->xmlRepresentation->documentElement);
+        $signatureProperty = SignatureProperty::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signatureProperty)
         );
     }

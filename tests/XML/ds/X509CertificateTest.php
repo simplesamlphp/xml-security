@@ -32,20 +32,20 @@ final class X509CertificateTest extends TestCase
     use SerializableElementTestTrait;
 
     /** @var string */
-    private string $certificate;
+    private static string $certificate;
 
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = X509Certificate::class;
+        self::$testedClass = X509Certificate::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509Certificate.xml',
         );
 
-        $this->certificate = str_replace(
+        self::$certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
                 '-----END CERTIFICATE-----',
@@ -71,10 +71,10 @@ final class X509CertificateTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $x509cert = new X509Certificate($this->certificate);
+        $x509cert = new X509Certificate(self::$certificate);
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($x509cert),
         );
     }
@@ -84,7 +84,7 @@ final class X509CertificateTest extends TestCase
      */
     public function testMarshallingInvalidBase64(): void
     {
-        $certificate = str_replace(substr($this->certificate, 1), '', $this->certificate);
+        $certificate = str_replace(substr(self::$certificate, 1), '', self::$certificate);
         $this->expectException(AssertionFailedException::class);
         new X509Certificate($certificate);
     }
@@ -94,10 +94,10 @@ final class X509CertificateTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $x509cert = X509Certificate::fromXML($this->xmlRepresentation->documentElement);
+        $x509cert = X509Certificate::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($x509cert),
         );
     }

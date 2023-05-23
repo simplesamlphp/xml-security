@@ -27,6 +27,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
+use function bin2hex;
 use function dirname;
 use function strval;
 
@@ -44,26 +45,26 @@ final class EncryptedKeyTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
-    /** @var PrivateKey */
-    protected PrivateKey $privKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
+    protected static PrivateKey $privKey;
 
-    /** @var PublicKey */
-    protected PublicKey $pubKey;
+    /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
+    protected static PublicKey $pubKey;
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = EncryptedKey::class;
+        self::$testedClass = EncryptedKey::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedKey.xml',
         );
 
-        $this->privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
-        $this->pubKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        self::$privKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
+        self::$pubKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
     }
 
 
@@ -104,7 +105,7 @@ final class EncryptedKeyTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedKey),
         );
     }
@@ -174,10 +175,10 @@ final class EncryptedKeyTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $encryptedKey = EncryptedKey::fromXML($this->xmlRepresentation->documentElement);
+        $encryptedKey = EncryptedKey::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedKey),
         );
     }
@@ -189,7 +190,7 @@ final class EncryptedKeyTest extends TestCase
     public function testPKCS1Encryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$pubKey);
         $symmetricKey = SymmetricKey::generate(8);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
@@ -197,7 +198,7 @@ final class EncryptedKeyTest extends TestCase
             new EncryptionMethod(C::KEY_TRANSPORT_RSA_1_5),
         );
 
-        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));
@@ -210,7 +211,7 @@ final class EncryptedKeyTest extends TestCase
     public function testOAEPEncryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$pubKey);
         $symmetricKey = SymmetricKey::generate(16);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
@@ -218,7 +219,7 @@ final class EncryptedKeyTest extends TestCase
             new EncryptionMethod(C::KEY_TRANSPORT_OAEP),
         );
 
-        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));
@@ -231,7 +232,7 @@ final class EncryptedKeyTest extends TestCase
     public function testOAEMGF1PPEncryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
+        $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$pubKey);
         $symmetricKey = SymmetricKey::generate(16);
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
@@ -239,7 +240,7 @@ final class EncryptedKeyTest extends TestCase
             new EncryptionMethod(C::KEY_TRANSPORT_OAEP_MGF1P),
         );
 
-        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
+        $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$privKey);
         $decryptedKey = $encryptedKey->decrypt($decryptor);
 
         $this->assertEquals(bin2hex($symmetricKey->getMaterial()), bin2hex($decryptedKey));

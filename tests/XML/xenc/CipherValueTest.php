@@ -29,11 +29,11 @@ final class CipherValueTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CipherValue::class;
+        self::$testedClass = CipherValue::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_CipherValue.xml',
         );
     }
@@ -46,7 +46,7 @@ final class CipherValueTest extends TestCase
         $cipherValue = new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($cipherValue),
         );
     }
@@ -65,10 +65,10 @@ final class CipherValueTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $cipherValue = CipherValue::fromXML($this->xmlRepresentation->documentElement);
+        $cipherValue = CipherValue::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($cipherValue),
         );
     }

@@ -26,11 +26,11 @@ final class CarriedKeyNameTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CarriedKeyName::class;
+        self::$testedClass = CarriedKeyName::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_CarriedKeyName.xml',
         );
     }
@@ -43,7 +43,7 @@ final class CarriedKeyNameTest extends TestCase
         $keyName = new CarriedKeyName('Some label');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyName),
         );
     }
@@ -53,10 +53,10 @@ final class CarriedKeyNameTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyName = CarriedKeyName::fromXML($this->xmlRepresentation->documentElement);
+        $keyName = CarriedKeyName::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyName),
         );
     }

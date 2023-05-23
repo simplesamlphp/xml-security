@@ -24,41 +24,40 @@ use function hex2bin;
  */
 final class OpenSSLTest extends TestCase
 {
+    /** @var string */
+    protected const VALIDSIG =
+        'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed057' .
+        '104721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27' .
+        'e57d183ff08188b338f7975681ad67b1b6f8d174b57b666f787b801df9511d7a90e90e9af2386f4051669a4763ce5e9720f' .
+        'c8ae2bc90e7c33d92a4bcecefddb06599b1f3adf48cde42d442d76c4d938d1570379bf1ab45feae95f94f48a460a8894f90' .
+        'e0208ba93d86b505f32942f53bdab8e506ba227cc813cd26a0ba9a93c46f27dd0c2b7452fd8c79c7aa72b885d95ef6d1dc8' .
+        '10829b0832abe290d';
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
-    protected PrivateKey $privKey;
+    protected static PrivateKey $privKey;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
-    protected PublicKey $pubKey;
+    protected static PublicKey $pubKey;
 
     /** @var \SimpleSAML\XMLSecurity\Backend\OpenSSL */
-    protected OpenSSL $backend;
-
-    /** @var string */
-    protected string $validSig;
+    protected static OpenSSL $backend;
 
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $sharedKey;
+    protected static SymmetricKey $sharedKey;
 
 
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->privKey = PrivateKey::fromFile(
+        self::$privKey = PrivateKey::fromFile(
             'file://' . dirname(__FILE__, 3) . '/resources/keys/privkey.pem'
         );
-        $this->pubKey = PublicKey::fromFile(
+        self::$pubKey = PublicKey::fromFile(
             'file://' . dirname(__FILE__, 3) . '/resources/keys/pubkey.pem'
         );
-        $this->sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
-        $this->backend = new OpenSSL();
-        $this->backend->setDigestAlg(C::DIGEST_SHA256);
-        $this->backend->setCipher(C::BLOCK_ENC_AES256_GCM);
-        $this->validSig =
-            'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed057' .
-            '104721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27' .
-            'e57d183ff08188b338f7975681ad67b1b6f8d174b57b666f787b801df9511d7a90e90e9af2386f4051669a4763ce5e9720f' .
-            'c8ae2bc90e7c33d92a4bcecefddb06599b1f3adf48cde42d442d76c4d938d1570379bf1ab45feae95f94f48a460a8894f90' .
-            'e0208ba93d86b505f32942f53bdab8e506ba227cc813cd26a0ba9a93c46f27dd0c2b7452fd8c79c7aa72b885d95ef6d1dc8' .
-            '10829b0832abe290d';
+        self::$sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
+        self::$backend = new OpenSSL();
+        self::$backend->setDigestAlg(C::DIGEST_SHA256);
+        self::$backend->setCipher(C::BLOCK_ENC_AES256_GCM);
     }
 
 
@@ -67,7 +66,7 @@ final class OpenSSLTest extends TestCase
      */
     public function testSign(): void
     {
-        $this->assertEquals($this->validSig, bin2hex($this->backend->sign($this->privKey, 'Signed text')));
+        $this->assertEquals(self::VALIDSIG, bin2hex(self::$backend->sign(self::$privKey, 'Signed text')));
     }
 
 
@@ -78,7 +77,7 @@ final class OpenSSLTest extends TestCase
     {
         $k = SymmetricKey::generate(10);
         $this->expectException(RuntimeException::class);
-        @$this->backend->sign($k, 'Signed text');
+        @self::$backend->sign($k, 'Signed text');
     }
 
 
@@ -88,12 +87,12 @@ final class OpenSSLTest extends TestCase
     public function testVerify(): void
     {
         // test successful verification
-        $this->assertTrue($this->backend->verify($this->pubKey, 'Signed text', hex2bin($this->validSig)));
+        $this->assertTrue(self::$backend->verify(self::$pubKey, 'Signed text', hex2bin(self::VALIDSIG)));
 
         // test forged signature
-        $wrongSig = $this->validSig;
+        $wrongSig = self::VALIDSIG;
         $wrongSig[10] = '6';
-        $this->assertFalse($this->backend->verify($this->pubKey, 'Signed text', hex2bin($wrongSig)));
+        $this->assertFalse(self::$backend->verify(self::$pubKey, 'Signed text', hex2bin($wrongSig)));
     }
 
 
@@ -103,15 +102,15 @@ final class OpenSSLTest extends TestCase
     public function testEncrypt(): void
     {
         // test symmetric encryption
-        $this->backend->setCipher(C::BLOCK_ENC_AES128);
-        $this->assertNotEmpty($this->backend->encrypt($this->sharedKey, 'Plaintext'));
-        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        self::$backend->setCipher(C::BLOCK_ENC_AES128);
+        $this->assertNotEmpty(self::$backend->encrypt(self::$sharedKey, 'Plaintext'));
+        self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
 
         // test encryption with public key
-        $this->assertNotEmpty($this->backend->encrypt($this->pubKey, 'Plaintext'));
+        $this->assertNotEmpty(self::$backend->encrypt(self::$pubKey, 'Plaintext'));
 
         // test encryption with private key
-        $this->assertNotEmpty($this->backend->encrypt($this->privKey, 'Plaintext'));
+        $this->assertNotEmpty(self::$backend->encrypt(self::$privKey, 'Plaintext'));
     }
 
 
@@ -121,21 +120,21 @@ final class OpenSSLTest extends TestCase
     public function testDecrypt(): void
     {
         // test decryption with symmetric key
-        $this->backend->setCipher(C::BLOCK_ENC_AES128);
+        self::$backend->setCipher(C::BLOCK_ENC_AES128);
         $this->assertEquals(
             'Plaintext',
-            $this->backend->decrypt(
-                $this->sharedKey,
+            self::$backend->decrypt(
+                self::$sharedKey,
                 hex2bin('9faa2195bd89d2b8b3721f4fea39e904250096ad2bcd66cf77f8423af83d18ba'),
             ),
         );
 
         // test decryption with private key
-        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
         $this->assertEquals(
             'Plaintext',
-            $this->backend->decrypt(
-                $this->privKey,
+            self::$backend->decrypt(
+                self::$privKey,
                 hex2bin(
                     'c2aa74a85de59daef76c4f4736680ff55503d1ce991a6b947ad5d269b93ef97acf761c1c1ccfedc1382d2c16ea52b7f' .
                     '6b298d8a0f6dbf5e46c41df70804888758e2b95502d9b0849c8d670e4bb9f13bb9afa1d51a76a32625513599c4a2d84' .
@@ -150,8 +149,8 @@ final class OpenSSLTest extends TestCase
         // test decryption with public key
         $this->assertEquals(
             'Plaintext',
-            $this->backend->decrypt(
-                $this->pubKey,
+            self::$backend->decrypt(
+                self::$pubKey,
                 hex2bin(
                     'd012f638b7814f63cce16d1938d34e1f82abcbe925cf579a4dd6e5b0d8f0c524b77a94423625c1cec7cc45e26f37188' .
                     'ff18870cd4f8cd3e0de6084413c71c1f4f14f04858a655162e9332f4b26fe4523cebf7de51267290f8ae290c869fb32' .
@@ -170,12 +169,12 @@ final class OpenSSLTest extends TestCase
      */
     public function testEquivalentOAEP(): void
     {
-        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
-        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
-        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->privKey, $ciphertext));
-        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->privKey, $ciphertext));
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$privKey, $ciphertext));
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$privKey, $ciphertext));
     }
 
 
@@ -184,12 +183,12 @@ final class OpenSSLTest extends TestCase
      */
     public function testEncryptRSA15DecryptOAEP(): void
     {
-        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
-        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
-        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
-        $this->backend->decrypt($this->privKey, $ciphertext);
+        self::$backend->decrypt(self::$privKey, $ciphertext);
     }
 
 
@@ -198,12 +197,12 @@ final class OpenSSLTest extends TestCase
      */
     public function testEncryptOAEPDecryptRSA15(): void
     {
-        $this->backend->setCipher(C::KEY_TRANSPORT_OAEP);
-        $ciphertext = $this->backend->encrypt($this->pubKey, 'Plaintext');
-        $this->backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
+        self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
-        $this->backend->decrypt($this->privKey, $ciphertext);
+        self::$backend->decrypt(self::$privKey, $ciphertext);
     }
 
 
@@ -212,11 +211,11 @@ final class OpenSSLTest extends TestCase
      */
     public function testMismatchingSymmetricEncryptionAlgorithm(): void
     {
-        $this->backend->setCipher(C::BLOCK_ENC_AES128);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
+        self::$backend->setCipher(C::BLOCK_ENC_AES128);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        self::$backend->setCipher(C::BLOCK_ENC_AES128_GCM);
         $this->expectException(RuntimeException::class);
-        $plaintext = $this->backend->decrypt($this->sharedKey, $ciphertext);
+        $plaintext = self::$backend->decrypt(self::$sharedKey, $ciphertext);
     }
 
 
@@ -225,21 +224,21 @@ final class OpenSSLTest extends TestCase
      */
     public function testSymmetricCBCEncryption(): void
     {
-        $this->backend->setCipher(C::BLOCK_ENC_3DES);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_3DES);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
 
-        $this->backend->setCipher(C::BLOCK_ENC_AES128);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES128);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
 
-        $this->backend->setCipher(C::BLOCK_ENC_AES192);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES192);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
 
-        $this->backend->setCipher(C::BLOCK_ENC_AES256);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES256);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
     }
 
 
@@ -248,17 +247,17 @@ final class OpenSSLTest extends TestCase
      */
     public function testSymmetricGCMEncryption(): void
     {
-        $this->backend->setCipher(C::BLOCK_ENC_AES128_GCM);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES128_GCM);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
 
-        $this->backend->setCipher(C::BLOCK_ENC_AES192_GCM);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES192_GCM);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
 
-        $this->backend->setCipher(C::BLOCK_ENC_AES256_GCM);
-        $ciphertext = $this->backend->encrypt($this->sharedKey, 'Plaintext');
-        $this->assertEquals('Plaintext', $this->backend->decrypt($this->sharedKey, $ciphertext));
+        self::$backend->setCipher(C::BLOCK_ENC_AES256_GCM);
+        $ciphertext = self::$backend->encrypt(self::$sharedKey, 'Plaintext');
+        $this->assertEquals('Plaintext', self::$backend->decrypt(self::$sharedKey, $ciphertext));
     }
 
 
@@ -279,10 +278,10 @@ final class OpenSSLTest extends TestCase
      */
     public function testPad(): void
     {
-        $this->assertEquals('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d', bin2hex($this->backend->pad('foo')));
+        $this->assertEquals('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d', bin2hex(self::$backend->pad('foo')));
         $this->assertEquals(
             '666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e',
-            bin2hex($this->backend->pad('foobarfoobarfoobar')),
+            bin2hex(self::$backend->pad('foobarfoobarfoobar')),
         );
     }
 
@@ -292,10 +291,10 @@ final class OpenSSLTest extends TestCase
      */
     public function testUnpad(): void
     {
-        $this->assertEquals('foo', $this->backend->unpad(hex2bin('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d')));
+        $this->assertEquals('foo', self::$backend->unpad(hex2bin('666f6f0d0d0d0d0d0d0d0d0d0d0d0d0d')));
         $this->assertEquals(
             'foobarfoobarfoobar',
-            $this->backend->unpad(hex2bin('666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e')),
+            self::$backend->unpad(hex2bin('666f6f626172666f6f626172666f6f6261720e0e0e0e0e0e0e0e0e0e0e0e0e0e')),
         );
     }
 

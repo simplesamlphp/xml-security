@@ -32,34 +32,31 @@ final class X509IssuerSerialTest extends TestCase
 {
     use SerializableElementTestTrait;
 
-    /** @var \DOMDocument */
-    private DOMDocument $document;
-
     /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
-    private Key\X509Certificate $key;
+    private static Key\X509Certificate $key;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\X509IssuerName */
-    private X509IssuerName $issuer;
+    private static X509IssuerName $issuer;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber */
-    private X509SerialNumber $serial;
+    private static X509SerialNumber $serial;
 
 
     /**
      */
     public function setUp(): void
     {
-        $this->testedClass = X509IssuerSerial::class;
+        self::$testedClass = X509IssuerSerial::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509IssuerSerial.xml',
         );
 
-        $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
+        self::$key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
 
-        $details = $this->key->getCertificateDetails();
-        $this->issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
-        $this->serial = new X509SerialNumber($details['serialNumber']);
+        $details = self::$key->getCertificateDetails();
+        self::$issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
+        self::$serial = new X509SerialNumber($details['serialNumber']);
     }
 
 
@@ -67,10 +64,10 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $X509IssuerSerial = new X509IssuerSerial($this->issuer, $this->serial);
+        $X509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($X509IssuerSerial),
         );
     }
@@ -80,7 +77,7 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testMarshallingElementOrdering(): void
     {
-        $X509IssuerSerial = new X509IssuerSerial($this->issuer, $this->serial);
+        $X509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
         $X509IssuerSerialElement = $X509IssuerSerial->toXML();
 
         $xpCache = XPath::getXPath($X509IssuerSerialElement);
@@ -105,10 +102,10 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $X509IssuerSerial = X509IssuerSerial::fromXML($this->xmlRepresentation->documentElement);
+        $X509IssuerSerial = X509IssuerSerial::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($X509IssuerSerial),
         );
     }

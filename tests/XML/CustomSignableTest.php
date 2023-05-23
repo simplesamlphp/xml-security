@@ -26,18 +26,14 @@ final class CustomSignableTest extends TestCase
     use SignedElementTestTrait;
 
 
-    /** @var \DOMElement */
-    private DOMElement $logoutRequestElement;
-
-
     /**
      * Load a fixture.
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CustomSignable::class;
+        self::$testedClass = CustomSignable::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml',
         );
     }
@@ -52,10 +48,10 @@ final class CustomSignableTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
+        $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($customSignable),
         );
     }

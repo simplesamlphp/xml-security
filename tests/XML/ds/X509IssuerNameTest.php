@@ -26,13 +26,14 @@ final class X509IssuerNameTest extends TestCase
 {
     use SerializableElementTestTrait;
 
+
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = X509IssuerName::class;
+        self::$testedClass = X509IssuerName::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509IssuerName.xml',
         );
     }
@@ -45,7 +46,7 @@ final class X509IssuerNameTest extends TestCase
         $issuerName = new X509IssuerName('some name');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($issuerName),
         );
     }
@@ -55,10 +56,10 @@ final class X509IssuerNameTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $issuerName = X509IssuerName::fromXML($this->xmlRepresentation->documentElement);
+        $issuerName = X509IssuerName::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($issuerName),
         );
     }

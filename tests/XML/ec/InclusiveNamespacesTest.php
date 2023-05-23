@@ -28,13 +28,13 @@ class InclusiveNamespacesTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/exc-c14n.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/exc-c14n.xsd';
 
-        $this->testedClass = InclusiveNamespaces::class;
+        self::$testedClass = InclusiveNamespaces::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ec_InclusiveNamespaces.xml',
         );
     }
@@ -49,7 +49,7 @@ class InclusiveNamespacesTest extends TestCase
         $this->assertEquals("soap", $inclusiveNamespaces->getPrefixes()[1]);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($inclusiveNamespaces),
         );
     }
@@ -60,11 +60,11 @@ class InclusiveNamespacesTest extends TestCase
     public function testUnmarshalling(): void
     {
         $inclusiveNamespaces = InclusiveNamespaces::fromXML(
-            $this->xmlRepresentation->documentElement,
+            self::$xmlRepresentation->documentElement,
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($inclusiveNamespaces),
         );
     }

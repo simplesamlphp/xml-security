@@ -32,13 +32,13 @@ final class CipherDataTest extends TestCase
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CipherData::class;
+        self::$testedClass = CipherData::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_CipherData.xml',
         );
     }
@@ -54,7 +54,7 @@ final class CipherDataTest extends TestCase
         $cipherData = new CipherData(new CipherValue('c29tZSB0ZXh0'));
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($cipherData),
         );
     }
@@ -67,10 +67,10 @@ final class CipherDataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $cipherData = CipherData::fromXML($this->xmlRepresentation->documentElement);
+        $cipherData = CipherData::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($cipherData),
         );
     }

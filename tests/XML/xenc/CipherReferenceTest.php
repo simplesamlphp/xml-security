@@ -32,24 +32,24 @@ final class CipherReferenceTest extends TestCase
     use SerializableElementTestTrait;
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\Transforms $transforms */
-    private Transforms $transforms;
+    private static Transforms $transforms;
 
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = CipherReference::class;
+        self::$testedClass = CipherReference::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_CipherReference.xml',
         );
 
         $xpath = new XPath('count(//. | //@* | //namespace::*)');
         $transform = new Transform(C::XPATH_URI, $xpath);
-        $this->transforms = new Transforms([$transform]);
+        self::$transforms = new Transforms([$transform]);
     }
 
 
@@ -60,10 +60,10 @@ final class CipherReferenceTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [$this->transforms]);
+        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [self::$transforms]);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($cipherReference),
         );
     }
@@ -76,10 +76,10 @@ final class CipherReferenceTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $cipherReference = CipherReference::fromXML($this->xmlRepresentation->documentElement);
+        $cipherReference = CipherReference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($cipherReference),
         );
     }

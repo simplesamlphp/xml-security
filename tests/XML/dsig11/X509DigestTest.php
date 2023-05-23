@@ -34,27 +34,24 @@ final class X509DigestTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
-    /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
-    private Key\X509Certificate $key;
-
     /** @var string */
-    private string $digest;
+    private static string $digest;
 
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = X509Digest::class;
+        self::$testedClass = X509Digest::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/dsig11_X509Digest.xml',
         );
-        $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
 
-        $this->digest = base64_encode(hex2bin($this->key->getRawThumbprint(C::DIGEST_SHA256)));
+        $key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
+        self::$digest = base64_encode(hex2bin($key->getRawThumbprint(C::DIGEST_SHA256)));
     }
 
 
@@ -62,10 +59,10 @@ final class X509DigestTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $x509digest = new X509Digest($this->digest, C::DIGEST_SHA256);
+        $x509digest = new X509Digest(self::$digest, C::DIGEST_SHA256);
 
         $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content($this->xmlRepresentation),
+            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($x509digest),
         );
     }
@@ -75,9 +72,9 @@ final class X509DigestTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $x509digest = X509Digest::fromXML($this->xmlRepresentation->documentElement);
+        $x509digest = X509Digest::fromXML(self::$xmlRepresentation->documentElement);
 
-        $this->assertEquals($x509digest->getContent(), $this->digest);
+        $this->assertEquals($x509digest->getContent(), self::$digest);
         $this->assertEquals(C::DIGEST_SHA256, $x509digest->getAlgorithm());
     }
 }

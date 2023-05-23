@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\Alg\Encryption;
 
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 
@@ -17,16 +18,20 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 class TripleDesEncryptionTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $skey;
+    protected static SymmetricKey $skey;
 
-    /** @var EncryptionAlgorithmFactory */
-    protected EncryptionAlgorithmFactory $factory;
+    /** @var \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory */
+    protected static EncryptionAlgorithmFactory $factory;
+
+    /** @var \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface */
+    protected static EncryptionAlgorithmInterface $algo;
 
 
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->skey = new SymmetricKey(hex2bin('0d6d02528a57fd9797a79db307ce1558761a454a1c1f4a57'));
-        $this->factory = new EncryptionAlgorithmFactory([]);
+        self::$skey = new SymmetricKey(hex2bin('0d6d02528a57fd9797a79db307ce1558761a454a1c1f4a57'));
+        self::$factory = new EncryptionAlgorithmFactory([]);
+        self::$algo = self::$factory->getAlgorithm(C::BLOCK_ENC_3DES, self::$skey);
     }
 
 
@@ -35,8 +40,7 @@ class TripleDesEncryptionTest extends TestCase
      */
     public function testEncrypt(): void
     {
-        $tripleDes = $this->factory->getAlgorithm(C::BLOCK_ENC_3DES, $this->skey);
-        $ciphertext = $tripleDes->encrypt('plaintext');
+        $ciphertext = self::$algo->encrypt('plaintext');
         $this->assertNotEmpty($ciphertext);
         $this->assertEquals(24, strlen($ciphertext));
     }
@@ -48,8 +52,7 @@ class TripleDesEncryptionTest extends TestCase
     public function testDecrypt(): void
     {
         $ciphertext = "D+3dKq7MFK7U+8bqdlyRcvO12JV5Lahl5ALhF5eJXSfi+cbYKRbkRjvJsMKPp2Mk";
-        $tripleDes = $this->factory->getAlgorithm(C::BLOCK_ENC_3DES, $this->skey);
-        $plaintext = $tripleDes->decrypt(base64_decode($ciphertext));
+        $plaintext = self::$algo->decrypt(base64_decode($ciphertext));
         $this->assertEquals("\n  <Value>\n\tHello, World!\n  </Value>\n", $plaintext);
     }
 }

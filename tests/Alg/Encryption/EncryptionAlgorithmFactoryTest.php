@@ -21,12 +21,12 @@ use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 class EncryptionAlgorithmFactoryTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $skey;
+    protected static SymmetricKey $skey;
 
 
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->skey = SymmetricKey::generate(16);
+        self::$skey = SymmetricKey::generate(16);
     }
 
 
@@ -37,7 +37,7 @@ class EncryptionAlgorithmFactoryTest extends TestCase
     {
         $factory = new EncryptionAlgorithmFactory([]);
         $this->expectException(UnsupportedAlgorithmException::class);
-        $factory->getAlgorithm('Unsupported algorithm identifier', $this->skey);
+        $factory->getAlgorithm('Unsupported algorithm identifier', self::$skey);
     }
 
 
@@ -47,33 +47,33 @@ class EncryptionAlgorithmFactoryTest extends TestCase
     public function testDefaultBlacklistedAlgorithms(): void
     {
         $factory = new EncryptionAlgorithmFactory();
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES128, $algorithm->getAlgorithmId());
-        $this->assertEquals($this->skey, $algorithm->getKey());
+        $this->assertEquals(self::$skey, $algorithm->getKey());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128_GCM, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128_GCM, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES128_GCM, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES192, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192_GCM, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192_GCM, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES192_GCM, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES256, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256_GCM, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256_GCM, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES256_GCM, $algorithm->getAlgorithmId());
 
         $this->expectException(BlacklistedAlgorithmException::class);
-        $factory->getAlgorithm(C::BLOCK_ENC_3DES, $this->skey);
+        $factory->getAlgorithm(C::BLOCK_ENC_3DES, self::$skey);
     }
 
 
@@ -83,31 +83,31 @@ class EncryptionAlgorithmFactoryTest extends TestCase
     public function testBlacklistedAlgorithm(): void
     {
         $factory = new EncryptionAlgorithmFactory([C::BLOCK_ENC_AES256_GCM]);
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_3DES, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_3DES, self::$skey);
         $this->assertInstanceOf(TripleDES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_3DES, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES128, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128_GCM, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128_GCM, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES128_GCM, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES192, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192_GCM, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES192_GCM, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES192_GCM, $algorithm->getAlgorithmId());
 
-        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256, $this->skey);
+        $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES256, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES256, $algorithm->getAlgorithmId());
 
         $this->expectException(BlacklistedAlgorithmException::class);
-        $factory->getAlgorithm(C::BLOCK_ENC_AES256_GCM, $this->skey);
+        $factory->getAlgorithm(C::BLOCK_ENC_AES256_GCM, self::$skey);
     }
 }

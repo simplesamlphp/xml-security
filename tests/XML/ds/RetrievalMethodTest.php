@@ -35,13 +35,13 @@ final class RetrievalMethodTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = RetrievalMethod::class;
+        self::$testedClass = RetrievalMethod::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_RetrievalMethod.xml',
         );
     }
@@ -58,7 +58,7 @@ final class RetrievalMethodTest extends TestCase
         $retrievalMethod = new RetrievalMethod($transforms, '#Encrypted_KEY_ID', C:: XMLENC_ENCRYPTEDKEY);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($retrievalMethod),
         );
     }
@@ -68,10 +68,10 @@ final class RetrievalMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $retrievalMethod = retrievalMethod::fromXML($this->xmlRepresentation->documentElement);
+        $retrievalMethod = retrievalMethod::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($retrievalMethod),
         );
     }

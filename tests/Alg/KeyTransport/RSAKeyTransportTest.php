@@ -18,27 +18,27 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
  */
 class RSAKeyTransportTest extends TestCase
 {
+    /** @var string */
+    public const PLAINTEXT = 'plaintext';
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
-    protected PrivateKey $privateKey;
+    protected static PrivateKey $privateKey;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
-    protected PublicKey $publicKey;
-
-    /** @var string */
-    protected string $plaintext = 'plaintext';
+    protected static PublicKey $publicKey;
 
     /** @var \SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory */
-    protected KeyTransportAlgorithmFactory $factory;
+    protected static KeyTransportAlgorithmFactory $factory;
 
 
     /**
      *
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->publicKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
-        $this->privateKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
-        $this->factory = new KeyTransportAlgorithmFactory([]);
+        self::$publicKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY);
+        self::$privateKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::PRIVATE_KEY);
+        self::$factory = new KeyTransportAlgorithmFactory([]);
     }
 
 
@@ -48,20 +48,20 @@ class RSAKeyTransportTest extends TestCase
     public function testEncrypt(): void
     {
         // test RSA 1.5
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->publicKey);
-        $encrypted = $rsa->encrypt($this->plaintext);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$publicKey);
+        $encrypted = $rsa->encrypt(self::PLAINTEXT);
         $this->assertNotEmpty($encrypted);
         $this->assertEquals(128, strlen($encrypted));
 
         // test RSA-OAEP
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->publicKey);
-        $encrypted = $rsa->encrypt($this->plaintext);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$publicKey);
+        $encrypted = $rsa->encrypt(self::PLAINTEXT);
         $this->assertNotEmpty($encrypted);
         $this->assertEquals(128, strlen($encrypted));
 
         // test RSA-OAEP-MGF1P
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->publicKey);
-        $encrypted = $rsa->encrypt($this->plaintext);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$publicKey);
+        $encrypted = $rsa->encrypt(self::PLAINTEXT);
         $this->assertNotEmpty($encrypted);
         $this->assertEquals(128, strlen($encrypted));
     }
@@ -79,21 +79,21 @@ class RSAKeyTransportTest extends TestCase
         $ciphertext = "0Ok/N3BV5LUxmr8IDXQQhtzQEJzD5uSN5kOVjzPkzesjlSVR9qv819MPBL8yfSMdUSQWVq1N/w" .
                       "A6fgclGb/keGZOtjSkHZnZEZvXEOQItFjS6MbQc+TzNmRd6FSkuPUmwQ1V+NwxTPCIwXSSd0Aj" .
                       "7oHb7xRdBhoFuDrSbYAvATQ=";
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privateKey);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$privateKey);
         $plaintext = $rsa->decrypt(base64_decode($ciphertext));
-        $this->assertEquals($this->plaintext, $plaintext);
+        $this->assertEquals(self::PLAINTEXT, $plaintext);
 
         // test RSA-OAEP (should behave the same as MGF1P)
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, $this->privateKey);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$privateKey);
         $plaintext = $rsa->decrypt(base64_decode($ciphertext));
-        $this->assertEquals($this->plaintext, $plaintext);
+        $this->assertEquals(self::PLAINTEXT, $plaintext);
 
         // test RSA-1.5
         $ciphertext = "ZAnYBqqM5T/kg+P8fb3UfDU1gyUIpndpqQN2qpmJso2z6His6WOkh5JFVN/wz+agvyR54kMmII" .
                       "afiDsy5izSk6+QZ5kMOgRLrmnh+RYZXjvCL6i1NXzaLw8yZLBvlP01SNMv/BBq640yzbG9U2ZN" .
                       "nxBLDvBmbJBxzt6XCowXQS8=";
-        $rsa = $this->factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, $this->privateKey);
+        $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$privateKey);
         $plaintext = $rsa->decrypt(base64_decode($ciphertext));
-        $this->assertEquals($this->plaintext, $plaintext);
+        $this->assertEquals(self::PLAINTEXT, $plaintext);
     }
 }

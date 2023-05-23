@@ -31,13 +31,13 @@ final class DigestMethodTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = DigestMethod::class;
+        self::$testedClass = DigestMethod::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_DigestMethod.xml',
         );
     }
@@ -57,7 +57,7 @@ final class DigestMethodTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($digestMethod),
         );
     }
@@ -67,10 +67,10 @@ final class DigestMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $digestMethod = DigestMethod::fromXML($this->xmlRepresentation->documentElement);
+        $digestMethod = DigestMethod::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($digestMethod),
         );
     }

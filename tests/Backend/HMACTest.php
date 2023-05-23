@@ -27,15 +27,19 @@ final class HMACTest extends TestCase
     public const SECRET = 'secret key';
 
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
-    protected SymmetricKey $key;
+    protected static SymmetricKey $key;
+
+    /** @var \SimpleSAML\XMLSecurity\Backend\HMAC */
+    protected static HMAC $backend;
 
 
     /**
      * Initialize shared key.
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->key = new SymmetricKey(self::SECRET);
+        self::$key = new SymmetricKey(self::SECRET);
+        self::$backend = new HMAC();
     }
 
 
@@ -44,9 +48,8 @@ final class HMACTest extends TestCase
      */
     public function testSign(): void
     {
-        $backend = new HMAC();
-        $backend->setDigestAlg(C::DIGEST_SHA1);
-        $this->assertEquals(self::SIGNATURE, bin2hex($backend->sign($this->key, self::PLAINTEXT)));
+        self::$backend->setDigestAlg(C::DIGEST_SHA1);
+        $this->assertEquals(self::SIGNATURE, bin2hex(self::$backend->sign(self::$key, self::PLAINTEXT)));
     }
 
 
@@ -55,9 +58,8 @@ final class HMACTest extends TestCase
      */
     public function testSetUnknownDigest(): void
     {
-        $backend = new HMAC();
         $this->expectException(InvalidArgumentException::class);
-        $backend->setDigestAlg('foo');
+        self::$backend->setDigestAlg('foo');
     }
 
 
@@ -67,26 +69,25 @@ final class HMACTest extends TestCase
     public function testVerify(): void
     {
         // test successful verification
-        $backend = new HMAC();
-        $backend->setDigestAlg(C::DIGEST_SHA1);
-        $this->assertTrue($backend->verify($this->key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
+        self::$backend->setDigestAlg(C::DIGEST_SHA1);
+        $this->assertTrue(self::$backend->verify(self::$key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
 
         // test failure to verify with different plaintext
-        $this->assertFalse($backend->verify($this->key, 'foo', hex2bin(self::SIGNATURE)));
+        $this->assertFalse(self::$backend->verify(self::$key, 'foo', hex2bin(self::SIGNATURE)));
 
         // test failure to verify with different signature
-        $this->assertFalse($backend->verify(
-            $this->key,
+        $this->assertFalse(self::$backend->verify(
+            self::$key,
             self::PLAINTEXT,
             hex2bin('12345678901234567890abcdefabcdef12345678'),
         ));
 
         // test failure to verify with wrong key
         $key = new SymmetricKey('wrong secret');
-        $this->assertFalse($backend->verify($key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
+        $this->assertFalse(self::$backend->verify($key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
 
         // test failure to verify with wrong digest algorithm
-        $backend->setDigestAlg(C::DIGEST_RIPEMD160);
-        $this->assertFalse($backend->verify($this->key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
+        self::$backend->setDigestAlg(C::DIGEST_RIPEMD160);
+        $this->assertFalse(self::$backend->verify(self::$key, self::PLAINTEXT, hex2bin(self::SIGNATURE)));
     }
 }

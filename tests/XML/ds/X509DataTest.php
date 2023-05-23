@@ -14,7 +14,6 @@ use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XML\Utils as XMLUtils;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
@@ -44,30 +43,25 @@ final class X509DataTest extends TestCase
     use SerializableElementTestTrait;
 
     /** @var string */
-    private string $certificate;
+    private static string $certificate;
 
     /** @var string[] */
-    private array $certData;
-
-    /** @var \SimpleSAML\XMLSecurity\Key\X509Certificate */
-    private Key\X509Certificate $key;
+    private static array $certData;
 
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = X509Data::class;
+        self::$testedClass = X509Data::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509Data.xml',
         );
 
-        $this->key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
-
-        $this->certificate = str_replace(
+        self::$certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
                 '-----END CERTIFICATE-----',
@@ -87,7 +81,7 @@ final class X509DataTest extends TestCase
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
 
-        $this->certData = openssl_x509_parse(
+        self::$certData = openssl_x509_parse(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
     }
@@ -104,7 +98,7 @@ final class X509DataTest extends TestCase
                         '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>'
                     )->documentElement,
                 ),
-                new X509Certificate($this->certificate),
+                new X509Certificate(self::$certificate),
                 new X509IssuerSerial(
                     new X509IssuerName(sprintf(
                         'C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=%s',
@@ -112,7 +106,7 @@ final class X509DataTest extends TestCase
                     )),
                     new X509SerialNumber('2'),
                 ),
-                new X509SubjectName($this->certData['name']),
+                new X509SubjectName(self::$certData['name']),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>'
                 )->documentElement)
@@ -120,7 +114,7 @@ final class X509DataTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($x509data),
         );
     }
@@ -130,10 +124,10 @@ final class X509DataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $x509data = X509Data::fromXML($this->xmlRepresentation->documentElement);
+        $x509data = X509Data::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($x509data),
         );
     }

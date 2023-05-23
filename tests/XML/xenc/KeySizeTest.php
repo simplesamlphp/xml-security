@@ -26,11 +26,11 @@ final class KeySizeTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = KeySize::class;
+        self::$testedClass = KeySize::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_KeySize.xml',
         );
     }
@@ -43,7 +43,7 @@ final class KeySizeTest extends TestCase
         $keySize = new KeySize(10);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keySize),
         );
     }
@@ -53,10 +53,10 @@ final class KeySizeTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keySize = KeySize::fromXML($this->xmlRepresentation->documentElement);
+        $keySize = KeySize::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keySize),
         );
     }

@@ -30,13 +30,13 @@ final class KeyInfoReferenceTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = KeyInfoReference::class;
+        self::$testedClass = KeyInfoReference::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/dsig11_KeyInfoReference.xml',
         );
     }
@@ -49,7 +49,7 @@ final class KeyInfoReferenceTest extends TestCase
         $KeyInfoReference = new KeyInfoReference('#_e395489e5f8444f1aabb4b2ca98a23b793d211ddf0', 'abc123');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($KeyInfoReference),
         );
     }
@@ -59,10 +59,10 @@ final class KeyInfoReferenceTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $KeyInfoReference = KeyInfoReference::fromXML($this->xmlRepresentation->documentElement);
+        $KeyInfoReference = KeyInfoReference::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($KeyInfoReference),
         );
     }

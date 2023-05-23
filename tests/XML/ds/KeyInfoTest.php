@@ -38,25 +38,25 @@ final class KeyInfoTest extends TestCase
     use SerializableElementTestTrait;
 
     /** @var string */
-    private string $certificate;
+    private static string $certificate;
 
     /** @var string[] */
-    private array $certData;
+    private static array $certData;
 
 
     /**
      */
     public function setUp(): void
     {
-        $this->testedClass = KeyInfo::class;
+        self::$testedClass = KeyInfo::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_KeyInfo.xml',
         );
 
-        $this->certificate = str_replace(
+        self::$certificate = str_replace(
             [
                 '-----BEGIN CERTIFICATE-----',
                 '-----END CERTIFICATE-----',
@@ -76,7 +76,7 @@ final class KeyInfoTest extends TestCase
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
 
-        $this->certData = openssl_x509_parse(
+        self::$certData = openssl_x509_parse(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
     }
@@ -91,8 +91,8 @@ final class KeyInfoTest extends TestCase
                 new KeyName('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate($this->certificate),
-                        new X509SubjectName($this->certData['name']),
+                        new X509Certificate(self::$certificate),
+                        new X509SubjectName(self::$certData['name']),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
@@ -103,7 +103,7 @@ final class KeyInfoTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyInfo),
         );
     }
@@ -124,10 +124,10 @@ final class KeyInfoTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $keyInfo = KeyInfo::fromXML($this->xmlRepresentation->documentElement);
+        $keyInfo = KeyInfo::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyInfo),
         );
     }

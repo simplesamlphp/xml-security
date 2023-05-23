@@ -38,26 +38,26 @@ final class SignableElementTest extends TestCase
     use SerializableElementTestTrait;
 
     /** @var string */
-    private string $certificate;
+    private static string $certificate;
 
-    /** @var PrivateKey */
-    private PrivateKey $key;
+    /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
+    private static PrivateKey $key;
 
     /** @var \DOMDocument */
-    private DOMDocument $signed;
+    private static DOMDocument $signed;
 
 
     /**
      */
     public function setUp(): void
     {
-        $this->testedClass = CustomSignable::class;
+        self::$testedClass = CustomSignable::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignable.xml',
         );
 
-        $this->signed = DOMDocumentFactory::fromFile(
+        self::$signed = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSigned.xml',
         );
 
@@ -65,9 +65,9 @@ final class SignableElementTest extends TestCase
         $certificateLines = explode("\n", trim($certificate));
         array_pop($certificateLines);
         array_shift($certificateLines);
-        $this->certificate = join("\n", $certificateLines);
+        self::$certificate = join("\n", $certificateLines);
 
-        $this->key = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
+        self::$key = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
     }
 
 
@@ -78,22 +78,22 @@ final class SignableElementTest extends TestCase
      */
     public function testSigningDocument(): void
     {
-        $customSignable = CustomSignable::fromXML($this->xmlRepresentation->documentElement);
+        $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
 
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate),
+                new X509Certificate(self::$certificate),
             ]),
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
 
         $this->assertEquals(
-            $this->signed->saveXML($this->signed->documentElement),
+            self::$signed->saveXML(self::$signed->documentElement),
             strval($customSignable),
         );
     }
@@ -114,11 +114,11 @@ final class SignableElementTest extends TestCase
         $this->assertFalse($customSignable->isEmptyElement());
 
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate),
+                new X509Certificate(self::$certificate),
             ]),
         ]);
 
@@ -150,11 +150,11 @@ final class SignableElementTest extends TestCase
         $this->assertFalse($customSignable->isEmptyElement());
 
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate),
+                new X509Certificate(self::$certificate),
             ]),
         ]);
 
@@ -186,11 +186,11 @@ final class SignableElementTest extends TestCase
         $this->assertFalse($customSignable->isEmptyElement());
 
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate($this->certificate),
+                new X509Certificate(self::$certificate),
             ]),
         ]);
 
@@ -216,10 +216,10 @@ final class SignableElementTest extends TestCase
     public function testSigningDocumentWithoutRoot(): void
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
-        $node = $doc->importNode($this->xmlRepresentation->documentElement, true);
+        $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
         $customSignable->sign($signer);
 
         $this->expectException(RuntimeException::class);
@@ -239,11 +239,11 @@ final class SignableElementTest extends TestCase
     public function testSigningWithDifferentRoot(): void
     {
         $doc = DOMDocumentFactory::fromString('<ns:Root><ns:foo>bar</ns:foo></ns:Root>');
-        $node = $doc->importNode($this->xmlRepresentation->documentElement, true);
+        $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
         $doc->appendChild($node);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
-        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, $this->key);
+        $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
         $customSignable->sign($signer);
 
         $this->expectException(RuntimeException::class);

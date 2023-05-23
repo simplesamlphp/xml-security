@@ -23,13 +23,14 @@ class XPathTest extends TestCase
 {
     use SerializableElementTestTrait;
 
+
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = XPath::class;
+        self::$testedClass = XPath::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_XPath.xml',
         );
     }
@@ -51,7 +52,7 @@ class XPathTest extends TestCase
         $this->assertEquals('http://www.w3.org/2001/04/xmlenc#', $namespaces['xenc']);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($xpath),
         );
     }
@@ -61,7 +62,7 @@ class XPathTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $xpath = XPath::fromXML($this->xmlRepresentation->documentElement);
+        $xpath = XPath::fromXML(self::$xmlRepresentation->documentElement);
         $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
         $namespaces = $xpath->getNamespaces();
         $this->assertCount(2, $namespaces);
@@ -70,7 +71,7 @@ class XPathTest extends TestCase
 
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($xpath),
         );
     }

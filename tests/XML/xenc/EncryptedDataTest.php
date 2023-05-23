@@ -37,13 +37,13 @@ final class EncryptedDataTest extends TestCase
 
     /**
      */
-    public function setup(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = EncryptedData::class;
+        self::$testedClass = EncryptedData::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedData.xml',
         );
     }
@@ -80,7 +80,7 @@ final class EncryptedDataTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedData),
         );
     }
@@ -143,10 +143,10 @@ final class EncryptedDataTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $encryptedData = EncryptedData::fromXML($this->xmlRepresentation->documentElement);
+        $encryptedData = EncryptedData::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($encryptedData),
         );
     }

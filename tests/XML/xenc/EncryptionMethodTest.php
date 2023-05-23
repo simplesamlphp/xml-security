@@ -32,11 +32,11 @@ final class EncryptionMethodTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = EncryptionMethod::class;
+        self::$testedClass = EncryptionMethod::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptionMethod.xml',
         );
     }
@@ -57,7 +57,7 @@ final class EncryptionMethodTest extends TestCase
         $em = new EncryptionMethod($alg, new KeySize(10), new OAEPparams('9lWu3Q=='), [$chunk]);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($em),
         );
     }
@@ -120,10 +120,10 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $em = EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
+        $em = EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($em),
         );
     }
@@ -134,10 +134,12 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshallingWithoutAlgorithm(): void
     {
+        $xmlRepresentation = clone self::$xmlRepresentation->documentElement;
+        $xmlRepresentation->removeAttribute('Algorithm');
+
         $this->expectException(MissingAttributeException::class);
         $this->expectExceptionMessage('Missing \'Algorithm\' attribute on xenc:EncryptionMethod.');
-        $this->xmlRepresentation->documentElement->removeAttribute('Algorithm');
-        EncryptionMethod::fromXML($this->xmlRepresentation->documentElement);
+        EncryptionMethod::fromXML($xmlRepresentation);
     }
 
 

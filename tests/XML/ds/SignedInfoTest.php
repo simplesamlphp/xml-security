@@ -33,13 +33,13 @@ final class SignedInfoTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = SignedInfo::class;
+        self::$testedClass = SignedInfo::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfo.xml',
         );
     }
@@ -63,7 +63,7 @@ final class SignedInfoTest extends TestCase
         );
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signedInfo),
         );
     }
@@ -73,10 +73,10 @@ final class SignedInfoTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $signedInfo = SignedInfo::fromXML($this->xmlRepresentation->documentElement);
+        $signedInfo = SignedInfo::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signedInfo),
         );
     }

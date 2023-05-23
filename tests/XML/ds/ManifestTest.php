@@ -35,13 +35,13 @@ final class ManifestTest extends TestCase
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = Manifest::class;
+        self::$testedClass = Manifest::class;
 
-        $this->schema = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Manifest.xml',
         );
     }
@@ -67,7 +67,7 @@ final class ManifestTest extends TestCase
         $manifest = new Manifest([$reference], 'abc123');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($manifest),
         );
     }
@@ -77,10 +77,10 @@ final class ManifestTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $manifest = Manifest::fromXML($this->xmlRepresentation->documentElement);
+        $manifest = Manifest::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($manifest),
         );
     }

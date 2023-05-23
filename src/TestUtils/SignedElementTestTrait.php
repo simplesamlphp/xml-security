@@ -41,14 +41,14 @@ trait SignedElementTestTrait
      *
      * @var \DOMDocument|null
      */
-    protected ?DOMDocument $xmlRepresentation = null;
+    protected static ?DOMDocument $xmlRepresentation;
 
     /**
      * The name of the class we are testing.
      *
-     * @var class-string
+     * @var class-string|null
      */
-    protected string $testedClass;
+    protected static ?string $testedClass;
 
 
     /**
@@ -56,23 +56,17 @@ trait SignedElementTestTrait
      */
     public function testSignatures(): void
     {
-        if (!class_exists($this->testedClass)) {
+        if (!class_exists(self::$testedClass)) {
             $this->markTestSkipped(
                 'Unable to run ' . self::class . '::testSignatures(). Please set ' . self::class
                 . ':$testedClass to a class-string representing the XML-class being tested',
             );
-        } elseif (empty($this->xmlRepresentation)) {
+        } elseif (empty(self::$xmlRepresentation)) {
             $this->markTestSkipped(
                 'Unable to run ' . self::class . '::testSignatures(). Please set ' . self::class
                 . ':$xmlRepresentation to a DOMDocument representing the XML-class being tested',
             );
         } else {
-            /** @psalm-var class-string|null */
-            $testedClass = $this->testedClass;
-
-            /** @psalm-var \DOMElement|null */
-            $xmlRepresentation = $this->xmlRepresentation;
-
             $algorithms = array_keys(C::$RSA_DIGESTS);
             foreach ($algorithms as $algorithm) {
                 if (
@@ -100,9 +94,9 @@ trait SignedElementTestTrait
                     )]),
                 ]);
 
-                $unsigned = $testedClass::fromXML($xmlRepresentation->documentElement);
+                $unsigned = self::$testedClass::fromXML(self::$xmlRepresentation->documentElement);
                 $unsigned->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
-                $signed = $this->testedClass::fromXML($unsigned->toXML());
+                $signed = self::$testedClass::fromXML($unsigned->toXML());
                 $this->assertEquals(
                     $algorithm,
                     $signed->getSignature()->getSignedInfo()->getSignatureMethod()->getAlgorithm(),
@@ -123,7 +117,7 @@ trait SignedElementTestTrait
                 ) {
                     $this->fail(sprintf('%s:  %s', $algorithm, $e->getMessage()));
                 }
-                $this->assertInstanceOf($this->testedClass, $verified);
+                $this->assertInstanceOf(self::$testedClass, $verified);
 
                 $this->assertEquals(
                     PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY),
@@ -135,7 +129,7 @@ trait SignedElementTestTrait
                 // sign without certificates
                 //
                 $unsigned->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, null);
-                $signed = $this->testedClass::fromXML($unsigned->toXML());
+                $signed = self::$testedClass::fromXML($unsigned->toXML());
 
                 // verify signature
                 try {
@@ -147,7 +141,7 @@ trait SignedElementTestTrait
                 ) {
                     $this->fail(sprintf('%s:  %s', $algorithm, $e->getMessage()));
                 }
-                $this->assertInstanceOf($this->testedClass, $verified);
+                $this->assertInstanceOf(self::$testedClass, $verified);
 
                 $this->assertEquals(
                     PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY),
@@ -163,7 +157,7 @@ trait SignedElementTestTrait
                     PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::OTHER_PRIVATE_KEY),
                 );
                 $unsigned->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, null);
-                $signed = $this->testedClass::fromXML($unsigned->toXML());
+                $signed = self::$testedClass::fromXML($unsigned->toXML());
 
                 // verify signature
                 try {
@@ -176,7 +170,7 @@ trait SignedElementTestTrait
                 ) {
                     $this->assertEquals('Failed to verify signature.', $e->getMessage());
                 }
-                $this->assertInstanceOf($this->testedClass, $verified);
+                $this->assertInstanceOf(self::$testedClass, $verified);
 
                 $this->assertEquals(
                     PEMCertificatesMock::getPublicKey(PEMCertificatesMock::PUBLIC_KEY),

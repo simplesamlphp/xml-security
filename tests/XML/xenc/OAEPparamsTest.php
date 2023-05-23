@@ -26,11 +26,11 @@ final class OAEPparamsTest extends TestCase
 
     /**
      */
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->testedClass = OAEPparams::class;
+        self::$testedClass = OAEPparams::class;
 
-        $this->xmlRepresentation = DOMDocumentFactory::fromFile(
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_OAEPparams.xml',
         );
     }
@@ -43,7 +43,7 @@ final class OAEPparamsTest extends TestCase
         $params = new OAEPparams('9lWu3Q==');
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($params),
         );
     }
@@ -53,10 +53,10 @@ final class OAEPparamsTest extends TestCase
      */
     public function testUnmarshalling(): void
     {
-        $params = OAEPparams::fromXML($this->xmlRepresentation->documentElement);
+        $params = OAEPparams::fromXML(self::$xmlRepresentation->documentElement);
 
         $this->assertEquals(
-            $this->xmlRepresentation->saveXML($this->xmlRepresentation->documentElement),
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($params),
         );
     }

@@ -21,14 +21,14 @@ use function dirname;
  */
 class PEMBundleTest extends TestCase
 {
-    private string $base_dir;
+    private static string $baseDir;
 
 
     /**
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->base_dir = dirname(__FILE__, 3);
+        self::$baseDir = dirname(__FILE__, 3);
     }
 
 
@@ -37,7 +37,7 @@ class PEMBundleTest extends TestCase
      */
     public function testBundle(): PEMBundle
     {
-        $bundle = PEMBundle::fromFile($this->base_dir . '/resources/certificates/cacert.pem');
+        $bundle = PEMBundle::fromFile(self::$baseDir . '/resources/certificates/cacert.pem');
         $this->assertInstanceOf(PEMBundle::class, $bundle);
         return $bundle;
     }
