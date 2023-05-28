@@ -76,7 +76,7 @@ final class SignableElementTest extends TestCase
      *
      * In this test we try to sign an entire document, since the element is the root of it, and doesn't have an ID.
      */
-    public function testSigningDocument(): void
+    public function testMarshalling(): void
     {
         $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
         $this->assertFalse($customSignable->isEmptyElement());
@@ -252,5 +252,18 @@ final class SignableElementTest extends TestCase
             'give your object an identifier.',
         );
         $customSignable->toXML($doc->documentElement);
+    }
+
+
+    /**
+     */
+    public function testUnmarshalling(): void
+    {
+        $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
+
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($customSignable),
+        );
     }
 }

@@ -69,7 +69,7 @@ final class KeyValueTest extends TestCase
 
     /**
      */
-    public function testMarshallingWithRSAKey(): void
+    public function testMarshalling(): void
     {
         $keyValue = new KeyValue(RSAKeyValue::fromXML(self::$rsaKeyValue->documentElement));
 
@@ -123,19 +123,14 @@ final class KeyValueTest extends TestCase
 
     /**
      */
-    public function testUnmarshallingWithRSAKey(): void
+    public function testUnmarshalling(): void
     {
-        $document = self::$empty;
-        $document->documentElement->appendChild($document->importNode(self::$rsaKeyValue->documentElement, true));
+        $keyValue = KeyValue::fromXML(self::$xmlRepresentation->documentElement);
 
-        $keyValue = KeyValue::fromXML($document->documentElement);
-
-        $rsaKeyValue = $keyValue->getRSAKeyValue();
-        $this->assertNotNull($rsaKeyValue);
-        $this->assertEmpty($keyValue->getElements());
-
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $rsaKeyValue->getModulus()->getContent());
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=', $rsaKeyValue->getExponent()->getContent());
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($keyValue),
+        );
     }
 
 

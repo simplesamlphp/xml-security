@@ -46,6 +46,24 @@ final class CustomSignableTest extends TestCase
 
     /**
      */
+    public function testMarshalling(): void
+    {
+        $document = DOMDocumentFactory::fromString(<<<XML
+<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>
+XML
+        );
+
+        $customSignable = new CustomSignable($document->documentElement, null);
+
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($customSignable),
+        );
+    }
+
+
+    /**
+     */
     public function testUnmarshalling(): void
     {
         $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
