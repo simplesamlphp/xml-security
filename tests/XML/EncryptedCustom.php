@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
+use DOMElement;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
@@ -189,5 +193,47 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
             $alg->decrypt($this->getEncryptedData()->getCipherData()->getCipherValue()->getContent()),
         );
         return CustomSignable::fromXML($xml->documentElement);
+    }
+
+
+    /**
+     * @inheritDoc
+     *
+     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     *   If the qualified name of the supplied element is wrong
+     */
+    public static function fromXML(DOMElement $xml): static
+    {
+        Assert::same(
+            $xml->localName,
+            AbstractElement::getClassName(static::class),
+            InvalidDOMElementException::class,
+        );
+        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
+
+        $ed = EncryptedData::getChildrenOfClass($xml);
+        Assert::count(
+            $ed,
+            1,
+            sprintf(
+                'No more or less than one EncryptedData element allowed in %s.',
+                AbstractElement::getClassName(static::class),
+            ),
+            TooManyElementsException::class,
+        );
+
+        return new static($ed[0]);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function toXML(DOMElement $parent = null): DOMElement
+    {
+        /** @psalm-var \DOMDocument $e->ownerDocument */
+        $e = $this->instantiateParentElement($parent);
+        $this->encryptedData->toXML($e);
+        return $e;
     }
 }

@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use DOMElement;
-use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
@@ -19,6 +14,8 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+
+use function base64_decode;
 
 /**
  * Trait aggregating functionality for encrypted elements.
@@ -141,60 +138,6 @@ trait EncryptedElementTrait
 
         return $decryptor->decrypt(base64_decode($encData->getCipherData()->getCipherValue()->getContent()));
     }
-
-
-    /**
-     * @inheritDoc
-     *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
-     *   If the qualified name of the supplied element is wrong
-     */
-    public static function fromXML(DOMElement $xml): static
-    {
-        Assert::same(
-            $xml->localName,
-            AbstractElement::getClassName(static::class),
-            InvalidDOMElementException::class,
-        );
-        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
-
-        $ed = EncryptedData::getChildrenOfClass($xml);
-        Assert::count(
-            $ed,
-            1,
-            sprintf(
-                'No more or less than one EncryptedData element allowed in %s.',
-                AbstractElement::getClassName(static::class),
-            ),
-            TooManyElementsException::class,
-        );
-
-        return new static($ed[0]);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function toXML(DOMElement $parent = null): DOMElement
-    {
-        /** @psalm-var \DOMDocument $e->ownerDocument */
-        $e = $this->instantiateParentElement($parent);
-        $this->encryptedData->toXML($e);
-        return $e;
-    }
-
-
-    /**
-     * Create a document structure for this element.
-     *
-     * The AbstractElement class implements this method. If your object inherits from that class, you will already
-     * have this method out of the box.
-     *
-     * @param \DOMElement|null $parent The element we should append to.
-     * @return \DOMElement
-     */
-    abstract public function instantiateParentElement(DOMElement $parent = null): DOMElement;
 
 
     /**
