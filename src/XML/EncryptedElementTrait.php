@@ -47,6 +47,7 @@ trait EncryptedElementTrait
         foreach ($keyInfo->getInfo() as $info) {
             if ($info instanceof EncryptedKey) {
                 $this->encryptedKey = $info;
+                break;
             }
         }
     }
