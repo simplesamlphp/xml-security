@@ -41,13 +41,6 @@ trait EncryptableElementTrait
      */
     protected string $blockCipherAlgId = C::BLOCK_ENC_AES256_GCM;
 
-    /**
-     * The type of the encrypted data.
-     *
-     * @var string|null
-     */
-    protected ?string $dataType = null;
-
 
     /**
      * Encryt this object.
@@ -85,7 +78,7 @@ trait EncryptableElementTrait
                 ),
             ),
             null,
-            $this->dataType,
+            C::XMLENC_ELEMENT,
             null,
             null,
             new EncryptionMethod($encryptor->getAlgorithmId()),
