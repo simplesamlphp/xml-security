@@ -27,10 +27,8 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
  */
 trait EncryptedElementTrait
 {
-    /**
-     * @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
-     */
-    protected EncryptedKey $encryptedKey;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey|null */
+    protected ?EncryptedKey $encryptedKey = null;
 
 
     /**
@@ -61,7 +59,7 @@ trait EncryptedElementTrait
      */
     public function hasDecryptionKey(): bool
     {
-        return $this->encryptedKey === null;
+        return $this->encryptedKey !== null;
     }
 
 
