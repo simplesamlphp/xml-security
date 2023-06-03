@@ -32,6 +32,7 @@ final class SignatureProperties extends AbstractDsElement
         protected array $signatureProperty,
         protected ?string $Id = null,
     ) {
+        Assert::maxCount($signatureProperty, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($signatureProperty, SignatureProperty::class, SchemaViolationException::class);
         Assert::nullOrValidNCName($Id);
     }

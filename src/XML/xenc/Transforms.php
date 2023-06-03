@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
@@ -25,6 +26,7 @@ final class Transforms extends AbstractXencElement
     public function __construct(
         protected array $transform,
     ) {
+        Assert::maxCount($transform, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($transform, Transform::class, InvalidArgumentException::class);
     }
 

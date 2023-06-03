@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -27,6 +28,7 @@ class InclusiveNamespaces extends AbstractEcElement
     final public function __construct(
         protected array $prefixes,
     ) {
+        Assert::maxCount($prefixes, C::UNBOUNDED_LIMIT);
         Assert::allString(
             $prefixes,
             'Can only add string InclusiveNamespaces prefixes.',

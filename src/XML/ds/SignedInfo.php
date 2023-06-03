@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
@@ -44,6 +45,7 @@ final class SignedInfo extends AbstractDsElement implements CanonicalizableEleme
         protected array $references,
         protected ?string $Id = null,
     ) {
+        Assert::maxCount($references, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($references, Reference::class, InvalidArgumentException::class);
         Assert::nullOrValidNCName($Id);
     }

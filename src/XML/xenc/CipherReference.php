@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
@@ -28,6 +29,7 @@ final class CipherReference extends AbstractXencElement
         protected array $transforms = [],
     ) {
         Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
+        Assert::maxCount($transforms, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($transforms, Transforms::class, SchemaViolationException::class);
     }
 

@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -24,6 +25,7 @@ final class Transforms extends AbstractDsElement
     public function __construct(
         protected array $transform,
     ) {
+        Assert::maxCount($transform, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($transform, Transform::class, InvalidArgumentException::class);
     }
 

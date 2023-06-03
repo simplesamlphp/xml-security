@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -29,6 +30,8 @@ class ReferenceList extends AbstractXencElement
         protected array $dataReferences,
         protected array $keyReferences = [],
     ) {
+        Assert::maxCount($dataReferences, C::UNBOUNDED_LIMIT);
+        Assert::maxCount($keyReferences, C::UNBOUNDED_LIMIT);
         Assert::minCount(
             array_merge($dataReferences, $keyReferences),
             1,

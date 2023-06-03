@@ -39,6 +39,7 @@ final class KeyInfo extends AbstractDsElement
         protected ?string $Id = null,
     ) {
         Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
+        Assert::maxCount($info, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOfAny(
             $info,
             [

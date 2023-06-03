@@ -6,8 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\Constants as C;
+use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
@@ -28,6 +29,7 @@ final class X509Data extends AbstractDsElement
     public function __construct(
         protected array $data,
     ) {
+        Assert::maxCount($data, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOfAny(
             $data,
             [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class],

@@ -40,7 +40,7 @@ final class DsObject extends AbstractDsElement
         protected ?string $Id = null,
         protected ?string $MimeType = null,
         protected ?string $Encoding = null,
-        array $elements = [],
+        array $elements,
     ) {
         Assert::nullOrValidNCName($Id);
         Assert::nullOrValidURI($Encoding);
@@ -157,7 +157,7 @@ final class DsObject extends AbstractDsElement
         }
 
         /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
-        foreach ($this->elements as $elt) {
+        foreach ($this->getElements() as $elt) {
             if (!$elt->isEmptyElement()) {
                 $elt->toXML($e);
             }

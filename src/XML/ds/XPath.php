@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
@@ -29,6 +30,7 @@ class XPath extends AbstractDsElement
         protected string $expression,
         protected array $namespaces = [],
     ) {
+        Assert::maxCount($namespaces, C::UNBOUNDED_LIMIT);
         Assert::allString($namespaces, InvalidArgumentException::class);
         Assert::allString(array_keys($namespaces, InvalidArgumentException::class));
     }

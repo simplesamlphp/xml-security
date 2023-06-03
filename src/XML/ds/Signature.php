@@ -36,6 +36,7 @@ final class Signature extends AbstractDsElement
         protected array $objects = [],
         protected ?string $Id = null,
     ) {
+        Assert::maxCount($objects, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($objects, DsObject::class);
         Assert::nullOrValidNCName($Id);
     }
