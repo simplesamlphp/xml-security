@@ -40,7 +40,7 @@ final class DsObject extends AbstractDsElement
         protected ?string $Id = null,
         protected ?string $MimeType = null,
         protected ?string $Encoding = null,
-        array $elements,
+        array $elements = [],
     ) {
         Assert::nullOrValidNCName($Id);
         Assert::nullOrValidURI($Encoding);
