@@ -24,6 +24,7 @@ use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
@@ -124,12 +125,11 @@ trait SignedElementTrait
 
 
     /**
+     * @param \SimpleSAML\XMLSecurity\XML\ds\SignedInfo $signedInfo
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface
      */
-    private function validateReference(): SignedElementInterface
+    private function validateReference(SignedInfo $signedInfo): SignedElementInterface
     {
-        /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature $this->signature */
-        $signedInfo = $this->signature->getSignedInfo();
         $references = $signedInfo->getReferences();
         Assert::count(
             $references,
@@ -177,8 +177,12 @@ trait SignedElementTrait
         /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature $this->signature */
         $signedInfo = $this->signature->getSignedInfo();
         $c14nAlg = $signedInfo->getCanonicalizationMethod()->getAlgorithm();
+
+        // the canonicalized ds:SignedInfo element (plaintext)
         $c14nSignedInfo = $signedInfo->canonicalize($c14nAlg);
-        $ref = $this->validateReference();
+        $ref = $this->validateReference(
+            SignedInfo::fromXML(DOMDocumentFactory::fromString($c14nSignedInfo)->documentElement),
+        );
 
         if (
             $verifier?->verify(
