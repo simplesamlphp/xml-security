@@ -10,6 +10,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -22,7 +23,7 @@ final class DigestMethod extends AbstractDsElement
 {
     use ExtendableElementTrait;
 
-    public const XS_ANY_ELT_NAMESPACE = C::XS_ANY_NS_OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
     /**
      * Initialize a DigestMethod element.

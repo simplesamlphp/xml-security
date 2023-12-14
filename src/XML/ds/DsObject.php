@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Constants;
+use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -25,7 +25,7 @@ final class DsObject extends AbstractDsElement
     public const LOCALNAME = 'Object';
 
     /** @var string */
-    public const XS_ANY_ELT_NAMESPACE = Constants::XS_ANY_NS_ANY;
+    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
     /**
