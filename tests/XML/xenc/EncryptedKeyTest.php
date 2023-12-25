@@ -168,22 +168,6 @@ final class EncryptedKeyTest extends TestCase
     }
 
 
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $encryptedKey = EncryptedKey::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptedKey),
-        );
-    }
-
-
     /**
      * Test encryption and decryption with PKCS1 RSA 1.5.
      */

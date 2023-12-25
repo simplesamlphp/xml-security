@@ -98,6 +98,7 @@ final class EncryptionMethodTest extends TestCase
         $xpCache = XPath::getXPath($emElement);
 
         // Test for a KeySize
+        /** @var \DOMElement[] $keySizeElements */
         $keySizeElements = XPath::xpQuery($emElement, './xenc:KeySize', $xpCache);
         $this->assertCount(1, $keySizeElements);
         $this->assertEquals('10', $keySizeElements[0]->textContent);
@@ -113,20 +114,6 @@ final class EncryptionMethodTest extends TestCase
 
 
     // test unmarshalling
-
-
-    /**
-     * Test creating an EncryptionMethod object from XML.
-     */
-    public function testUnmarshalling(): void
-    {
-        $em = EncryptionMethod::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($em),
-        );
-    }
 
 
     /**

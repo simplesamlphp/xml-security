@@ -77,17 +77,4 @@ final class TransformTest extends TestCase
             strval($transform),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $transform = Transform::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($transform),
-        );
-    }
 }

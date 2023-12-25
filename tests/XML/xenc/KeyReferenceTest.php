@@ -67,20 +67,4 @@ final class KeyReferenceTest extends TestCase
             strval($keyReference),
         );
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $keyReference = KeyReference::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyReference),
-        );
-    }
 }

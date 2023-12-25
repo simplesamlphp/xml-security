@@ -88,17 +88,4 @@ final class X509CertificateTest extends TestCase
         $this->expectException(AssertionFailedException::class);
         new X509Certificate($certificate);
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $x509cert = X509Certificate::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($x509cert),
-        );
-    }
 }

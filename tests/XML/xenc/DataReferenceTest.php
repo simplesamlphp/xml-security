@@ -67,20 +67,4 @@ final class DataReferenceTest extends TestCase
             strval($dataReference),
         );
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $dataReference = DataReference::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($dataReference),
-        );
-    }
 }

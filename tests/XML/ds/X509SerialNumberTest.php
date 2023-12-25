@@ -55,19 +55,6 @@ final class X509SerialNumberTest extends TestCase
 
     /**
      */
-    public function testUnmarshalling(): void
-    {
-        $serialNumber = X509SerialNumber::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($serialNumber),
-        );
-    }
-
-
-    /**
-     */
     public function testUnmarshallingIncorrectTypeThrowsException(): void
     {
         $document = clone self::$xmlRepresentation;

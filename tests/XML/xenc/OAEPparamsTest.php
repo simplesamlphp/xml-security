@@ -47,17 +47,4 @@ final class OAEPparamsTest extends TestCase
             strval($params),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $params = OAEPparams::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($params),
-        );
-    }
 }

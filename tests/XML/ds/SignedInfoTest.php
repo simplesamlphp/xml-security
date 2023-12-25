@@ -70,19 +70,6 @@ final class SignedInfoTest extends TestCase
 
 
     /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $signedInfo = SignedInfo::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signedInfo),
-        );
-    }
-
-
-    /**
      *
      */
     private function canonicalization(DOMElement $xml, SignedInfo $signedInfo): void

@@ -52,14 +52,4 @@ final class CanonicalizationMethodTest extends TestCase
             strval($canonicalizationMethod),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $canonicalizationMethod = CanonicalizationMethod::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $canonicalizationMethod->getAlgorithm());
-    }
 }

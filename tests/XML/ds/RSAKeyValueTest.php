@@ -83,17 +83,4 @@ final class RSAKeyValueTest extends TestCase
         $this->assertCount(1, $RSAKeyValueElements);
         $this->assertEquals('ds:Exponent', $RSAKeyValueElements[0]->tagName);
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $RSAKeyValue = RSAKeyValue::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($RSAKeyValue),
-        );
-    }
 }

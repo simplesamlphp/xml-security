@@ -71,17 +71,4 @@ final class ManifestTest extends TestCase
             strval($manifest),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $manifest = Manifest::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($manifest),
-        );
-    }
 }

@@ -68,19 +68,6 @@ final class ObjectTest extends TestCase
 
 
     /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $obj = DsObject::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($obj)
-        );
-    }
-
-
-    /**
      * Adding an empty Object-element should yield an empty element.
      */
     public function testMarshallingEmptyElement(): void

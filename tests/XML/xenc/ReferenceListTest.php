@@ -76,20 +76,4 @@ final class ReferenceListTest extends TestCase
             strval($referenceList),
         );
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $referenceList = ReferenceList::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($referenceList),
-        );
-    }
 }

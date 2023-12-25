@@ -73,21 +73,4 @@ final class SignatureValueTest extends TestCase
             'abc123',
         );
     }
-
-
-    /**
-     * Test creating a SignatureValue object from XML.
-     */
-    public function testUnmarshalling(): void
-    {
-        $signatureValue = SignatureValue::fromXML(self::$xmlRepresentation->documentElement);
-        $this->assertEquals(
-            'j14G9v6AnsOiEJYgkTg864DG3e/KLqoGpuybPGSGblVTn7ST6M/BsvP7YiVZjLqJEuEvWmf2mW4DPb+pbArzzDcsLWEtNveMrw+F' .
-            'kWehDUQV9oe20iepo+W46wmj7zB/eWL+Z8MrGvlycoTndJU6CVwHTLsB+dq2FDa7JV4pAPjMY32JZTbiwKhzqw3nEi/eVrujJE4Y' .
-            'RrlW28D+rXhITfoUAGGvsqPzcwGzp02lnMe2SmXADY1u9lbVjOhUrJpgvWfn9YuiCR+wjvaGMwIwzfJxChLJZOBV+1ad1CyNTiu6' .
-            'qAblxZ4F8cWlMWJ7f0KkWvtw66HOf2VNR6Qan2Ra7Q==',
-            $signatureValue->getContent(),
-        );
-        $this->assertEquals('abc123', $signatureValue->getId());
-    }
 }

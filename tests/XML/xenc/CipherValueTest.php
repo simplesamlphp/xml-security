@@ -59,17 +59,4 @@ final class CipherValueTest extends TestCase
         $this->expectException(AssertionFailedException::class);
         new CipherValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $cipherValue = CipherValue::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
-            strval($cipherValue),
-        );
-    }
 }

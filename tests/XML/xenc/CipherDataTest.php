@@ -58,20 +58,4 @@ final class CipherDataTest extends TestCase
             strval($cipherData),
         );
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $cipherData = CipherData::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($cipherData),
-        );
-    }
 }

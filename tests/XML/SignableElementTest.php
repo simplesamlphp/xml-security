@@ -253,17 +253,4 @@ final class SignableElementTest extends TestCase
         );
         $customSignable->toXML($doc->documentElement);
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $customSignable = CustomSignable::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($customSignable),
-        );
-    }
 }

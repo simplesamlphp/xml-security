@@ -63,17 +63,4 @@ final class DigestValueTest extends TestCase
         $this->expectException(AssertionFailedException::class);
         new DigestValue('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $digestValue = DigestValue::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($digestValue),
-        );
-    }
 }

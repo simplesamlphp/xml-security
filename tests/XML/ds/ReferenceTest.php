@@ -96,17 +96,4 @@ final class ReferenceTest extends TestCase
         $this->assertEquals('ds:DigestMethod', $children[1]->tagName);
         $this->assertEquals('ds:DigestValue', $children[2]->tagName);
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $reference = Reference::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($reference),
-        );
-    }
 }

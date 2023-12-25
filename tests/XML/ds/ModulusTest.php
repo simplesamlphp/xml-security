@@ -59,14 +59,4 @@ final class ModulusTest extends TestCase
         $this->expectException(SchemaViolationException::class);
         new Modulus('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $modulus = Modulus::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==', $modulus->getContent());
-    }
 }

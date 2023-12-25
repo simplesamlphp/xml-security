@@ -144,31 +144,4 @@ final class SignatureTest extends TestCase
         $this->assertEquals('ds:KeyInfo', $signatureElements[1]->tagName);
         $this->assertEquals('ds:Object', $signatureElements[2]->tagName);
     }
-
-
-    /**
-     * Test creating a SignatureValue object from XML.
-     */
-    public function testUnmarshalling(): void
-    {
-        $signature = Signature::fromXML(self::$xmlRepresentation->documentElement);
-        $this->assertEquals('def456', $signature->getId());
-
-        $signedInfo = $signature->getSignedInfo();
-        $this->assertInstanceOf(SignedInfo::class, $signedInfo);
-
-        $signatureValue = $signature->getSignatureValue();
-        $this->assertInstanceOf(SignatureValue::class, $signatureValue);
-
-        $keyInfo = $signature->getKeyInfo();
-        $this->assertInstanceOf(KeyInfo::class, $keyInfo);
-
-        $objects = $signature->getObjects();
-        $this->assertCount(1, $objects);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signature),
-        );
-    }
 }

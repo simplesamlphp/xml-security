@@ -59,17 +59,4 @@ final class ExponentTest extends TestCase
         $this->expectException(SchemaViolationException::class);
         new Exponent('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $exponent = Exponent::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($exponent),
-        );
-    }
 }

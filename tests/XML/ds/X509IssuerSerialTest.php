@@ -96,17 +96,4 @@ final class X509IssuerSerialTest extends TestCase
         $this->assertCount(1, $X509IssuerSerialElements);
         $this->assertEquals('ds:X509SerialNumber', $X509IssuerSerialElements[0]->tagName);
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $X509IssuerSerial = X509IssuerSerial::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($X509IssuerSerial),
-        );
-    }
 }

@@ -64,17 +64,4 @@ final class SignaturePropertiesTest extends TestCase
             strval($signatureProperties)
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $signatureProperties = SignatureProperties::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signatureProperties)
-        );
-    }
 }

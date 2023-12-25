@@ -48,17 +48,4 @@ final class X509SubjectNameTest extends TestCase
             strval($subjectName),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $subjectName = X509SubjectName::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($subjectName),
-        );
-    }
 }

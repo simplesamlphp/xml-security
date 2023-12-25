@@ -53,17 +53,4 @@ final class SignatureMethodTest extends TestCase
             strval($signatureMethod),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $signatureMethod = SignatureMethod::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signatureMethod),
-        );
-    }
 }

@@ -53,19 +53,4 @@ class InclusiveNamespacesTest extends TestCase
             strval($inclusiveNamespaces),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $inclusiveNamespaces = InclusiveNamespaces::fromXML(
-            self::$xmlRepresentation->documentElement,
-        );
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($inclusiveNamespaces),
-        );
-    }
 }

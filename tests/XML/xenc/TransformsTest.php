@@ -63,19 +63,6 @@ final class TransformsTest extends TestCase
 
 
     /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $transforms = Transforms::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($transforms),
-        );
-    }
-
-
-    /**
      * Adding an empty Transforms element should yield an empty element.
      */
     public function testMarshallingEmptyElement(): void

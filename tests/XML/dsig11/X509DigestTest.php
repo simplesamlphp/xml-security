@@ -66,15 +66,4 @@ final class X509DigestTest extends TestCase
             strval($x509digest),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $x509digest = X509Digest::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals($x509digest->getContent(), self::$digest);
-        $this->assertEquals(C::DIGEST_SHA256, $x509digest->getAlgorithm());
-    }
 }

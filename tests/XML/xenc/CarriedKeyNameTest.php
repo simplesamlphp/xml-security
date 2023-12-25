@@ -47,17 +47,4 @@ final class CarriedKeyNameTest extends TestCase
             strval($keyName),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $keyName = CarriedKeyName::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyName),
-        );
-    }
 }

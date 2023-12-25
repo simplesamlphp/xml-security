@@ -67,20 +67,4 @@ final class CipherReferenceTest extends TestCase
             strval($cipherReference),
         );
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $cipherReference = CipherReference::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($cipherReference),
-        );
-    }
 }

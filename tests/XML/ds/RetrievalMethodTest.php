@@ -62,17 +62,4 @@ final class RetrievalMethodTest extends TestCase
             strval($retrievalMethod),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $retrievalMethod = retrievalMethod::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($retrievalMethod),
-        );
-    }
 }

@@ -134,20 +134,4 @@ final class EncryptedDataTest extends TestCase
         // EncryptionProperties is currently not supported
         //$this->assertEquals('xenc:EncryptionProperties', $encryptedDataElements[2]->tagName);
     }
-
-
-    // unmarshalling
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $encryptedData = EncryptedData::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptedData),
-        );
-    }
 }

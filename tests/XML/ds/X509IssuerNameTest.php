@@ -50,17 +50,4 @@ final class X509IssuerNameTest extends TestCase
             strval($issuerName),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $issuerName = X509IssuerName::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($issuerName),
-        );
-    }
 }

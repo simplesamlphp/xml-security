@@ -118,17 +118,4 @@ final class X509DataTest extends TestCase
             strval($x509data),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $x509data = X509Data::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($x509data),
-        );
-    }
 }

@@ -122,19 +122,6 @@ final class KeyInfoTest extends TestCase
 
     /**
      */
-    public function testUnmarshalling(): void
-    {
-        $keyInfo = KeyInfo::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyInfo),
-        );
-    }
-
-
-    /**
-     */
     public function testUnmarshallingEmpty(): void
     {
         $document = DOMDocumentFactory::fromString('<ds:KeyInfo xmlns:ds="' . KeyInfo::NS . '"/>');

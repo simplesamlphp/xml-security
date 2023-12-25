@@ -47,17 +47,4 @@ final class KeySizeTest extends TestCase
             strval($keySize),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $keySize = KeySize::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keySize),
-        );
-    }
 }

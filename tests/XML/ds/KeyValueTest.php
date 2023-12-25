@@ -123,19 +123,6 @@ final class KeyValueTest extends TestCase
 
     /**
      */
-    public function testUnmarshalling(): void
-    {
-        $keyValue = KeyValue::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyValue),
-        );
-    }
-
-
-    /**
-     */
     public function testUnmarshallingWithOtherElement(): void
     {
         $document = self::$empty;

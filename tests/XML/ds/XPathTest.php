@@ -56,23 +56,4 @@ class XPathTest extends TestCase
             strval($xpath),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $xpath = XPath::fromXML(self::$xmlRepresentation->documentElement);
-        $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
-        $namespaces = $xpath->getNamespaces();
-        $this->assertCount(2, $namespaces);
-        $this->assertEquals('xenc', array_keys($namespaces)[0]);
-        $this->assertEquals('ds', array_keys($namespaces)[1]);
-
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($xpath),
-        );
-    }
 }

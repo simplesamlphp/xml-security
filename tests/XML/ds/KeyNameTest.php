@@ -51,17 +51,4 @@ final class KeyNameTest extends TestCase
             strval($keyName),
         );
     }
-
-
-    /**
-     */
-    public function testUnmarshalling(): void
-    {
-        $keyName = KeyName::fromXML(self::$xmlRepresentation->documentElement);
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyName),
-        );
-    }
 }
