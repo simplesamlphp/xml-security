@@ -11,9 +11,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
-use SimpleSAML\XMLSecurity\XML\ds\Modulus;
 use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
 
 use function dirname;

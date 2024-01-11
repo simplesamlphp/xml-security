@@ -5,15 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\Alg\Signature;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSecurity\Alg\Signature\HMAC;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Key\PrivateKey;
-use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\Key\X509Certificate;
-use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use TypeError;
 
 use function bin2hex;
 use function hex2bin;

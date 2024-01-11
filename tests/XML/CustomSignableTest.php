@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMDocument;
-use DOMElement;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XMLSecurity\TestUtils\SignedElementTestTrait;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\TestUtils\SignedElementTestTrait;
 
 use function dirname;
 use function strval;

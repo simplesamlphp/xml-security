@@ -7,12 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
-use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
 /**
  * Abstract class representing references. No custom elements are allowed.

@@ -7,10 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XML\XsNamespace as NS;
 
 /**
  * Class representing a ds:Object element.

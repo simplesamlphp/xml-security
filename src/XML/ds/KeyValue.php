@@ -7,14 +7,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XML\XsNamespace as NS;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 /**
  * Class representing a ds:KeyValue element.

@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
-use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\XPath;
-use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 
 use function dirname;

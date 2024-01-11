@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use OpenSSLAsymmetricKey;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;

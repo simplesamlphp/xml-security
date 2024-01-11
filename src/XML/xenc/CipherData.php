@@ -8,7 +8,6 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\Utils\XPath;
 
 use function array_pop;
 

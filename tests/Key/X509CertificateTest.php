@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
-use ReflectionMethod;
-use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
-use function file_get_contents;
 use function openssl_pkey_get_details;
 use function openssl_pkey_get_public;
 use function openssl_x509_fingerprint;

@@ -9,11 +9,11 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\MissingAttributeException;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\KeySize;
 use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
-use SimpleSAML\XMLSecurity\Constants as C;
 
 use function dirname;
 use function strval;

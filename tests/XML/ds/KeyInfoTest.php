@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
-use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function dirname;
 use function openssl_x509_parse;

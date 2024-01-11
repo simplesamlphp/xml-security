@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\TestUtils;
 
-use Exception;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
@@ -12,8 +11,6 @@ use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 
 use function dirname;
 use function file_get_contents;
-use function preg_match;
-use function preg_replace;
 use function trim;
 
 /**

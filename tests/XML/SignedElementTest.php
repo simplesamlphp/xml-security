@@ -13,11 +13,10 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
-use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\XML\ds\Signature;
 
 use function dirname;
-use function file_get_contents;
 use function strval;
 
 /**

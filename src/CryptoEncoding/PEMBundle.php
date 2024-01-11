@@ -8,7 +8,6 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use LogicException;
-use RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\IOException;
 use UnexpectedValueException;
 
@@ -16,9 +15,9 @@ use function array_map;
 use function array_merge;
 use function base64_decode;
 use function count;
+use function file_get_contents;
 use function implode;
 use function is_readable;
-use function file_get_contents;
 use function preg_match_all;
 use function preg_replace;
 

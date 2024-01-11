@@ -11,8 +11,6 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
 
-use function str_replace;
-
 /**
  * Class implementing the XPath element.
  *

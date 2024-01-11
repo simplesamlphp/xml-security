@@ -9,8 +9,6 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
-use function count;
-
 /**
  * Abstract class representing encrypted data.
  *

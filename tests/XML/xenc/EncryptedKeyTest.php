@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\KeyTransport\RSA;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
@@ -25,7 +23,6 @@ use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
-use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
 use function bin2hex;
 use function dirname;

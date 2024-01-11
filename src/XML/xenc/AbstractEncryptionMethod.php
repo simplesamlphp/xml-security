@@ -13,10 +13,8 @@ use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function array_pop;
-use function sprintf;
 
 /**
  * A class implementing the xenc:AbstractEncryptionMethod element.

@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Key;
 
-use OpenSSLAsymmetricKey;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
 use function base64_encode;
 use function chr;
 use function chunk_split;
-use function openssl_error_string;
 use function ord;
 use function pack;
 use function sprintf;

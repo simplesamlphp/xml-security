@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\Test\CryptoEncoding;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle;
 use SimpleSAML\XMLSecurity\Exception\IOException;

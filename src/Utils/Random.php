@@ -10,9 +10,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 
-use function bin2hex;
 use function random_bytes;
-use function substr;
 
 /**
  * A collection of utilities to generate cryptographically-secure random data.

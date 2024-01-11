@@ -6,8 +6,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Base64ElementTrait;
+use SimpleSAML\XML\Exception\InvalidDOMElementException;
 
 /**
  * Class representing a ds:SignatureValue element.

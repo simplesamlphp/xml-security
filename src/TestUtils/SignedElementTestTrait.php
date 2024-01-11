@@ -5,20 +5,15 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\TestUtils;
 
 use DOMDocument;
-use Exception;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
-use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
-use SimpleSAML\XMLSecurity\Key\PrivateKey;
-use SimpleSAML\XMLSecurity\Key\X509Certificate as X509;
+use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
-use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 
 use function array_keys;
 use function boolval;

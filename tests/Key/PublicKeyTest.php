@@ -10,7 +10,6 @@ use SimpleSAML\XMLSecurity\Exception\IOException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 
-use function file_get_contents;
 use function openssl_pkey_get_details;
 use function openssl_pkey_get_public;
 
