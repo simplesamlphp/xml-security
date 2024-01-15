@@ -3,6 +3,7 @@
 /build/
 /vendor/
 .phpunit.result.cache
+phpunit.xml.bak
 composer.lock
 composer.phar
 
