@@ -23,7 +23,7 @@ final class DsObject extends AbstractDsElement
     /** @var string */
     public const LOCALNAME = 'Object';
 
-    /** @var string */
+    /** @var \SimpleSAML\XML\XsNamespace */
     public const XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
@@ -33,7 +33,7 @@ final class DsObject extends AbstractDsElement
      * @param string|null $Id
      * @param string|null $MimeType
      * @param string|null $Encoding
-     * @param \SimpleSAML\XML\ElementInterface[] $elements
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     public function __construct(
         protected ?string $Id = null,
@@ -155,7 +155,6 @@ final class DsObject extends AbstractDsElement
             $e->setAttribute('Encoding', $this->getEncoding());
         }
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface[] $this->elements */
         foreach ($this->getElements() as $elt) {
             if (!$elt->isEmptyElement()) {
                 $elt->toXML($e);

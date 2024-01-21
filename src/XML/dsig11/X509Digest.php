@@ -16,7 +16,6 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  * Class representing a dsig11:X509Digest element.
  *
  * @package simplesaml/xml-security
- * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class X509Digest extends AbstractDsig11Element
 {

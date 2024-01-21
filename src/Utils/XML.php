@@ -24,8 +24,8 @@ class XML
      * @param \DOMElement $element The DOM element that needs canonicalization.
      * @param string $c14nMethod The identifier of the canonicalization algorithm to use.
      * See \SimpleSAML\XMLSecurity\Constants.
-     * @param array|null $xpaths An array of xpaths to filter the nodes by. Defaults to null (no filters).
-     * @param array|null $prefixes An array of namespace prefixes to filter the nodes by. Defaults to null (no filters).
+     * @param string[]|null $xpaths An array of xpaths to filter the nodes by. Defaults to null (no filters).
+     * @param string[]|null $prefixes An array of namespace prefixes to filter the nodes by. Defaults to null (no filters).
      *
      * @return string The canonical representation of the given DOM node, according to the algorithm requested.
      */
@@ -75,7 +75,6 @@ class XML
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms The transforms to apply.
      * @param \DOMElement $data The data referenced.
-     * @param bool $includeCommentNodes Whether to allow canonicalization with comments or not.
      *
      * @return string The canonicalized data after applying all transforms specified by $ref.
      *

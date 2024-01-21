@@ -13,7 +13,6 @@ use SimpleSAML\XML\Exception\SchemaViolationException;
  * Class representing a xenc:KeySize element.
  *
  * @package simplesaml/xml-security
- * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class KeySize extends AbstractXencElement
 {

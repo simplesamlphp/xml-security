@@ -108,7 +108,6 @@ final class EncryptedKey extends AbstractEncryptedType
             InvalidArgumentException::class,
         );
 
-        /** @psalm-var \SimpleSAML\XMLSecurity\XML\xenc\CipherValue $cipherValue */
         return $decryptor->decrypt(base64_decode($cipherValue->getContent()));
     }
 
@@ -245,7 +244,6 @@ final class EncryptedKey extends AbstractEncryptedType
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = parent::toXML($parent);
 
         if ($this->getRecipient() !== null) {

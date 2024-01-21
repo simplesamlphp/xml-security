@@ -22,7 +22,6 @@ final class SignatureProperties extends AbstractDsElement
      * Initialize a ds:SignatureProperties
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureProperty[] $signatureProperty
-     * @param string $Target
      * @param string|null $Id
      */
     public function __construct(

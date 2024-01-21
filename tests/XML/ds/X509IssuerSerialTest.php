@@ -53,6 +53,7 @@ final class X509IssuerSerialTest extends TestCase
 
         self::$key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
 
+        /** @var string[] $details */
         $details = self::$key->getCertificateDetails();
         self::$issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
         self::$serial = new X509SerialNumber($details['serialNumber']);
@@ -84,7 +85,7 @@ final class X509IssuerSerialTest extends TestCase
         $issuerName = XPath::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName', $xpCache);
         $this->assertCount(1, $issuerName);
 
-        /** @psalm-var \DOMElement[] $X509IssuerSerialElements */
+        /** @var \DOMElement[] $X509IssuerSerialElements */
         $X509IssuerSerialElements = XPath::xpQuery(
             $X509IssuerSerialElement,
             './ds:X509IssuerName/following-sibling::*',

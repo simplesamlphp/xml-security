@@ -50,7 +50,9 @@ final class X509DigestTest extends TestCase
         );
 
         $key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
-        self::$digest = base64_encode(hex2bin($key->getRawThumbprint(C::DIGEST_SHA256)));
+        /** @var string $binary */
+        $binary = hex2bin($key->getRawThumbprint(C::DIGEST_SHA256));
+        self::$digest = base64_encode($binary);
     }
 
 

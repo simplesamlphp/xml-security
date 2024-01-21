@@ -25,13 +25,15 @@ use function preg_replace;
  * Container for multiple PEM objects.
  *
  * The order of PEMs shall be retained, eg. when read from a file.
+ *
+ * @phpstan-implements IteratorAggregate<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
  */
 class PEMBundle implements Countable, IteratorAggregate
 {
     /**
      * Array of PEM objects.
      *
-     * @var array \SimpleSAML\XMLSecurity\CryptoEncoding\PEM[]
+     * @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM[]
      */
     protected array $pems;
 
@@ -190,7 +192,7 @@ class PEMBundle implements Countable, IteratorAggregate
      *
      * @see \IteratorAggregate::getIterator()
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
      */
     public function getIterator(): ArrayIterator
     {

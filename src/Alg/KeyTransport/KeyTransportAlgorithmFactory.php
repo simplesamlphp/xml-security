@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\AlgorithmInterface;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
@@ -28,7 +29,7 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
     /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
-     * @var string[]
+     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface>
      */
     protected static array $cache = [];
 
@@ -43,7 +44,7 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
     /**
      * Build a factory that creates key transport algorithms.
      *
-     * @param array|null $blacklist A list of algorithms forbidden for their use.
+     * @param string[]|null $blacklist A list of algorithms forbidden for their use.
      */
     public function __construct(array $blacklist = null)
     {
@@ -65,13 +66,13 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
      * @param string $algId The identifier of the algorithm desired.
      * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
      *
-     * @return \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface An object implementing the given
+     * @return \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface An object implementing the given
      * algorithm.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
      * is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, KeyInterface $key): EncryptionAlgorithmInterface
+    public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
     {
         return parent::getAlgorithm($algId, $key);
     }

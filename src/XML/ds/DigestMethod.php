@@ -98,7 +98,6 @@ final class DigestMethod extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', $this->getAlgorithm());
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $elt */
         foreach ($this->elements as $elt) {
             if (!$elt->isEmptyElement()) {
                 $elt->toXML($e);

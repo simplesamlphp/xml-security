@@ -20,7 +20,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement
     /**
      * EncryptionProperty constructor.
      *
-     * @param \SimpleSAML\XML\EncryptionProperty[] $encryptionProperty
+     * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty[] $encryptionProperty
      * @param string|null $Id
      */
     final public function __construct(
@@ -35,7 +35,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement
     /**
      * Get the value of the $encryptionProperty property.
      *
-     * @return \SimpleSAML\XML\EncryptionProperty[]
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty[]
      */
     public function getEncryptionProperty(): array
     {

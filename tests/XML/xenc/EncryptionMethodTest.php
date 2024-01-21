@@ -52,7 +52,9 @@ final class EncryptionMethodTest extends TestCase
     {
         $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
-        $chunk = Chunk::fromXML($chunkXml->documentElement);
+        /** @var \DOMElement $chunkElt */
+        $chunkElt = $chunkXml->documentElement;
+        $chunk = Chunk::fromXML($chunkElt);
 
         $em = new EncryptionMethod($alg, new KeySize(10), new OAEPparams('9lWu3Q=='), [$chunk]);
 
@@ -88,7 +90,9 @@ final class EncryptionMethodTest extends TestCase
     {
         $alg = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
-        $chunk = Chunk::fromXML($chunkXml->documentElement);
+        /** @var \DOMElement $chunkElt */
+        $chunkElt = $chunkXml->documentElement;
+        $chunk = Chunk::fromXML($chunkElt);
 
         $em = new EncryptionMethod($alg, new KeySize(10), new OAEPparams('9lWu3Q=='), [$chunk]);
 
@@ -121,7 +125,9 @@ final class EncryptionMethodTest extends TestCase
      */
     public function testUnmarshallingWithoutAlgorithm(): void
     {
-        $xmlRepresentation = clone self::$xmlRepresentation->documentElement;
+        $xmlRepresentation = clone self::$xmlRepresentation;
+        /** @var \DOMElement $xmlRepresentation */
+        $xmlRepresentation = $xmlRepresentation->documentElement;
         $xmlRepresentation->removeAttribute('Algorithm');
 
         $this->expectException(MissingAttributeException::class);
@@ -141,7 +147,9 @@ final class EncryptionMethodTest extends TestCase
 XML
         );
 
-        $em = EncryptionMethod::fromXML($document->documentElement);
+        /** @var \DOMElement @element */
+        $element = $document->documentElement;
+        $em = EncryptionMethod::fromXML($element);
         $this->assertNull($em->getKeySize());
         $this->assertNull($em->getOAEPParams());
         $this->assertEmpty($em->getElements());

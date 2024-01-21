@@ -21,6 +21,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const DIGEST_SHA512 = 'http://www.w3.org/2001/04/xmlenc#sha512';
     public const DIGEST_RIPEMD160 = 'http://www.w3.org/2001/04/xmlenc#ripemd160';
 
+    /** @var array<string, string> */
     public static array $DIGEST_ALGORITHMS = [
         self::DIGEST_SHA1 => 'sha1',
         self::DIGEST_SHA224 => 'sha224',
@@ -47,6 +48,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const BLOCK_ENC_AES192_GCM = 'http://www.w3.org/2009/xmlenc11#aes192-gcm';
     public const BLOCK_ENC_AES256_GCM = 'http://www.w3.org/2009xmlenc11#aes256-gcm';
 
+    /** @var array<string, string> */
     public static array $BLOCK_CIPHER_ALGORITHMS = [
         self::BLOCK_ENC_3DES => 'des-ede3-cbc',
         self::BLOCK_ENC_AES128 => 'aes-128-cbc',
@@ -57,6 +59,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 'aes-256-gcm',
     ];
 
+    /** @var array<string, positive-int> */
     public static array $BLOCK_SIZES = [
         self::BLOCK_ENC_3DES => 8,
         self::BLOCK_ENC_AES128 => 16,
@@ -67,6 +70,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 16,
     ];
 
+    /** @var array<string, positive-int> */
     public static array $BLOCK_CIPHER_KEY_SIZES = [
         self::BLOCK_ENC_3DES => 24,
         self::BLOCK_ENC_AES128 => 16,
@@ -84,6 +88,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const KEY_TRANSPORT_OAEP = 'http://www.w3.org/2009/xmlenc11#rsa-oaep';
     public const KEY_TRANSPORT_OAEP_MGF1P = 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p';
 
+    /** @var string[] */
     public static array $KEY_TRANSPORT_ALGORITHMS = [
         self::KEY_TRANSPORT_RSA_1_5,
         self::KEY_TRANSPORT_OAEP,
@@ -114,6 +119,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const SIG_HMAC_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha512';
     public const SIG_HMAC_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-ripemd160';
 
+    /** @var array<string, string> */
     public static array $RSA_DIGESTS = [
         self::SIG_RSA_SHA1 => self::DIGEST_SHA1,
         self::SIG_RSA_SHA224 => self::DIGEST_SHA224,
@@ -123,6 +129,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::SIG_RSA_RIPEMD160 => self::DIGEST_RIPEMD160,
     ];
 
+    /** @var array<string, string> */
     public static array $HMAC_DIGESTS = [
         self::SIG_HMAC_SHA1 => self::DIGEST_SHA1,
         self::SIG_HMAC_SHA224 => self::DIGEST_SHA224,

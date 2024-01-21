@@ -48,7 +48,7 @@ trait CanonicalizableElementTrait
     /**
      * Serialize this canonicalisable element.
      *
-     * @return array The serialized chunk.
+     * @return array{0: string} The serialized chunk.
      */
     public function __serialize(): array
     {

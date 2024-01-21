@@ -30,7 +30,7 @@ final class SignatureProperty extends AbstractDsElement
     /**
      * Initialize a ds:SignatureProperty
      *
-     * @param \SimpleSAML\XML\ElementInterface[] $elements
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      * @param string $Target
      * @param string|null $Id
      */
@@ -90,7 +90,6 @@ final class SignatureProperty extends AbstractDsElement
             $children[] = new Chunk($child);
         }
 
-        /** @psalm-var \SimpleSAML\XML\ElementInterface[] $children */
         Assert::minCount(
             $children,
             1,
@@ -121,7 +120,6 @@ final class SignatureProperty extends AbstractDsElement
             $e->setAttribute('Id', $this->getId());
         }
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $element */
         foreach ($this->getElements() as $element) {
             $element->toXML($e);
         }
