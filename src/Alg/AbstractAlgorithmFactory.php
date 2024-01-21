@@ -23,19 +23,18 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
 abstract class AbstractAlgorithmFactory
 {
     /**
-     * A cache of algorithm implementations indexed by algorithm ID.
-     *
-     * @var string[]
-     */
-    protected static array $cache = [];
-
-    /**
      * Whether the factory has been initialized or not.
      *
      * @var bool
      */
     protected static bool $initialized = false;
 
+    /**
+     * A cache of algorithm implementations indexed by algorithm ID.
+     *
+     * @var array<string, \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface>
+     */
+    protected static array $cache = [];
 
     /**
      * Build a factory that creates algorithms.
@@ -67,15 +66,16 @@ abstract class AbstractAlgorithmFactory
 
 
     /**
-     * Get a new object implementing the given algorithm.
+     * Get a new object implementing the given digital signature algorithm.
      *
      * @param string $algId The identifier of the algorithm desired.
      * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
      *
-     * @return \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface An object implementing the given algorithm.
+     * @return \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface An object implementing the given
+     * algorithm.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
-     * is blacklisted, unknown or the given key is not suitable for it.
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given
+     * algorithm is blacklisted, unknown or the given key is not suitable for it.
      */
     public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
     {
@@ -91,7 +91,6 @@ abstract class AbstractAlgorithmFactory
             UnsupportedAlgorithmException::class,
         );
 
-        /** @psalm-var AlgorithmInterface */
         return new static::$cache[$algId]($key, $algId);
     }
 
@@ -99,7 +98,7 @@ abstract class AbstractAlgorithmFactory
     /**
      * Get the name of the abstract class our algorithm implementations must extend.
      *
-     * @return string
+     * @return class-string
      */
     abstract protected static function getExpectedParent(): string;
 

@@ -135,7 +135,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      */
     public function toXML(DOMElement $parent = null): DOMElement
     {
-        /** @psalm-var \DOMDocument $e->ownerDocument */
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', $this->getAlgorithm());
 
@@ -143,7 +142,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $this->getOAEPparams()?->toXML($e);
 
         foreach ($this->getElements() as $child) {
-            /** @var \SimpleSAML\XML\SerializableElementInterface $child */
             $child->toXML($e);
         }
 

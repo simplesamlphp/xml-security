@@ -24,14 +24,16 @@ final class KeyInfo extends AbstractDsElement
     /**
      * Initialize a KeyInfo element.
      *
-     * @param list<\SimpleSAML\XML\Chunk|
-     *         \SimpleSAML\XMLSecurity\XML\ds\KeyName|
-     *         \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
-     *         \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
-     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
-     *         \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey> $info
+     * @param (
+     *     \SimpleSAML\XML\SerializableElementInterface|
+     *     \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *     \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *     \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
+     *     \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *     \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
+     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
+     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     * )[] $info
      * @param string|null $Id
      */
     public function __construct(
@@ -72,14 +74,16 @@ final class KeyInfo extends AbstractDsElement
     /**
      * Collect the value of the info-property
      *
-     * @return (\SimpleSAML\XML\Chunk|
-     *          \SimpleSAML\XMLSecurity\XML\ds\KeyName|
-     *          \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
-     *          \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *          \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
-     *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
-     *          \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey)[]
+     * @return (
+     *     \SimpleSAML\XML\SerializableElementInterface|
+     *     \SimpleSAML\XMLSecurity\XML\ds\KeyName|
+     *     \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
+     *     \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
+     *     \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *     \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
+     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
+     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     * )[]
      */
     public function getInfo(): array
     {

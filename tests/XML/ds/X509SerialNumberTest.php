@@ -56,9 +56,11 @@ final class X509SerialNumberTest extends TestCase
     public function testUnmarshallingIncorrectTypeThrowsException(): void
     {
         $document = clone self::$xmlRepresentation;
-        $document->documentElement->textContent = 'Not an integer';
+        /** @var \DOMElement $docElement */
+        $docElement = $document->documentElement;
+        $docElement->textContent = 'Not an integer';
 
         $this->expectException(SchemaViolationException::class);
-        X509SerialNumber::fromXML($document->documentElement);
+        X509SerialNumber::fromXML($docElement);
     }
 }

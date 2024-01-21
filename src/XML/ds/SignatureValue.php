@@ -13,7 +13,6 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
  * Class representing a ds:SignatureValue element.
  *
  * @package simplesaml/xml-security
- * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class SignatureValue extends AbstractDsElement
 {

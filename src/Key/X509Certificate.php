@@ -26,17 +26,17 @@ class X509Certificate
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
     protected PublicKey $publicKey;
 
-    /** @var array */
+    /** @var array<string, string> */
     protected array $thumbprint = [];
 
-    /** @var array */
+    /** @var array<string, mixed> */
     protected array $parsed = [];
 
 
     /**
      * Create a new X509 certificate from its PEM-encoded representation.
      *
-     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $cert
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $material
      *   The PEM-encoded certificate or the path to a file containing it.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
@@ -58,7 +58,7 @@ class X509Certificate
         }
 
         // Some OpenSSL functions will add errors to the list even if they succeed
-        while (openssl_error_string() !== false);
+        while (openssl_error_string() !== false); // @phpstan-ignore-line
 
         $this->publicKey = new PublicKey(PEM::fromString($details['key']));
 
@@ -130,7 +130,7 @@ class X509Certificate
     /**
      * Get the details of this certificate.
      *
-     * @return array An array with all the details of the certificate.
+     * @return array<string, mixed> An array with all the details of the certificate.
      *
      * @see openssl_x509_parse()
      */

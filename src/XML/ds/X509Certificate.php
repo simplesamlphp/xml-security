@@ -10,7 +10,6 @@ use SimpleSAML\XML\Base64ElementTrait;
  * Class representing a ds:X509Certificate element.
  *
  * @package simplesamlphp/xml-security
- * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class X509Certificate extends AbstractDsElement
 {

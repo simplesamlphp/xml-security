@@ -74,7 +74,7 @@ final class RSAKeyValueTest extends TestCase
         $modulus = XPath::xpQuery($RSAKeyValueElement, './ds:Modulus', $xpCache);
         $this->assertCount(1, $modulus);
 
-        /** @psalm-var \DOMElement[] $RSAKeyValueElements */
+        /** @var \DOMElement[] $RSAKeyValueElements */
         $RSAKeyValueElements = XPath::xpQuery($RSAKeyValueElement, './ds:Modulus/following-sibling::*', $xpCache);
 
         // Test ordering of RSAKeyValue contents

@@ -42,8 +42,8 @@
         "ext-pcre": "*",
         "ext-spl": "*",
 
-        "simplesamlphp/assert": "^1.0",
-        "simplesamlphp/xml-common": "^1.14"
+        "simplesamlphp/assert": "^1.1",
+        "simplesamlphp/xml-common": "^1.15"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "^1.5"

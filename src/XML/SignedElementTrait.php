@@ -195,7 +195,6 @@ trait SignedElementTrait
              * property is available, and we can set it on the newly created object because we are in the same class,
              * even thought the property itself is private.
              */
-            /** @psalm-suppress NoInterfaceProperties */
             $ref->validatingKey = $verifier->getKey();
             return $ref;
         }

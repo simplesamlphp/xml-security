@@ -10,7 +10,6 @@ use SimpleSAML\XML\Base64ElementTrait;
  * Class representing a xenc:CipherValue element.
  *
  * @package simplesaml/xml-security
- * @psalm-suppress PropertyNotSetInConstructor $content
  */
 final class CipherValue extends AbstractXencElement
 {

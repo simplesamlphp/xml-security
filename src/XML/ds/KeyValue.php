@@ -32,7 +32,7 @@ final class KeyValue extends AbstractDsElement
      * Initialize an KeyValue.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|null $RSAKeyValue
-     * @param \SimpleSAML\XML\ElementInterface|null $element
+     * @param \SimpleSAML\XML\SerializableElementInterface|null $element
      */
     final public function __construct(
         protected ?RSAKeyValue $RSAKeyValue,
@@ -114,7 +114,6 @@ final class KeyValue extends AbstractDsElement
 
         $this->getRSAKeyValue()?->toXML($e);
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $elt */
         foreach ($this->elements as $elt) {
             if (!$elt->isEmptyElement()) {
                 $elt->toXML($e);

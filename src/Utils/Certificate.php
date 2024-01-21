@@ -51,7 +51,7 @@ class Certificate
 
 
     /**
-     * @param array|string $issuer
+     * @param array<string, mixed>|string $issuer
      *
      * @return string
      */
@@ -82,7 +82,6 @@ class Certificate
             throw new InvalidArgumentException('Could not find content matching the provided pattern.');
         }
 
-        /** @psalm-suppress EmptyArrayAccess */
         return preg_replace('/\s+/', '', $matches[1]);
     }
 }

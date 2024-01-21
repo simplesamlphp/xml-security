@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\Encryption;
 
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 /**
@@ -29,7 +32,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
     /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
-     * @var string[]
+     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface>
      */
     protected static array $cache = [];
 
@@ -44,7 +47,7 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
     /**
      * Build a factory that creates encryption algorithms.
      *
-     * @param array|null $blacklist A list of algorithms forbidden for their use.
+     * @param string[]|null $blacklist A list of algorithms forbidden for their use.
      */
     public function __construct(array $blacklist = null)
     {
@@ -66,23 +69,5 @@ final class EncryptionAlgorithmFactory extends AbstractAlgorithmFactory
     protected static function getExpectedParent(): string
     {
         return EncryptionAlgorithmInterface::class;
-    }
-
-
-    /**
-     * Get a new object implementing the given encryption algorithm.
-     *
-     * @param string $algId The identifier of the algorithm desired.
-     * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
-     *
-     * @return \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface An object implementing the given
-     * algorithm.
-     *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
-     * is blacklisted, unknown or the given key is not suitable for it.
-     */
-    public function getAlgorithm(string $algId, KeyInterface $key): EncryptionAlgorithmInterface
-    {
-        return parent::getAlgorithm($algId, $key);
     }
 }

@@ -23,8 +23,8 @@ use function openssl_x509_read;
  */
 final class X509CertificateTest extends TestCase
 {
-    /** @var array */
-    protected static $cert = [];
+    /** @var array<string, string|int> */
+    protected static array $cert = [];
 
     /** @var string */
     protected static string $f;

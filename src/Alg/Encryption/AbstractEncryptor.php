@@ -99,7 +99,7 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
     /**
      * Decrypt a given ciphertext with the current algorithm and key.
      *
-     * @param string The (binary) ciphertext to decrypt.
+     * @param string $ciphertext The (binary) ciphertext to decrypt.
      *
      * @return string The decrypted plaintext.
      */

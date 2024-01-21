@@ -29,7 +29,7 @@ abstract class AbstractReference extends AbstractXencElement
      * AbstractReference constructor.
      *
      * @param string $uri
-     * @param \SimpleSAML\XML\ElementInterface[] $elements
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     final public function __construct(
         protected string $uri,
@@ -86,7 +86,6 @@ abstract class AbstractReference extends AbstractXencElement
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('URI', $this->getUri());
 
-        /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $elt */
         foreach ($this->getElements() as $elt) {
             $elt->toXML($e);
         }

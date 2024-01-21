@@ -135,7 +135,7 @@ final class SignatureTest extends TestCase
         $signedInfo = XPath::xpQuery($signatureElement, './ds:SignedInfo', $xpCache);
         $this->assertCount(1, $signedInfo);
 
-        /** @psalm-var \DOMElement[] $signatureElements */
+        /** @var \DOMElement[] $signatureElements */
         $signatureElements = XPath::xpQuery($signatureElement, './ds:SignedInfo/following-sibling::*', $xpCache);
 
         // Test ordering of Signature contents

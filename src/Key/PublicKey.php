@@ -17,7 +17,6 @@ use function sprintf;
 /**
  * A class modeling public keys for their use in asymmetric algorithms.
  *
- * @psalm-consistent-constructor
  * @package simplesamlphp/xml-security
  */
 class PublicKey extends AsymmetricKey
@@ -46,7 +45,7 @@ class PublicKey extends AsymmetricKey
      *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The PEM-encoded key material.
      */
-    public function __construct(PEM $key)
+    final public function __construct(PEM $key)
     {
         Assert::oneOf(
             $key->type(),

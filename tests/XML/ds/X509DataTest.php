@@ -38,7 +38,7 @@ final class X509DataTest extends TestCase
     /** @var string */
     private static string $certificate;
 
-    /** @var string[] */
+    /** @var array<string, mixed> */
     private static array $certData;
 
 

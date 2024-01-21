@@ -74,7 +74,7 @@ class XPath extends AbstractDsElement
         $namespaces = [];
         $xpath = XPathUtils::getXPath($xml->ownerDocument);
         foreach (XPathUtils::xpQuery($xml, './namespace::*', $xpath) as $ns) {
-            if ($xml->getAttributeNode($ns->nodeName)) {
+            if ($xml->getAttributeNode($ns->nodeName) !== false) {
                 // only add namespaces when they are defined explicitly in an attribute
                 $namespaces[$ns->localName] = $xml->getAttribute($ns->nodeName);
             }

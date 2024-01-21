@@ -35,7 +35,7 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement
     /**
      * EncryptionProperty constructor.
      *
-     * @param \SimpleSAML\XML\SerializableElement[] $children
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $children
      * @param string|null $Target
      * @param string|null $Id
      * @param \SimpleSAML\XML\Attribute[] $namespacedAttributes

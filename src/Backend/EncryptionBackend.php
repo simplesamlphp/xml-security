@@ -18,7 +18,7 @@ interface EncryptionBackend
      *
      * @param string $cipher The identifier of the cipher.
      *
-     * @throws InvalidArgumentException If the cipher is unknown or not supported.
+     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the cipher is unknown or not supported.
      *
      * @see \SimpleSAML\XMLSecurity\Constants
      */
