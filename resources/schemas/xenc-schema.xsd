@@ -31,6 +31,7 @@
         targetNamespace='http://www.w3.org/2001/04/xmlenc#'
         elementFormDefault='qualified'>
 
+  <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation='xml.xsd' />
   <import namespace='http://www.w3.org/2000/09/xmldsig#'
           schemaLocation='xmldsig-core-schema.xsd'/>
 
@@ -59,9 +60,9 @@
     <attribute name='Algorithm' type='anyURI' use='required'/>
   </complexType>
 
-    <simpleType name='KeySizeType'>
-      <restriction base="integer"/>
-    </simpleType>
+  <simpleType name='KeySizeType'>
+    <restriction base="integer"/>
+  </simpleType>
 
   <element name='CipherData' type='xenc:CipherDataType'/>
   <complexType name='CipherDataType'>
