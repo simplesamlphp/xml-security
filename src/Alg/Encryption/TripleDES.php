@@ -26,7 +26,7 @@ class TripleDES extends AbstractEncryptor
 
 
     /**
-     * @inheritDoc
+     * @return string[]
      */
     public static function getSupportedAlgorithms(): array
     {
