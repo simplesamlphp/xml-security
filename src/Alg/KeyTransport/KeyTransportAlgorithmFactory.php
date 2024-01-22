@@ -4,17 +4,35 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 
-use SimpleSAML\XMLSecurity\Alg\AbstractAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\AlgorithmInterface;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
+
+use function array_key_exists;
+use function in_array;
+use function sprintf;
 
 /**
  * Factory class to create and configure key transport algorithms.
  */
-class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
+class KeyTransportAlgorithmFactory
 {
+    /**
+     * A cache of algorithm implementations indexed by algorithm ID.
+     *
+     * @var array<string, \SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmInterface>
+     */
+    protected static array $cache = [];
+
+    /**
+     * Whether the factory has been initialized or not.
+     *
+     * @var bool
+     */
+    protected static bool $initialized = false;
+
     /**
      * An array of blacklisted algorithms.
      *
@@ -26,54 +44,93 @@ class KeyTransportAlgorithmFactory extends AbstractAlgorithmFactory
         C::KEY_TRANSPORT_RSA_1_5,
     ];
 
+
     /**
-     * A cache of algorithm implementations indexed by algorithm ID.
+     * An array of default algorithms that can be used.
      *
-     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface>
+     * @var class-string[]
      */
-    protected static array $cache = [];
-
-    /**
-     * Whether the factory has been initialized or not.
-     *
-     * @var bool
-     */
-    protected static bool $initialized = false;
+    private const SUPPORTED_DEFAULTS = [
+        RSA::class,
+    ];
 
 
     /**
-     * Build a factory that creates key transport algorithms.
+     * Build a factory that creates algorithms.
      *
      * @param string[]|null $blacklist A list of algorithms forbidden for their use.
      */
-    public function __construct(array $blacklist = null)
-    {
-        parent::__construct($blacklist ?? self::DEFAULT_BLACKLIST, [RSA::class]);
+    public function __construct(
+        protected ?array $blacklist = self::DEFAULT_BLACKLIST,
+    ) {
+        // initialize the cache for supported algorithms per known implementation
+        if (!self::$initialized && $blacklist !== null) {
+            foreach (self::SUPPORTED_DEFAULTS as $algorithm) {
+                foreach ($algorithm::getSupportedAlgorithms() as $algId) {
+                    if (array_key_exists($algId, self::$cache)) {
+                        /*
+                         * If the key existed before initialization, that means someone registered a handler for this
+                         * algorithm, so we should respect that and skip registering the default here.
+                         */
+                        continue;
+                    }
+                    self::$cache[$algId] = $algorithm;
+                }
+            }
+            self::$initialized = true;
+        }
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected static function getExpectedParent(): string
-    {
-        return EncryptionAlgorithmInterface::class;
-    }
-
 
     /**
-     * Get a new object implementing the given key transport algorithm.
+     * Get a new object implementing the given digital signature algorithm.
      *
      * @param string $algId The identifier of the algorithm desired.
      * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use with the given algorithm.
      *
-     * @return \SimpleSAML\XMLSecurity\Alg\AlgorithmInterface An object implementing the given
+     * @return \SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmInterface An object implementing the given
      * algorithm.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If an error occurs, e.g. the given algorithm
-     * is blacklisted, unknown or the given key is not suitable for it.
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given
+     * algorithm is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, KeyInterface $key): AlgorithmInterface
+    public function getAlgorithm(string $algId, KeyInterface $key): KeyTransportAlgorithmInterface
     {
-        return parent::getAlgorithm($algId, $key);
+        Assert::false(
+            ($this->blacklist !== null) && in_array($algId, $this->blacklist, true),
+            sprintf('Blacklisted algorithm: \'%s\'.', $algId),
+            BlacklistedAlgorithmException::class,
+        );
+        Assert::keyExists(
+            self::$cache,
+            $algId,
+            sprintf('Unknown or unsupported algorithm: \'%s\'.', $algId),
+            UnsupportedAlgorithmException::class,
+        );
+
+        return new self::$cache[$algId]($key, $algId);
+    }
+
+
+    /**
+     * Register an implementation of some algorithm(s) for its use.
+     *
+     * @param class-string $className
+     */
+    public static function registerAlgorithm(string $className): void
+    {
+        Assert::implementsInterface(
+            $className,
+            KeyTransportAlgorithmInterface::class,
+            sprintf(
+                'Cannot register algorithm "%s", must implement %s.',
+                $className,
+                KeyTransportAlgorithmInterface::class,
+            ),
+        );
+
+        foreach ($className::getSupportedAlgorithms() as $algId) {
+            self::$cache[$algId] = $className;
+        }
     }
 }

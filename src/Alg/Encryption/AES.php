@@ -27,7 +27,7 @@ class AES extends AbstractEncryptor
 
 
     /**
-     * @inheritDoc
+     * @return string[]
      */
     public static function getSupportedAlgorithms(): array
     {

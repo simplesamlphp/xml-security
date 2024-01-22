@@ -32,7 +32,7 @@ final class HMAC extends AbstractSigner implements SignatureAlgorithmInterface
 
 
     /**
-     * @inheritDoc
+     * @return string[]
      */
     public static function getSupportedAlgorithms(): array
     {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
@@ -16,7 +15,7 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractKeyTransporter implements EncryptionAlgorithmInterface
+abstract class AbstractKeyTransporter implements KeyTransportAlgorithmInterface
 {
     /** @var string */
     protected const DEFAULT_BACKEND = Backend\OpenSSL::class;

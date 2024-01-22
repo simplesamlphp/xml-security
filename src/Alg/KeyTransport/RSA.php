@@ -27,7 +27,7 @@ final class RSA extends AbstractKeyTransporter
 
 
     /**
-     * @inheritDoc
+     * @return string[]
      */
     public static function getSupportedAlgorithms(): array
     {
