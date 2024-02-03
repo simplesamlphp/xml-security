@@ -215,6 +215,7 @@ final class SignableElementTest extends TestCase
     public function testSigningDocumentWithoutRoot(): void
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
+        /** @var \DOMElement $node */
         $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
@@ -238,6 +239,7 @@ final class SignableElementTest extends TestCase
     public function testSigningWithDifferentRoot(): void
     {
         $doc = DOMDocumentFactory::fromString('<ns:Root><ns:foo>bar</ns:foo></ns:Root>');
+        /** @var \DOMElement $node */
         $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
         $doc->appendChild($node);
         $customSignable = CustomSignable::fromXML($node);

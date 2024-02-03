@@ -20,8 +20,8 @@ use function openssl_pkey_get_public;
  */
 final class PublicKeyTest extends TestCase
 {
-    /** @var array */
-    protected static $pubKey = [];
+    /** @var array<string, string|array<string>> */
+    protected static array $pubKey = [];
 
     /** @var string */
     protected static string $f;
