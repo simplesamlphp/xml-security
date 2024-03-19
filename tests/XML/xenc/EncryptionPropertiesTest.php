@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
 use SimpleSAML\XML\Chunk;
@@ -11,6 +12,8 @@ use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionPropertiesType;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperties;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
 
@@ -26,6 +29,9 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractXencElement::class)]
+#[CoversClass(AbstractEncryptionPropertiesType::class)]
+#[CoversClass(EncryptionProperties::class)]
 final class EncryptionPropertiesTest extends TestCase
 {
     use SchemaValidationTestTrait;

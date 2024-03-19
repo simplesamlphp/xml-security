@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\CryptoEncoding;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
@@ -14,10 +16,9 @@ use function dirname;
 use function file_get_contents;
 
 /**
- * @group pem
- *
  * @internal
  */
+#[Group('pem')]
 class PEMTest extends TestCase
 {
     private static string $baseDir;
@@ -51,10 +52,9 @@ class PEMTest extends TestCase
 
 
     /**
-     * @depends testFromFile
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $pem
      */
+    #[Depends('testFromFile')]
     public function testType(PEM $pem): void
     {
         $this->assertEquals(PEM::TYPE_PUBLIC_KEY, $pem->type());
@@ -101,10 +101,9 @@ DATA;
 
 
     /**
-     * @depends testFromFile
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $pem
      */
+    #[Depends('testFromFile')]
     public function testString(PEM $pem): void
     {
         $this->assertIsString($pem->string());
@@ -112,10 +111,9 @@ DATA;
 
 
     /**
-     * @depends testFromFile
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $pem
      */
+    #[Depends('testFromFile')]
     public function testToString(PEM $pem): void
     {
         $this->assertIsString(strval($pem));

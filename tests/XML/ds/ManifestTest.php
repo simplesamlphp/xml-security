@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 use SimpleSAML\XMLSecurity\XML\ds\Manifest;
@@ -22,11 +24,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\ManifestTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\Manifest
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- *
  * @package simplesamlphp/saml2
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(Manifest::class)]
 final class ManifestTest extends TestCase
 {
     use SchemaValidationTestTrait;

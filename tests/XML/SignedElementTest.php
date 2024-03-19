@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMElement;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -13,8 +14,10 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
 
 use function dirname;
 use function strval;
@@ -22,11 +25,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignedElementTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\SignedElementTrait
- * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(SignedElementTrait::class)]
+#[CoversClass(CustomSignable::class)]
 final class SignedElementTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */

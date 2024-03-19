@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
@@ -20,11 +22,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\RetrievalMethodTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- *
  * @package simplesamlphp/saml2
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(RetrievalMethod::class)]
 final class RetrievalMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;

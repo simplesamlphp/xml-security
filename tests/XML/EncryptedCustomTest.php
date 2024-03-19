@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMElement;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
@@ -13,19 +14,21 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Test\XML\EncryptedCustom;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
+use SimpleSAML\XMLSecurity\XML\EncryptedElementTrait;
 
 use function dirname;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\EncryptedCustomTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\EncryptableElementTrait
- * @covers \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait
- * @covers \SimpleSAML\XMLSecurity\Test\XML\EncryptedCustom
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(EncryptableElementTrait::class)]
+#[CoversClass(EncryptedElementTrait::class)]
+#[CoversClass(EncryptedCustom::class)]
 class EncryptedCustomTest extends TestCase
 {
     /** @var \DOMElement */

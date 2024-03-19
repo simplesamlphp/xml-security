@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference;
 
 use function dirname;
@@ -16,11 +18,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\dsig11\KeyInfoReferenceTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element
- * @covers \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsig11Element::class)]
+#[CoversClass(KeyInfoReference::class)]
 final class KeyInfoReferenceTest extends TestCase
 {
     use SchemaValidationTestTrait;

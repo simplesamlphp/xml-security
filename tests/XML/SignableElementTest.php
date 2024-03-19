@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use DOMDocument;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
@@ -12,6 +13,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -28,10 +30,9 @@ use function trim;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignableElementTest
  *
- * @covers \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(CustomSignable::class)]
 final class SignableElementTest extends TestCase
 {
     use SerializableElementTestTrait;

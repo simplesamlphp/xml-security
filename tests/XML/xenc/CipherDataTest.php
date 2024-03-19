@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 
@@ -22,6 +24,8 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractXencElement::class)]
+#[CoversClass(CipherData::class)]
 final class CipherDataTest extends TestCase
 {
     use SchemaValidationTestTrait;

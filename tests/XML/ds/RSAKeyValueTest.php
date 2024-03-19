@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XML\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
 use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
@@ -19,11 +21,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\RSAKeyValueTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(RSAKeyValue::class)]
 final class RSAKeyValueTest extends TestCase
 {
     use SchemaValidationTestTrait;

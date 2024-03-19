@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
@@ -11,6 +12,8 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractReference;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
 
 use function dirname;
@@ -25,6 +28,9 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractXencElement::class)]
+#[CoversClass(AbstractReference::class)]
+#[CoversClass(KeyReference::class)]
 final class KeyReferenceTest extends TestCase
 {
     use SerializableElementTestTrait;

@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\Utils;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\Certificate;
 
 /**
- * @covers \SimpleSAML\XMLSecurity\Utils\Certificate
  * @package simplesamlphp/xml-security
  */
+#[Group('utilities')]
+#[CoversClass(Certificate::class)]
 final class CertificateTest extends TestCase
 {
-    /**
-     * @group utilities
-     * @test
-     */
+    #[Test]
     public function testValidStructure(): void
     {
         $result = Certificate::hasValidStructure(
@@ -32,10 +33,7 @@ final class CertificateTest extends TestCase
     }
 
 
-    /**
-     * @group utilities
-     * @test
-     */
+    #[Test]
     public function testConvertToCertificate(): void
     {
         $result = Certificate::convertToCertificate(PEMCertificatesMock::getPlainCertificateContents());
@@ -44,8 +42,7 @@ final class CertificateTest extends TestCase
     }
 
 
-    /**
-     */
+    #[Test]
     public function testParseIssuer(): void
     {
         // Test string input

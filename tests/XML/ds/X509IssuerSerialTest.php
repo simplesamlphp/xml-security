@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
@@ -12,6 +13,7 @@ use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\Certificate as CertificateUtils;
 use SimpleSAML\XMLSecurity\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
@@ -22,11 +24,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(X509IssuerSerial::class)]
 final class X509IssuerSerialTest extends TestCase
 {
     use SerializableElementTestTrait;

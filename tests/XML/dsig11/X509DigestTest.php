@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
@@ -13,6 +14,7 @@ use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
 use function base64_encode;
@@ -23,11 +25,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\dsig11\X509DigestTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element
- * @covers \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsig11Element::class)]
+#[CoversClass(X509Digest::class)]
 final class X509DigestTest extends TestCase
 {
     use SchemaValidationTestTrait;

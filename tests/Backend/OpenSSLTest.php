@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\Backend;
 
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -195,16 +196,29 @@ final class OpenSSLTest extends TestCase
     /**
      * Test that encrypting with RSA-OAEP* and decrypting with RSA 1.5 fails.
      */
-    public function testEncryptOAEPDecryptRSA15(): void
+    #[RequiresOperatingSystem('Linux')]
+    public function testEncryptOAEPDecryptRSA15Unix(): void
     {
         self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
         $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
         self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
-// As of March 2024 the openssl_decrypt function no longer throws an exception
-//        $this->expectException(RuntimeException::class);
-//        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
         $plaintext = self::$backend->decrypt(self::$privKey, $ciphertext);
         $this->assertNotEquals('Plaintext', $plaintext);
+    }
+
+
+    /**
+     * Test that encrypting with RSA-OAEP* and decrypting with RSA 1.5 fails.
+     */
+    #[RequiresOperatingSystem('Windows')]
+    public function testEncryptOAEPDecryptRSA15Windows(): void
+    {
+        self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
+        self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
+        self::$backend->decrypt(self::$privKey, $ciphertext);
     }
 
 

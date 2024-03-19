@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
 
 use function dirname;
@@ -17,11 +19,10 @@ use function strval;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\SignatureMethodTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(SignatureMethod::class)]
 final class SignatureMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;

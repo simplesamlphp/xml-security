@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
@@ -11,6 +12,8 @@ use SimpleSAML\XML\Exception\MissingAttributeException;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\KeySize;
 use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
@@ -26,6 +29,9 @@ use function strval;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractXencElement::class)]
+#[CoversClass(AbstractEncryptionMethod::class)]
+#[CoversClass(EncryptionMethod::class)]
 final class EncryptionMethodTest extends TestCase
 {
     use SerializableElementTestTrait;

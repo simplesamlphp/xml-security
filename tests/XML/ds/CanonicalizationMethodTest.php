@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 
 use function dirname;
@@ -16,11 +18,10 @@ use function dirname;
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\ds\CanonicalizationMethodTest
  *
- * @covers \SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement
- * @covers \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod
- *
  * @package simplesamlphp/xml-security
  */
+#[CoversClass(AbstractDsElement::class)]
+#[CoversClass(CanonicalizationMethod::class)]
 final class CanonicalizationMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;

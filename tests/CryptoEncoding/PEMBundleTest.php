@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\CryptoEncoding;
 
 use LogicException;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle;
@@ -14,10 +16,9 @@ use UnexpectedValueException;
 use function dirname;
 
 /**
- * @group pem
- *
  * @internal
  */
+#[Group('pem')]
 class PEMBundleTest extends TestCase
 {
     private static string $baseDir;
@@ -43,10 +44,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testAll(PEMBundle $bundle): void
     {
         $this->assertContainsOnlyInstancesOf(PEM::class, $bundle->all());
@@ -54,10 +54,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testFirst(PEMBundle $bundle): void
     {
         $this->assertInstanceOf(PEM::class, $bundle->first());
@@ -66,10 +65,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testLast(PEMBundle $bundle): void
     {
         $this->assertInstanceOf(PEM::class, $bundle->last());
@@ -78,10 +76,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testCount(PEMBundle $bundle): void
     {
         $this->assertCount(150, $bundle);
@@ -89,10 +86,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testIterator(PEMBundle $bundle): void
     {
         $values = [];
@@ -104,10 +100,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testString(PEMBundle $bundle): void
     {
         $this->assertIsString($bundle->string());
@@ -115,10 +110,9 @@ class PEMBundleTest extends TestCase
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testToString(PEMBundle $bundle): void
     {
         $this->assertIsString(strval($bundle));
@@ -168,10 +162,9 @@ DATA;
 
 
     /**
-     * @depends testBundle
-     *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle $bundle
      */
+    #[Depends('testBundle')]
     public function testWithPEMs(PEMBundle $bundle): void
     {
         $bundle = $bundle->withPEMs(new PEM('TEST', 'data'));
