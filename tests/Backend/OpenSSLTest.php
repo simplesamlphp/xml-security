@@ -200,9 +200,11 @@ final class OpenSSLTest extends TestCase
         self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
         $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
         self::$backend->setCipher(C::KEY_TRANSPORT_RSA_1_5);
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
-        self::$backend->decrypt(self::$privKey, $ciphertext);
+// As of March 2024 the openssl_decrypt function no longer throws an exception
+//        $this->expectException(RuntimeException::class);
+//        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
+        $plaintext = self::$backend->decrypt(self::$privKey, $ciphertext);
+        $this->assertNotEquals('Plaintext', $plaintext);
     }
 
 
