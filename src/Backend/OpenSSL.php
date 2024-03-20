@@ -164,7 +164,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             $key->getMaterial(),
             $options,
             $iv,
-            strval($authTag), /** @TODO remove strval when minimal php-version becomes >=8.1 */
+            $authTag,
         );
 
         if ($plaintext === false) {
