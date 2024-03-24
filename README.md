@@ -224,7 +224,7 @@ canonicalization algorithm to use:
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
-use SimpleSAML\XMLSecurity\XML\ds\X509Data
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 ...
 
