@@ -22,7 +22,6 @@ use function openssl_sign;
 use function openssl_verify;
 use function ord;
 use function str_repeat;
-use function strval;
 use function substr;
 
 /**
