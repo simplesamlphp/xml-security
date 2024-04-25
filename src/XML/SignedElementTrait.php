@@ -151,7 +151,7 @@ trait SignedElementTrait
         $data = XML::processTransforms($reference->getTransforms(), $xml);
         $digest = Security::hash($reference->getDigestMethod()->getAlgorithm(), $data, false);
 
-        if (Security::compareStrings($digest, base64_decode($reference->getDigestValue()->getRawContent())) !== true) {
+        if (Security::compareStrings($digest, base64_decode($reference->getDigestValue()->getRawContent(), true)) !== true) {
             throw new SignatureVerificationFailedException('Failed to verify signature.');
         }
 
@@ -187,7 +187,7 @@ trait SignedElementTrait
         if (
             $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
-                base64_decode($this->signature->getSignatureValue()->getRawContent()), // the actual signature
+                base64_decode($this->signature->getSignatureValue()->getRawContent(), true), // the actual signature
             )
         ) {
             /*

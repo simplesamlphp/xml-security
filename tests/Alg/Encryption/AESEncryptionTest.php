@@ -52,7 +52,7 @@ class AESEncryptionTest extends TestCase
     public function testDecrypt(): void
     {
         $ciphertext = "r0YRkEixBnAKU032/ux7avHcVTH1CIIyKaPA2qr4KlIs0LVZp5CuwQKRRi6lji4cnaFbH4jETtJhMSEfbpSdvg==";
-        $plaintext = self::$algo->decrypt(base64_decode($ciphertext));
+        $plaintext = self::$algo->decrypt(base64_decode($ciphertext, true));
         $this->assertEquals("\n  <Value>\n\tHello, World!\n  </Value>\n", $plaintext);
     }
 }

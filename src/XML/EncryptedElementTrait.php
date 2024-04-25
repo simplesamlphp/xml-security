@@ -140,7 +140,7 @@ trait EncryptedElementTrait
             throw new InvalidArgumentException('Decryption algorithm does not match EncryptionMethod.');
         }
 
-        return $decryptor->decrypt(base64_decode($encData->getCipherData()->getCipherValue()->getContent()));
+        return $decryptor->decrypt(base64_decode($encData->getCipherData()->getCipherValue()->getContent(), true));
     }
 
 

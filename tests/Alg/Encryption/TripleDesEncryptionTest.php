@@ -52,7 +52,7 @@ class TripleDesEncryptionTest extends TestCase
     public function testDecrypt(): void
     {
         $ciphertext = "D+3dKq7MFK7U+8bqdlyRcvO12JV5Lahl5ALhF5eJXSfi+cbYKRbkRjvJsMKPp2Mk";
-        $plaintext = self::$algo->decrypt(base64_decode($ciphertext));
+        $plaintext = self::$algo->decrypt(base64_decode($ciphertext, true));
         $this->assertEquals("\n  <Value>\n\tHello, World!\n  </Value>\n", $plaintext);
     }
 }

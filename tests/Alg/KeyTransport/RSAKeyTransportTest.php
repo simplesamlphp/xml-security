@@ -80,12 +80,12 @@ class RSAKeyTransportTest extends TestCase
                       "A6fgclGb/keGZOtjSkHZnZEZvXEOQItFjS6MbQc+TzNmRd6FSkuPUmwQ1V+NwxTPCIwXSSd0Aj" .
                       "7oHb7xRdBhoFuDrSbYAvATQ=";
         $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$privateKey);
-        $plaintext = $rsa->decrypt(base64_decode($ciphertext));
+        $plaintext = $rsa->decrypt(base64_decode($ciphertext, true));
         $this->assertEquals(self::PLAINTEXT, $plaintext);
 
         // test RSA-OAEP (should behave the same as MGF1P)
         $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$privateKey);
-        $plaintext = $rsa->decrypt(base64_decode($ciphertext));
+        $plaintext = $rsa->decrypt(base64_decode($ciphertext, true));
         $this->assertEquals(self::PLAINTEXT, $plaintext);
 
         // test RSA-1.5
@@ -93,7 +93,7 @@ class RSAKeyTransportTest extends TestCase
                       "afiDsy5izSk6+QZ5kMOgRLrmnh+RYZXjvCL6i1NXzaLw8yZLBvlP01SNMv/BBq640yzbG9U2ZN" .
                       "nxBLDvBmbJBxzt6XCowXQS8=";
         $rsa = self::$factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$privateKey);
-        $plaintext = $rsa->decrypt(base64_decode($ciphertext));
+        $plaintext = $rsa->decrypt(base64_decode($ciphertext, true));
         $this->assertEquals(self::PLAINTEXT, $plaintext);
     }
 }

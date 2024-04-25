@@ -108,7 +108,7 @@ final class EncryptedKey extends AbstractEncryptedType
             InvalidArgumentException::class,
         );
 
-        return $decryptor->decrypt(base64_decode($cipherValue->getContent()));
+        return $decryptor->decrypt(base64_decode($cipherValue->getContent(), true));
     }
 
 

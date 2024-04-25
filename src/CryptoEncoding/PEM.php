@@ -91,7 +91,7 @@ class PEM
 
         $payload = preg_replace('/\s+/', '', $match[2]);
         $data = base64_decode($payload, true);
-        if ($data === false) {
+        if (empty($data)) {
             throw new UnexpectedValueException('Failed to decode PEM data.');
         }
 
