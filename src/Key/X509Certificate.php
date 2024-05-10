@@ -7,10 +7,9 @@ namespace SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\OpenSSLException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 
-use function openssl_error_string;
 use function openssl_pkey_get_details;
 use function openssl_pkey_get_public;
 use function openssl_x509_fingerprint;
@@ -39,7 +38,7 @@ class X509Certificate
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $material
      *   The PEM-encoded certificate or the path to a file containing it.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If the certificate cannot be exported to PEM format.
+     * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If the certificate cannot be exported to PEM format.
      */
     final public function __construct(
         protected PEM $material,
@@ -47,18 +46,12 @@ class X509Certificate
         Assert::oneOf($material->type(), [PEM::TYPE_CERTIFICATE], "PEM structure has the wrong type %s.");
 
         if (($key = openssl_pkey_get_public($material->string())) === false) {
-            throw new RuntimeException('Failed to read key: ' . openssl_error_string());
+            throw new OpenSSLException('Failed to read key');
         }
-
-        // Some OpenSSL functions will add errors to the list even if they succeed
-        while (openssl_error_string() !== false);
 
         if (($details = openssl_pkey_get_details($key)) === false) {
-            throw new RuntimeException('Failed to export key: ' . openssl_error_string());
+            throw new OpenSSLException('Failed to export key');
         }
-
-        // Some OpenSSL functions will add errors to the list even if they succeed
-        while (openssl_error_string() !== false); // @phpstan-ignore-line
 
         $this->publicKey = new PublicKey(PEM::fromString($details['key']));
 

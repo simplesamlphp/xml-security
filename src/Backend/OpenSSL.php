@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\Backend;
 
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\OpenSSLException;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
@@ -17,7 +17,6 @@ use function mb_strlen;
 use function openssl_cipher_iv_length;
 use function openssl_decrypt;
 use function openssl_encrypt;
-use function openssl_error_string;
 use function openssl_sign;
 use function openssl_verify;
 use function ord;
@@ -73,7 +72,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * @param string $plaintext The original text to encrypt.
      *
      * @return string The encrypted plaintext (ciphertext).
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while encrypting the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while encrypting the plaintext.
      */
     public function encrypt(KeyInterface $key, string $plaintext): string
     {
@@ -86,7 +85,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
             $ciphertext = '';
             if (!$fn($plaintext, $ciphertext, $key->getMaterial(), $this->padding)) {
-                throw new RuntimeException('Cannot encrypt data: ' . openssl_error_string());
+                throw new OpenSSLException('Cannot encrypt data');
             }
             return $ciphertext;
         }
@@ -112,7 +111,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         );
 
         if (!$ciphertext) {
-            throw new RuntimeException('Cannot encrypt data: ' . openssl_error_string());
+            throw new OpenSSLException('Cannot encrypt data');
         }
         return $iv . $ciphertext . $authTag;
     }
@@ -126,7 +125,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      *
      * @return string The decrypted ciphertext (plaintext).
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while decrypting the ciphertext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while decrypting the ciphertext.
      */
     public function decrypt(KeyInterface $key, string $ciphertext): string
     {
@@ -139,7 +138,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
             $plaintext = '';
             if (!$fn($ciphertext, $plaintext, $key->getMaterial(), $this->padding)) {
-                throw new RuntimeException('Cannot decrypt data: ' . openssl_error_string());
+                throw new OpenSSLException('Cannot decrypt data');
             }
             return $plaintext;
         }
@@ -167,7 +166,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         );
 
         if ($plaintext === false) {
-            throw new RuntimeException('Cannot decrypt data: ' . openssl_error_string());
+            throw new OpenSSLException('Cannot decrypt data');
         }
         return $this->useAuthTag ? $plaintext : $this->unpad($plaintext);
     }
@@ -181,12 +180,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      *
-     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while signing the plaintext.
+     * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while signing the plaintext.
      */
     public function sign(KeyInterface $key, string $plaintext): string
     {
         if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest)) {
-            throw new RuntimeException('Cannot sign data: ' . openssl_error_string());
+            throw new OpenSSLException('Cannot sign data');
         }
         return $signature;
     }

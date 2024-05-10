@@ -188,7 +188,7 @@ final class OpenSSLTest extends TestCase
         $ciphertext = self::$backend->encrypt(self::$pubKey, 'Plaintext');
         self::$backend->setCipher(C::KEY_TRANSPORT_OAEP);
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/^Cannot decrypt data:/');
+        $this->expectExceptionMessageMatches('/^Cannot decrypt data;/');
         self::$backend->decrypt(self::$privKey, $ciphertext);
     }
 
