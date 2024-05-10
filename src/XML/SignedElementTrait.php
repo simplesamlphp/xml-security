@@ -19,7 +19,6 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
-use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
@@ -30,6 +29,8 @@ use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 use function array_pop;
 use function base64_decode;
+use function hash;
+use function hash_equals;
 use function in_array;
 
 /**
@@ -149,9 +150,16 @@ trait SignedElementTrait
         $xml->removeChild($sigNode[0]);
 
         $data = XML::processTransforms($reference->getTransforms(), $xml);
-        $digest = Security::hash($reference->getDigestMethod()->getAlgorithm(), $data, false);
+        $algo = $reference->getDigestMethod()->getAlgorithm();
+        Assert::keyExists(
+            C::$DIGEST_ALGORITHMS,
+            $algo,
+            'Unsupported digest method "' . $algo . '"',
+            InvalidArgumentException::class,
+        );
 
-        if (Security::compareStrings($digest, base64_decode($reference->getDigestValue()->getRawContent(), true)) !== true) {
+        $digest = hash(C::$DIGEST_ALGORITHMS[$algo], $data, true);
+        if (hash_equals($digest, base64_decode($reference->getDigestValue()->getRawContent(), true)) !== true) {
             throw new SignatureVerificationFailedException('Failed to verify signature.');
         }
 

@@ -8,8 +8,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
-use SimpleSAML\XMLSecurity\Utils\Security;
 
+use function hash_equals;
 use function hash_hmac;
 
 /**
@@ -77,6 +77,6 @@ final class HMAC implements SignatureBackend
      */
     public function verify(KeyInterface $key, string $plaintext, string $signature): bool
     {
-        return Security::compareStrings(hash_hmac($this->digest, $plaintext, $key->getMaterial(), true), $signature);
+        return hash_equals(hash_hmac($this->digest, $plaintext, $key->getMaterial(), true), $signature);
     }
 }

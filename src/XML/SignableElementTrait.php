@@ -11,7 +11,6 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
-use SimpleSAML\XMLSecurity\Utils\Security;
 use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
@@ -25,6 +24,8 @@ use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
+use function base64_encode;
+use function hash;
 use function in_array;
 
 /**
@@ -129,7 +130,7 @@ trait SignableElementTrait
 
         return new Reference(
             new DigestMethod($digestAlg),
-            new DigestValue(Security::hash($digestAlg, $canonicalDocument)),
+            new DigestValue(base64_encode(hash(C::$DIGEST_ALGORITHMS[$digestAlg], $canonicalDocument, true))),
             $transforms,
             null,
             null,
