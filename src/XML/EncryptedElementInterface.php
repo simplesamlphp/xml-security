@@ -17,9 +17,8 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 interface EncryptedElementInterface
 {
     /**
-     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor to use to
-     * decrypt
-     * the object.
+     * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor
+     *   The decryptor to use to decrypt the object.
      *
      * @return \SimpleSAML\XML\ElementInterface The decrypted element.
      */
