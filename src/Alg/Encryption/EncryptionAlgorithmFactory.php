@@ -96,8 +96,11 @@ final class EncryptionAlgorithmFactory
      * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If an error occurs, e.g. the given
      * algorithm is blacklisted, unknown or the given key is not suitable for it.
      */
-    public function getAlgorithm(string $algId, KeyInterface $key): EncryptionAlgorithmInterface
-    {
+    public function getAlgorithm(
+        string $algId,
+        #[\SensitiveParameter]
+        KeyInterface $key,
+    ): EncryptionAlgorithmInterface {
         Assert::false(
             ($this->blacklist !== null) && in_array($algId, $this->blacklist, true),
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),

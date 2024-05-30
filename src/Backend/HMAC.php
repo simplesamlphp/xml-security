@@ -60,8 +60,11 @@ final class HMAC implements SignatureBackend
      *
      * @return string The (binary) signature corresponding to the given plaintext.
      */
-    public function sign(KeyInterface $key, string $plaintext): string
-    {
+    public function sign(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+    ): string {
         return hash_hmac($this->digest, $plaintext, $key->getMaterial(), true);
     }
 
@@ -75,8 +78,12 @@ final class HMAC implements SignatureBackend
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(KeyInterface $key, string $plaintext, string $signature): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+        string $signature,
+    ): bool {
         return hash_equals(hash_hmac($this->digest, $plaintext, $key->getMaterial(), true), $signature);
     }
 }

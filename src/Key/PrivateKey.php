@@ -23,8 +23,10 @@ class PrivateKey extends AsymmetricKey
      *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The PEM-encoded key material.
      */
-    final public function __construct(PEM $key)
-    {
+    final public function __construct(
+        #[\SensitiveParameter]
+        PEM $key,
+    ) {
         Assert::oneOf(
             $key->type(),
             [PEM::TYPE_PRIVATE_KEY, PEM::TYPE_RSA_PRIVATE_KEY],
@@ -45,8 +47,11 @@ class PrivateKey extends AsymmetricKey
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the file cannot be read.
      */
-    public static function fromFile(string $file, string $passphrase = ''): static
-    {
+    public static function fromFile(
+        string $file,
+        #[\SensitiveParameter]
+        string $passphrase = '',
+    ): static {
         if (($key = openssl_pkey_get_private($file, $passphrase)) === false) {
             throw new OpenSSLException('Failed to read key');
         }

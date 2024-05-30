@@ -20,8 +20,11 @@ final class RSA extends AbstractKeyTransporter
      * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(AsymmetricKey $key, string $algId = C::KEY_TRANSPORT_OAEP_MGF1P)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        AsymmetricKey $key,
+        string $algId = C::KEY_TRANSPORT_OAEP_MGF1P,
+    ) {
         parent::__construct($key, $algId);
     }
 

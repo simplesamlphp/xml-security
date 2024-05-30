@@ -36,6 +36,7 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
      * @param string $digest The identifier of the digest algorithm to use.
      */
     public function __construct(
+        #[\SensitiveParameter]
         private KeyInterface $key,
         protected string $algId,
         protected string $digest,

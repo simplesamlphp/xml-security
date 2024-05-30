@@ -45,8 +45,10 @@ class PublicKey extends AsymmetricKey
      *
      * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM $key The PEM-encoded key material.
      */
-    final public function __construct(PEM $key)
-    {
+    final public function __construct(
+        #[\SensitiveParameter]
+        PEM $key,
+    ) {
         Assert::oneOf(
             $key->type(),
             [PEM::TYPE_PUBLIC_KEY, PEM::TYPE_RSA_PUBLIC_KEY],

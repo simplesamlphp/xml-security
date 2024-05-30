@@ -33,7 +33,11 @@ interface SignatureBackend
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while signing the plaintext.
      */
-    public function sign(KeyInterface $key, string $plaintext): string;
+    public function sign(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+    ): string;
 
 
     /**
@@ -45,5 +49,10 @@ interface SignatureBackend
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(KeyInterface $key, string $plaintext, string $signature): bool;
+    public function verify(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+        string $signature,
+    ): bool;
 }

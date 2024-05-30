@@ -35,7 +35,11 @@ interface EncryptionBackend
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while encrypting the plaintext.
      */
-    public function encrypt(KeyInterface $key, string $plaintext): string;
+    public function encrypt(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+    ): string;
 
 
     /**
@@ -48,5 +52,9 @@ interface EncryptionBackend
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If there is an error while decrypting the ciphertext.
      */
-    public function decrypt(KeyInterface $key, string $ciphertext): string;
+    public function decrypt(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $ciphertext,
+    ): string;
 }

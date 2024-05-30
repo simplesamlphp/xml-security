@@ -20,8 +20,11 @@ final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
      * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(AsymmetricKey $key, string $algId = C::SIG_RSA_SHA256)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        AsymmetricKey $key,
+        string $algId = C::SIG_RSA_SHA256,
+    ) {
         parent::__construct($key, $algId, C::$RSA_DIGESTS[$algId]);
     }
 

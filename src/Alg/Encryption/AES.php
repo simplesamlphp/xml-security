@@ -20,8 +20,11 @@ class AES extends AbstractEncryptor
      * @param \SimpleSAML\XMLSecurity\Key\SymmetricKey $key The symmetric key to use.
      * @param string $algId The identifier of this algorithm.
      */
-    public function __construct(SymmetricKey $key, string $algId = C::BLOCK_ENC_AES256_GCM)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        SymmetricKey $key,
+        string $algId = C::BLOCK_ENC_AES256_GCM,
+    ) {
         parent::__construct($key, $algId);
     }
 

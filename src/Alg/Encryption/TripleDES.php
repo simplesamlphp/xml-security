@@ -19,8 +19,10 @@ class TripleDES extends AbstractEncryptor
      *
      * @param \SimpleSAML\XMLSecurity\Key\SymmetricKey $key The symmetric key to use.
      */
-    public function __construct(SymmetricKey $key)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        SymmetricKey $key,
+    ) {
         parent::__construct($key, C::BLOCK_ENC_3DES);
     }
 

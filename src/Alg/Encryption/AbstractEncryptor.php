@@ -35,6 +35,7 @@ abstract class AbstractEncryptor implements EncryptionAlgorithmInterface
      * @param string $algId The identifier of this algorithm.
      */
     public function __construct(
+        #[\SensitiveParameter]
         private KeyInterface $key,
         protected string $algId,
     ) {

@@ -74,8 +74,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      * @return string The encrypted plaintext (ciphertext).
      * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while encrypting the plaintext.
      */
-    public function encrypt(KeyInterface $key, string $plaintext): string
-    {
+    public function encrypt(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+    ): string {
         if ($key instanceof AsymmetricKey) {
             // asymmetric encryption
             $fn = 'openssl_public_encrypt';
@@ -127,8 +130,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while decrypting the ciphertext.
      */
-    public function decrypt(KeyInterface $key, string $ciphertext): string
-    {
+    public function decrypt(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $ciphertext,
+    ): string {
         if ($key instanceof AsymmetricKey) {
             // asymmetric encryption
             $fn = 'openssl_public_decrypt';
@@ -182,8 +188,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException If there is an error while signing the plaintext.
      */
-    public function sign(KeyInterface $key, string $plaintext): string
-    {
+    public function sign(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+    ): string {
         if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest)) {
             throw new OpenSSLException('Cannot sign data');
         }
@@ -200,8 +209,12 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
      *
      * @return boolean True if the signature can be verified, false otherwise.
      */
-    public function verify(KeyInterface $key, string $plaintext, string $signature): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        KeyInterface $key,
+        string $plaintext,
+        string $signature,
+    ): bool {
         return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest) === 1;
     }
 
