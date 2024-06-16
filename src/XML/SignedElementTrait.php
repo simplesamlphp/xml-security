@@ -286,7 +286,7 @@ trait SignedElementTrait
                 // build a valid PEM for the certificate
                 $cert = sprintf(
                     "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----",
-                    $data->getRawContent()
+                    $data->getRawContent(),
                 );
 
                 $cert = new Key\X509Certificate(PEM::fromString($cert));

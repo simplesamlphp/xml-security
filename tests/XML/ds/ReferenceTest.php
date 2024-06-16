@@ -82,7 +82,7 @@ final class ReferenceTest extends TestCase
                 [
                     new Transform(C::XMLDSIG_ENVELOPED),
                     new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
-                ]
+                ],
             ),
             'ghi789',
             'urn:some:type',

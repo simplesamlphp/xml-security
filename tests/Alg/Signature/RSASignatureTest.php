@@ -219,7 +219,7 @@ final class RSASignatureTest extends TestCase
         // test wrong key
         $rsa = self::$factory->getAlgorithm(
             C::SIG_RSA_SHA1,
-            PEMCertificatesMock::getPublicKey(PEMCertificatesMock::OTHER_PUBLIC_KEY)
+            PEMCertificatesMock::getPublicKey(PEMCertificatesMock::OTHER_PUBLIC_KEY),
         );
         $this->assertFalse($rsa->verify(
             self::PLAINTEXT,

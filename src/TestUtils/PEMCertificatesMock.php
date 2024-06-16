@@ -120,7 +120,7 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainCertificate(
-        string $file = self::CERTIFICATE
+        string $file = self::CERTIFICATE,
     ): string {
         return self::loadPlainCertificateFile($file);
     }
@@ -131,7 +131,7 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainPublicKey(
-        string $file = self::PUBLIC_KEY
+        string $file = self::PUBLIC_KEY,
     ): string {
         return self::loadPlainKeyFile($file);
     }
@@ -142,7 +142,7 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainPrivateKey(
-        string $file = self::PRIVATE_KEY
+        string $file = self::PRIVATE_KEY,
     ): string {
         return self::loadPlainKeyFile($file);
     }
@@ -153,11 +153,11 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainCertificateContents(
-        string $file = self::CERTIFICATE
+        string $file = self::CERTIFICATE,
     ): string {
         return CertificateUtils::stripHeaders(
             self::loadPlainCertificateFile($file),
-            CertificateUtils::CERTIFICATE_PATTERN
+            CertificateUtils::CERTIFICATE_PATTERN,
         );
     }
 
@@ -167,11 +167,11 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainPublicKeyContents(
-        string $file = self::PUBLIC_KEY
+        string $file = self::PUBLIC_KEY,
     ): string {
         return CertificateUtils::stripHeaders(
             self::loadPlainKeyFile($file),
-            CertificateUtils::PUBLIC_KEY_PATTERN
+            CertificateUtils::PUBLIC_KEY_PATTERN,
         );
     }
 
@@ -181,11 +181,11 @@ class PEMCertificatesMock
      * @return string
      */
     public static function getPlainPrivateKeyContents(
-        string $file = self::PRIVATE_KEY
+        string $file = self::PRIVATE_KEY,
     ): string {
         return CertificateUtils::stripHeaders(
             self::loadPlainCertificateFile($file),
-            CertificateUtils::PRIVATE_KEY_PATTERN
+            CertificateUtils::PRIVATE_KEY_PATTERN,
         );
     }
 }

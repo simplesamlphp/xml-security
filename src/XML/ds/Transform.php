@@ -53,7 +53,7 @@ class Transform extends AbstractDsElement
                 sprintf(
                     'Transform algorithm "%s" or "%s" required if InclusiveNamespaces provided.',
                     C::C14N_EXCLUSIVE_WITH_COMMENTS,
-                    C::C14N_EXCLUSIVE_WITHOUT_COMMENTS
+                    C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
                 ),
             );
         }

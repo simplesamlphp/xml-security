@@ -48,18 +48,18 @@ final class SignaturePropertyTest extends TestCase
     public function testMarshalling(): void
     {
         $document = DOMDocumentFactory::fromString(
-            '<ssp:HSMSerialNumber xmlns:ssp="urn:x-simplesamlphp:namespace">1234567890</ssp:HSMSerialNumber>'
+            '<ssp:HSMSerialNumber xmlns:ssp="urn:x-simplesamlphp:namespace">1234567890</ssp:HSMSerialNumber>',
         );
 
         $signatureProperty = new SignatureProperty(
             [new Chunk($document->documentElement)],
             'https://simplesamlphp.org/some/target',
-            'abc123'
+            'abc123',
         );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signatureProperty)
+            strval($signatureProperty),
         );
     }
 }

@@ -35,7 +35,7 @@ final class ObjectTest extends TestCase
         self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_Object.xml'
+            dirname(__FILE__, 3) . '/resources/xml/ds_Object.xml',
         );
     }
 
@@ -53,15 +53,15 @@ final class ObjectTest extends TestCase
                 new Chunk(
                     DOMDocumentFactory::fromString(sprintf(
                         '<ssp:data xmlns:ssp="urn:ssp:custom">%s</ssp:data>',
-                        $img
-                    ))->documentElement
-                )
+                        $img,
+                    ))->documentElement,
+                ),
             ],
         );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($obj)
+            strval($obj),
         );
     }
 
@@ -75,7 +75,7 @@ final class ObjectTest extends TestCase
         $obj = new DsObject(null, null, null, []);
         $this->assertEquals(
             "<ds:Object xmlns:ds=\"$ds_ns\"/>",
-            strval($obj)
+            strval($obj),
         );
         $this->assertTrue($obj->isEmptyElement());
     }

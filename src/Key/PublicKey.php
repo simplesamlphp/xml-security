@@ -52,7 +52,7 @@ class PublicKey extends AsymmetricKey
         Assert::oneOf(
             $key->type(),
             [PEM::TYPE_PUBLIC_KEY, PEM::TYPE_RSA_PUBLIC_KEY],
-            "PEM structure has the wrong type %s."
+            "PEM structure has the wrong type %s.",
         );
 
         parent::__construct($key);

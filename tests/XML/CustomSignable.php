@@ -57,7 +57,7 @@ class CustomSignable extends AbstractElement implements
      */
     final public function __construct(
         protected DOMElement $xml,
-        protected ?string $id
+        protected ?string $id,
     ) {
     }
 

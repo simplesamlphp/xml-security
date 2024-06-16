@@ -89,7 +89,7 @@ final class RetrievalMethod extends AbstractDsElement
         return new static(
             array_pop($transforms),
             $URI,
-            $Type
+            $Type,
         );
     }
 

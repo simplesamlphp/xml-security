@@ -79,7 +79,7 @@ class CipherData extends AbstractXencElement
             $cv,
             1,
             'More than one CipherValue element in <xenc:CipherData>',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         $cr = CipherReference::getChildrenOfClass($xml);
@@ -87,7 +87,7 @@ class CipherData extends AbstractXencElement
             $cr,
             1,
             'More than one CipherReference element in <xenc:CipherData>',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         return new static(

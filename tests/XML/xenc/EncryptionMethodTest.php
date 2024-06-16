@@ -148,9 +148,11 @@ final class EncryptionMethodTest extends TestCase
     public function testUnmarshallingWithoutOptionalParameters(): void
     {
         $xencns = C::NS_XENC;
-        $document = DOMDocumentFactory::fromString(<<<XML
+        $document = DOMDocumentFactory::fromString(
+            <<<XML
 <xenc:EncryptionMethod xmlns:xenc="{$xencns}" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
 XML
+            ,
         );
 
         /** @var \DOMElement @element */

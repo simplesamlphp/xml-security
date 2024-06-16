@@ -71,13 +71,13 @@ final class RSAKeyValue extends AbstractDsElement
             $modulus,
             1,
             'An <ds:RSAKeyValue> must contain exactly one <ds:Modulus>',
-            MissingElementException::class
+            MissingElementException::class,
         );
         Assert::maxCount(
             $modulus,
             1,
             'An <ds:RSAKeyValue> must contain exactly one <ds:Modulus>',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         $exponent = Exponent::getChildrenOfClass($xml);
@@ -85,13 +85,13 @@ final class RSAKeyValue extends AbstractDsElement
             $exponent,
             1,
             'An <ds:RSAKeyValue> must contain exactly one <ds:Modulus>',
-            MissingElementException::class
+            MissingElementException::class,
         );
         Assert::maxCount(
             $exponent,
             1,
             'An <ds:RSAKeyValue> must contain exactly one <ds:Modulus>',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         return new static(array_pop($modulus), array_pop($exponent));

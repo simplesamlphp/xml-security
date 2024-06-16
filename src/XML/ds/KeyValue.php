@@ -80,7 +80,7 @@ final class KeyValue extends AbstractDsElement
             $RSAKeyValue,
             1,
             'A <ds:KeyValue> can contain exactly one <ds:RSAKeyValue>',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         $elements = [];
@@ -95,7 +95,7 @@ final class KeyValue extends AbstractDsElement
             $elements,
             1,
             'A <ds:KeyValue> can contain exactly one element in namespace ##other',
-            TooManyElementsException::class
+            TooManyElementsException::class,
         );
 
         return new static(array_pop($RSAKeyValue), array_pop($elements));

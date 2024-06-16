@@ -50,10 +50,10 @@ final class OpenSSLTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         self::$privKey = PrivateKey::fromFile(
-            'file://' . dirname(__FILE__, 3) . '/resources/keys/privkey.pem'
+            'file://' . dirname(__FILE__, 3) . '/resources/keys/privkey.pem',
         );
         self::$pubKey = PublicKey::fromFile(
-            'file://' . dirname(__FILE__, 3) . '/resources/keys/pubkey.pem'
+            'file://' . dirname(__FILE__, 3) . '/resources/keys/pubkey.pem',
         );
         self::$sharedKey = new SymmetricKey(hex2bin('54c98b0ea7d98186c27a6c0c6f35ee1a'));
         self::$backend = new OpenSSL();
@@ -142,7 +142,7 @@ final class OpenSSLTest extends TestCase
                     '1cb79beec171b9c0cf11466e90187e91377a7f7582f3eec3df6703a1abda89339d0f490bca61ceac743be401d861d50' .
                     'eb6aaa2db63264cd2013e4008d82c4e7b3f8f13447cf136e52c9b9f06c062a3fe66d3b9f7fa78281d149e7756a97edb' .
                     '0b2a500f110587f2d81790922def9061c4d8d500cd67ade406b61a20a8fe3b7db1ccc69095a20f556e5ed1f91ccaff1' .
-                    'cb3f13065ebee9e20064b0a75edb2b603af6c'
+                    'cb3f13065ebee9e20064b0a75edb2b603af6c',
                 ),
             ),
         );
@@ -158,7 +158,7 @@ final class OpenSSLTest extends TestCase
                     '4570d9065b9604587111b116e8d15d8ef820f2ea2c1ae129ce27a20c4a7e4df815fb47a047cd11b06ada9f4ad881545' .
                     '2380a09fb6bff787ff167a20662740e1ac034e66612e2194d8b60a22341032d758fd94221314125dbb2d1432b4a3633' .
                     'b0857d8d4938aabe1b53ab5f970fb4ad0ed0a554771cfa819cffba8ec5935a6d2f706dfcada355da34b994691c76a60' .
-                    'd10c746a5b683b2a0080d847ff208cf240a1c'
+                    'd10c746a5b683b2a0080d847ff208cf240a1c',
                 ),
             ),
         );

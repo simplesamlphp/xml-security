@@ -68,10 +68,10 @@ final class ReferenceListTest extends TestCase
 
         $referenceList = new ReferenceList(
             [
-                new DataReference('#Encrypted_DATA_ID', [new Transforms([$transformData])])
+                new DataReference('#Encrypted_DATA_ID', [new Transforms([$transformData])]),
             ],
             [
-                new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])])
+                new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])]),
             ],
         );
 

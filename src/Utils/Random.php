@@ -36,7 +36,7 @@ class Random
         Assert::positiveInteger(
             $length,
             'Invalid length received to generate random bytes.',
-            InvalidArgumentException::class
+            InvalidArgumentException::class,
         );
 
         try {

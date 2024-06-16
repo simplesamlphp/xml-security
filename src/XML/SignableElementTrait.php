@@ -73,7 +73,7 @@ trait SignableElementTrait
     public function sign(
         SignatureAlgorithmInterface $signer,
         string $canonicalizationAlg = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-        ?KeyInfo $keyInfo = null
+        ?KeyInfo $keyInfo = null,
     ): void {
         $this->signer = $signer;
         $this->keyInfo = $keyInfo;

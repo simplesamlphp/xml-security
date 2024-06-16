@@ -70,7 +70,7 @@ final class KeyInfoTest extends TestCase
                 '',
                 '',
                 "\n",
-                ''
+                '',
             ],
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
@@ -95,7 +95,7 @@ final class KeyInfoTest extends TestCase
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>'
+                    '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
                 )->documentElement),
             ],
             'fed654',

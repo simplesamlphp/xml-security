@@ -113,7 +113,7 @@ final class KeyValueTest extends TestCase
     {
         $this->expectException(SchemaViolationException::class);
         $this->expectExceptionMessage(
-            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other'
+            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
         );
 
         new KeyValue(null, null);
@@ -147,7 +147,7 @@ final class KeyValueTest extends TestCase
 
         $this->expectException(SchemaViolationException::class);
         $this->expectExceptionMessage(
-            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other'
+            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
         );
 
         KeyValue::fromXML($document->documentElement);

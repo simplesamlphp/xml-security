@@ -129,7 +129,7 @@ final class EncryptedDataTest extends TestCase
         $encryptedDataElements = XPath::xpQuery(
             $encryptedDataElement,
             './xenc:EncryptionMethod/following-sibling::*',
-            $xpCache
+            $xpCache,
         );
         $this->assertCount(2, $encryptedDataElements);
         $this->assertEquals('ds:KeyInfo', $encryptedDataElements[0]->tagName);

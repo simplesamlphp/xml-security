@@ -196,7 +196,7 @@ final class SignableElementTest extends TestCase
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
         $signed = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml'
+            dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml',
         );
 
         $this->assertEquals(

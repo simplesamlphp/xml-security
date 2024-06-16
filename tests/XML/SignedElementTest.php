@@ -61,7 +61,7 @@ final class SignedElementTest extends TestCase
         )->documentElement;
 
         $this->certificate = PEM::fromString(
-            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE)
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
     }
 

@@ -82,12 +82,12 @@ class PEMBundle implements Countable, IteratorAggregate
                 $data = base64_decode($payload, true);
                 if (empty($data)) {
                     throw new UnexpectedValueException(
-                        'Failed to decode PEM data.'
+                        'Failed to decode PEM data.',
                     );
                 }
                 return new PEM($match[1], $data);
             },
-            $matches
+            $matches,
         );
 
         return new self(...$pems);
@@ -216,8 +216,8 @@ class PEMBundle implements Countable, IteratorAggregate
                 function (PEM $pem) {
                     return $pem->string();
                 },
-                $this->pems
-            )
+                $this->pems,
+            ),
         );
     }
 }

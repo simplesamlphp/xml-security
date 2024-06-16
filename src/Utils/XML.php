@@ -23,9 +23,10 @@ class XML
      *
      * @param \DOMElement $element The DOM element that needs canonicalization.
      * @param string $c14nMethod The identifier of the canonicalization algorithm to use.
-     * See \SimpleSAML\XMLSecurity\Constants.
+     *   See \SimpleSAML\XMLSecurity\Constants.
      * @param string[]|null $xpaths An array of xpaths to filter the nodes by. Defaults to null (no filters).
-     * @param string[]|null $prefixes An array of namespace prefixes to filter the nodes by. Defaults to null (no filters).
+     * @param string[]|null $prefixes An array of namespace prefixes to filter the nodes by.
+     *   Defaults to null (no filters).
      *
      * @return string The canonical representation of the given DOM node, according to the algorithm requested.
      */

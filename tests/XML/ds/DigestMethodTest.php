@@ -51,8 +51,8 @@ final class DigestMethodTest extends TestCase
             C::DIGEST_SHA256,
             [
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<some:Chunk xmlns:some="urn:test:some">Random</some:Chunk>'
-                )->documentElement)
+                    '<some:Chunk xmlns:some="urn:test:some">Random</some:Chunk>',
+                )->documentElement),
             ],
         );
 

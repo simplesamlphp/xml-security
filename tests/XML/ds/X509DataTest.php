@@ -70,7 +70,7 @@ final class X509DataTest extends TestCase
                 '',
                 '',
                 "\n",
-                ''
+                '',
             ],
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
@@ -89,21 +89,21 @@ final class X509DataTest extends TestCase
             [
                 new Chunk(
                     DOMDocumentFactory::fromString(
-                        '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>'
+                        '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
                     )->documentElement,
                 ),
                 new X509Certificate(self::$certificate),
                 new X509IssuerSerial(
                     new X509IssuerName(sprintf(
                         'C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=%s',
-                        'noreply@simplesamlphp.org'
+                        'noreply@simplesamlphp.org',
                     )),
                     new X509SerialNumber('2'),
                 ),
                 new X509SubjectName(self::$certData['name']),
                 new Chunk(DOMDocumentFactory::fromString(
-                    '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>'
-                )->documentElement)
+                    '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>',
+                )->documentElement),
             ],
         );
 

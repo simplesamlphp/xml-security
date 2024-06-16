@@ -30,7 +30,7 @@ class PrivateKey extends AsymmetricKey
         Assert::oneOf(
             $key->type(),
             [PEM::TYPE_PRIVATE_KEY, PEM::TYPE_RSA_PRIVATE_KEY],
-            "PEM structure has the wrong type %s."
+            "PEM structure has the wrong type %s.",
         );
 
         parent::__construct($key);
