@@ -131,17 +131,11 @@ trait SignedElementTrait
      */
     private function validateReference(SignedInfo $signedInfo): SignedElementInterface
     {
-        $references = $signedInfo->getReferences();
-        Assert::count(
-            $references,
-            1,
-            'Exactly one reference expected in signature.',
-            TooManyElementsException::class,
-        );
-        $reference = array_pop($references);
-
         $xml = $this->getOriginalXML();
-        $this->validateReferenceUri($reference, $xml);
+        $references = $signedInfo->getReferences();
+        foreach ($references as $reference) {
+            $this->validateReferenceUri($reference, $xml);
+        }
 
         $xp = XPath::getXPath($xml->ownerDocument);
         $sigNode = XPath::xpQuery($xml, 'child::ds:Signature', $xp);
