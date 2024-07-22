@@ -182,7 +182,7 @@ trait SignableElementTrait
         $signingData = $signedInfo->canonicalize($this->c14nAlg);
         $signedData = base64_encode($this->signer->sign($signingData));
 
-        $this->signature = new Signature($signedInfo, new SignatureValue($signedData), $this->keyInfo);
+        $this->setSignature(new Signature($signedInfo, new SignatureValue($signedData), $this->keyInfo));
         return DOMDocumentFactory::fromString($canonicalDocument)->documentElement;
     }
 

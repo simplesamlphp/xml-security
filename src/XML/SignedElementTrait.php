@@ -86,7 +86,7 @@ trait SignedElementTrait
     {
         if (
             in_array(
-                $this->signature->getSignedInfo()->getCanonicalizationMethod()->getAlgorithm(),
+                $this->getSignature()->getSignedInfo()->getCanonicalizationMethod()->getAlgorithm(),
                 [
                     C::C14N_INCLUSIVE_WITH_COMMENTS,
                     C::C14N_EXCLUSIVE_WITH_COMMENTS,
@@ -183,7 +183,7 @@ trait SignedElementTrait
     private function verifyInternal(SignatureAlgorithmInterface $verifier): SignedElementInterface
     {
         /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature $this->signature */
-        $signedInfo = $this->signature->getSignedInfo();
+        $signedInfo = $this->getSignature()->getSignedInfo();
         $c14nAlg = $signedInfo->getCanonicalizationMethod()->getAlgorithm();
 
         // the canonicalized ds:SignedInfo element (plaintext)
@@ -195,7 +195,7 @@ trait SignedElementTrait
         if (
             $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
-                base64_decode($this->signature->getSignatureValue()->getRawContent(), true), // the actual signature
+                base64_decode($this->getSignature()->getSignatureValue()->getRawContent(), true), // the actual signature
             )
         ) {
             /*
