@@ -34,6 +34,9 @@ final class SignedElementTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $certificate;
 
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    private PEM $wrong_certificate;
+
     /** @var \DOMElement */
     private DOMElement $signedDocumentWithComments;
 
@@ -62,6 +65,10 @@ final class SignedElementTest extends TestCase
 
         $this->certificate = PEM::fromString(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
+        );
+
+        $this->wrong_certificate = PEM::fromString(
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::OTHER_CERTIFICATE),
         );
     }
 
@@ -97,6 +104,44 @@ final class SignedElementTest extends TestCase
         $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
         $verified = $customSigned->verify($verifier);
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+        $this->assertFalse($verified->isSigned());
+        $this->assertEquals(
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace"><ssp:Chunk>Some' .
+            '</ssp:Chunk></ssp:CustomSignable>',
+            strval($verified),
+        );
+        $this->assertEquals($certificate->getPublicKey(), $verified->getVerifyingKey());
+    }
+
+
+    /**
+     * Test the verification of a signature with the wrong key first, and the right one second.
+     */
+    public function testSuccessfulVerifyingWithWrongKeyFirstRightOneSecond(): void
+    {
+        $customSigned = CustomSignable::fromXML($this->signedDocument);
+
+        $this->assertTrue($customSigned->isSigned());
+        $signature = $customSigned->getSignature();
+        $this->assertInstanceOf(Signature::class, $signature);
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
+
+        $verified = null;
+        foreach ([$this->wrong_certificate, $this->certificate] as $i => $key) {
+            $factory = new SignatureAlgorithmFactory();
+            $certificate = new X509Certificate($key);
+            $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
+
+            try {
+                $verified = $customSigned->verify($verifier);
+                break 1;
+            } catch (\SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException $e) {
+                continue;
+            }
+        }
+
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());
         $this->assertEquals(
