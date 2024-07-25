@@ -136,13 +136,18 @@ trait SignedElementTrait
             $this->validateReferenceUri($reference, $xml);
         }
 
-        $xp = XPath::getXPath($xml->ownerDocument);
-        $sigNode = XPath::xpQuery($xml, 'child::ds:Signature', $xp);
+        // Clone the document so we don't mess up the original DOMDocument
+        $doc = DOMDocumentFactory::create();
+        $node = $doc->importNode($xml->ownerDocument->documentElement, true);
+        $doc->appendChild($node);
+
+        $xp = XPath::getXPath($doc);
+        $sigNode = XPath::xpQuery($doc->documentElement, 'child::ds:Signature', $xp);
         Assert::minCount($sigNode, 1, NoSignatureFoundException::class);
         Assert::maxCount($sigNode, 1, 'More than one signature found in object.', TooManyElementsException::class);
-        $xml->removeChild($sigNode[0]);
 
-        $data = XML::processTransforms($reference->getTransforms(), $xml);
+        $doc->documentElement->removeChild($sigNode[0]);
+        $data = XML::processTransforms($reference->getTransforms(), $doc->documentElement);
         $algo = $reference->getDigestMethod()->getAlgorithm();
         Assert::keyExists(
             C::$DIGEST_ALGORITHMS,
