@@ -117,6 +117,7 @@ final class SignedElementTest extends TestCase
 
     /**
      * Test the verification of a signature with the wrong key first, and the right one second.
+     * See Github issue #51
      */
     public function testSuccessfulVerifyingWithWrongKeyFirstRightOneSecond(): void
     {
