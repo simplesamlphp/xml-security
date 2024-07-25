@@ -27,7 +27,6 @@ use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
-use function array_pop;
 use function base64_decode;
 use function hash;
 use function hash_equals;
