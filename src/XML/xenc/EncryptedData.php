@@ -13,6 +13,8 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 
+use function array_pop;
+
 /**
  * Class containing encrypted data.
  *
@@ -73,8 +75,8 @@ final class EncryptedData extends AbstractEncryptedType
             self::getOptionalAttribute($xml, 'Type', null),
             self::getOptionalAttribute($xml, 'MimeType', null),
             self::getOptionalAttribute($xml, 'Encoding', null),
-            count($encryptionMethod) === 1 ? $encryptionMethod[0] : null,
-            count($keyInfo) === 1 ? $keyInfo[0] : null,
+            array_pop($encryptionMethod),
+            array_pop($keyInfo),
         );
     }
 }
