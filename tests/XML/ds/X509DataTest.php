@@ -10,6 +10,9 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
+use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -18,8 +21,11 @@ use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
 use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
+use function base64_encode;
 use function dirname;
+use function hex2bin;
 use function openssl_x509_parse;
 use function str_replace;
 use function strval;
@@ -42,6 +48,8 @@ final class X509DataTest extends TestCase
     /** @var array<string, mixed> */
     private static array $certData;
 
+    /** @var string */
+    private static string $digest;
 
     /**
      */
@@ -78,6 +86,11 @@ final class X509DataTest extends TestCase
         self::$certData = openssl_x509_parse(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
         );
+
+        $key = new Key\X509Certificate(PEM::fromString(PEMCertificatesMock::getPlainCertificate()));
+        /** @var string $binary */
+        $binary = hex2bin($key->getRawThumbprint(C::DIGEST_SHA256));
+        self::$digest = base64_encode($binary);
     }
 
 
@@ -101,6 +114,7 @@ final class X509DataTest extends TestCase
                     new X509SerialNumber('2'),
                 ),
                 new X509SubjectName(self::$certData['name']),
+                new X509Digest(self::$digest, C::DIGEST_SHA256),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">other</ssp:Chunk>',
                 )->documentElement),

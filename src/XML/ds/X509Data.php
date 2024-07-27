@@ -10,6 +10,7 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
 /**
  * Class representing a ds:X509Data element.
@@ -24,7 +25,8 @@ final class X509Data extends AbstractDsElement
      * @param (\SimpleSAML\XML\Chunk|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[] $data
+     *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[] $data
      */
     public function __construct(
         protected array $data,
@@ -32,7 +34,7 @@ final class X509Data extends AbstractDsElement
         Assert::maxCount($data, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOfAny(
             $data,
-            [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class],
+            [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class, X509Digest::class],
             InvalidArgumentException::class,
         );
     }
@@ -44,7 +46,8 @@ final class X509Data extends AbstractDsElement
      * @return (\SimpleSAML\XML\Chunk|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
      *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName)[]
+     *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *          \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[]
      */
     public function getData(): array
     {
@@ -80,6 +83,7 @@ final class X509Data extends AbstractDsElement
                 'X509Certificate' => X509Certificate::fromXML($n),
                 'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
                 'X509SubjectName' => X509SubjectName::fromXML($n),
+                'X509Digest' => X509Digest::fromXML($n),
                 default => new Chunk($n),
             };
         }
