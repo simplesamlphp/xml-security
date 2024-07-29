@@ -310,8 +310,8 @@ trait SignedElementTrait
     /**
      * Get the list of algorithms that are blacklisted for any signing operation.
      *
-     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
-     * defaults.
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null to use this
+     * libraries default.
      */
     abstract public function getBlacklistedAlgorithms(): ?array;
 }

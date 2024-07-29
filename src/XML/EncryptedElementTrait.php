@@ -131,7 +131,7 @@ trait EncryptedElementTrait
             $encryptedKey = $this->getEncryptedKey();
             $decryptionKey = $encryptedKey->decrypt($decryptor);
 
-            $factory = new EncryptionAlgorithmFactory($this->getBlacklistedAlgorithms());
+            $factory = new EncryptionAlgorithmFactory($this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST);
             $decryptor = $factory->getAlgorithm($encMethod->getAlgorithm(), new SymmetricKey($decryptionKey));
             $decryptor->setBackend($this->getEncryptionBackend());
         }
@@ -209,8 +209,8 @@ trait EncryptedElementTrait
     /**
      * Get the list of algorithms that are blacklisted for any encryption operation.
      *
-     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null if we want to use the
-     * defaults.
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null to use this
+     * libraries default.
      */
     abstract public function getBlacklistedAlgorithms(): ?array;
 }

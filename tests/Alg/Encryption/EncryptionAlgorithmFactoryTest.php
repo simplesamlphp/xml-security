@@ -35,7 +35,7 @@ class EncryptionAlgorithmFactoryTest extends TestCase
      */
     public function testGetUnknownAlgorithm(): void
     {
-        $factory = new EncryptionAlgorithmFactory([]);
+        $factory = new EncryptionAlgorithmFactory();
         $this->expectException(UnsupportedAlgorithmException::class);
         $factory->getAlgorithm('Unsupported algorithm identifier', self::$skey);
     }
@@ -47,6 +47,7 @@ class EncryptionAlgorithmFactoryTest extends TestCase
     public function testDefaultBlacklistedAlgorithms(): void
     {
         $factory = new EncryptionAlgorithmFactory();
+
         $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_AES128, self::$skey);
         $this->assertInstanceOf(AES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_AES128, $algorithm->getAlgorithmId());
@@ -83,6 +84,7 @@ class EncryptionAlgorithmFactoryTest extends TestCase
     public function testBlacklistedAlgorithm(): void
     {
         $factory = new EncryptionAlgorithmFactory([C::BLOCK_ENC_AES256_GCM]);
+
         $algorithm = $factory->getAlgorithm(C::BLOCK_ENC_3DES, self::$skey);
         $this->assertInstanceOf(TripleDES::class, $algorithm);
         $this->assertEquals(C::BLOCK_ENC_3DES, $algorithm->getAlgorithmId());
