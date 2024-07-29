@@ -11,7 +11,6 @@ use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 use function array_key_exists;
-use function in_array;
 use function sprintf;
 
 /**
@@ -60,16 +59,16 @@ final class EncryptionAlgorithmFactory
     /**
      * Build a factory that creates algorithms.
      *
-     * @param string[]|null $blacklist A list of algorithms forbidden for their use.
+     * @param string[] $blacklist A list of algorithms forbidden for their use.
      */
     public function __construct(
-        protected ?array $blacklist = self::DEFAULT_BLACKLIST,
+        protected array $blacklist = self::DEFAULT_BLACKLIST,
     ) {
         // initialize the cache for supported algorithms per known implementation
-        if (!self::$initialized && $blacklist !== null) {
+        if (!self::$initialized) {
             foreach (self::SUPPORTED_DEFAULTS as $algorithm) {
                 foreach ($algorithm::getSupportedAlgorithms() as $algId) {
-                    if (array_key_exists($algId, self::$cache)) {
+                    if (array_key_exists($algId, self::$cache) && !array_key_exists($algId, $this->blacklist)) {
                         /*
                          * If the key existed before initialization, that means someone registered a handler for this
                          * algorithm, so we should respect that and skip registering the default here.
@@ -101,8 +100,9 @@ final class EncryptionAlgorithmFactory
         #[\SensitiveParameter]
         KeyInterface $key,
     ): EncryptionAlgorithmInterface {
-        Assert::false(
-            ($this->blacklist !== null) && in_array($algId, $this->blacklist, true),
+        Assert::notInArray(
+            $algId,
+            $this->blacklist,
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
             BlacklistedAlgorithmException::class,
         );

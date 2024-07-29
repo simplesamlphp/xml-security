@@ -47,9 +47,6 @@ class CustomSignable extends AbstractElement implements
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null */
     private ?EncryptionBackend $backend = null;
 
-    /** @var string[] */
-    private array $blacklistedAlgs = [];
-
     /**
      * Constructor
      *
@@ -143,25 +140,12 @@ class CustomSignable extends AbstractElement implements
      * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
      * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
      *
-     * @return string[]|null An array with all algorithm identifiers that we want to blacklist, or null if we want to
-     * use the defaults.
+     * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null to use this
+     * libraries default.
      */
     public function getBlacklistedAlgorithms(): ?array
     {
-        return $this->blacklistedAlgs;
-    }
-
-
-    /**
-     * Implement a method like this if your encrypted object needs to instantiate a new decryptor, for example, to
-     * decrypt a session key. This method is required by \SimpleSAML\XMLSecurity\XML\EncryptedElementTrait.
-     *
-     * @param string[]|null $algIds An array with the identifiers of the algorithms we want to blacklist, or null if we
-     * want to use the defaults.
-     */
-    public function setBlacklistedAlgorithms(?array $algIds): void
-    {
-        $this->blacklistedAlgs = $algIds;
+        return [];
     }
 
 
