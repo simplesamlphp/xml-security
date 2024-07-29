@@ -40,7 +40,7 @@ class KeyTransportAlgorithmFactory
      *
      * @var string[]
      */
-    private const DEFAULT_BLACKLIST = [
+    public const DEFAULT_BLACKLIST = [
         C::KEY_TRANSPORT_RSA_1_5,
     ];
 

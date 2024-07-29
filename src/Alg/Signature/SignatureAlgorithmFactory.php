@@ -42,7 +42,7 @@ final class SignatureAlgorithmFactory
      *
      * @var string[]
      */
-    private const DEFAULT_BLACKLIST = [
+    public const DEFAULT_BLACKLIST = [
         C::SIG_RSA_SHA1,
         C::SIG_HMAC_SHA1,
     ];

@@ -42,7 +42,7 @@ final class EncryptionAlgorithmFactory
      *
      * @var string[]
      */
-    private const DEFAULT_BLACKLIST = [
+    public const DEFAULT_BLACKLIST = [
         C::BLOCK_ENC_3DES,
     ];
 
