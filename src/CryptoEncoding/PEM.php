@@ -115,7 +115,7 @@ class PEM
 
         if (!is_readable($filename) || ($str === false)) {
             $e = error_get_last();
-            $error = $e['message'] ?: "Check that the file exists and can be read.";
+            $error = $e['message'] ?? "Check that the file exists and can be read.";
             throw new IOException(sprintf("File '%s' was not loaded;  %s", $filename, $error));
         }
 
