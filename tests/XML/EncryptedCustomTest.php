@@ -15,7 +15,6 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\Test\XML\CustomSigned;
 use SimpleSAML\XMLSecurity\Test\XML\EncryptedCustom;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
@@ -110,7 +109,7 @@ class EncryptedCustomTest extends TestCase
         $privateKey = PEMCertificatesMock::getPrivateKey(PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY);
         $signer = (new SignatureAlgorithmFactory())->getAlgorithm(
             C::SIG_RSA_SHA256,
-            $privateKey
+            $privateKey,
         );
         $customSigned->sign($signer);
         $customSigned = CustomSignable::fromXML($customSigned->toXML());
