@@ -71,10 +71,12 @@ trait EncryptableElementTrait
             $encryptor->setBackend($this->getEncryptionBackend());
         }
 
+        $xmlRepresentation = $this->toXML();
+
         return new EncryptedData(
             new CipherData(
                 new CipherValue(
-                    base64_encode($encryptor->encrypt($this->__toString())),
+                    base64_encode($encryptor->encrypt($xmlRepresentation->ownerDocument->saveXML($xmlRepresentation))),
                 ),
             ),
             null,
