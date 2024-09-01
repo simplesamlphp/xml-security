@@ -56,4 +56,15 @@ final class PrivateKeyTest extends TestCase
         $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
         $this->assertEquals(self::$privKey['key'], $keyDetails['key']);
     }
+
+
+    /**
+     * Test creation from a file without file:// prefix succeeds.
+     */
+    public function testFromFileNoPrefix(): void
+    {
+        $k = PrivateKey::fromFile('./resources/keys/privkey.pem');
+        $keyDetails = openssl_pkey_get_details(openssl_pkey_get_private($k->getMaterial()));
+        $this->assertEquals(self::$privKey['key'], $keyDetails['key']);
+    }
 }

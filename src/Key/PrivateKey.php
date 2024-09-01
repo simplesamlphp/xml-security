@@ -10,6 +10,8 @@ use SimpleSAML\XMLSecurity\Exception\OpenSSLException;
 
 use function openssl_pkey_export;
 use function openssl_pkey_get_private;
+use function preg_filter;
+use function preg_match;
 
 /**
  * A class modeling private keys for their use in asymmetric algorithms.
@@ -52,6 +54,10 @@ class PrivateKey extends AsymmetricKey
         #[\SensitiveParameter]
         string $passphrase = '',
     ): static {
+        if (preg_match('/^(file:\/\/)/i', $file) !== 1) {
+            $file = preg_filter('/^/', 'file://', $file);
+        }
+
         if (($key = openssl_pkey_get_private($file, $passphrase)) === false) {
             throw new OpenSSLException('Failed to read key');
         }
