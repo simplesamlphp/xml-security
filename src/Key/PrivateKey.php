@@ -54,8 +54,11 @@ class PrivateKey extends AsymmetricKey
         #[\SensitiveParameter]
         string $passphrase = '',
     ): static {
-        if (preg_match('/^(file:\/\/)/i', $file) !== 1) {
-            $file = preg_filter('/^/', 'file://', $file);
+        if (preg_match(PEM::PEM_REGEX, $file) !== 1) {
+            // Not a PEM-encoded key. Must be a file
+            if (preg_match('/^(file:\/\/)/i', $file) !== 1) {
+                $file = preg_filter('/^/', 'file://', $file);
+            }
         }
 
         if (($key = openssl_pkey_get_private($file, $passphrase)) === false) {
