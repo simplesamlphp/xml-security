@@ -66,7 +66,9 @@ trait EncryptableElementTrait
 
             $keyInfo = new KeyInfo([$encryptedKey]);
 
-            $factory = new EncryptionAlgorithmFactory($this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST);
+            $factory = new EncryptionAlgorithmFactory(
+                $this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST,
+            );
             $encryptor = $factory->getAlgorithm($this->blockCipherAlgId, $sessionKey);
             $encryptor->setBackend($this->getEncryptionBackend());
         }

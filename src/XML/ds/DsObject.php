@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
@@ -112,22 +111,7 @@ final class DsObject extends AbstractDsElement
         $Id = DsObject::getOptionalAttribute($xml, 'Id', null);
         $MimeType = DsObject::getOptionalAttribute($xml, 'MimeType', null);
         $Encoding = DsObject::getOptionalAttribute($xml, 'Encoding', null);
-
-        $elements = [];
-        foreach ($xml->childNodes as $elt) {
-            if (!($elt instanceof DOMElement)) {
-                // @TODO: support mixed content
-                continue;
-            } elseif ($elt->namespaceURI === self::NS) {
-                $elements[] = match ($elt->localName) {
-                    'SignatureProperties' => SignatureProperties::fromXML($elt),
-                    'Manifest' => Manifest::fromXML($elt),
-                    default => new Chunk($elt),
-                };
-            }
-
-            $elements[] = new Chunk($elt);
-        }
+        $elements = self::getChildElementsFromXML($xml);
 
         return new static($Id, $MimeType, $Encoding, $elements);
     }

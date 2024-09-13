@@ -94,6 +94,8 @@ final class KeyInfoTest extends TestCase
                         new X509SubjectName(self::$certData['name']),
                     ],
                 ),
+            ],
+            [
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
                 )->documentElement),
