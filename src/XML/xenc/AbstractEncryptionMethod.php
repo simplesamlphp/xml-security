@@ -33,7 +33,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @param string $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams
-     * @param \SimpleSAML\XML\Chunk[] $children
+     * @param list<\SimpleSAML\XML\SerializableElementInterface> $children
      */
     final public function __construct(
         protected string $algorithm,

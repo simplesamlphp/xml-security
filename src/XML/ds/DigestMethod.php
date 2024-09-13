@@ -28,7 +28,7 @@ final class DigestMethod extends AbstractDsElement
      * Initialize a DigestMethod element.
      *
      * @param string $Algorithm
-     * @param \SimpleSAML\XML\Chunk[] $elements
+     * @param list<\SimpleSAML\XML\SerializableElementInterface> $elements
      */
     public function __construct(
         protected string $Algorithm,
