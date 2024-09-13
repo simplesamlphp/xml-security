@@ -198,7 +198,8 @@ trait SignedElementTrait
         if (
             $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
-                base64_decode($this->getSignature()->getSignatureValue()->getRawContent(), true), // the actual signature
+                // the actual signature
+                base64_decode($this->getSignature()->getSignatureValue()->getRawContent(), true),
             )
         ) {
             /*

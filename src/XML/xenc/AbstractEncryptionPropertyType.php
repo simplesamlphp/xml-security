@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
@@ -88,17 +87,8 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
-        $children = [];
-        foreach ($xml->childNodes as $child) {
-            if (!($child instanceof DOMElement)) {
-                continue;
-            }
-
-            $children[] = new Chunk($child);
-        }
-
         return new static(
-            $children,
+            self::getChildElementsFromXML($xml),
             self::getOptionalAttribute($xml, 'Target', null),
             self::getOptionalAttribute($xml, 'Id', null),
             self::getAttributesNSFromXML($xml),

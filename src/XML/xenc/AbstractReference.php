@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
@@ -66,13 +65,7 @@ abstract class AbstractReference extends AbstractXencElement
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
         $URI = self::getAttribute($xml, 'URI');
-
-        $elements = [];
-        foreach ($xml->childNodes as $element) {
-            if ($element instanceof DOMElement) {
-                $elements[] = new Chunk($element);
-            }
-        }
+        $elements = self::getChildElementsFromXML($xml);
 
         return new static($URI, $elements);
     }

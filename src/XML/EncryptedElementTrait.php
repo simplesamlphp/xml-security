@@ -131,7 +131,9 @@ trait EncryptedElementTrait
             $encryptedKey = $this->getEncryptedKey();
             $decryptionKey = $encryptedKey->decrypt($decryptor);
 
-            $factory = new EncryptionAlgorithmFactory($this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST);
+            $factory = new EncryptionAlgorithmFactory(
+                $this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST,
+            );
             $decryptor = $factory->getAlgorithm($encMethod->getAlgorithm(), new SymmetricKey($decryptionKey));
             $decryptor->setBackend($this->getEncryptionBackend());
         }

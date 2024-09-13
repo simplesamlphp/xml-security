@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
@@ -83,14 +82,7 @@ final class KeyValue extends AbstractDsElement
             TooManyElementsException::class,
         );
 
-        $elements = [];
-        foreach ($xml->childNodes as $element) {
-            if (!($element instanceof DOMElement) || $element->namespaceURI === KeyValue::NS) {
-                continue;
-            }
-
-            $elements[] = new Chunk($element);
-        }
+        $elements = self::getChildElementsFromXML($xml);
         Assert::maxCount(
             $elements,
             1,

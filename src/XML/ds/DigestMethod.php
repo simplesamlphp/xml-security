@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
@@ -29,7 +28,7 @@ final class DigestMethod extends AbstractDsElement
      * Initialize a DigestMethod element.
      *
      * @param string $Algorithm
-     * @param \SimpleSAML\XML\Chunk[] $elements
+     * @param list<\SimpleSAML\XML\SerializableElementInterface> $elements
      */
     public function __construct(
         protected string $Algorithm,
@@ -73,15 +72,7 @@ final class DigestMethod extends AbstractDsElement
         Assert::same($xml->namespaceURI, DigestMethod::NS, InvalidDOMElementException::class);
 
         $Algorithm = DigestMethod::getAttribute($xml, 'Algorithm');
-
-        $elements = [];
-        foreach ($xml->childNodes as $elt) {
-            if (!($elt instanceof DOMElement)) {
-                continue;
-            }
-
-            $elements[] = new Chunk($elt);
-        }
+        $elements = self::getChildElementsFromXML($xml);
 
         return new static($Algorithm, $elements);
     }

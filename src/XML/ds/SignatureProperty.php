@@ -6,7 +6,6 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
@@ -81,15 +80,7 @@ final class SignatureProperty extends AbstractDsElement
         $Target = self::getAttribute($xml, 'Target');
         $Id = self::getOptionalAttribute($xml, 'Id', null);
 
-        $children = [];
-        foreach ($xml->childNodes as $child) {
-            if (!($child instanceof DOMElement)) {
-                continue;
-            }
-
-            $children[] = new Chunk($child);
-        }
-
+        $children = self::getChildElementsFromXML($xml);
         Assert::minCount(
             $children,
             1,

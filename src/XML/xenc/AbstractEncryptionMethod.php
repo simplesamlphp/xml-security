@@ -6,13 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
-use SimpleSAML\XMLSecurity\Constants as C;
 
 use function array_pop;
 
@@ -35,7 +33,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @param string $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams
-     * @param \SimpleSAML\XML\Chunk[] $children
+     * @param list<\SimpleSAML\XML\SerializableElementInterface> $children
      */
     final public function __construct(
         protected string $algorithm,
@@ -108,20 +106,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         $oaepParams = OAEPparams::getChildrenOfClass($xml);
         Assert::maxCount($oaepParams, 1, TooManyElementsException::class);
 
-        $children = [];
-        foreach ($xml->childNodes as $node) {
-            if (!$node instanceof DOMElement) {
-                continue;
-            } elseif ($node->namespaceURI === C::NS_XENC) {
-                if ($node->localName === 'KeySize') {
-                    continue;
-                } elseif ($node->localName === 'OAEPparams') {
-                    continue;
-                }
-            }
-
-            $children[] = Chunk::fromXML($node);
-        }
+        $children = self::getChildElementsFromXML($xml);
 
         return new static($algorithm, array_pop($keySize), array_pop($oaepParams), $children);
     }

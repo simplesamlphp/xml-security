@@ -15,6 +15,7 @@ use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
 use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
 
 use function dirname;
 use function strval;
@@ -134,8 +135,8 @@ final class KeyValueTest extends TestCase
         $this->assertCount(1, $elements);
 
         $element = reset($elements);
-        $this->assertInstanceOf(Chunk::class, $element);
-        $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $this->assertInstanceOf(CipherValue::class, $element);
+        $this->assertEquals($element->getContent(), '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
 
 
