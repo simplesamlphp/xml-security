@@ -34,30 +34,32 @@ final class KeyInfo extends AbstractDsElement
      *     \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *     \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *     \SimpleSAML\XMLSecurity\XML\ds\X509Data|
-     *     \SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference|
-     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData|
-     *     \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     *     \SimpleSAML\XML\SerializableElementInterface
      * )[] $info
-     * @param \SimpleSAML\XML\SerializableElementInterface[] $children
      * @param string|null $Id
      */
     public function __construct(
         protected array $info,
-        array $children = [],
         protected ?string $Id = null,
     ) {
-        $combi = array_merge($info, $children);
-
-        Assert::notEmpty($combi, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
-        Assert::maxCount($combi, C::UNBOUNDED_LIMIT);
+        Assert::notEmpty($info, 'ds:KeyInfo cannot be empty', InvalidArgumentException::class);
+        Assert::maxCount($info, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf(
-            $combi,
+            $info,
             SerializableElementInterface::class,
             InvalidArgumentException::class,
         );
         Assert::nullOrValidNCName($Id);
 
-        $this->setElements($children);
+        foreach ($info as $item) {
+            if ($item->getNamespaceURI() === static::NS) {
+                Assert::isInstanceOfAny(
+                    $item,
+                    [KeyName::class, KeyValue::class, RetrievalMethod::class, X509Data::class],
+                    SchemaViolationException::class,
+                );
+            }
+        }
     }
 
 
@@ -79,7 +81,7 @@ final class KeyInfo extends AbstractDsElement
      */
     public function getInfo(): array
     {
-        return array_merge($this->info, $this->getElements());
+        return $this->info;
     }
 
 
@@ -106,6 +108,7 @@ final class KeyInfo extends AbstractDsElement
         //$pgpData = PGPData::getChildrenOfClass($xml);
         //$spkiData = SPKIData::getChildrenOfClass($xml);
         //$mgmtData = MgmtData::getChildrenOfClass($xml);
+        $other = self::getChildElementsFromXML($xml);
 
         $info = array_merge(
             $keyName,
@@ -115,10 +118,10 @@ final class KeyInfo extends AbstractDsElement
             //$pgpdata,
             //$spkidata,
             //$mgmtdata,
+            $other,
         );
 
-        $children = self::getChildElementsFromXML($xml);
-        return new static($info, $children, $Id);
+        return new static($info, $Id);
     }
 
 
