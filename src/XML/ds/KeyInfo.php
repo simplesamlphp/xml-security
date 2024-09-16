@@ -13,6 +13,7 @@ use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
 /**
  * Class representing a ds:KeyInfo element.
@@ -53,7 +54,7 @@ final class KeyInfo extends AbstractDsElement
         Assert::nullOrValidNCName($Id);
 
         foreach ($info as $item) {
-            if ($item->getNamespaceURI() === static::NS) {
+            if ($item instanceof AbstractDsElement) {
                 Assert::isInstanceOfAny(
                     $item,
                     [KeyName::class, KeyValue::class, RetrievalMethod::class, X509Data::class],
