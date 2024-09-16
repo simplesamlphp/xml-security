@@ -1,6 +1,7 @@
 {
     "name": "simplesamlphp/xml-security",
     "description": "SimpleSAMLphp library for XML Security",
+    "type": "simplesamlphp-xmlprovider",
     "license": "LGPL-2.1-or-later",
     "keywords": [
         "xml",
