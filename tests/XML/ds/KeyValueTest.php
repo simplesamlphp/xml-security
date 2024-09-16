@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 use DOMDocument;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
@@ -15,7 +14,7 @@ use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
 use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
 
 use function dirname;
 use function strval;
@@ -39,8 +38,8 @@ final class KeyValueTest extends TestCase
     /** @var \DOMDocument $rsaKeyValue */
     protected static DOMDocument $rsaKeyValue;
 
-    /** @var \DOMDocument $cipherValue */
-    protected static DOMDocument $cipherValue;
+    /** @var \DOMDocument $encryptionProperty */
+    protected static DOMDocument $encryptionProperty;
 
 
     /**
@@ -61,8 +60,8 @@ final class KeyValueTest extends TestCase
             dirname(__FILE__, 3) . '/resources/xml/ds_RSAKeyValue.xml',
         );
 
-        self::$cipherValue = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/xenc_CipherValue.xml',
+        self::$encryptionProperty = DOMDocumentFactory::fromFile(
+            dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptionProperty.xml',
         );
     }
 
@@ -91,18 +90,17 @@ final class KeyValueTest extends TestCase
      */
     public function testMarshallingWithOtherElement(): void
     {
-        $keyValue = new KeyValue(null, Chunk::fromXML(self::$cipherValue->documentElement));
+        $keyValue = new KeyValue(null, EncryptionProperty::fromXML(self::$encryptionProperty->documentElement));
 
         $elements = $keyValue->getElements();
         $this->assertEmpty($keyValue->getRSAKeyValue());
         $this->assertCount(1, $elements);
 
         $element = reset($elements);
-        $this->assertInstanceOf(Chunk::class, $element);
-        $this->assertEquals($element->getXML()->textContent, '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $this->assertInstanceOf(EncryptionProperty::class, $element);
 
         $document = self::$empty;
-        $document->documentElement->appendChild($document->importNode(self::$cipherValue->documentElement, true));
+        $element->toXML($document->documentElement);
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
     }
@@ -126,7 +124,7 @@ final class KeyValueTest extends TestCase
     public function testUnmarshallingWithOtherElement(): void
     {
         $document = self::$empty;
-        $document->documentElement->appendChild($document->importNode(self::$cipherValue->documentElement, true));
+        $document->documentElement->appendChild($document->importNode(self::$encryptionProperty->documentElement, true));
 
         $keyValue = KeyValue::fromXML($document->documentElement);
 
@@ -135,8 +133,7 @@ final class KeyValueTest extends TestCase
         $this->assertCount(1, $elements);
 
         $element = reset($elements);
-        $this->assertInstanceOf(CipherValue::class, $element);
-        $this->assertEquals($element->getContent(), '/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $this->assertInstanceOf(EncryptionProperty::class, $element);
     }
 
 
