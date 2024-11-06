@@ -51,7 +51,7 @@ final class RetrievalMethodTest extends TestCase
     public function testMarshalling(): void
     {
         $transforms = new Transforms(
-            [new Transform(C::XPATH_URI, new XPath('self::xenc:CipherValue[@Id="example1"]', ['xenc' => C::NS_XENC]))],
+            [new Transform(C::XPATH10_URI, new XPath('self::xenc:CipherValue[@Id="example1"]', ['xenc' => C::NS_XENC]))],
         );
 
         $retrievalMethod = new RetrievalMethod($transforms, '#Encrypted_KEY_ID', C:: XMLENC_ENCRYPTEDKEY);

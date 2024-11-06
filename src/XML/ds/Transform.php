@@ -38,8 +38,8 @@ class Transform extends AbstractDsElement
         if ($xpath !== null) {
             Assert::nullOrEq(
                 $this->algorithm,
-                C::XPATH_URI,
-                sprintf('Transform algorithm "%s" required if XPath provided.', C::XPATH_URI),
+                C::XPATH10_URI,
+                sprintf('Transform algorithm "%s" required if XPath provided.', C::XPATH10_URI),
             );
         }
 
@@ -135,7 +135,7 @@ class Transform extends AbstractDsElement
         $e->setAttribute('Algorithm', $algorithm);
 
         switch ($algorithm) {
-            case C::XPATH_URI:
+            case C::XPATH10_URI:
                 $this->getXpath()?->toXML($e);
                 break;
             case C::C14N_EXCLUSIVE_WITH_COMMENTS:

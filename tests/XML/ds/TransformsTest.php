@@ -51,7 +51,7 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms(
             [
                 new Transform(
-                    C::XPATH_URI,
+                    C::XPATH10_URI,
                     new XPath(
                         'count(//. | //@* | //namespace::*)',
                     ),

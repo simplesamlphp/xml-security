@@ -60,7 +60,7 @@ final class DataReferenceTest extends TestCase
                 new Transforms(
                     [
                         new Transform(
-                            C::XPATH_URI,
+                            C::XPATH10_URI,
                             new XPath('self::xenc:EncryptedData[@Id="example1"]'),
                         ),
                     ],

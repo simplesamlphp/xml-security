@@ -54,7 +54,7 @@ final class CipherReferenceTest extends TestCase
         );
 
         $xpath = new XPath('count(//. | //@* | //namespace::*)');
-        $transform = new Transform(C::XPATH_URI, $xpath);
+        $transform = new Transform(C::XPATH10_URI, $xpath);
         self::$transforms = new Transforms([$transform]);
     }
 

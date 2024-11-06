@@ -101,7 +101,7 @@ class XML
                         }
                     }
                     break;
-                case C::XPATH_URI:
+                case C::XPATH10_URI:
                     $xpath = $transform->getXPath();
                     if ($xpath !== null) {
                         $arXPath = [];

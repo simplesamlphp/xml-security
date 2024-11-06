@@ -60,7 +60,7 @@ final class KeyReferenceTest extends TestCase
                 new Transforms(
                     [
                         new Transform(
-                            C::XPATH_URI,
+                            C::XPATH10_URI,
                             new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
                         ),
                     ],

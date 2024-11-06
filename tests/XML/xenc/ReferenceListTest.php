@@ -58,11 +58,11 @@ final class ReferenceListTest extends TestCase
     public function testMarshalling(): void
     {
         $transformData = new Transform(
-            C::XPATH_URI,
+            C::XPATH10_URI,
             new XPath('self::xenc:EncryptedData[@Id="example1"]'),
         );
         $transformKey = new Transform(
-            C::XPATH_URI,
+            C::XPATH10_URI,
             new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
         );
 
