@@ -12,6 +12,7 @@ use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
@@ -138,7 +139,7 @@ final class SignedElementTest extends TestCase
             try {
                 $verified = $customSigned->verify($verifier);
                 break 1;
-            } catch (\SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException $e) {
+            } catch (SignatureVerificationFailedException $e) {
                 continue;
             }
         }
