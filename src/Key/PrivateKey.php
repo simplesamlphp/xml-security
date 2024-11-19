@@ -56,7 +56,7 @@ class PrivateKey extends AsymmetricKey
     ): static {
         if (preg_match(PEM::PEM_REGEX, $file) !== 1) {
             // Not a PEM-encoded key. Must be a file
-            if (preg_match('/^(file:\/\/)/i', $file) !== 1) {
+            if (preg_match('/^(file:\/\/)/Di', $file) !== 1) {
                 $file = preg_filter('/^/', 'file://', $file);
             }
         }
