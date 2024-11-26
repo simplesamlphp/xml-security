@@ -13,6 +13,7 @@ use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
@@ -30,6 +31,7 @@ use function strval;
  * @package simplesamlphp/xml-security
  */
 #[CoversClass(AbstractDsElement::class)]
+#[CoversClass(AbstractKeyInfoType::class)]
 #[CoversClass(KeyInfo::class)]
 final class KeyInfoTest extends TestCase
 {
@@ -115,7 +117,7 @@ final class KeyInfoTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
 
-        $keyInfo = new KeyInfo([]);
+        new KeyInfo([]);
     }
 
 
@@ -128,6 +130,6 @@ final class KeyInfoTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
 
-        $keyInfo = KeyInfo::fromXML($document->documentElement);
+        KeyInfo::fromXML($document->documentElement);
     }
 }
