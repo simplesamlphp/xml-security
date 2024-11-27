@@ -152,4 +152,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const XMLENC_ELEMENT = 'http://www.w3.org/2001/04/xmlenc#Element';
     public const XMLENC_ENCRYPTEDKEY = 'http://www.w3.org/2001/04/xmlenc#EncryptedKey';
     public const XMLENC_EXI = 'http://www.w3.org/2009/xmlenc11#EXI';
+
+    // The namespace for the Elliptic Curve Diffie-Hellman Ephemeral Static (ECDH-ES) algorithm
+    public const XMLENC11_ECDH_ES = 'http://www.w3.org/2009/xmlenc11#ECDH-ES';
 }
