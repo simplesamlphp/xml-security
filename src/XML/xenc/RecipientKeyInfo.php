@@ -2,23 +2,36 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\XML\ds;
+namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
+use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
+use SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 use function array_merge;
 
 /**
- * Class representing a ds:KeyInfo element.
+ * Class representing a xenc:RecipientKeyInfo element.
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfo extends AbstractKeyInfoType
+final class RecipientKeyInfo extends AbstractKeyInfoType
 {
+    /** @var string */
+    public const NS = C::NS_XENC;
+
+    /** @var string */
+    public const NS_PREFIX = 'xenc';
+
+
     /**
-     * Convert XML into a KeyInfo
+     * Convert XML into a RecipientKeyInfo
      *
      * @param \DOMElement $xml The XML element we should load
      * @return static
@@ -28,8 +41,8 @@ final class KeyInfo extends AbstractKeyInfoType
      */
     public static function fromXML(DOMElement $xml): static
     {
-        Assert::same($xml->localName, 'KeyInfo', InvalidDOMElementException::class);
-        Assert::same($xml->namespaceURI, KeyInfo::NS, InvalidDOMElementException::class);
+        Assert::same($xml->localName, 'RecipientKeyInfo', InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, RecipientKeyInfo::NS, InvalidDOMElementException::class);
 
         $Id = self::getOptionalAttribute($xml, 'Id', null);
 

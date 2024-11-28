@@ -2,23 +2,22 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\XMLSecurity\Test\XML\ds;
+namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
-use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo;
 
 use function dirname;
 use function openssl_x509_parse;
@@ -26,16 +25,15 @@ use function str_replace;
 use function strval;
 
 /**
- * Class \SimpleSAML\XMLSecurity\Test\XML\ds\KeyInfoTest
+ * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\RecipientKeyInfoTest
  *
  * @package simplesamlphp/xml-security
  */
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(AbstractKeyInfoType::class)]
-#[CoversClass(KeyInfo::class)]
-final class KeyInfoTest extends TestCase
+#[CoversClass(RecipientKeyInfo::class)]
+final class RecipientKeyInfoTest extends TestCase
 {
-    use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
     /** @var string */
@@ -49,12 +47,10 @@ final class KeyInfoTest extends TestCase
      */
     public function setUp(): void
     {
-        self::$testedClass = KeyInfo::class;
-
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$testedClass = RecipientKeyInfo::class;
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
-            dirname(__FILE__, 3) . '/resources/xml/ds_KeyInfo.xml',
+            dirname(__FILE__, 3) . '/resources/xml/xenc_RecipientKeyInfo.xml',
         );
 
         self::$certificate = str_replace(
@@ -87,7 +83,7 @@ final class KeyInfoTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keyInfo = new KeyInfo(
+        $recipientKeyInfo = new RecipientKeyInfo(
             [
                 new KeyName('testkey'),
                 new X509Data(
@@ -105,7 +101,7 @@ final class KeyInfoTest extends TestCase
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyInfo),
+            strval($recipientKeyInfo),
         );
     }
 
@@ -115,9 +111,9 @@ final class KeyInfoTest extends TestCase
     public function testMarshallingEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
+        $this->expectExceptionMessage('xenc:RecipientKeyInfo cannot be empty');
 
-        new KeyInfo([]);
+        new RecipientKeyInfo([]);
     }
 
 
@@ -125,11 +121,13 @@ final class KeyInfoTest extends TestCase
      */
     public function testUnmarshallingEmpty(): void
     {
-        $document = DOMDocumentFactory::fromString('<ds:KeyInfo xmlns:ds="' . KeyInfo::NS . '"/>');
+        $document = DOMDocumentFactory::fromString(
+            '<xenc:RecipientKeyInfo xmlns:xenc="' . RecipientKeyInfo::NS . '"/>',
+        );
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('ds:KeyInfo cannot be empty');
+        $this->expectExceptionMessage('xenc:RecipientKeyInfo cannot be empty');
 
-        KeyInfo::fromXML($document->documentElement);
+        RecipientKeyInfo::fromXML($document->documentElement);
     }
 }

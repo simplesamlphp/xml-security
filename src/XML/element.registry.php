@@ -43,10 +43,10 @@ return [
         'InclusiveNamespaces' => '\SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces',
     ],
     'http://www.w3.org/2001/04/xmlenc#' => [
-//        'AgreementMethod' => '\SimpleSAML\XMLSecurity\XML\xenc\AgreementMethod',
+        'AgreementMethod' => '\SimpleSAML\XMLSecurity\XML\xenc\AgreementMethod',
         'CipherData' => '\SimpleSAML\XMLSecurity\XML\xenc\CipherData',
         'CipherReference' => '\SimpleSAML\XMLSecurity\XML\xenc\CipherReference',
-//        'DHKeyValue' => '\SimpleSAML\XMLSecurity\XML\xenc\DHKeyValue',
+        'DHKeyValue' => '\SimpleSAML\XMLSecurity\XML\xenc\DHKeyValue',
         'EncryptedData' => '\SimpleSAML\XMLSecurity\XML\xenc\EncryptedData',
         'EncryptedKey' => '\SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey',
         'EncryptionProperties' => '\SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperties',
