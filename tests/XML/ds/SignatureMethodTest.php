@@ -6,11 +6,13 @@ namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
 
 use function dirname;
@@ -34,7 +36,7 @@ final class SignatureMethodTest extends TestCase
     {
         self::$testedClass = SignatureMethod::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
+        self::$schemaFile = dirname(__FILE__, 3) . '/resources/schemas/simplesamlphp.xsd';
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_SignatureMethod.xml',
@@ -46,7 +48,13 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256);
+        $hmacOutputLength = new HMACOutputLength('1234');
+
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+        )->documentElement);
+
+        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256, $hmacOutputLength, [$chunk]);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

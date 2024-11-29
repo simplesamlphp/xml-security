@@ -8,8 +8,15 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+
+use function array_keys;
+use function array_merge;
+use function array_pop;
 
 /**
  * Class representing a ds:SignatureMethod element.
@@ -18,13 +25,23 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class SignatureMethod extends AbstractDsElement
 {
+    use ExtendableElementTrait;
+
+    /** The namespace-attribute for the xs:any element */
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+
+
     /**
      * Initialize a SignatureMethod element.
      *
      * @param string $Algorithm
+     * @param \SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength|null $hmacOutputLength
+     * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
      */
     public function __construct(
         protected string $Algorithm,
+        protected ?HMACOutputLength $hmacOutputLength = null,
+        array $children = [],
     ) {
         Assert::validURI($Algorithm, SchemaViolationException::class);
         Assert::oneOf(
@@ -36,6 +53,8 @@ final class SignatureMethod extends AbstractDsElement
             'Invalid signature method: %s',
             InvalidArgumentException::class,
         );
+
+        $this->setElements($children);
     }
 
 
@@ -47,6 +66,17 @@ final class SignatureMethod extends AbstractDsElement
     public function getAlgorithm(): string
     {
         return $this->Algorithm;
+    }
+
+
+    /**
+     * Collect the value of the hmacOutputLength-property
+     *
+     * @return \SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength|null
+     */
+    public function getHMACOutputLength(): ?HMACOutputLength
+    {
+        return $this->hmacOutputLength;
     }
 
 
@@ -66,7 +96,10 @@ final class SignatureMethod extends AbstractDsElement
 
         $Algorithm = SignatureMethod::getAttribute($xml, 'Algorithm');
 
-        return new static($Algorithm);
+        $hmacOutputLength = HMACOutputLength::getChildrenOfClass($xml);
+        Assert::maxCount($hmacOutputLength, 1, TooManyElementsException::class);
+
+        return new static($Algorithm, array_pop($hmacOutputLength), self::getChildElementsFromXML($xml));
     }
 
 
@@ -80,6 +113,12 @@ final class SignatureMethod extends AbstractDsElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', $this->getAlgorithm());
+
+        $this->getHMACOutputLength()?->toXML($e);
+
+        foreach ($this->getElements() as $elt) {
+            $elt->toXML($e);
+        }
 
         return $e;
     }
