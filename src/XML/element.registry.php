@@ -12,7 +12,7 @@ return [
         'KeyName' => '\SimpleSAML\XMLSecurity\XML\ds\KeyName',
         'KeyValue' => '\SimpleSAML\XMLSecurity\XML\ds\KeyValue',
         'Manifest' => '\SimpleSAML\XMLSecurity\XML\ds\Manifest',
-//        'MgmtData' => '\SimpleSAML\XMLSecurity\XML\ds\MgmtData',
+        'MgmtData' => '\SimpleSAML\XMLSecurity\XML\ds\MgmtData',
         'Object' => '\SimpleSAML\XMLSecurity\XML\ds\DsObject',
 //        'PGPData' => '\SimpleSAML\XMLSecurity\XML\ds\PGPData',
         'Reference' => '\SimpleSAML\XMLSecurity\XML\ds\Reference',

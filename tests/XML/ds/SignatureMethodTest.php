@@ -11,6 +11,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength;
 use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
@@ -60,5 +61,37 @@ final class SignatureMethodTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($signatureMethod),
         );
+    }
+
+
+    /**
+     */
+    public function testMarshallingElementOrder(): void
+    {
+        $hmacOutputLength = new HMACOutputLength('1234');
+
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+        )->documentElement);
+
+        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256, $hmacOutputLength, [$chunk]);
+
+        $signatureMethodElement = $signatureMethod->toXML();
+
+        $xpCache = XPath::getXPath($signatureMethodElement);
+
+        $hmacOutputLength = XPath::xpQuery($signatureMethodElement, './ds:HMACOutputLength', $xpCache);
+        $this->assertCount(1, $hmacOutputLength);
+
+        /** @var \DOMElement[] $signatureMethodElements */
+        $signatureMethodElements = XPath::xpQuery(
+            $signatureMethodElement,
+            './ds:HMACOutputLength/following-sibling::*',
+            $xpCache,
+        );
+
+        // Test ordering of SignatureMethod contents
+        $this->assertCount(1, $signatureMethodElements);
+        $this->assertEquals('ssp:Chunk', $signatureMethodElements[0]->tagName);
     }
 }
