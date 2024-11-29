@@ -43,7 +43,7 @@ final class X509SerialNumberTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $serialNumber = new X509SerialNumber('123456');
+        $serialNumber = new X509SerialNumber(123456);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
