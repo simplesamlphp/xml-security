@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
-use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\IntegerElementTrait;
 
 /**
@@ -21,9 +17,9 @@ final class X509SerialNumber extends AbstractDsElement
 
 
     /**
-     * @param int $content
+     * @param string $content
      */
-    public function __construct(int $content)
+    public function __construct(string $content)
     {
         $this->setContent($content);
     }

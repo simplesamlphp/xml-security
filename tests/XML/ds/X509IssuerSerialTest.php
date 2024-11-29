@@ -57,7 +57,7 @@ final class X509IssuerSerialTest extends TestCase
         /** @var string[] $details */
         $details = self::$key->getCertificateDetails();
         self::$issuer = new X509IssuerName(CertificateUtils::parseIssuer($details['issuer']));
-        self::$serial = new X509SerialNumber(intval($details['serialNumber']));
+        self::$serial = new X509SerialNumber($details['serialNumber']);
     }
 
 

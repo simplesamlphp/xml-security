@@ -111,7 +111,7 @@ final class X509DataTest extends TestCase
                         'C=US,ST=Hawaii,L=Honolulu,O=SimpleSAMLphp HQ,CN=SimpleSAMLphp Testing CA,emailAddress=%s',
                         'noreply@simplesamlphp.org',
                     )),
-                    new X509SerialNumber(2),
+                    new X509SerialNumber('2'),
                 ),
                 new X509SubjectName(self::$certData['name']),
                 new X509Digest(self::$digest, C::DIGEST_SHA256),
