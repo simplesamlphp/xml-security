@@ -16,6 +16,7 @@ use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\MgmtData;
 use SimpleSAML\XMLSecurity\XML\ds\PGPData;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
@@ -105,6 +106,7 @@ final class KeyInfoTest extends TestCase
                     new PGPKeyPacket('GpM8'),
                     [new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')],
                 ),
+                new MgmtData('ManagementData'),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
                 )->documentElement),
