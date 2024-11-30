@@ -35,6 +35,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
      *     \SimpleSAML\XMLSecurity\XML\ds\KeyValue|
      *     \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *     \SimpleSAML\XMLSecurity\XML\ds\X509Data|
+     *     \SimpleSAML\XMLSecurity\XML\ds\PGPData|
      *     \SimpleSAML\XML\SerializableElementInterface
      * )[] $info
      * @param string|null $Id
@@ -64,7 +65,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
             if ($item instanceof AbstractDsElement) {
                 Assert::isInstanceOfAny(
                     $item,
-                    [KeyName::class, KeyValue::class, RetrievalMethod::class, X509Data::class],
+                    [KeyName::class, KeyValue::class, RetrievalMethod::class, X509Data::class, PGPData::class],
                     SchemaViolationException::class,
                 );
             }

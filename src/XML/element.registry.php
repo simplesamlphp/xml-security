@@ -14,7 +14,7 @@ return [
         'Manifest' => '\SimpleSAML\XMLSecurity\XML\ds\Manifest',
         'MgmtData' => '\SimpleSAML\XMLSecurity\XML\ds\MgmtData',
         'Object' => '\SimpleSAML\XMLSecurity\XML\ds\DsObject',
-//        'PGPData' => '\SimpleSAML\XMLSecurity\XML\ds\PGPData',
+        'PGPData' => '\SimpleSAML\XMLSecurity\XML\ds\PGPData',
         'Reference' => '\SimpleSAML\XMLSecurity\XML\ds\Reference',
         'RetrievalMethod' => '\SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod',
         'RSAKeyValue' => '\SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue',

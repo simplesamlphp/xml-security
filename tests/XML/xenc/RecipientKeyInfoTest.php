@@ -14,9 +14,13 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\PGPData;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\xenc\P;
 use SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo;
 
 use function dirname;
@@ -91,6 +95,11 @@ final class RecipientKeyInfoTest extends TestCase
                         new X509Certificate(self::$certificate),
                         new X509SubjectName(self::$certData['name']),
                     ],
+                ),
+                new PGPData(
+                    new PGPKeyID('GpM7'),
+                    new PGPKeyPacket('GpM8'),
+                    [new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
