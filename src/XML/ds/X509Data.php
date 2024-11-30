@@ -7,8 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
@@ -74,18 +74,22 @@ final class X509Data extends AbstractDsElement
         for ($n = $xml->firstChild; $n !== null; $n = $n->nextSibling) {
             if (!($n instanceof DOMElement)) {
                 continue;
-            } elseif ($n->namespaceURI !== self::NS) {
+            } elseif ($n->namespaceURI === self::NS) {
+                $data[] = match ($n->localName) {
+                    'X509Certificate' => X509Certificate::fromXML($n),
+                    'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
+                    'X509SubjectName' => X509SubjectName::fromXML($n),
+                    default => new Chunk($n),
+                };
+            } elseif ($n->namespaceURI === C::NS_XDSIG11) {
+                $data[] = match ($n->localName) {
+                    'X509Digest' => X509Digest::fromXML($n),
+                    default => new Chunk($n),
+                };
+            } else {
                 $data[] = new Chunk($n);
                 continue;
             }
-
-            $data[] = match ($n->localName) {
-                'X509Certificate' => X509Certificate::fromXML($n),
-                'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
-                'X509SubjectName' => X509SubjectName::fromXML($n),
-                'X509Digest' => X509Digest::fromXML($n),
-                default => new Chunk($n),
-            };
         }
 
         return new static($data);
