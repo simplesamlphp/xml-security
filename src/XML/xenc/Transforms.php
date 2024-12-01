@@ -77,7 +77,7 @@ final class Transforms extends AbstractXencElement
      * @param \DOMElement|null $parent The element we should append this Transforms element to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
 

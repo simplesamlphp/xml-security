@@ -102,7 +102,7 @@ final class SignatureProperty extends AbstractDsElement
      * @param \DOMElement|null $parent The element we should append this SignatureProperty element to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Target', $this->getTarget());

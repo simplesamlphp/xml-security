@@ -242,7 +242,7 @@ final class EncryptedKey extends AbstractEncryptedType
     /**
      * @inheritDoc
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = parent::toXML($parent);
 

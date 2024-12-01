@@ -66,7 +66,7 @@ final class X509SerialNumber extends AbstractDsElement
      * @param \DOMElement|null $parent The element we should append this X509SerialNumber element to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->getContent();

@@ -65,5 +65,5 @@ interface SignedElementInterface extends CanonicalizableElementInterface
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to validate.
      */
-    public function verify(SignatureAlgorithmInterface $verifier = null): SignedElementInterface;
+    public function verify(?SignatureAlgorithmInterface $verifier = null): SignedElementInterface;
 }
