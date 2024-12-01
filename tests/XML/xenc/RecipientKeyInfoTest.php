@@ -18,11 +18,15 @@ use SimpleSAML\XMLSecurity\XML\ds\MgmtData;
 use SimpleSAML\XMLSecurity\XML\ds\PGPData;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
+use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
+use SimpleSAML\XMLSecurity\XML\ds\SPKISexp;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
 use SimpleSAML\XMLSecurity\XML\xenc\P;
 use SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo;
+use SimpleSAML\XMLSecurity\XML\xenc\Seed;
 
 use function dirname;
 use function openssl_x509_parse;
@@ -88,6 +92,12 @@ final class RecipientKeyInfoTest extends TestCase
      */
     public function testMarshalling(): void
     {
+        $SPKISexp1 = new SPKISexp('GpM6');
+        $seed = new Seed('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $SPKISexp2 = new SPKISexp('GpM7');
+        $SPKISexp3 = new SPKISexp('GpM8');
+        $carriedKeyName = new CarriedKeyName('Some label');
+
         $recipientKeyInfo = new RecipientKeyInfo(
             [
                 new KeyName('testkey'),
@@ -102,6 +112,11 @@ final class RecipientKeyInfoTest extends TestCase
                     new PGPKeyPacket('GpM8'),
                     [new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')],
                 ),
+                new SPKIData([
+                    [$SPKISexp1, $seed],
+                    [$SPKISexp2, null],
+                    [$SPKISexp3, $carriedKeyName],
+                ]),
                 new MgmtData('ManagementData'),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',

@@ -36,6 +36,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
      *     \SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod|
      *     \SimpleSAML\XMLSecurity\XML\ds\X509Data|
      *     \SimpleSAML\XMLSecurity\XML\ds\PGPData|
+     *     \SimpleSAML\XMLSecurity\XML\ds\SPKIData|
      *     \SimpleSAML\XMLSecurity\XML\ds\MgmtData|
      *     \SimpleSAML\XML\SerializableElementInterface
      * )[] $info
@@ -72,7 +73,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
                         RetrievalMethod::class,
                         X509Data::class,
                         PGPData::class,
-                        // SPKIData::class,
+                        SPKIData::class,
                         MgmtData::class,
                     ],
                     SchemaViolationException::class,

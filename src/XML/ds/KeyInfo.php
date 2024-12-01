@@ -38,7 +38,7 @@ final class KeyInfo extends AbstractKeyInfoType
         $retrievalMethod = RetrievalMethod::getChildrenOfClass($xml);
         $x509Data = X509Data::getChildrenOfClass($xml);
         $pgpData = PGPData::getChildrenOfClass($xml);
-        //$spkiData = SPKIData::getChildrenOfClass($xml);
+        $spkiData = SPKIData::getChildrenOfClass($xml);
         $mgmtData = MgmtData::getChildrenOfClass($xml);
         $other = self::getChildElementsFromXML($xml);
 
@@ -48,7 +48,7 @@ final class KeyInfo extends AbstractKeyInfoType
             $retrievalMethod,
             $x509Data,
             $pgpData,
-            //$spkiData,
+            $spkiData,
             $mgmtData,
             $other,
         );
