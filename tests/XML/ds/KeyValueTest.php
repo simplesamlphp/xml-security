@@ -124,7 +124,9 @@ final class KeyValueTest extends TestCase
     public function testUnmarshallingWithOtherElement(): void
     {
         $document = self::$empty;
-        $document->documentElement->appendChild($document->importNode(self::$encryptionProperty->documentElement, true));
+        $document->documentElement->appendChild(
+            $document->importNode(self::$encryptionProperty->documentElement, true),
+        );
 
         $keyValue = KeyValue::fromXML($document->documentElement);
 

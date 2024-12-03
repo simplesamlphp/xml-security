@@ -23,7 +23,9 @@ abstract class AbstractSPKIDataType extends AbstractDsElement
     /**
      * Initialize a SPKIData element.
      *
-     * @param array{array{\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, \SimpleSAML\XML\SerializableElementInterface|null}} $tuples
+     * @param array{
+     *   array{\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, \SimpleSAML\XML\SerializableElementInterface|null}
+     * } $tuples
      */
     final public function __construct(
         protected array $tuples,

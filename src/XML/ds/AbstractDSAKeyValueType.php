@@ -27,7 +27,6 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement
      * @param \SimpleSAML\XMLSecurity\XML\ds\J|null $j
      * @param \SimpleSAML\XMLSecurity\XML\ds\P|null $p
      * @param \SimpleSAML\XMLSecurity\XML\ds\Q|null $q
-     * @param \SimpleSAML\XMLSecurity\XML\ds\Generator|null $generator
      * @param \SimpleSAML\XMLSecurity\XML\ds\Seed|null $seed
      * @param \SimpleSAML\XMLSecurity\XML\ds\PgenCounter|null $pgenCounter
      */
@@ -68,9 +67,9 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement
     /**
      * Get the G.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\ds\G
+     * @return \SimpleSAML\XMLSecurity\XML\ds\G|null
      */
-    public function getG(): G
+    public function getG(): ?G
     {
         return $this->g;
     }
@@ -79,9 +78,9 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement
     /**
      * Get the J.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\ds\J
+     * @return \SimpleSAML\XMLSecurity\XML\ds\J|null
      */
-    public function getJ(): J
+    public function getJ(): ?J
     {
         return $this->j;
     }
