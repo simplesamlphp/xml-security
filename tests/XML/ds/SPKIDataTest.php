@@ -55,11 +55,13 @@ final class SPKIDataTest extends TestCase
         $SPKISexp2 = new SPKISexp('GpM7');
         $SPKISexp3 = new SPKISexp('GpM8');
         $carriedKeyName = new CarriedKeyName('Some label');
+        $SPKISexp4 = new SPKISexp('GpM9');
 
         $SPKIData = new SPKIData([
             [$SPKISexp1, $seed],
             [$SPKISexp2, null],
             [$SPKISexp3, $carriedKeyName],
+            [$SPKISexp4, null],
         ]);
 
         $this->assertEquals(

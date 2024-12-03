@@ -4,4 +4,5 @@
   <ds:SPKISexp>GpM7</ds:SPKISexp>
   <ds:SPKISexp>GpM8</ds:SPKISexp>
   <xenc:CarriedKeyName xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">Some label</xenc:CarriedKeyName>
+  <ds:SPKISexp>GpM9</ds:SPKISexp>
 </ds:SPKIData>
