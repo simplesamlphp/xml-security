@@ -10,7 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractSPKIData;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractSPKIDataType;
 use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
 use SimpleSAML\XMLSecurity\XML\ds\SPKISexp;
 use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
@@ -25,7 +25,7 @@ use function strval;
  * @package simplesamlphp/xml-security
  */
 #[CoversClass(AbstractDsElement::class)]
-#[CoversClass(AbstractSPKIData::class)]
+#[CoversClass(AbstractSPKIDataType::class)]
 #[CoversClass(SPKIData::class)]
 final class SPKIDataTest extends TestCase
 {

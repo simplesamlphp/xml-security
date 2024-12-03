@@ -23,7 +23,7 @@ abstract class AbstractSPKIDataType extends AbstractDsElement
     /**
      * Initialize a SPKIData element.
      *
-     * @param array<\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, SimpleSAML\XML\SerializableElementInterface|null> $tuples
+     * @param array{array{\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, \SimpleSAML\XML\SerializableElementInterface|null}} $tuples
      */
     final public function __construct(
         protected array $tuples,
@@ -32,9 +32,8 @@ abstract class AbstractSPKIDataType extends AbstractDsElement
         Assert::allCount($tuples, 2);
 
         foreach ($tuples as $tuple) {
-            list($spkisExp, $other) = $tuple;
-            Assert::isInstanceOf($spkisExp, SPKISexp::class, SchemaViolationException::class);
-            Assert::nullOrIsInstanceOf($other, SerializableElementInterface::class, SchemaViolationException::class);
+            Assert::isInstanceOf($tuple[0], SPKISexp::class, SchemaViolationException::class);
+            Assert::nullOrIsInstanceOf($tuple[1], SerializableElementInterface::class, SchemaViolationException::class);
         }
     }
 
@@ -42,7 +41,7 @@ abstract class AbstractSPKIDataType extends AbstractDsElement
     /**
      * Collect the value of the SPKISexp-property
      *
-     * @return array<\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, SimpleSAML\XML\SerializableElementInterface|null>
+     * @return array{array{\SimpleSAML\XMLSecurity\XML\ds\SPKISexp, \SimpleSAML\XML\SerializableElementInterface|null}}
      */
     public function getTuples(): array
     {
@@ -102,10 +101,8 @@ abstract class AbstractSPKIDataType extends AbstractDsElement
         $e = $this->instantiateParentElement($parent);
 
         foreach ($this->getTuples() as $tuple) {
-            list($spkisExp, $other) = $tuple;
-
-            $spkisExp->toXML($e);
-            $other?->toXML($e);
+            $tuple[0]->toXML($e);
+            $tuple[1]?->toXML($e);
         }
 
         return $e;
