@@ -100,7 +100,7 @@ class CipherData extends AbstractXencElement
     /**
      * @inheritDoc
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
 

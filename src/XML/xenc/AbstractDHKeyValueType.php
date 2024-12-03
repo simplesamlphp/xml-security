@@ -172,7 +172,7 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement
      * @param \DOMElement|null $parent The element we should append this DHKeyValue to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
 

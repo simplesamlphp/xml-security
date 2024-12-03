@@ -251,7 +251,7 @@ trait SignedElementTrait
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to verify.
      */
-    public function verify(SignatureAlgorithmInterface $verifier = null): SignedElementInterface
+    public function verify(?SignatureAlgorithmInterface $verifier = null): SignedElementInterface
     {
         if (!$this->isSigned()) {
             throw new NoSignatureFoundException();

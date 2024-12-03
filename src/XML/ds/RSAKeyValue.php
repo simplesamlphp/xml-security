@@ -104,7 +104,7 @@ final class RSAKeyValue extends AbstractDsElement
      * @param \DOMElement|null $parent The element we should append this RSAKeyValue element to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
 

@@ -182,7 +182,7 @@ class CustomSignable extends AbstractElement implements
      * @return \DOMElement The XML element after adding the data corresponding to this CustomSignable.
      * @throws \Exception
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         if ($this->signer !== null) {
             $signedXML = $this->doSign($this->xml);

@@ -81,7 +81,7 @@ final class X509Digest extends AbstractDsig11Element
      * @param \DOMElement|null $parent The element we should append this X509Digest element to.
      * @return \DOMElement
      */
-    public function toXML(DOMElement $parent = null): DOMElement
+    public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->getContent();
