@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use SimpleSAML\XML\IntegerElementTrait;
+use SimpleSAML\XML\StringElementTrait;
 
 /**
- * Class representing a ds:X509SerialNumber element.
+ * Class representing a ds:MgmtData element.
  *
- * @package simplesaml/xml-security
+ * @package simplesamlphp/xml-security
  */
-final class X509SerialNumber extends AbstractDsElement
+final class MgmtData extends AbstractDsElement
 {
-    use IntegerElementTrait;
+    use StringElementTrait;
 
 
     /**

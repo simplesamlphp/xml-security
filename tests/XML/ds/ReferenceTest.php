@@ -64,6 +64,7 @@ final class ReferenceTest extends TestCase
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
 
+        $this->assertFalse($reference->isXPointer());
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($reference),
