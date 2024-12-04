@@ -12,7 +12,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractXencElement extends AbstractElement
+abstract class AbstractXenc11Element extends AbstractElement
 {
     /** @var string */
     public const NS = C::NS_XENC11;
