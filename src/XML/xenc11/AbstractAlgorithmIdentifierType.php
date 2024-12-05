@@ -59,7 +59,11 @@ abstract class AbstractAlgorithmIdentifierType extends AbstractXenc11Element
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', $this->getAlgorithm());
 
-        $this->getParameters()?->toXML($e);
+        if ($this->getParameters() !== null) {
+            if (!$this->getParameters()->isEmptyElement()) {
+                $this->getParameters()->toXML($e);
+            }
+        }
 
         return $e;
     }
