@@ -44,10 +44,10 @@
         "ext-spl": "*",
 
         "simplesamlphp/assert": "^1.6",
-        "simplesamlphp/xml-common": "^1.21.0"
+        "simplesamlphp/xml-common": "^1.22.0"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.7"
+        "simplesamlphp/simplesamlphp-test-framework": "^1.8"
     },
     "config": {
         "allow-plugins": {
