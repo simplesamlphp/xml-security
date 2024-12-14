@@ -65,7 +65,7 @@ final class ManifestTest extends TestCase
             C::XMLDSIG_MANIFEST,
             '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
         );
-        $manifest = new Manifest([$reference], 'abc123');
+        $manifest = new Manifest([$reference], 'def456');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
