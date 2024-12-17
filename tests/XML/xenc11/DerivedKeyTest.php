@@ -11,7 +11,9 @@ use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
-use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\Exponent;
+use SimpleSAML\XMLSecurity\XML\ds\Modulus;
+use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
@@ -51,8 +53,6 @@ final class DerivedKeyTest extends TestCase
     {
         self::$testedClass = DerivedKey::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema-11.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc11_DerivedKey.xml',
         );
@@ -67,9 +67,12 @@ final class DerivedKeyTest extends TestCase
     public function testMarshalling(): void
     {
         $alg = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
-        $keyName = new KeyName('testkey');
+        $RSAKeyValue = new RSAKeyValue(
+            new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+            new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+        );
 
-        $keyDerivationMethod = new KeyDerivationMethod($alg, [$keyName]);
+        $keyDerivationMethod = new KeyDerivationMethod($alg, [$RSAKeyValue]);
 
         $transformData = new Transform(
             C::XPATH10_URI,
@@ -114,9 +117,12 @@ final class DerivedKeyTest extends TestCase
     public function testMarshallingElementOrder(): void
     {
         $alg = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
-        $keyName = new KeyName('testkey');
+        $RSAKeyValue = new RSAKeyValue(
+            new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+            new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+        );
 
-        $keyDerivationMethod = new KeyDerivationMethod($alg, [$keyName]);
+        $keyDerivationMethod = new KeyDerivationMethod($alg, [$RSAKeyValue]);
 
         $transformData = new Transform(
             C::XPATH10_URI,

@@ -43,8 +43,6 @@ final class PBKDF2paramsTest extends TestCase
     {
         self::$testedClass = PBKDF2params::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema-11.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc11_PBKDF2-params.xml',
         );

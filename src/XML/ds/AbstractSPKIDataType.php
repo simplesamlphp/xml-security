@@ -10,6 +10,8 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Registry\ElementRegistry;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
@@ -18,8 +20,10 @@ use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractSPKIDataType extends AbstractDsElement
+abstract class AbstractSPKIDataType extends AbstractDsElement implements SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * Initialize a SPKIData element.
      *

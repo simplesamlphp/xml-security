@@ -7,6 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 
 use function array_merge;
 
@@ -15,8 +17,10 @@ use function array_merge;
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfo extends AbstractKeyInfoType
+final class KeyInfo extends AbstractKeyInfoType implements SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * Convert XML into a KeyInfo
      *

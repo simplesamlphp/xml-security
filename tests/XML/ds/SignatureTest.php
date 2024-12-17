@@ -40,8 +40,6 @@ final class SignatureTest extends TestCase
     {
         self::$testedClass = Signature::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Signature.xml',
         );

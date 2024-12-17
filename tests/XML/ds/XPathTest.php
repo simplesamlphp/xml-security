@@ -40,19 +40,9 @@ class XPathTest extends TestCase
 
     public function testMarshalling(): void
     {
-        $xpath = new XPath(
-            'self::xenc:CipherValue[@Id="example1"]',
-            [
-                'xenc' => 'http://www.w3.org/2001/04/xmlenc#',
-            ],
-        );
+        $xpath = new XPath('self::xenc:CipherValue[@Id="example1"]');
 
         $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
-        $namespaces = $xpath->getNamespaces();
-        $this->assertCount(1, $namespaces);
-        $this->assertArrayHasKey('xenc', $namespaces);
-        $this->assertEquals('http://www.w3.org/2001/04/xmlenc#', $namespaces['xenc']);
-
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($xpath),

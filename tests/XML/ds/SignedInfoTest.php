@@ -38,8 +38,6 @@ final class SignedInfoTest extends TestCase
     {
         self::$testedClass = SignedInfo::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_SignedInfo.xml',
         );

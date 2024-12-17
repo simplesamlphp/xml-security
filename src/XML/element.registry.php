@@ -53,7 +53,7 @@ return [
         'EncryptionProperty' => '\SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty',
         'ReferenceList' => '\SimpleSAML\XMLSecurity\XML\xenc\ReferenceList',
     ],
-    'http://www.w3.org/2009/xmlenc11#'=> [
+    'http://www.w3.org/2009/xmlenc11#' => [
         'ConcatKDFParams' => '\SimpleSAML\XMLSecurity\XML\xenc11\ConcatKDFParams',
         'DerivedKey' => '\SimpleSAML\XMLSecurity\XML\xenc11\DerivedKey',
         'KeyDerivationMethod' => '\SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod',

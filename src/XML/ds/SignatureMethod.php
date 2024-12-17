@@ -10,6 +10,8 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -23,9 +25,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-final class SignatureMethod extends AbstractDsElement
+final class SignatureMethod extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use ExtendableElementTrait;
+    use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

@@ -10,6 +10,8 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
 use function array_pop;
@@ -19,8 +21,11 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element
+abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element implements
+    SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * ConcatKDFParams constructor.
      *

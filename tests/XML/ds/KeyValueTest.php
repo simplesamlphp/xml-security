@@ -48,8 +48,6 @@ final class KeyValueTest extends TestCase
     {
         self::$testedClass = KeyValue::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$empty = DOMDocumentFactory::fromString('<ds:KeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>');
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(

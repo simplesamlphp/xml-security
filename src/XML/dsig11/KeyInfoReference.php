@@ -8,14 +8,18 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 
 /**
  * Class representing a dsig11:KeyInfoReference element.
  *
  * @package simplesamlphp/xml-security
  */
-final class KeyInfoReference extends AbstractDsig11Element
+final class KeyInfoReference extends AbstractDsig11Element implements SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * Initialize a KeyInfoReference element.
      *

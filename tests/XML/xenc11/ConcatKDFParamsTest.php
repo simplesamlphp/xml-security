@@ -38,8 +38,6 @@ final class ConcatKDFParamsTest extends TestCase
     {
         self::$testedClass = ConcatKDFParams::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema-11.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc11_ConcatKDFParams.xml',
         );

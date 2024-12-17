@@ -38,8 +38,6 @@ final class RetrievalMethodTest extends TestCase
     {
         self::$testedClass = RetrievalMethod::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_RetrievalMethod.xml',
         );
@@ -53,7 +51,7 @@ final class RetrievalMethodTest extends TestCase
         $transforms = new Transforms([
             new Transform(
                 C::XPATH10_URI,
-                new XPath('self::xenc:CipherValue[@Id="example1"]', ['xenc' => C::NS_XENC]),
+                new XPath('self::xenc:CipherValue[@Id="example1"]'),
             ),
         ]);
 

@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 
 /**
@@ -15,9 +17,10 @@ use SimpleSAML\XML\XsNamespace as NS;
  *
  * @package simplesamlphp/xml-security
  */
-final class DsObject extends AbstractDsElement
+final class DsObject extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use ExtendableElementTrait;
+    use SchemaValidatableElementTrait;
 
     /** @var string */
     public const LOCALNAME = 'Object';

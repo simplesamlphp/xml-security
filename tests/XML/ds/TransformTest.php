@@ -37,8 +37,6 @@ final class TransformTest extends TestCase
     {
         self::$testedClass = Transform::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_Transform.xml',
         );

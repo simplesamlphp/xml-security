@@ -10,6 +10,8 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 
 /**
@@ -17,10 +19,10 @@ use SimpleSAML\XML\XsNamespace as NS;
  *
  * @package simplesamlphp/xml-security
  */
-final class SignatureProperty extends AbstractDsElement
+final class SignatureProperty extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use ExtendableElementTrait;
-
+    use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

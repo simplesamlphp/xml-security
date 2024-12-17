@@ -33,8 +33,6 @@ final class KeyInfoReferenceTest extends TestCase
     {
         self::$testedClass = KeyInfoReference::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/dsig11_KeyInfoReference.xml',
         );

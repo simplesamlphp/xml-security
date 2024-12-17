@@ -31,8 +31,6 @@ class InclusiveNamespacesTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/exc-c14n.xsd';
-
         self::$testedClass = InclusiveNamespaces::class;
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(

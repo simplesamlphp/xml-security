@@ -60,8 +60,6 @@ final class EncryptedKeyTest extends TestCase
     {
         self::$testedClass = EncryptedKey::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_EncryptedKey.xml',
         );

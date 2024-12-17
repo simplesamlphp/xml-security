@@ -1,6 +1,9 @@
 <xenc11:DerivedKey xmlns:xenc11="http://www.w3.org/2009/xmlenc11#" Recipient="phpunit" Id="phpunit" Type="urn:x-simplesamlphp:type">
   <xenc11:KeyDerivationMethod Algorithm="http://www.w3.org/2009/xmlenc11#ConcatKDF">
-    <ds:KeyName xmlns:ds="http://www.w3.org/2000/09/xmldsig#">testkey</ds:KeyName>
+    <ds:RSAKeyValue xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ds:Modulus>dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==</ds:Modulus>
+      <ds:Exponent>dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=</ds:Exponent>
+    </ds:RSAKeyValue>
   </xenc11:KeyDerivationMethod>
   <xenc:ReferenceList xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
     <xenc:DataReference URI="#Encrypted_DATA_ID">
