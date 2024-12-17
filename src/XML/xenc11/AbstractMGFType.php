@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+
 /**
  * Class representing <xenc11:AbstractMGFType>.
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractMGFType extends AbstractAlgorithmIdentifierType
+abstract class AbstractMGFType extends AbstractAlgorithmIdentifierType implements
+    SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * MGFType constructor.
      *

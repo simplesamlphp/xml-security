@@ -37,8 +37,6 @@ final class SignatureMethodTest extends TestCase
     {
         self::$testedClass = SignatureMethod::class;
 
-        self::$schemaFile = dirname(__FILE__, 3) . '/resources/schemas/simplesamlphp.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_SignatureMethod.xml',
         );

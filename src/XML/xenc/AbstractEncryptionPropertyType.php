@@ -12,6 +12,8 @@ use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 
 /**
@@ -19,10 +21,12 @@ use SimpleSAML\XML\XsNamespace as NS;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractEncryptionPropertyType extends AbstractXencElement
+abstract class AbstractEncryptionPropertyType extends AbstractXencElement implements
+    SchemaValidatableElementInterface
 {
     use ExtendableAttributesTrait;
     use ExtendableElementTrait;
+    use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:anyAttribute element */
     public const XS_ANY_ATTR_NAMESPACE = [C::NS_XML];

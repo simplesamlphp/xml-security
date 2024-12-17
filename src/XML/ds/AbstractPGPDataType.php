@@ -10,6 +10,8 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
@@ -20,9 +22,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractPGPDataType extends AbstractDsElement
+abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use ExtendableElementTrait;
+    use SchemaValidatableElementTrait;
 
     /** @var \SimpleSAML\XML\XsNamespace */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

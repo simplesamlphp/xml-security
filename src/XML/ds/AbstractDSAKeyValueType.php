@@ -9,6 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 
 use function array_pop;
 
@@ -17,8 +19,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractDSAKeyValueType extends AbstractDsElement
+abstract class AbstractDSAKeyValueType extends AbstractDsElement implements SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * DSAKeyValueType constructor.
      *

@@ -8,6 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 
 /**
@@ -15,8 +17,11 @@ use SimpleSAML\XML\Exception\SchemaViolationException;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractEncryptionPropertiesType extends AbstractXencElement
+abstract class AbstractEncryptionPropertiesType extends AbstractXencElement implements
+    SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * EncryptionProperty constructor.
      *

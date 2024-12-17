@@ -42,8 +42,6 @@ final class DSAKeyValueTest extends TestCase
     {
         self::$testedClass = DSAKeyValue::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_DSAKeyValue.xml',
         );

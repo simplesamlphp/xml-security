@@ -9,6 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 
 use function array_pop;
 
@@ -17,8 +19,10 @@ use function array_pop;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractPBKDF2ParameterType extends AbstractXenc11Element
+abstract class AbstractPBKDF2ParameterType extends AbstractXenc11Element implements SchemaValidatableElementInterface
 {
+    use SchemaValidatableElementTrait;
+
     /**
      * PBKDF2ParameterType constructor.
      *

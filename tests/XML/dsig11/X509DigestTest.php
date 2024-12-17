@@ -44,8 +44,6 @@ final class X509DigestTest extends TestCase
     {
         self::$testedClass = X509Digest::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig11-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/dsig11_X509Digest.xml',
         );

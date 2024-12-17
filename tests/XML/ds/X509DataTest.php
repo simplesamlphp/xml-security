@@ -57,8 +57,6 @@ final class X509DataTest extends TestCase
     {
         self::$testedClass = X509Data::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xmldsig1-schema.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_X509Data.xml',
         );

@@ -37,8 +37,6 @@ final class MGFTest extends TestCase
     {
         self::$testedClass = MGF::class;
 
-        self::$schemaFile = dirname(__FILE__, 4) . '/resources/schemas/xenc-schema-11.xsd';
-
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc11_MGF.xml',
         );
