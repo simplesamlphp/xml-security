@@ -130,13 +130,11 @@ class Transform extends AbstractDsElement
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-
-        $algorithm = $this->getAlgorithm();
-        $e->setAttribute('Algorithm', $algorithm);
+        $e->setAttribute('Algorithm', $this->getAlgorithm());
 
         switch ($algorithm) {
             case C::XPATH10_URI:
-                $this->getXpath()?->toXML($e);
+                $this->getXPath()?->toXML($e);
                 break;
             case C::C14N_EXCLUSIVE_WITH_COMMENTS:
             case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
