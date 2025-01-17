@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMDocument;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
-use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, KeyValue, RSAKeyValue};
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
 
 use function dirname;
@@ -24,6 +21,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(KeyValue::class)]
 final class KeyValueTest extends TestCase

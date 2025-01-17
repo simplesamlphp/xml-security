@@ -6,8 +6,8 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XML\Type\AnyURIValue;
 
 use function array_pop;
 
@@ -33,7 +33,7 @@ final class OtherSource extends AbstractAlgorithmIdentifierType
         Assert::maxCount($parameter, 1, TooManyElementsException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Algorithm', null),
+            self::getOptionalAttribute($xml, 'Algorithm', AnyURIValue::class, null),
             array_pop($parameter),
         );
     }

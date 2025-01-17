@@ -9,6 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue;
+use SimpleSAML\XML\Type\IDValue;
 
 use function array_merge;
 
@@ -35,7 +36,7 @@ final class KeyInfo extends AbstractKeyInfoType implements SchemaValidatableElem
         Assert::same($xml->localName, 'KeyInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyInfo::NS, InvalidDOMElementException::class);
 
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', IDValue::class, null);
 
         $keyName = KeyName::getChildrenOfClass($xml);
         $keyValue = KeyValue::getChildrenOfClass($xml);

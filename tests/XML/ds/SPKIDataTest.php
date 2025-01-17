@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractSPKIDataType;
-use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
-use SimpleSAML\XMLSecurity\XML\ds\SPKISexp;
-use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
-use SimpleSAML\XMLSecurity\XML\xenc\Seed;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{Base64BinaryValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractSPKIDataType};
+use SimpleSAML\XMLSecurity\XML\ds\{SPKIData, SPKISexp};
+use SimpleSAML\XMLSecurity\XML\xenc\{CarriedKeyName, Seed};
 
 use function dirname;
 use function strval;
@@ -24,6 +21,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(AbstractSPKIDataType::class)]
 #[CoversClass(SPKIData::class)]
@@ -48,12 +46,24 @@ final class SPKIDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $SPKISexp1 = new SPKISexp('GpM6');
-        $seed = new Seed('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $SPKISexp2 = new SPKISexp('GpM7');
-        $SPKISexp3 = new SPKISexp('GpM8');
-        $carriedKeyName = new CarriedKeyName('Some label');
-        $SPKISexp4 = new SPKISexp('GpM9');
+        $SPKISexp1 = new SPKISexp(
+            Base64BinaryValue::fromString('GpM6'),
+        );
+        $seed = new Seed(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
+        $SPKISexp2 = new SPKISexp(
+            Base64BinaryValue::fromString('GpM7'),
+        );
+        $SPKISexp3 = new SPKISexp(
+            Base64BinaryValue::fromString('GpM8'),
+        );
+        $carriedKeyName = new CarriedKeyName(
+            StringValue::fromString('Some label'),
+        );
+        $SPKISexp4 = new SPKISexp(
+            Base64BinaryValue::fromString('GpM9'),
+        );
 
         $SPKIData = new SPKIData([
             [$SPKISexp1, $seed],

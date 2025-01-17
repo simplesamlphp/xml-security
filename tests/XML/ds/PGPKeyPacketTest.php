@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
+use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, PGPKeyPacket};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(PGPKeyPacket::class)]
 final class PGPKeyPacketTest extends TestCase
@@ -41,7 +42,9 @@ final class PGPKeyPacketTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $pgpKeyPacket = new PGPKeyPacket('GpM7');
+        $pgpKeyPacket = new PGPKeyPacket(
+            Base64BinaryValue::fromString('GpM7'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

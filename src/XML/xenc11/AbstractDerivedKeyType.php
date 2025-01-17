@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
 use function array_pop;
+use function strval;
 
 /**
  * Class representing <xenc11:DerivedKeyType>.
@@ -28,34 +27,32 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * DerivedKey constructor.
      *
-     * @param string|null $recipient
-     * @param string|null $id
-     * @param string|null $type
+     * @param \SimpleSAML\XML\Type\StringValue|null $recipient
+     * @param \SimpleSAML\XML\Type\IDValue|null $id
+     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod|null $keyDerivationMethod
      * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName|null $derivedKeyName
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\MasterKeyName|null $masterKeyName
      */
     final public function __construct(
-        protected ?string $recipient = null,
-        protected ?string $id = null,
-        protected ?string $type = null,
+        protected ?StringValue $recipient = null,
+        protected ?IDValue $id = null,
+        protected ?AnyURIValue $type = null,
         protected ?KeyDerivationMethod $keyDerivationMethod = null,
         protected ?ReferenceList $referenceList = null,
         protected ?DerivedKeyName $derivedKeyName = null,
         protected ?MasterKeyName $masterKeyName = null,
     ) {
-        Assert::nullOrValidNCName($id, SchemaViolationException::class);
-        Assert::nullOrValidURI($type, SchemaViolationException::class);
     }
 
 
     /**
      * Get the value of the $recipient property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\StringValue|null
      */
-    public function getRecipient(): ?string
+    public function getRecipient(): ?StringValue
     {
         return $this->recipient;
     }
@@ -64,9 +61,9 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * Get the value of the $id property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->id;
     }
@@ -75,9 +72,9 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * Get the value of the $type property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\AnyURIValue|null
      */
-    public function getType(): ?string
+    public function getType(): ?AnyURIValue
     {
         return $this->type;
     }
@@ -168,9 +165,9 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
         Assert::maxCount($masterKeyName, 1, TooManyElementsException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Recipient', null),
-            self::getOptionalAttribute($xml, 'Id', null),
-            self::getOptionalAttribute($xml, 'Type', null),
+            self::getOptionalAttribute($xml, 'Recipient', StringValue::class, null),
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
+            self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null),
             array_pop($keyDerivationMethod),
             array_pop($referenceList),
             array_pop($derivedKeyName),
@@ -187,15 +184,15 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getRecipient() !== null) {
-            $e->setAttribute('Recipient', $this->getRecipient());
+            $e->setAttribute('Recipient', strval($this->getRecipient()));
         }
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         if ($this->getType() !== null) {
-            $e->setAttribute('Type', $this->getType());
+            $e->setAttribute('Type', strval($this->getType()));
         }
 
         $this->getKeyDerivationMethod()?->toXML($e);

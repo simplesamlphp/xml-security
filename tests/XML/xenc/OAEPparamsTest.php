@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
+use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\XML\xenc\{AbstractXencElement, OAEPparams};
 
 use function dirname;
 use function strval;
@@ -22,6 +22,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(OAEPparams::class)]
 final class OAEPparamsTest extends TestCase
@@ -44,7 +45,9 @@ final class OAEPparamsTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $params = new OAEPparams('9lWu3Q==');
+        $params = new OAEPparams(
+            Base64BinaryValue::fromString('9lWu3Q=='),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

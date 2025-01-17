@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, Transform, Transforms, XPath};
 
 use function dirname;
 use function strval;
@@ -23,6 +20,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(Transforms::class)]
 final class TransformsTest extends TestCase
@@ -49,9 +47,9 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms(
             [
                 new Transform(
-                    C::XPATH10_URI,
+                    AnyURIValue::fromString(C::XPATH10_URI),
                     new XPath(
-                        'count(//. | //@* | //namespace::*)',
+                        StringValue::fromString('count(//. | //@* | //namespace::*)'),
                     ),
                 ),
             ],

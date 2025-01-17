@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, HexBinaryValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractConcatKDFParamsType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\ConcatKDFParams;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractConcatKDFParamsType, AbstractXenc11Element, ConcatKDFParams};
 
 use function dirname;
 use function strval;
@@ -24,6 +21,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(AbstractConcatKDFParamsType::class)]
 #[CoversClass(ConcatKDFParams::class)]
@@ -49,7 +47,7 @@ final class ConcatKDFParamsTest extends TestCase
     public function testMarshalling(): void
     {
         $digestMethod = new DigestMethod(
-            C::DIGEST_SHA256,
+            AnyURIValue::fromString(C::DIGEST_SHA256),
             [
                 new Chunk(DOMDocumentFactory::fromString(
                     '<some:Chunk xmlns:some="urn:test:some">Random</some:Chunk>',
@@ -59,11 +57,11 @@ final class ConcatKDFParamsTest extends TestCase
 
         $concatKdfParams = new ConcatKDFParams(
             $digestMethod,
-            'a1b2',
-            'b2c3',
-            'c3d4',
-            'd4e5',
-            'e5f6',
+            HexBinaryValue::fromString('a1b2'),
+            HexBinaryValue::fromString('b2c3'),
+            HexBinaryValue::fromString('c3d4'),
+            HexBinaryValue::fromString('d4e5'),
+            HexBinaryValue::fromString('e5f6'),
         );
 
         $this->assertEquals(

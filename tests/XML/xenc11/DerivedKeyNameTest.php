@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName;
+use SimpleSAML\XML\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, DerivedKeyName};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(DerivedKeyName::class)]
 final class DerivedKeyNameTest extends TestCase
@@ -41,7 +42,9 @@ final class DerivedKeyNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $derivedKeyName = new DerivedKeyName('phpunit');
+        $derivedKeyName = new DerivedKeyName(
+            StringValue::fromString('phpunit'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

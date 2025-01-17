@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionPropertiesType;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperties;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
+use SimpleSAML\XML\{Chunk, Constants as C, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\xenc\{
+    AbstractEncryptionPropertiesType,
+    AbstractXencElement,
+    EncryptionProperties,
+    EncryptionProperty,
+};
 
 use function dirname;
 use function strval;
@@ -29,6 +29,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractEncryptionPropertiesType::class)]
 #[CoversClass(EncryptionProperties::class)]
@@ -68,23 +69,36 @@ final class EncryptionPropertiesTest extends TestCase
         /** @var \DOMElement $otherElt */
         $otherElt = $otherDoc->documentElement;
 
-        $attr1 = new XMLAttribute(C::NS_XML, 'xml', 'lang', 'en');
-        $attr2 = new XMLAttribute(C::NS_XML, 'xml', 'lang', 'nl');
+        $attr1 = new XMLAttribute(
+            C::NS_XML,
+            'xml',
+            'lang',
+            StringValue::fromString('en'),
+        );
+        $attr2 = new XMLAttribute(
+            C::NS_XML,
+            'xml',
+            'lang',
+            StringValue::fromString('nl'),
+        );
 
         $encryptionProperty1 = new EncryptionProperty(
             [new Chunk($someElt)],
-            'urn:x-simplesamlphp:phpunit',
-            'inner-first',
+            AnyURIValue::fromString('urn:x-simplesamlphp:phpunit'),
+            IDValue::fromString('inner-first'),
             [$attr1],
         );
         $encryptionProperty2 = new EncryptionProperty(
             [new Chunk($otherElt)],
-            'urn:x-simplesamlphp:phpunit',
-            'inner-second',
+            AnyURIValue::fromString('urn:x-simplesamlphp:phpunit'),
+            IDValue::fromString('inner-second'),
             [$attr2],
         );
 
-        $encryptionProperties = new EncryptionProperties([$encryptionProperty1, $encryptionProperty2], 'outer');
+        $encryptionProperties = new EncryptionProperties(
+            [$encryptionProperty1, $encryptionProperty2],
+            IDValue::fromString('outer'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

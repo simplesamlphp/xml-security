@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\Exponent;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, Exponent};
 
 use function dirname;
 use function strval;
@@ -21,6 +20,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(Exponent::class)]
 final class ExponentTest extends TestCase
@@ -43,20 +43,13 @@ final class ExponentTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $exponent = new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
+        $exponent = new Exponent(
+            CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+        );
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($exponent),
         );
-    }
-
-
-    /**
-     */
-    public function testMarshallingNotBase64(): void
-    {
-        $this->expectException(SchemaViolationException::class);
-        new Exponent('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
 }

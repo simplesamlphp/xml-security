@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Type\AnyURIValue;
 
 /**
  * A class implementing the xenc11:PRF element.
@@ -27,7 +28,7 @@ final class PRF extends AbstractPRFAlgorithmIdentifierType
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Algorithm', null),
+            self::getOptionalAttribute($xml, 'Algorithm', AnyURIValue::class, null),
         );
     }
 }

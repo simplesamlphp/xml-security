@@ -12,7 +12,52 @@ namespace SimpleSAML\XMLSecurity;
 class Constants extends \SimpleSAML\XML\Constants
 {
     /**
-     * Digest algorithms
+     * Symmetric key wrap algorithms
+     */
+    public const KEY_WRAP_3DES = 'http://www.w3.org/2001/04/xmlenc#kw-tripledes';
+    public const KEY_WRAP_AES128 = 'http://www.w3.org/2001/04/xmlenc#kw-aes128';
+    public const KEY_WRAP_AES192 = 'http://www.w3.org/2001/04/xmlenc#kw-aes192';
+    public const KEY_WRAP_AES256 = 'http://www.w3.org/2001/04/xmlenc#kw-aes256';
+
+    /** @var string[] */
+    public static array $KEY_WRAP_ALGORITHMS = [
+        self::KEY_WRAP_3DES,
+        self::KEY_WRAP_AES128,
+        self::KEY_WRAP_AES192,
+        self::KEY_WRAP_AES256,
+    ];
+
+
+    /**
+     * Key derivation algorithms
+     */
+    public const KEY_DERIVATION_CONCATKDF = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
+    public const KEY_DERIVATION_PBKDF2 = 'http://www.w3.org/2009/xmlenc11#pbkdf2';
+
+    /** @var string[] */
+    public static array $KEY_DERIVATION_ALGORITHMS = [
+        self::KEY_DERIVATION_CONCATKDF,
+        self::KEY_DERIVATION_PBKDF2,
+    ];
+
+
+    /**
+     * Key agreement algorithms
+     */
+    public const KEY_AGREEMENT_ECDH_ES = 'http://www.w3.org/2009/xmlenc11#ECDH-ES';
+    public const KEY_AGREEMENT_DH = 'http://www.w3.org/2001/04/xmlenc#dh';
+    public const KEY_AGREEMENT_DH_ES = 'http://www.w3.org/2009/xmlenc11#dh-es';
+
+    /** @var string[] */
+    public static array $KEY_AGREEMENT_ALGORITHMS = [
+        self::KEY_AGREEMENT_ECDH_ES,
+        self::KEY_AGREEMENT_DH,
+        self::KEY_AGREEMENT_DH_ES,
+    ];
+
+
+    /**
+     * Message digest algorithms
      */
     public const DIGEST_SHA1 = 'http://www.w3.org/2000/09/xmldsig#sha1';
     public const DIGEST_SHA224 = 'http://www.w3.org/2001/04/xmldsig-more#sha224';
@@ -31,11 +76,13 @@ class Constants extends \SimpleSAML\XML\Constants
         self::DIGEST_RIPEMD160 => 'ripemd160',
     ];
 
+
     /**
      * Padding schemas
      */
     public const PADDING_PKCS1 = "PKCS1";
     public const PADDING_PKCS1_OAEP = "OAEP";
+
 
     /**
      * Block encryption algorithms
@@ -81,6 +128,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 32,
     ];
 
+
     /**
      * Key transport algorithms
      */
@@ -95,6 +143,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::KEY_TRANSPORT_OAEP_MGF1P,
     ];
 
+
     /**
      * Canonicalization algorithms
      */
@@ -102,6 +151,19 @@ class Constants extends \SimpleSAML\XML\Constants
     public const C14N_INCLUSIVE_WITHOUT_COMMENTS = 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315';
     public const C14N_EXCLUSIVE_WITH_COMMENTS = 'http://www.w3.org/2001/10/xml-exc-c14n#WithComments';
     public const C14N_EXCLUSIVE_WITHOUT_COMMENTS = 'http://www.w3.org/2001/10/xml-exc-c14n#';
+    public const C14N11_INCLUSIVE_WITH_COMMENTS = 'http://www.w3.org/2006/12/xml-c14n11';
+    public const C14N11_INCLUSIVE_WITHOUT_COMMENTS = 'http://www.w3.org/2006/12/xml-c14n11#WithComments';
+
+    /** @var string[] */
+    public static array $CANONICALIZATION_ALGORITHMS = [
+        self::C14N_INCLUSIVE_WITH_COMMENTS,
+        self::C14N_INCLUSIVE_WITHOUT_COMMENTS,
+        self::C14N_EXCLUSIVE_WITH_COMMENTS,
+        self::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+//        self::C14N11_INCLUSIVE_WITH_COMMENTS,
+//        self::C14N11_INCLUSIVE_WITHOUT_COMMENTS,
+    ];
+
 
     /**
      * Signature algorithms
@@ -139,6 +201,19 @@ class Constants extends \SimpleSAML\XML\Constants
         self::SIG_HMAC_RIPEMD160 => self::DIGEST_RIPEMD160,
     ];
 
+
+    /**
+     * Encoding algorithms
+     */
+    public const ENCODING_BASE64 = 'http://www.w3.org/2000/09/xmldsig#base64';
+
+
+    /**
+     * Transforms algorithms
+     */
+    public const TRANSFORMS_BASE64 = 'http://www.w3.org/2000/09/xmldsig#base64';
+
+
     /**
      * XML & XPath namespaces and identifiers
      */
@@ -156,7 +231,4 @@ class Constants extends \SimpleSAML\XML\Constants
     public const XMLENC_ELEMENT = 'http://www.w3.org/2001/04/xmlenc#Element';
     public const XMLENC_ENCRYPTEDKEY = 'http://www.w3.org/2001/04/xmlenc#EncryptedKey';
     public const XMLENC_EXI = 'http://www.w3.org/2009/xmlenc11#EXI';
-
-    // The namespace for the Elliptic Curve Diffie-Hellman Ephemeral Static (ECDH-ES) algorithm
-    public const XMLENC11_ECDH_ES = 'http://www.w3.org/2009/xmlenc11#ECDH-ES';
 }

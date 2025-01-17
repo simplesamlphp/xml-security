@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDSAKeyValueType;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\DSAKeyValue;
-use SimpleSAML\XMLSecurity\XML\ds\G;
-use SimpleSAML\XMLSecurity\XML\ds\J;
-use SimpleSAML\XMLSecurity\XML\ds\P;
-use SimpleSAML\XMLSecurity\XML\ds\PgenCounter;
-use SimpleSAML\XMLSecurity\XML\ds\Q;
-use SimpleSAML\XMLSecurity\XML\ds\Seed;
-use SimpleSAML\XMLSecurity\XML\ds\Y;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDSAKeyValueType, AbstractDsElement, DSAKeyValue};
+use SimpleSAML\XMLSecurity\XML\ds\{G, J, P, PgenCounter, Q, Seed, Y};
 
 use function dirname;
 use function strval;
@@ -28,6 +20,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(AbstractDSAKeyValueType::class)]
 #[CoversClass(DSAKeyValue::class)]
@@ -52,13 +45,27 @@ final class DSAKeyValueTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $p = new P('GpM1');
-        $q = new Q('GpM2');
-        $g = new G('GpM3');
-        $y = new Y('GpM4');
-        $j = new J('GpM5');
-        $seed = new Seed('GpM6');
-        $pgenCounter = new PgenCounter('GpM7');
+        $p = new P(
+            Base64BinaryValue::fromString('GpM1'),
+        );
+        $q = new Q(
+            Base64BinaryValue::fromString('GpM2'),
+        );
+        $g = new G(
+            Base64BinaryValue::fromString('GpM3'),
+        );
+        $y = new Y(
+            Base64BinaryValue::fromString('GpM4'),
+        );
+        $j = new J(
+            Base64BinaryValue::fromString('GpM5'),
+        );
+        $seed = new Seed(
+            Base64BinaryValue::fromString('GpM6'),
+        );
+        $pgenCounter = new PgenCounter(
+            Base64BinaryValue::fromString('GpM7'),
+        );
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 
@@ -73,13 +80,27 @@ final class DSAKeyValueTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $p = new P('GpM1');
-        $q = new Q('GpM2');
-        $g = new G('GpM3');
-        $y = new Y('GpM4');
-        $j = new J('GpM5');
-        $seed = new Seed('GpM6');
-        $pgenCounter = new PgenCounter('GpM7');
+        $p = new P(
+            Base64BinaryValue::fromString('GpM1'),
+        );
+        $q = new Q(
+            Base64BinaryValue::fromString('GpM2'),
+        );
+        $g = new G(
+            Base64BinaryValue::fromString('GpM3'),
+        );
+        $y = new Y(
+            Base64BinaryValue::fromString('GpM4'),
+        );
+        $j = new J(
+            Base64BinaryValue::fromString('GpM5'),
+        );
+        $seed = new Seed(
+            Base64BinaryValue::fromString('GpM6'),
+        );
+        $pgenCounter = new PgenCounter(
+            Base64BinaryValue::fromString('GpM7'),
+        );
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 

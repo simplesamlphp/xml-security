@@ -6,10 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\Type\PositiveIntegerValue;
 
-use function intval;
 use function strval;
 
 /**
@@ -20,19 +19,18 @@ use function strval;
 final class IterationCount extends AbstractXenc11Element
 {
     /**
-     * @param int $iterationCount
+     * @param \SimpleSAML\XML\Type\PositiveIntegerValue $iterationCount
      */
     public function __construct(
-        protected int $iterationCount,
+        protected PositiveIntegerValue $iterationCount,
     ) {
-        Assert::positiveInteger($iterationCount, SchemaViolationException::class);
     }
 
 
     /**
-     * @return int
+     * @return \SimpleSAML\XML\Type\PositiveIntegerValue
      */
-    public function getIterationCount(): int
+    public function getIterationCount(): PositiveIntegerValue
     {
         return $this->iterationCount;
     }
@@ -51,9 +49,10 @@ final class IterationCount extends AbstractXenc11Element
     {
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
-        Assert::numeric($xml->textContent);
 
-        return new static(intval($xml->textContent));
+        return new static(
+            PositiveIntegerValue::fromString($xml->textContent),
+        );
     }
 
 

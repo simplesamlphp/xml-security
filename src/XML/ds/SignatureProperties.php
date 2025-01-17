@@ -6,12 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
+
+use function strval;
 
 /**
  * Class representing a ds:SignatureProperties element.
@@ -26,15 +26,14 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
      * Initialize a ds:SignatureProperties
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureProperty[] $signatureProperty
-     * @param string|null $Id
+     * @param \SimpleSAML\XML\Type\IDValue|null $Id
      */
     public function __construct(
         protected array $signatureProperty,
-        protected ?string $Id = null,
+        protected ?IDValue $Id = null,
     ) {
         Assert::maxCount($signatureProperty, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($signatureProperty, SignatureProperty::class, SchemaViolationException::class);
-        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -48,9 +47,9 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
@@ -71,8 +70,6 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
         Assert::same($xml->namespaceURI, SignatureProperties::NS, InvalidDOMElementException::class);
 
         $signatureProperty = SignatureProperty::getChildrenOfClass($xml);
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
-
         Assert::minCount(
             $signatureProperty,
             1,
@@ -82,7 +79,7 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
 
         return new static(
             $signatureProperty,
-            $Id,
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
         );
     }
 
@@ -98,7 +95,7 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         foreach ($this->getSignatureProperty() as $signatureProperty) {

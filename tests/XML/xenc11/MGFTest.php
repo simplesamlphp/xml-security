@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractMGFType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\MGF;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{
+    AbstractAlgorithmIdentifierType,
+    AbstractMGFType,
+    AbstractXenc11Element,
+    MGF,
+};
 
 use function dirname;
 use function strval;
@@ -22,6 +24,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(MGF::class)]
 #[CoversClass(AbstractMGFType::class)]
 #[CoversClass(AbstractAlgorithmIdentifierType::class)]
@@ -50,7 +53,9 @@ final class MGFTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $mgf = new MGF('urn:x-simplesamlphp:algorithm');
+        $mgf = new MGF(
+            AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

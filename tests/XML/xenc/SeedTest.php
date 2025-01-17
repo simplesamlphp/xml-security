@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\Seed;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
+use SimpleSAML\XMLSecurity\XML\xenc\{AbstractXencElement, Seed};
 
 use function dirname;
 use function strval;
@@ -24,6 +23,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(Seed::class)]
 final class SeedTest extends TestCase
@@ -46,20 +46,13 @@ final class SeedTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $seed = new Seed('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $seed = new Seed(
+            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
             strval($seed),
         );
-    }
-
-
-    /**
-     */
-    public function testMarshallingNotBase64(): void
-    {
-        $this->expectException(AssertionFailedException::class);
-        new Seed('/CTj3d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
     }
 }

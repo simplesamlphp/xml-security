@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractKeyDerivationMethodType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractKeyDerivationMethodType, AbstractXenc11Element, KeyDerivationMethod};
 
 use function dirname;
 use function strval;
@@ -25,6 +24,7 @@ use function strval;
  * @covers \SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(AbstractKeyDerivationMethodType::class)]
 #[CoversClass(KeyDerivationMethod::class)]
@@ -53,10 +53,12 @@ final class KeyDerivationMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $alg = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
-        $keyName = new KeyName('testkey');
-
-        $kdm = new KeyDerivationMethod($alg, [$keyName]);
+        $kdm = new KeyDerivationMethod(
+            AnyURIValue::fromString(C::KEY_DERIVATION_CONCATKDF),
+            [
+                new KeyName(StringValue::fromString('testkey')),
+            ],
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractPGPDataType;
-use SimpleSAML\XMLSecurity\XML\ds\PGPData;
-use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
-use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractPGPDataType};
+use SimpleSAML\XMLSecurity\XML\ds\{PGPData, PGPKeyID, PGPKeyPacket};
 use SimpleSAML\XMLSecurity\XML\xenc\P;
 
 use function dirname;
@@ -25,6 +22,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(AbstractPGPDataType::class)]
 #[CoversClass(PGPData::class)]
@@ -32,6 +30,10 @@ final class PGPDataTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
+    private static PGPKeyID $pgpKeyId;
+    private static PGPKeyPacket $pgpKeyPacket;
+    private static P $p;
 
     /**
      */
@@ -42,6 +44,18 @@ final class PGPDataTest extends TestCase
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/ds_PGPData.xml',
         );
+
+        self::$pgpKeyId = new PGPKeyID(
+            Base64BinaryValue::fromString('GpM7'),
+        );
+
+        self::$pgpKeyPacket = new PGPKeyPacket(
+            Base64BinaryValue::fromString('GpM8'),
+        );
+
+        self::$p = new P(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
     }
 
 
@@ -49,11 +63,7 @@ final class PGPDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $pgpKeyId = new PGPKeyID('GpM7');
-        $pgpKeyPacket = new PGPKeyPacket('GpM8');
-        $p = new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-
-        $pgpData = new PGPData($pgpKeyId, $pgpKeyPacket, [$p]);
+        $pgpData = new PGPData(self::$pgpKeyId, self::$pgpKeyPacket, [self::$p]);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
@@ -76,11 +86,7 @@ final class PGPDataTest extends TestCase
      */
     public function testMarshallingReferenceElementOrdering(): void
     {
-        $pgpKeyId = new PGPKeyID('GpM7');
-        $pgpKeyPacket = new PGPKeyPacket('GpM8');
-        $p = new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-
-        $pgpData = new PGPData($pgpKeyId, $pgpKeyPacket, [$p]);
+        $pgpData = new PGPData(self::$pgpKeyId, self::$pgpKeyPacket, [self::$p]);
 
         $pgpDataElement = $pgpData->toXML();
         /** @var \DOMElement[] $children */

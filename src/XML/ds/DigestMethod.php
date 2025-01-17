@@ -6,14 +6,15 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+
+use function strval;
 
 /**
  * Class representing a ds:DigestMethod element.
@@ -25,21 +26,21 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
 
+    /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
     /**
      * Initialize a DigestMethod element.
      *
-     * @param string $Algorithm
+     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $elements
      */
     public function __construct(
-        protected string $Algorithm,
+        protected AnyURIValue $Algorithm,
         array $elements = [],
     ) {
-        Assert::validURI($Algorithm, SchemaViolationException::class);
         Assert::oneOf(
-            $Algorithm,
+            $Algorithm->getValue(),
             array_keys(C::$DIGEST_ALGORITHMS),
             'Invalid digest method: %s',
             InvalidArgumentException::class,
@@ -52,9 +53,9 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getAlgorithm(): string
+    public function getAlgorithm(): AnyURIValue
     {
         return $this->Algorithm;
     }
@@ -74,7 +75,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
         Assert::same($xml->localName, 'DigestMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DigestMethod::NS, InvalidDOMElementException::class);
 
-        $Algorithm = DigestMethod::getAttribute($xml, 'Algorithm');
+        $Algorithm = self::getAttribute($xml, 'Algorithm', AnyURIValue::class);
         $elements = self::getChildElementsFromXML($xml);
 
         return new static($Algorithm, $elements);
@@ -90,7 +91,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->getAlgorithm());
+        $e->setAttribute('Algorithm', strval($this->getAlgorithm()));
 
         foreach ($this->elements as $elt) {
             if (!$elt->isEmptyElement()) {

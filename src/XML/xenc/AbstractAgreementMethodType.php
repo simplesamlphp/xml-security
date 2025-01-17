@@ -6,15 +6,14 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XML\XsNamespace as NS;
 
 use function array_pop;
+use function strval;
 
 /**
  * A class implementing the xenc:AbstractAgreementMethodType element.
@@ -33,21 +32,19 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     /**
      * AgreementMethodType constructor.
      *
-     * @param string $algorithm
+     * @param \SimpleSAML\XML\Type\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KANonce|null $kaNonce
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OriginatorKeyInfo|null $originatorKeyInfo
      * @param \SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo|null $recipientKeyInfo
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $children
      */
     final public function __construct(
-        protected string $algorithm,
+        protected AnyURIValue $algorithm,
         protected ?KANonce $kaNonce = null,
         protected ?OriginatorKeyInfo $originatorKeyInfo = null,
         protected ?RecipientKeyInfo $recipientKeyInfo = null,
         protected array $children = [],
     ) {
-        Assert::validURI($algorithm, SchemaViolationException::class); // Covers the empty string
-
         $this->setElements($children);
     }
 
@@ -55,9 +52,9 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     /**
      * Get the URI identifying the algorithm used by this agreement method.
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getAlgorithm(): string
+    public function getAlgorithm(): AnyURIValue
     {
         return $this->algorithm;
     }
@@ -114,8 +111,6 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
         Assert::same($xml->localName, 'AgreementMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        $algorithm = self::getAttribute($xml, 'Algorithm');
-
         $kaNonce = KANonce::getChildrenOfClass($xml);
         Assert::maxCount($kaNonce, 1, TooManyElementsException::class);
 
@@ -128,7 +123,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
         $children = self::getChildElementsFromXML($xml);
 
         return new static(
-            $algorithm,
+            self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
             array_pop($kaNonce),
             array_pop($originatorKeyInfo),
             array_pop($recipientKeyInfo),
@@ -146,7 +141,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->getAlgorithm());
+        $e->setAttribute('Algorithm', strval($this->getAlgorithm()));
 
         $this->getKANonce()?->toXML($e);
 
