@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Type\HMACOutputLengthValue;
 use SimpleSAML\XMLSecurity\Utils\XPath;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength;
-use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, HMACOutputLength, SignatureMethod};
 
 use function dirname;
 use function strval;
@@ -24,6 +22,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(SignatureMethod::class)]
 final class SignatureMethodTest extends TestCase
@@ -49,13 +48,19 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $hmacOutputLength = new HMACOutputLength('1234');
+        $hmacOutputLength = new HMACOutputLength(
+            HMACOutputLengthValue::fromString('128'),
+        );
 
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
         )->documentElement);
 
-        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256, $hmacOutputLength, [$chunk]);
+        $signatureMethod = new SignatureMethod(
+            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+            $hmacOutputLength,
+            [$chunk],
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
@@ -68,13 +73,19 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $hmacOutputLength = new HMACOutputLength('1234');
+        $hmacOutputLength = new HMACOutputLength(
+            HMACOutputLengthValue::fromString('128'),
+        );
 
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
         )->documentElement);
 
-        $signatureMethod = new SignatureMethod(C::SIG_RSA_SHA256, $hmacOutputLength, [$chunk]);
+        $signatureMethod = new SignatureMethod(
+            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+            $hmacOutputLength,
+            [$chunk],
+        );
 
         $signatureMethodElement = $signatureMethod->toXML();
 

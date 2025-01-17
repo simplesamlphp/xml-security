@@ -6,14 +6,15 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+
+use function strval;
 
 /**
  * Class representing an encrypted key.
@@ -28,11 +29,11 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
      * EncryptedKey constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherData $cipherData The CipherData object of this EncryptedData.
-     * @param string|null $id The Id attribute of this object. Optional.
-     * @param string|null $type The Type attribute of this object. Optional.
-     * @param string|null $mimeType The MimeType attribute of this object. Optional.
-     * @param string|null $encoding The Encoding attribute of this object. Optional.
-     * @param string|null $recipient The Recipient attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\IDValue|null $id The Id attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type The Type attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\StringValue|null $mimeType The MimeType attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\AnyURIValue|null $encoding The Encoding attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\StringValue|null $recipient The Recipient attribute of this object. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
      *   The value of the CarriedKeyName element of this EncryptedData.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
@@ -43,11 +44,11 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
      */
     final public function __construct(
         CipherData $cipherData,
-        ?string $id = null,
-        ?string $type = null,
-        ?string $mimeType = null,
-        ?string $encoding = null,
-        protected ?string $recipient = null,
+        ?IDValue $id = null,
+        ?AnyURIValue $type = null,
+        ?StringValue $mimeType = null,
+        ?AnyURIValue $encoding = null,
+        protected ?StringValue $recipient = null,
         protected ?CarriedKeyName $carriedKeyName = null,
         ?EncryptionMethod $encryptionMethod = null,
         ?KeyInfo $keyInfo = null,
@@ -71,9 +72,9 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
     /**
      * Get the value of the Recipient attribute.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\StringValue|null
      */
-    public function getRecipient(): ?string
+    public function getRecipient(): ?StringValue
     {
         return $this->recipient;
     }
@@ -112,7 +113,7 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
             InvalidArgumentException::class,
         );
 
-        return $decryptor->decrypt(base64_decode($cipherValue->getContent(), true));
+        return $decryptor->decrypt(base64_decode($cipherValue->getContent()->getValue(), true));
     }
 
 
@@ -123,11 +124,11 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
-     * @param string|null $id The Id attribute of this object. Optional.
-     * @param string|null $type The Type attribute of this object. Optional.
-     * @param string|null $mimeType The MimeType attribute of this object. Optional.
-     * @param string|null $encoding The Encoding attribute of this object. Optional.
-     * @param string|null $recipient The Recipient attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\IDValue|null $id The Id attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type The Type attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\StringValue|null $mimeType The MimeType attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\AnyURIValue|null $encoding The Encoding attribute of this object. Optional.
+     * @param \SimpleSAML\XML\Type\StringValue|null $recipient The Recipient attribute of this object. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
      *   The value of the CarriedKeyName element of this EncryptedData.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
@@ -140,18 +141,18 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
         KeyInterface $keyToEncrypt,
         EncryptionAlgorithmInterface $encryptor,
         EncryptionMethod $encryptionMethod,
-        ?string $id = null,
-        ?string $type = null,
-        ?string $mimeType = null,
-        ?string $encoding = null,
-        ?string $recipient = null,
+        ?IDValue $id = null,
+        ?AnyURIValue $type = null,
+        ?StringValue $mimeType = null,
+        ?AnyURIValue $encoding = null,
+        ?StringValue $recipient = null,
         ?CarriedKeyName $carriedKeyName = null,
         ?KeyInfo $keyInfo = null,
         ?ReferenceList $referenceList = null,
     ): EncryptedKey {
         Assert::eq(
             $encryptor->getAlgorithmId(),
-            $encryptionMethod->getAlgorithm(),
+            $encryptionMethod->getAlgorithm()->getValue(),
             'Encryptor algorithm and encryption method do not match.',
             InvalidArgumentException::class,
         );
@@ -159,9 +160,9 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
         return new self(
             new CipherData(
                 new CipherValue(
-                    base64_encode(
+                    Base64BinaryValue::fromString(base64_encode(
                         $encryptor->encrypt($keyToEncrypt->getMaterial()),
-                    ),
+                    )),
                 ),
             ),
             $id,
@@ -230,11 +231,11 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
 
         return new static(
             $cipherData[0],
-            self::getOptionalAttribute($xml, 'Id', null),
-            self::getOptionalAttribute($xml, 'Type', null),
-            self::getOptionalAttribute($xml, 'MimeType', null),
-            self::getOptionalAttribute($xml, 'Encoding', null),
-            self::getOptionalAttribute($xml, 'Recipient', null),
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
+            self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null),
+            self::getOptionalAttribute($xml, 'MimeType', StringValue::class, null),
+            self::getOptionalAttribute($xml, 'Encoding', AnyURIValue::class, null),
+            self::getOptionalAttribute($xml, 'Recipient', StringValue::class, null),
             array_pop($carriedKeyNames),
             array_pop($encryptionMethod),
             array_pop($keyInfo),
@@ -251,7 +252,7 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
         $e = parent::toXML($parent);
 
         if ($this->getRecipient() !== null) {
-            $e->setAttribute('Recipient', $this->getRecipient());
+            $e->setAttribute('Recipient', strval($this->getRecipient()));
         }
 
         $this->getReferenceList()?->toXML($e);
