@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Base64ElementTrait;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\{Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
+
+use function strval;
 
 /**
  * Class representing a ds:SignatureValue element.
@@ -18,32 +19,39 @@ use SimpleSAML\XMLSecurity\Assert\Assert;
  */
 final class SignatureValue extends AbstractDsElement implements SchemaValidatableElementInterface
 {
-    use Base64ElementTrait;
     use SchemaValidatableElementTrait;
 
 
     /**
-     * @param string $content
-     * @param string|null $Id
+     * @param \SimpleSAML\XML\Type\Base64BinaryValue $value
+     * @param \SimpleSAML\XML\Type\IDValue|null $Id
      */
     public function __construct(
-        string $content,
-        protected ?string $Id = null,
+        protected Base64BinaryValue $value,
+        protected ?IDValue $Id = null,
     ) {
-        Assert::nullOrValidNCName($Id);
-
-        $this->setContent($content);
     }
 
 
     /**
      * Get the Id used for this signature value.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
+    }
+
+
+    /**
+     * Get the content for this signature value.
+     *
+     * @return \SimpleSAML\XML\Type\Base64BinaryValue
+     */
+    public function getValue(): ?Base64BinaryValue
+    {
+        return $this->value;
     }
 
 
@@ -61,9 +69,9 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
         Assert::same($xml->localName, 'SignatureValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureValue::NS, InvalidDOMElementException::class);
 
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', IDValue::class, null);
 
-        return new static($xml->textContent, $Id);
+        return new static(Base64BinaryValue::fromString($xml->textContent), $Id);
     }
 
 
@@ -76,10 +84,10 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->getContent();
+        $e->textContent = strval($this->getValue());
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         return $e;
