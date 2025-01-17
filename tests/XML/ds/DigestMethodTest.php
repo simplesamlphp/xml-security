@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestMethod};
 
 use function dirname;
 use function strval;
@@ -22,6 +20,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(DigestMethod::class)]
 final class DigestMethodTest extends TestCase
@@ -46,7 +45,7 @@ final class DigestMethodTest extends TestCase
     public function testMarshalling(): void
     {
         $digestMethod = new DigestMethod(
-            C::DIGEST_SHA256,
+            AnyURIValue::fromString(C::DIGEST_SHA256),
             [
                 new Chunk(DOMDocumentFactory::fromString(
                     '<some:Chunk xmlns:some="urn:test:some">Random</some:Chunk>',

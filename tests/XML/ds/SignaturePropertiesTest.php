@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\SignatureProperties;
-use SimpleSAML\XMLSecurity\XML\ds\SignatureProperty;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, SignatureProperties, SignatureProperty};
 
 use function dirname;
 use function strval;
@@ -22,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/saml2
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(SignatureProperties::class)]
 final class SignaturePropertiesTest extends TestCase
@@ -52,10 +50,14 @@ final class SignaturePropertiesTest extends TestCase
 
         $signatureProperty = new SignatureProperty(
             [new Chunk($document->documentElement)],
-            'https://simplesamlphp.org/some/target',
-            'abc123',
+            AnyURIValue::fromString('https://simplesamlphp.org/some/target'),
+            IDValue::fromString('abc123'),
         );
-        $signatureProperties = new SignatureProperties([$signatureProperty], 'def456');
+
+        $signatureProperties = new SignatureProperties(
+            [$signatureProperty],
+            IDValue::fromString('def456'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

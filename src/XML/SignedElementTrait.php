@@ -7,30 +7,34 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\Type\IDValue;
 use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
+use SimpleSAML\XMLSecurity\Alg\Signature\{SignatureAlgorithmFactory, SignatureAlgorithmInterface};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
-use SimpleSAML\XMLSecurity\Exception\ReferenceValidationFailedException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
-use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
+use SimpleSAML\XMLSecurity\Exception\{
+    InvalidArgumentException,
+    NoSignatureFoundException,
+    ReferenceValidationFailedException,
+    RuntimeException,
+    SignatureVerificationFailedException,
+};
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
-use SimpleSAML\XMLSecurity\Utils\XML;
-use SimpleSAML\XMLSecurity\Utils\XPath;
-use SimpleSAML\XMLSecurity\XML\ds\Reference;
-use SimpleSAML\XMLSecurity\XML\ds\Signature;
-use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
-use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
-use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\Utils\{XML, XPath};
+use SimpleSAML\XMLSecurity\XML\ds\{
+    Reference,
+    Signature,
+    SignedInfo,
+    X509Certificate,
+    X509Data,
+};
 
 use function base64_decode;
 use function hash;
 use function hash_equals;
 use function in_array;
+use function strval;
 
 /**
  * Helper trait for processing signed elements.
@@ -104,7 +108,7 @@ trait SignedElementTrait
         $id = $this->getId();
         $uri = $reference->getURI();
 
-        if (empty($uri) || $uri === '#xpointer(/)') { // same-document reference
+        if (empty($uri) || $uri->getValue() === '#xpointer(/)') { // same-document reference
             Assert::true(
                 $xml->isSameNode($xml->ownerDocument->documentElement),
                 'Cannot use document reference when element is not the root of the document.',
@@ -117,10 +121,10 @@ trait SignedElementTrait
                 ReferenceValidationFailedException::class,
             );
             Assert::oneOf(
-                $uri,
+                $uri->getValue(),
                 [
-                    '#' . $id,
-                    '#xpointer(id(' . $id . '))',
+                    '#' . $id->getValue(),
+                    '#xpointer(id(' . $id->getValue() . '))',
                 ],
                 'Reference does not point to given element.',
                 ReferenceValidationFailedException::class,
@@ -153,7 +157,7 @@ trait SignedElementTrait
 
         $doc->documentElement->removeChild($sigNode[0]);
         $data = XML::processTransforms($reference->getTransforms(), $doc->documentElement);
-        $algo = $reference->getDigestMethod()->getAlgorithm();
+        $algo = $reference->getDigestMethod()->getAlgorithm()->getValue();
         Assert::keyExists(
             C::$DIGEST_ALGORITHMS,
             $algo,
@@ -162,7 +166,12 @@ trait SignedElementTrait
         );
 
         $digest = hash(C::$DIGEST_ALGORITHMS[$algo], $data, true);
-        if (hash_equals($digest, base64_decode($reference->getDigestValue()->getRawContent(), true)) !== true) {
+        if (
+            hash_equals(
+                $digest,
+                base64_decode($reference->getDigestValue()->getContent()->getValue(), true),
+            ) !== true
+        ) {
             throw new SignatureVerificationFailedException('Failed to verify signature.');
         }
 
@@ -190,7 +199,7 @@ trait SignedElementTrait
         $c14nAlg = $signedInfo->getCanonicalizationMethod()->getAlgorithm();
 
         // the canonicalized ds:SignedInfo element (plaintext)
-        $c14nSignedInfo = $signedInfo->canonicalize($c14nAlg);
+        $c14nSignedInfo = $signedInfo->canonicalize($c14nAlg->getValue());
         $ref = $this->validateReference(
             SignedInfo::fromXML(DOMDocumentFactory::fromString($c14nSignedInfo)->documentElement),
         );
@@ -199,7 +208,7 @@ trait SignedElementTrait
             $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
                 // the actual signature
-                base64_decode($this->getSignature()->getSignatureValue()->getRawContent(), true),
+                base64_decode(strval($this->getSignature()->getSignatureValue()->getValue()), true),
             )
         ) {
             /*
@@ -290,11 +299,11 @@ trait SignedElementTrait
                 // build a valid PEM for the certificate
                 $cert = sprintf(
                     "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----",
-                    $data->getRawContent(),
+                    strval($data->getContent()),
                 );
 
                 $cert = new Key\X509Certificate(PEM::fromString($cert));
-                $verifier = $factory->getAlgorithm($algId, $cert->getPublicKey());
+                $verifier = $factory->getAlgorithm($algId->getValue(), $cert->getPublicKey());
 
                 try {
                     return $this->verifyInternal($verifier);
@@ -308,9 +317,9 @@ trait SignedElementTrait
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    abstract public function getId(): ?string;
+    abstract public function getId(): ?IDValue;
 
 
     /**

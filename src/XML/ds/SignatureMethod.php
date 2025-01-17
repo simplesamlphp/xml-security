@@ -6,12 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XML\XsNamespace as NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -19,6 +17,7 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use function array_keys;
 use function array_merge;
 use function array_pop;
+use function strval;
 
 /**
  * Class representing a ds:SignatureMethod element.
@@ -37,18 +36,17 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Initialize a SignatureMethod element.
      *
-     * @param string $Algorithm
+     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
      * @param \SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength|null $hmacOutputLength
      * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
      */
     public function __construct(
-        protected string $Algorithm,
+        protected AnyURIValue $Algorithm,
         protected ?HMACOutputLength $hmacOutputLength = null,
         array $children = [],
     ) {
-        Assert::validURI($Algorithm, SchemaViolationException::class);
         Assert::oneOf(
-            $Algorithm,
+            $Algorithm->getValue(),
             array_merge(
                 array_keys(C::$RSA_DIGESTS),
                 array_keys(C::$HMAC_DIGESTS),
@@ -64,9 +62,9 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getAlgorithm(): string
+    public function getAlgorithm(): AnyURIValue
     {
         return $this->Algorithm;
     }
@@ -97,7 +95,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
         Assert::same($xml->localName, 'SignatureMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureMethod::NS, InvalidDOMElementException::class);
 
-        $Algorithm = SignatureMethod::getAttribute($xml, 'Algorithm');
+        $Algorithm = self::getAttribute($xml, 'Algorithm', AnyURIValue::class);
 
         $hmacOutputLength = HMACOutputLength::getChildrenOfClass($xml);
         Assert::maxCount($hmacOutputLength, 1, TooManyElementsException::class);
@@ -115,7 +113,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('Algorithm', $this->getAlgorithm());
+        $e->setAttribute('Algorithm', strval($this->getAlgorithm()));
 
         $this->getHMACOutputLength()?->toXML($e);
 

@@ -6,14 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\{CipherData, EncryptionMethod};
 
 use function array_pop;
 
@@ -75,10 +72,10 @@ final class EncryptedData extends AbstractEncryptedType implements SchemaValidat
 
         return new static(
             $cipherData[0],
-            self::getOptionalAttribute($xml, 'Id', null),
-            self::getOptionalAttribute($xml, 'Type', null),
-            self::getOptionalAttribute($xml, 'MimeType', null),
-            self::getOptionalAttribute($xml, 'Encoding', null),
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
+            self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null),
+            self::getOptionalAttribute($xml, 'MimeType', StringValue::class, null),
+            self::getOptionalAttribute($xml, 'Encoding', AnyURIValue::class, null),
             array_pop($encryptionMethod),
             array_pop($keyInfo),
         );
