@@ -19,18 +19,12 @@ class HMACOutputLengthValue extends IntegerValue
      *
      * @param string $value
      * @throws \SimpleSAML\XML\Exception\SchemaViolationException on failure
+     * @throws \SimpleSAML\XMLSecurity\Exception\ProtocolViolationException when not devisible by 8
      * @return void
      */
     protected function validateValue(string $value): void
     {
         // Note: value must already be sanitized before validating
-        $value = $this->sanitizeValue($value);
-
-        Assert::validHMACOutputLength($value, SchemaViolationException::class);
-        Assert::true(
-            intval($value) % 8 === 0,
-            '%s is not devisible by 8 and therefore not a valid ds:HMACOutputLengthType',
-            ProtocolViolationException::class,
-        );
+        Assert::validHMACOutputLength($this->sanitizeValue($value));
     }
 }

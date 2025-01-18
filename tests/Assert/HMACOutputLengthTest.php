@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, DataProvider};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XMLSecurity\Assert\Assert;
+use SimpleSAML\XMLSecurity\Exception\ProtocolViolationException;
 
 /**
  * Class \SimpleSAML\Test\XMLSecurity\Assert\HMACOutputLengthTest
@@ -27,7 +28,7 @@ final class HMACOutputLengthTest extends TestCase
         try {
             Assert::validHMACOutputLength($HMACOutputLength);
             $this->assertTrue($shouldPass);
-        } catch (AssertionFailedException $e) {
+        } catch (AssertionFailedException|ProtocolViolationException $e) {
             $this->assertFalse($shouldPass);
         }
     }
@@ -41,8 +42,7 @@ final class HMACOutputLengthTest extends TestCase
         return [
             'empty' => [false, ''],
             'valid positive integer' => [true, '128'],
-            // Indivisible by 8 is caught by the type-class, because schema-wise it's perfectly valid
-            'valid indivisible by 8' => [true, '4'],
+            'invalid indivisible by 8' => [false, '4'],
             'invalid signed positive integer' => [false, '+128'],
             'invalid zero' => [false, '0'],
             'invalid leading zeros' => [false, '0000000000000000000128'],
