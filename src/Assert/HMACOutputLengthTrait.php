@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Assert;
 
-use InvalidArgumentException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XMLSecurity\Exception\ProtocolViolationException;
+
+use function intval;
 
 /**
  * @package simplesamlphp/xml-security
@@ -27,11 +30,24 @@ trait HMACOutputLengthTrait
      */
     protected static function validHMACOutputLength(string $value, string $message = ''): void
     {
-        parent::regex(
-            $value,
-            self::$HMACOutputLength_regex,
-            $message ?: '%s is not a valid ds:HMACOutputLengthType',
-            InvalidArgumentException::class,
-        );
+        try {
+            parent::regex(
+                $value,
+                self::$HMACOutputLength_regex,
+                $message ?: '%s is not a valid ds:HMACOutputLengthType',
+            );
+        } catch (AssertionFailedException $e) {
+            throw new SchemaViolationException($e->getMessage());
+        }
+
+        try {
+            parent::true(
+                intval($value) % 8 === 0,
+                '%s is not devisible by 8 and therefore not a valid ds:HMACOutputLengthType',
+            );
+        } catch (AssertionFailedException $e) {
+            throw new ProtocolViolationException($e->getMessage());
+        }
+
     }
 }
