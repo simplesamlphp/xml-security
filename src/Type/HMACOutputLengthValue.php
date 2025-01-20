@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Type;
 
-use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
-use SimpleSAML\XMLSecurity\Exception\ProtocolViolationException;
 
 /**
  * @package simplesaml/xml-security
