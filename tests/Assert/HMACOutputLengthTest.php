@@ -6,7 +6,7 @@ namespace SimpleSAML\Test\XMLSecurity\Assert;
 
 use PHPUnit\Framework\Attributes\{CoversClass, DataProvider};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\Assert\AssertionFailedException;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\ProtocolViolationException;
 
@@ -28,7 +28,7 @@ final class HMACOutputLengthTest extends TestCase
         try {
             Assert::validHMACOutputLength($HMACOutputLength);
             $this->assertTrue($shouldPass);
-        } catch (AssertionFailedException|ProtocolViolationException $e) {
+        } catch (SchemaViolationException | ProtocolViolationException $e) {
             $this->assertFalse($shouldPass);
         }
     }
