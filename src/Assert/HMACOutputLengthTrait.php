@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Assert;
 
+use SimpleSAML\Assert\AssertionFailedException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Exception\ProtocolViolationException;
 
@@ -48,6 +49,5 @@ trait HMACOutputLengthTrait
         } catch (AssertionFailedException $e) {
             throw new ProtocolViolationException($e->getMessage());
         }
-
     }
 }
