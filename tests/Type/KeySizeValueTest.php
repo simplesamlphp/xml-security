@@ -48,7 +48,7 @@ final class KeySizeValueTest extends TestCase
             'invalid with fractional' => [false, '1.'],
             'invalid negative' => [false, '-1234'],
             'invalid with thousands-delimiter' => [false, '1,234'],
-            'valid with whitespace collapse' => [true, " 1 234 \n"],
+            'valid with whitespace collapse' => [true, " 1234 \n"],
         ];
     }
 }
