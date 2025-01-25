@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
-use function count;
+use function array_map;
 use function is_null;
 
 /**
@@ -89,15 +89,15 @@ class XML
         $arXPath = null;
         $prefixList = null;
         foreach ($transforms->getTransform() as $transform) {
-            $canonicalMethod = $transform->getAlgorithm();
+            $canonicalMethod = $transform->getAlgorithm()->getValue();
             switch ($canonicalMethod) {
                 case C::C14N_EXCLUSIVE_WITHOUT_COMMENTS:
                 case C::C14N_EXCLUSIVE_WITH_COMMENTS:
                     $inclusiveNamespaces = $transform->getInclusiveNamespaces();
                     if ($inclusiveNamespaces !== null) {
                         $prefixes = $inclusiveNamespaces->getPrefixes();
-                        if (count($prefixes) > 0) {
-                            $prefixList = $prefixes;
+                        if ($prefixes !== null) {
+                            $prefixList = array_map('strval', $prefixes->toArray());
                         }
                     }
                     break;

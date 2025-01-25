@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use SimpleSAML\XML\Base64ElementTrait;
+use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XML\TypedTextContentTrait;
 
 /**
  * Class representing a ds:X509CRL element.
@@ -13,14 +14,8 @@ use SimpleSAML\XML\Base64ElementTrait;
  */
 final class X509CRL extends AbstractDsElement
 {
-    use Base64ElementTrait;
+    use TypedTextContentTrait;
 
-
-    /**
-     * @param string $content
-     */
-    public function __construct(string $content)
-    {
-        $this->setContent($content);
-    }
+    /** @var string */
+    public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
 }

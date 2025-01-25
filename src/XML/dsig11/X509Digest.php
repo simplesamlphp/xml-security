@@ -6,13 +6,13 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Base64ElementTrait;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+
+use function strval;
 
 /**
  * Class representing a dsig11:X509Digest element.
@@ -21,38 +21,45 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
  */
 final class X509Digest extends AbstractDsig11Element implements SchemaValidatableElementInterface
 {
-    use Base64ElementTrait;
     use SchemaValidatableElementTrait;
 
 
     /**
      * Initialize a X509Digest element.
      *
-     * @param string $digest
-     * @param string $algorithm
+     * @param \SimpleSAML\XML\Type\Base64BinaryValue $digest
+     * @param \SimpleSAML\XML\Type\AnyURIValue $algorithm
      */
     public function __construct(
-        string $digest,
-        protected string $algorithm,
+        protected Base64BinaryValue $digest,
+        protected AnyURIValue $algorithm,
     ) {
-        Assert::validURI($algorithm, SchemaViolationException::class);
         Assert::oneOf(
-            $algorithm,
+            strval($algorithm),
             array_keys(C::$DIGEST_ALGORITHMS),
             'Invalid digest method: %s',
             InvalidArgumentException::class,
         );
+    }
 
-        $this->setContent($digest);
+
+    /**
+     * Collect the value of the digest-property
+     *
+     * @return \SimpleSAML\XML\Type\Base64BinaryValue
+     */
+    public function getDigest(): Base64BinaryValue
+    {
+        return $this->digest;
     }
 
 
     /**
      * Collect the value of the algorithm-property
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getAlgorithm(): string
+    public function getAlgorithm(): AnyURIValue
     {
         return $this->algorithm;
     }
@@ -72,9 +79,10 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
         Assert::same($xml->localName, 'X509Digest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Digest::NS, InvalidDOMElementException::class);
 
-        $algorithm = self::getAttribute($xml, 'Algorithm');
-
-        return new static($xml->textContent, $algorithm);
+        return new static(
+            Base64BinaryValue::fromString($xml->textContent),
+            self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
+        );
     }
 
 
@@ -87,8 +95,8 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->textContent = $this->getContent();
-        $e->setAttribute('Algorithm', $this->getAlgorithm());
+        $e->textContent = strval($this->getDigest());
+        $e->setAttribute('Algorithm', strval($this->getAlgorithm()));
 
         return $e;
     }

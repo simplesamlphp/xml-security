@@ -4,28 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
-use SimpleSAML\XMLSecurity\XML\ds\Exponent;
-use SimpleSAML\XMLSecurity\XML\ds\Modulus;
-use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
-use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
-use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
-use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractDerivedKeyType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKey;
-use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName;
-use SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod;
-use SimpleSAML\XMLSecurity\XML\xenc11\MasterKeyName;
+use SimpleSAML\XMLSecurity\XML\ds\{Exponent, Modulus, RSAKeyValue, Transform, Transforms, XPath};
+use SimpleSAML\XMLSecurity\XML\xenc\{DataReference, KeyReference, ReferenceList};
+use SimpleSAML\XMLSecurity\XML\xenc11\{
+    AbstractDerivedKeyType,
+    AbstractXenc11Element,
+    DerivedKey,
+    DerivedKeyName,
+    MasterKeyName,
+    KeyDerivationMethod,
+};
 
 use function dirname;
 use function strval;
@@ -39,6 +34,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(AbstractDerivedKeyType::class)]
 #[CoversClass(DerivedKey::class)]
@@ -46,6 +42,9 @@ final class DerivedKeyTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
+    private static KeyDerivationMethod $keyDerivationMethod;
+    private static ReferenceList $referenceList;
 
     /**
      */
@@ -55,6 +54,48 @@ final class DerivedKeyTest extends TestCase
 
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc11_DerivedKey.xml',
+        );
+
+        self::$keyDerivationMethod = new KeyDerivationMethod(
+            AnyURIValue::fromString(C::KEY_DERIVATION_CONCATKDF),
+            [
+                new RSAKeyValue(
+                    new Modulus(
+                        Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+                    ),
+                    new Exponent(
+                        Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+                    ),
+                ),
+            ],
+        );
+
+        $transformData = new Transform(
+            AnyURIValue::fromString(C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
+            ),
+        );
+        $transformKey = new Transform(
+            AnyURIValue::fromString(C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
+            ),
+        );
+
+        self::$referenceList = new ReferenceList(
+            [
+                new DataReference(
+                    AnyURIValue::fromString('#Encrypted_DATA_ID'),
+                    [new Transforms([$transformData])],
+                ),
+            ],
+            [
+                new KeyReference(
+                    AnyURIValue::fromString('#Encrypted_KEY_ID'),
+                    [new Transforms([$transformKey])],
+                ),
+            ],
         );
     }
 
@@ -66,41 +107,19 @@ final class DerivedKeyTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $alg = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
-        $RSAKeyValue = new RSAKeyValue(
-            new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
-            new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+        $derivedKeyName = new DerivedKeyName(
+            StringValue::fromString('phpunit'),
         );
-
-        $keyDerivationMethod = new KeyDerivationMethod($alg, [$RSAKeyValue]);
-
-        $transformData = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedData[@Id="example1"]'),
+        $masterKeyName = new MasterKeyName(
+            StringValue::fromString('phpunit'),
         );
-        $transformKey = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
-        );
-
-        $referenceList = new ReferenceList(
-            [
-                new DataReference('#Encrypted_DATA_ID', [new Transforms([$transformData])]),
-            ],
-            [
-                new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])]),
-            ],
-        );
-
-        $derivedKeyName = new DerivedKeyName('phpunit');
-        $masterKeyName = new MasterKeyName('phpunit');
 
         $derivedKey = new DerivedKey(
-            'phpunit',
-            'phpunit',
-            'urn:x-simplesamlphp:type',
-            $keyDerivationMethod,
-            $referenceList,
+            StringValue::fromString('phpunit'),
+            IDValue::fromString('phpunit'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:type'),
+            self::$keyDerivationMethod,
+            self::$referenceList,
             $derivedKeyName,
             $masterKeyName,
         );
@@ -116,41 +135,19 @@ final class DerivedKeyTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $alg = 'http://www.w3.org/2009/xmlenc11#ConcatKDF';
-        $RSAKeyValue = new RSAKeyValue(
-            new Modulus('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
-            new Exponent('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+        $derivedKeyName = new DerivedKeyName(
+            StringValue::fromString('phpunit'),
         );
-
-        $keyDerivationMethod = new KeyDerivationMethod($alg, [$RSAKeyValue]);
-
-        $transformData = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedData[@Id="example1"]'),
+        $masterKeyName = new MasterKeyName(
+            StringValue::fromString('phpunit'),
         );
-        $transformKey = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
-        );
-
-        $referenceList = new ReferenceList(
-            [
-                new DataReference('#Encrypted_DATA_ID', [new Transforms([$transformData])]),
-            ],
-            [
-                new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])]),
-            ],
-        );
-
-        $derivedKeyName = new DerivedKeyName('phpunit');
-        $masterKeyName = new MasterKeyName('phpunit');
 
         $derivedKey = new DerivedKey(
-            'phpunit',
-            'phpunit',
-            'urn:x-simplesamlphp:type',
-            $keyDerivationMethod,
-            $referenceList,
+            StringValue::fromString('phpunit'),
+            IDValue::fromString('phpunit'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:type'),
+            self::$keyDerivationMethod,
+            self::$referenceList,
             $derivedKeyName,
             $masterKeyName,
         );

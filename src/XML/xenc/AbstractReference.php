@@ -6,10 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XML\XsNamespace as NS;
+
+use function strval;
 
 /**
  * Abstract class representing references. No custom elements are allowed.
@@ -27,15 +29,13 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * AbstractReference constructor.
      *
-     * @param string $uri
+     * @param \SimpleSAML\XML\Type\AnyURIValue $uri
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     final public function __construct(
-        protected string $uri,
+        protected AnyURIValue $uri,
         array $elements = [],
     ) {
-        Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
-
         $this->setElements($elements);
     }
 
@@ -43,9 +43,9 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * Get the value of the URI attribute of this reference.
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getURI(): string
+    public function getURI(): AnyURIValue
     {
         return $this->uri;
     }
@@ -64,10 +64,10 @@ abstract class AbstractReference extends AbstractXencElement
         Assert::same($xml->localName, static::getClassName(static::class), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        $URI = self::getAttribute($xml, 'URI');
-        $elements = self::getChildElementsFromXML($xml);
-
-        return new static($URI, $elements);
+        return new static(
+            self::getAttribute($xml, 'URI', AnyURIValue::class),
+            self::getChildElementsFromXML($xml),
+        );
     }
 
 
@@ -77,7 +77,7 @@ abstract class AbstractReference extends AbstractXencElement
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('URI', $this->getUri());
+        $e->setAttribute('URI', strval($this->getUri()));
 
         foreach ($this->getElements() as $elt) {
             $elt->toXML($e);

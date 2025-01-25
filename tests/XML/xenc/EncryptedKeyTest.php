@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Key\PrivateKey;
-use SimpleSAML\XMLSecurity\Key\PublicKey;
-use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Key\{PrivateKey, PublicKey, SymmetricKey};
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
-use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
-use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
+use SimpleSAML\XMLSecurity\XML\xenc\{
+    AbstractEncryptedType,
+    AbstractXencElement,
+    CarriedKeyName,
+    CipherData,
+    CipherValue,
+    DataReference,
+    EncryptedKey,
+    EncryptionMethod,
+    ReferenceList,
+};
 
 use function bin2hex;
 use function dirname;
@@ -40,6 +40,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractEncryptedType::class)]
 #[CoversClass(EncryptedKey::class)]
@@ -77,32 +78,54 @@ final class EncryptedKeyTest extends TestCase
     public function testMarshalling(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData(new CipherValue('3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s'
-                . '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQ'
-                . 'V6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwMiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO'
-                . 'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==')),
-            'Encrypted_KEY_ID',
-            'http://www.w3.org/2001/04/xmlenc#Element',
-            'text/plain',
-            'urn:x-simplesamlphp:encoding',
-            'some_ENTITY_ID',
-            new CarriedKeyName('Name of the key'),
-            new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
+            new CipherData(
+                new CipherValue(
+                    Base64BinaryValue::fromString(
+                        '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
+                        '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
+                        'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
+                        'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
+                        'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
+                        'Cn66P/Zt7I9Q==',
+                    ),
+                ),
+            ),
+            IDValue::fromString('Encrypted_KEY_ID'),
+            AnyURIValue::fromString(C::XMLENC_ELEMENT),
+            StringValue::fromString('text/plain'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
+            StringValue::fromString('some_ENTITY_ID'),
+            new CarriedKeyName(
+                StringValue::fromString('Name of the key'),
+            ),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::KEY_TRANSPORT_RSA_1_5),
+            ),
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+                        new CipherData(
+                            new CipherValue(
+                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                            ),
+                        ),
                         null,
                         null,
                         null,
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                        new EncryptionMethod(
+                            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+                        ),
                     ),
                 ],
             ),
-            new ReferenceList([new DataReference('#Encrypted_DATA_ID')]),
+            new ReferenceList([
+                new DataReference(
+                    AnyURIValue::fromString('#Encrypted_DATA_ID'),
+                ),
+            ]),
         );
 
         $this->assertEquals(
@@ -117,32 +140,54 @@ final class EncryptedKeyTest extends TestCase
     public function testMarshallingElementOrdering(): void
     {
         $encryptedKey = new EncryptedKey(
-            new CipherData(new CipherValue('3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s'
-                . '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUdoipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQ'
-                . 'V6dF9YSJqehuRFCqVJprIDZNfrKnm7WfwMiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO'
-                . 'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLoCn66P/Zt7I9Q==')),
-            'Encrypted_KEY_ID',
-            'http://www.w3.org/2001/04/xmlenc#Element',
-            'text/plain',
-            'urn:x-simplesamlphp:encoding',
-            'some_ENTITY_ID',
-            new CarriedKeyName('Name of the key'),
-            new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#rsa-1_5'),
+            new CipherData(
+                new CipherValue(
+                    Base64BinaryValue::fromString(
+                        '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
+                        '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
+                        'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
+                        'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
+                        'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
+                        'Cn66P/Zt7I9Q==',
+                    ),
+                ),
+            ),
+            IDValue::fromString('Encrypted_KEY_ID'),
+            AnyURIValue::fromString(C::XMLENC_ELEMENT),
+            StringValue::fromString('text/plain'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
+            StringValue::fromString('some_ENTITY_ID'),
+            new CarriedKeyName(
+                StringValue::fromString('Name of the key'),
+            ),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::KEY_TRANSPORT_RSA_1_5),
+            ),
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+                        new CipherData(
+                            new CipherValue(
+                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                            ),
+                        ),
                         null,
                         null,
                         null,
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                        new EncryptionMethod(
+                            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+                        ),
                     ),
                 ],
             ),
-            new ReferenceList([new DataReference('#Encrypted_DATA_ID')]),
+            new ReferenceList([
+                new DataReference(
+                    AnyURIValue::fromString('#Encrypted_DATA_ID'),
+                ),
+            ]),
         );
 
         // Marshall it to a \DOMElement
@@ -181,7 +226,9 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(C::KEY_TRANSPORT_RSA_1_5),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::KEY_TRANSPORT_RSA_1_5),
+            ),
         );
 
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$privKey);
@@ -202,7 +249,9 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(C::KEY_TRANSPORT_OAEP),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::KEY_TRANSPORT_OAEP),
+            ),
         );
 
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP, self::$privKey);
@@ -223,7 +272,9 @@ final class EncryptedKeyTest extends TestCase
         $encryptedKey = EncryptedKey::fromKey(
             $symmetricKey,
             $encryptor,
-            new EncryptionMethod(C::KEY_TRANSPORT_OAEP_MGF1P),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::KEY_TRANSPORT_OAEP_MGF1P),
+            ),
         );
 
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, self::$privKey);
