@@ -6,11 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
+
+use function strval;
 
 /**
  * Class representing a ds:Manifest element.
@@ -25,15 +26,14 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
      * Initialize a ds:Manifest
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references
-     * @param string|null $Id
+     * @param \SimpleSAML\XML\Type\IDValue|null $Id
      */
     public function __construct(
         protected array $references,
-        protected ?string $Id = null,
+        protected ?IDValue $Id = null,
     ) {
         Assert::maxCount($references, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($references, Reference::class);
-        Assert::nullOrValidNCName($Id);
     }
 
 
@@ -47,9 +47,9 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
@@ -69,7 +69,7 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
         Assert::same($xml->localName, 'Manifest', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Manifest::NS, InvalidDOMElementException::class);
 
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', IDValue::class, null);
 
         $references = Reference::getChildrenOfClass($xml);
         Assert::minCount(
@@ -97,7 +97,7 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         foreach ($this->getReferences() as $reference) {

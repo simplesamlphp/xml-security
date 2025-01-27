@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
+
+use function strval;
 
 /**
  * Class representing <xenc:EncryptionPropertiesType>.
@@ -26,14 +26,13 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
      * EncryptionProperty constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty[] $encryptionProperty
-     * @param string|null $Id
+     * @param \SimpleSAML\XML\Type\IDValue|null $Id
      */
     final public function __construct(
         protected array $encryptionProperty,
-        protected ?string $Id = null,
+        protected ?IDValue $Id = null,
     ) {
         Assert::minCount($encryptionProperty, 1, MissingElementException::class);
-        Assert::nullOrValidNCName($Id, SchemaViolationException::class);
     }
 
 
@@ -51,9 +50,9 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
     /**
      * Get the value of the $Id property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
@@ -72,7 +71,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
 
         return new static(
             EncryptionProperty::getChildrenOfClass($xml),
-            self::getOptionalAttribute($xml, 'Id', null),
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
         );
     }
 
@@ -89,7 +88,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
         }
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         return $e;

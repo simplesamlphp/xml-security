@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\DsObject;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DsObject};
 
 /**
  * Class \SimpleSAML\XMLSecurity\XML\Test\ds\ObjectTest
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(DsObject::class)]
 final class ObjectTest extends TestCase
@@ -44,9 +43,9 @@ final class ObjectTest extends TestCase
     {
         $img = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         $obj = new DsObject(
-            'abc123',
-            'image/png',
-            'http://www.w3.org/2000/09/xmldsig#base64',
+            IDValue::fromString('abc123'),
+            StringValue::fromString('image/png'),
+            AnyURIValue::fromString('http://www.w3.org/2000/09/xmldsig#base64'),
             [
                 new Chunk(
                     DOMDocumentFactory::fromString(sprintf(

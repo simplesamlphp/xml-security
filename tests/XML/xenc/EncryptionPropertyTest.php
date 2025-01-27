@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\Attribute as XMLAttribute;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionPropertyType;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
+use SimpleSAML\XML\{Attribute as XMLAttribute, Chunk, Constants as C, DOMDocumentFactory};
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\xenc\{AbstractEncryptionPropertyType, AbstractXencElement, EncryptionProperty};
 
 use function dirname;
 use function strval;
@@ -28,6 +23,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractEncryptionPropertyType::class)]
 #[CoversClass(EncryptionProperty::class)]
@@ -61,11 +57,17 @@ final class EncryptionPropertyTest extends TestCase
         /** @var \DOMElement $elt */
         $elt = $doc->documentElement;
 
-        $attr = new XMLAttribute(C::NS_XML, 'xml', 'lang', 'en');
+        $attr = new XMLAttribute(
+            C::NS_XML,
+            'xml',
+            'lang',
+            StringValue::fromString('en'),
+        );
+
         $encryptionProperty = new EncryptionProperty(
             [new Chunk($elt)],
-            'urn:x-simplesamlphp:phpunit',
-            'phpunit',
+            AnyURIValue::fromString('urn:x-simplesamlphp:phpunit'),
+            IDValue::fromString('phpunit'),
             [$attr],
         );
 

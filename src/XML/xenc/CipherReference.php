@@ -7,11 +7,12 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
+
+use function strval;
 
 /**
  * Class representing a CipherReference.
@@ -25,14 +26,13 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
     /**
      * AbstractReference constructor.
      *
-     * @param string $uri
+     * @param \SimpleSAML\XML\Type\AnyURIValue $uri
      * @param \SimpleSAML\XMLSecurity\XML\xenc\Transforms[] $transforms
      */
     final public function __construct(
-        protected string $uri,
+        protected AnyURIValue $uri,
         protected array $transforms = [],
     ) {
-        Assert::validURI($uri, SchemaViolationException::class); // Covers the empty string
         Assert::maxCount($transforms, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($transforms, Transforms::class, SchemaViolationException::class);
     }
@@ -41,9 +41,9 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
     /**
      * Get the value of the URI attribute of this reference.
      *
-     * @return string
+     * @return \SimpleSAML\XML\Type\AnyURIValue
      */
-    public function getURI(): string
+    public function getURI(): AnyURIValue
     {
         return $this->uri;
     }
@@ -62,10 +62,10 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
         Assert::same($xml->localName, static::getClassName(static::class), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        $URI = self::getAttribute($xml, 'URI');
-        $transforms = Transforms::getChildrenOfClass($xml);
-
-        return new static($URI, $transforms);
+        return new static(
+            self::getAttribute($xml, 'URI', AnyURIValue::class),
+            Transforms::getChildrenOfClass($xml),
+        );
     }
 
 
@@ -75,7 +75,7 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
     public function toXML(?DOMElement $parent = null): DOMElement
     {
         $e = $this->instantiateParentElement($parent);
-        $e->setAttribute('URI', $this->getUri());
+        $e->setAttribute('URI', strval($this->getUri()));
 
         foreach ($this->transforms as $transforms) {
             $transforms->toXML($e);
