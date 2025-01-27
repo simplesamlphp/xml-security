@@ -35,7 +35,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
     public function __construct(
         protected SignedInfo $signedInfo,
         protected SignatureValue $signatureValue,
-        protected ?KeyInfo $keyInfo,
+        protected ?KeyInfo $keyInfo = null,
         protected array $objects = [],
         protected ?IDValue $Id = null,
     ) {
