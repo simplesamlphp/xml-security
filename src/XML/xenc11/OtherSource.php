@@ -33,7 +33,7 @@ final class OtherSource extends AbstractAlgorithmIdentifierType
         Assert::maxCount($parameter, 1, TooManyElementsException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Algorithm', AnyURIValue::class, null),
+            self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
             array_pop($parameter),
         );
     }

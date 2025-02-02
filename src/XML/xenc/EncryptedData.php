@@ -10,7 +10,6 @@ use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementExceptio
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\{CipherData, EncryptionMethod};
 
 use function array_pop;
 
