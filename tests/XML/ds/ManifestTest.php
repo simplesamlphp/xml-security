@@ -10,6 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
 use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestMethod, DigestValue};
 use SimpleSAML\XMLSecurity\XML\ds\{Manifest, Reference, Transform, Transforms};
 
@@ -51,7 +52,7 @@ final class ManifestTest extends TestCase
                 AnyURIValue::fromString(C::DIGEST_SHA256),
             ),
             new DigestValue(
-                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                DigestValueType::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             ),
             new Transforms(
                 [

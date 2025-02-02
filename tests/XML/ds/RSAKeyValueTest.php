@@ -8,8 +8,8 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\Base64BinaryValue;
 use SimpleSAML\XML\Utils\XPath;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, Exponent, Modulus, RSAKeyValue};
 
 use function dirname;
@@ -42,10 +42,10 @@ final class RSAKeyValueTest extends TestCase
 
         self::$rsaKeyValue = new RSAKeyValue(
             new Modulus(
-                Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+                CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
             ),
             new Exponent(
-                Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+                CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
             ),
         );
     }

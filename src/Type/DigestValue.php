@@ -11,7 +11,7 @@ use SimpleSAML\XMLSecurity\Assert\Assert;
 /**
  * @package simplesaml/xml-security
  */
-class DigestValueValue extends Base64BinaryValue
+class DigestValue extends Base64BinaryValue
 {
     /**
      * Validate the value.
