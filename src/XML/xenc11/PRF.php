@@ -28,7 +28,7 @@ final class PRF extends AbstractPRFAlgorithmIdentifierType
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Algorithm', AnyURIValue::class, null),
+            self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
         );
     }
 }

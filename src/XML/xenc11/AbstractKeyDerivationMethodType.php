@@ -66,7 +66,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
         return new static(
-            self::getOptionalAttribute($xml, 'Algorithm', AnyURIValue::class, null),
+            self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
             self::getChildElementsFromXML($xml),
         );
     }
