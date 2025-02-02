@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
-use SimpleSAML\XMLSecurity\Type\DigestValueValue;
+use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestValue};
 
 use function dirname;
@@ -45,7 +45,7 @@ final class DigestValueTest extends TestCase
     public function testMarshalling(): void
     {
         $digestValue = new DigestValue(
-            DigestValueValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            DigestValueType::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
         );
 
         $this->assertEquals(

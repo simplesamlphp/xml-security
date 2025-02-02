@@ -10,6 +10,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
 use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractPGPDataType};
 use SimpleSAML\XMLSecurity\XML\ds\{PGPData, PGPKeyID, PGPKeyPacket};
 use SimpleSAML\XMLSecurity\XML\xenc\P;
@@ -54,7 +55,7 @@ final class PGPDataTest extends TestCase
         );
 
         self::$p = new P(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
         );
     }
 

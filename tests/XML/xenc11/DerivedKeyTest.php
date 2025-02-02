@@ -8,8 +8,9 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
 use SimpleSAML\XMLSecurity\XML\ds\{Exponent, Modulus, RSAKeyValue, Transform, Transforms, XPath};
 use SimpleSAML\XMLSecurity\XML\xenc\{DataReference, KeyReference, ReferenceList};
@@ -61,10 +62,10 @@ final class DerivedKeyTest extends TestCase
             [
                 new RSAKeyValue(
                     new Modulus(
-                        Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+                        CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
                     ),
                     new Exponent(
-                        Base64BinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
+                        CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
                     ),
                 ),
             ],

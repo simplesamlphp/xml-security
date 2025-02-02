@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
 use SimpleSAML\XML\Type\{Base64BinaryValue, StringValue};
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractSPKIDataType};
 use SimpleSAML\XMLSecurity\XML\ds\{SPKIData, SPKISexp};
 use SimpleSAML\XMLSecurity\XML\xenc\{CarriedKeyName, Seed};
@@ -50,7 +51,7 @@ final class SPKIDataTest extends TestCase
             Base64BinaryValue::fromString('GpM6'),
         );
         $seed = new Seed(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
         );
         $SPKISexp2 = new SPKISexp(
             Base64BinaryValue::fromString('GpM7'),
