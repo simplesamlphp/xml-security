@@ -8,15 +8,15 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XMLSecurity\Type\DigestValueValue;
+use SimpleSAML\XMLSecurity\Type\DigestValue;
 
 /**
- * Class \SimpleSAML\Test\XMLSecurity\Type\DigestValueValueTest
+ * Class \SimpleSAML\Test\XMLSecurity\Type\DigestValueTest
  *
  * @package simplesamlphp/xml-security
  */
-#[CoversClass(DigestValueValue::class)]
-final class DigestValueValueTest extends TestCase
+#[CoversClass(DigestValue::class)]
+final class DigestValueTest extends TestCase
 {
     /**
      * @param boolean $shouldPass
@@ -26,7 +26,7 @@ final class DigestValueValueTest extends TestCase
     public function testDigestValue(bool $shouldPass, string $digestValue): void
     {
         try {
-            DigestValueValue::fromString($digestValue);
+            DigestValue::fromString($digestValue);
             $this->assertTrue($shouldPass);
         } catch (SchemaViolationException $e) {
             $this->assertFalse($shouldPass);

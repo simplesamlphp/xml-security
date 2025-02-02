@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDSAKeyValueType, AbstractDsElement, DSAKeyValue};
 use SimpleSAML\XMLSecurity\XML\ds\{G, J, P, PgenCounter, Q, Seed, Y};
 
@@ -46,25 +46,25 @@ final class DSAKeyValueTest extends TestCase
     public function testMarshalling(): void
     {
         $p = new P(
-            Base64BinaryValue::fromString('GpM1'),
+            CryptoBinaryValue::fromString('GpM1'),
         );
         $q = new Q(
-            Base64BinaryValue::fromString('GpM2'),
+            CryptoBinaryValue::fromString('GpM2'),
         );
         $g = new G(
-            Base64BinaryValue::fromString('GpM3'),
+            CryptoBinaryValue::fromString('GpM3'),
         );
         $y = new Y(
-            Base64BinaryValue::fromString('GpM4'),
+            CryptoBinaryValue::fromString('GpM4'),
         );
         $j = new J(
-            Base64BinaryValue::fromString('GpM5'),
+            CryptoBinaryValue::fromString('GpM5'),
         );
         $seed = new Seed(
-            Base64BinaryValue::fromString('GpM6'),
+            CryptoBinaryValue::fromString('GpM6'),
         );
         $pgenCounter = new PgenCounter(
-            Base64BinaryValue::fromString('GpM7'),
+            CryptoBinaryValue::fromString('GpM7'),
         );
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
@@ -81,25 +81,25 @@ final class DSAKeyValueTest extends TestCase
     public function testMarshallingElementOrder(): void
     {
         $p = new P(
-            Base64BinaryValue::fromString('GpM1'),
+            CryptoBinaryValue::fromString('GpM1'),
         );
         $q = new Q(
-            Base64BinaryValue::fromString('GpM2'),
+            CryptoBinaryValue::fromString('GpM2'),
         );
         $g = new G(
-            Base64BinaryValue::fromString('GpM3'),
+            CryptoBinaryValue::fromString('GpM3'),
         );
         $y = new Y(
-            Base64BinaryValue::fromString('GpM4'),
+            CryptoBinaryValue::fromString('GpM4'),
         );
         $j = new J(
-            Base64BinaryValue::fromString('GpM5'),
+            CryptoBinaryValue::fromString('GpM5'),
         );
         $seed = new Seed(
-            Base64BinaryValue::fromString('GpM6'),
+            CryptoBinaryValue::fromString('GpM6'),
         );
         $pgenCounter = new PgenCounter(
-            Base64BinaryValue::fromString('GpM7'),
+            CryptoBinaryValue::fromString('GpM7'),
         );
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);

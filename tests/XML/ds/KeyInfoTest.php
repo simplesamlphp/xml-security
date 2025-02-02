@@ -11,6 +11,7 @@ use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTest
 use SimpleSAML\XML\Type\{Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractKeyInfoType, KeyInfo, KeyName, MgmtData};
 use SimpleSAML\XMLSecurity\XML\ds\{PGPData, PGPKeyID, PGPKeyPacket};
 use SimpleSAML\XMLSecurity\XML\ds\{SPKIData, SPKISexp};
@@ -87,7 +88,7 @@ final class KeyInfoTest extends TestCase
             Base64BinaryValue::fromString('GpM6'),
         );
         $seed = new Seed(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
         );
         $SPKISexp2 = new SPKISexp(
             Base64BinaryValue::fromString('GpM7'),
@@ -123,7 +124,7 @@ final class KeyInfoTest extends TestCase
                     ),
                     [
                         new P(
-                            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                         ),
                     ],
                 ),
