@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use SimpleSAML\XML\TypedTextContentTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSecurity\Type\DigestValueValue;
+use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 
 /**
  * Class representing a ds:DigestValue element.
@@ -19,5 +19,5 @@ final class DigestValue extends AbstractDsElement implements SchemaValidatableEl
     use TypedTextContentTrait;
 
     /** @var string */
-    public const TEXTCONTENT_TYPE = DigestValueValue::class;
+    public const TEXTCONTENT_TYPE = DigestValueType::class;
 }

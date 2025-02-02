@@ -11,7 +11,7 @@ use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\{RuntimeException, UnsupportedAlgorithmException};
-use SimpleSAML\XMLSecurity\Type\DigestValueValue;
+use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\XML\ds\{
     CanonicalizationMethod,
@@ -136,7 +136,7 @@ trait SignableElementTrait
                 AnyURIValue::fromString($digestAlg),
             ),
             new DigestValue(
-                DigestValueValue::fromString(
+                DigestValueType::fromString(
                     base64_encode(hash(C::$DIGEST_ALGORITHMS[$digestAlg], $canonicalDocument, true)),
                 ),
             ),
