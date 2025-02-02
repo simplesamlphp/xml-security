@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\IterationCount;
+use SimpleSAML\XML\Type\PositiveIntegerValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, IterationCount};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(IterationCount::class)]
 final class IterationCountTest extends TestCase
@@ -41,7 +42,9 @@ final class IterationCountTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $iterationCount = new IterationCount(3);
+        $iterationCount = new IterationCount(
+            PositiveIntegerValue::fromString('3'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -44,7 +44,7 @@
         "ext-spl": "*",
 
         "simplesamlphp/assert": "~1.8.0",
-        "simplesamlphp/xml-common": "~1.24.0"
+        "simplesamlphp/xml-common": "dev-feature/xsd-types"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "~1.8.0"
