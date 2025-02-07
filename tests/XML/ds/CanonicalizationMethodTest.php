@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, CanonicalizationMethod};
 
 use function dirname;
 
@@ -20,6 +19,7 @@ use function dirname;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(CanonicalizationMethod::class)]
 final class CanonicalizationMethodTest extends TestCase
@@ -43,7 +43,9 @@ final class CanonicalizationMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $canonicalizationMethod = new CanonicalizationMethod(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS);
+        $canonicalizationMethod = new CanonicalizationMethod(
+            AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
