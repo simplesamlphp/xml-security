@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Type;
 
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
@@ -23,6 +24,6 @@ class HMACOutputLengthValue extends IntegerValue
     protected function validateValue(string $value): void
     {
         // Note: value must already be sanitized before validating
-        Assert::validHMACOutputLength($this->sanitizeValue($value));
+        Assert::validHMACOutputLength($this->sanitizeValue($value), SchemaViolationException::class);
     }
 }
