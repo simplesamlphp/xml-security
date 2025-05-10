@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue};
+use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\{CipherData, CipherValue};
+use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey, EncryptionMethod};
 
 /**
  * Trait aggregating functionality for elements that can be encrypted.
@@ -61,7 +58,9 @@ trait EncryptableElementTrait
             $encryptedKey = EncryptedKey::fromKey(
                 $sessionKey,
                 $encryptor,
-                new EncryptionMethod($encryptor->getAlgorithmId()),
+                new EncryptionMethod(
+                    AnyURIValue::fromString($encryptor->getAlgorithmId()),
+                ),
             );
 
             $keyInfo = new KeyInfo([$encryptedKey]);
@@ -78,14 +77,20 @@ trait EncryptableElementTrait
         return new EncryptedData(
             new CipherData(
                 new CipherValue(
-                    base64_encode($encryptor->encrypt($xmlRepresentation->ownerDocument->saveXML($xmlRepresentation))),
+                    Base64BinaryValue::fromString(
+                        base64_encode($encryptor->encrypt(
+                            $xmlRepresentation->ownerDocument->saveXML($xmlRepresentation),
+                        )),
+                    ),
                 ),
             ),
             null,
-            C::XMLENC_ELEMENT,
+            AnyURIValue::fromString(C::XMLENC_ELEMENT),
             null,
             null,
-            new EncryptionMethod($encryptor->getAlgorithmId()),
+            new EncryptionMethod(
+                AnyURIValue::fromString($encryptor->getAlgorithmId()),
+            ),
             $keyInfo,
         );
     }

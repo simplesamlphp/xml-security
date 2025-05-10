@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractPRFAlgorithmIdentifierType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\PRF;
+use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{
+    AbstractAlgorithmIdentifierType,
+    AbstractPRFAlgorithmIdentifierType,
+    AbstractXenc11Element,
+    PRF,
+};
 
 use function dirname;
 use function strval;
@@ -21,6 +24,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(PRF::class)]
 #[CoversClass(AbstractPRFAlgorithmIdentifierType::class)]
 #[CoversClass(AbstractAlgorithmIdentifierType::class)]
@@ -48,7 +52,9 @@ final class PRFTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $prf = new PRF('urn:x-simplesamlphp:algorithm');
+        $prf = new PRF(
+            AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

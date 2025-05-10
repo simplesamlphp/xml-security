@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
-use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
-use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
+use SimpleSAML\XMLSecurity\XML\ds\{Transform, Transforms, XPath};
+use SimpleSAML\XMLSecurity\XML\xenc\{AbstractXencElement, DataReference, KeyReference, ReferenceList};
 
 use function dirname;
 use function strval;
@@ -29,6 +24,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(ReferenceList::class)]
 final class ReferenceListTest extends TestCase
@@ -56,20 +52,30 @@ final class ReferenceListTest extends TestCase
     public function testMarshalling(): void
     {
         $transformData = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedData[@Id="example1"]'),
+            AnyURIValue::fromString(C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
+            ),
         );
         $transformKey = new Transform(
-            C::XPATH10_URI,
-            new XPath('self::xenc:EncryptedKey[@Id="example1"]'),
+            AnyURIValue::fromString(C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
+            ),
         );
 
         $referenceList = new ReferenceList(
             [
-                new DataReference('#Encrypted_DATA_ID', [new Transforms([$transformData])]),
+                new DataReference(
+                    AnyURIValue::fromString('#Encrypted_DATA_ID'),
+                    [new Transforms([$transformData])],
+                ),
             ],
             [
-                new KeyReference('#Encrypted_KEY_ID', [new Transforms([$transformKey])]),
+                new KeyReference(
+                    AnyURIValue::fromString('#Encrypted_KEY_ID'),
+                    [new Transforms([$transformKey])],
+                ),
             ],
         );
 
