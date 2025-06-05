@@ -30,7 +30,7 @@ return [
         'X509Data' => '\SimpleSAML\XMLSecurity\XML\ds\X509Data',
     ],
     'http://www.w3.org/2009/xmldsig11#' => [
-//        'DEREncodedKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue',
+        'DEREncodedKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue',
 //        'ECKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue',
 //        'GnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\GnB',
         'KeyInfoReference' => '\SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference',
