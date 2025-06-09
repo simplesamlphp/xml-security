@@ -48,6 +48,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
     final public function __construct(
         protected RSAKeyValue|DSAKeyValue|ECKeyValue|SerializableElementInterface $keyValue,
     ) {
+        /** @var \SimpleSAML\XML\AbstractElement|\SimpleSAML\XML\Chunk $keyValue */
         if (
             !($keyValue instanceof RSAKeyValue
             || $keyValue instanceof DSAKeyValue

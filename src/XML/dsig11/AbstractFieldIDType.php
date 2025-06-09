@@ -38,6 +38,7 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
     public function __construct(
         protected Prime|TnB|PnB|GnB|SerializableElementInterface $fieldId,
     ) {
+        /** @var \SimpleSAML\XML\AbstractElement|\SimpleSAML\XML\Chunk $fieldId */
         if (
             !($fieldId instanceof Prime
             || $fieldId instanceof TnB
