@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
 use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -35,28 +34,23 @@ final class FieldID extends AbstractFieldIDType implements SchemaValidatableElem
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
-        $prime = Prime::getChildrenOfClass($xml);
-        Assert::minCount($prime, 1, MissingElementException::class);
-        Assert::maxCount($prime, 1, TooManyElementsException::class);
+        $fieldId = array_merge(
+            Prime::getChildrenOfClass($xml),
+            TnB::getChildrenOfClass($xml),
+            PnB::getChildrenOfClass($xml),
+            GnB::getChildrenOfClass($xml),
+            self::getChildElementsFromXML($xml),
+        );
 
-        $tnb = TnB::getChildrenOfClass($xml);
-        Assert::minCount($tnb, 1, MissingElementException::class);
-        Assert::maxCount($tnb, 1, TooManyElementsException::class);
-
-        $pnb = PnB::getChildrenOfClass($xml);
-        Assert::minCount($pnb, 1, MissingElementException::class);
-        Assert::maxCount($pnb, 1, TooManyElementsException::class);
-
-        $gnb = GnB::getChildrenOfClass($xml);
-        Assert::minCount($gnb, 1, MissingElementException::class);
-        Assert::maxCount($gnb, 1, TooManyElementsException::class);
+        Assert::count(
+            $fieldId,
+            1,
+            'A <dsig11:FieldID> must contain exactly one child element',
+            TooManyElementsException::class,
+        );
 
         return new static(
-            array_pop($prime),
-            array_pop($tnb),
-            array_pop($pnb),
-            array_pop($gnb),
-            self::getChildElementsFromXML($xml),
+            array_pop($fieldId),
         );
     }
 }

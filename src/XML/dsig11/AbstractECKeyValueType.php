@@ -27,7 +27,7 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
         protected PublicKey $publicKey,
         protected ?string $id = null,
         protected ?ECParameters $ecParameters = null,
-        protected ?NamedCurve $ecParamOrNamedCurve = null,
+        protected ?NamedCurve $namedCurve = null,
     ) {
         Assert::validNCName($id, SchemaViolationException::class);
         Assert::oneOf(

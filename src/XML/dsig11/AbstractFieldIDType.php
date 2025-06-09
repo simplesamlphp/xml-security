@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\Constants as C;
+use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XML\XsNamespace as NS;
 
 /**
@@ -15,7 +20,11 @@ use SimpleSAML\XML\XsNamespace as NS;
  */
 abstract class AbstractFieldIDType extends AbstractDsig11Element
 {
-    use ExtendableElementTrait;
+    // We use our own getter instead of the trait's one, so we prevent their use by marking them private
+    use ExtendableElementTrait {
+        getElements as private;
+        setElements as private;
+    }
 
     /** @var \SimpleSAML\XML\XsNamespace */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
@@ -24,64 +33,39 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
     /**
      * Initialize a FieldIDType element.
      *
-     * @param \SimpleSAML\XMLSecurity\XML\dsig11\Prime $prime
-     * @param \SimpleSAML\XMLSecurity\XML\dsig11\TnB $tnb
-     * @param \SimpleSAML\XMLSecurity\XML\dsig11\PnB $pnb
-     * @param \SimpleSAML\XMLSecurity\XML\dsig11\GnB $gnb
-     * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
+     * @param \SimpleSAML\XML\SerializableElementInterface $fieldId
      */
     public function __construct(
-        protected Prime $prime,
-        protected TnB $tnb,
-        protected PnB $pnb,
-        protected GnB $gnb,
-        array $children,
+        protected Prime|TnB|PnB|GnB|SerializableElementInterface $fieldId,
     ) {
-        $this->setElements($children);
+        if (
+            !($fieldId instanceof Prime
+            || $fieldId instanceof TnB
+            || $fieldId instanceof PnB
+            || $fieldId instanceof GnB)
+        ) {
+            Assert::true(
+                (($fieldId instanceof Chunk) ? $fieldId->getNamespaceURI() : $fieldId::getNameSpaceURI())
+                !== C::NS_XDSIG11,
+                'A <dsig11:FieldIDType> requires either a Prime, TnB, PnB, GnB or an element in namespace ##other',
+                SchemaViolationException::class,
+            );
+        }
     }
 
 
     /**
-     * Collect the value of the prime-property
+     * Collect the value of the fieldId-property
      *
      * @return \SimpleSAML\XMLSecurity\XML\dsig11\Prime
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\TnB
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\PnB
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\GnB
+     *         \SimpleSAML\XML\SerializableElementInterface
      */
-    public function getPrime(): Prime
+    public function getFieldId(): Prime|TnB|PnB|GnB|SerializableElementInterface
     {
-        return $this->prime;
-    }
-
-
-    /**
-     * Collect the value of the tnb-property
-     *
-     * @return \SimpleSAML\XMLSecurity\XML\dsig11\TnB
-     */
-    public function getTnB(): TnB
-    {
-        return $this->tnb;
-    }
-
-
-    /**
-     * Collect the value of the pnb-property
-     *
-     * @return \SimpleSAML\XMLSecurity\XML\dsig11\PnB
-     */
-    public function getPnB(): PnB
-    {
-        return $this->pnb;
-    }
-
-
-    /**
-     * Collect the value of the gnb-property
-     *
-     * @return \SimpleSAML\XMLSecurity\XML\dsig11\GnB
-     */
-    public function getGnB(): GnB
-    {
-        return $this->gnb;
+        return $this->fieldId;
     }
 
 
@@ -95,14 +79,7 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
     {
         $e = $this->instantiateParentElement($parent);
 
-        $this->getPrime()->toXML($e);
-        $this->getTnB()->toXML($e);
-        $this->getPnB()->toXML($e);
-        $this->getGnB()->toXML($e);
-
-        foreach ($this->getElements() as $elt) {
-            $elt->toXML($e);
-        }
+        $this->getFieldId()->toXML($e);
 
         return $e;
     }
