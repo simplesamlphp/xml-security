@@ -6,11 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\XML\dsig11\A;
-use SimpleSAML\XMLSecurity\XML\dsig11\B;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSecurity\XML\dsig11\{A, B};
+
+use function array_pop;
 
 /**
  * Class representing a dsig11:Curve element.
