@@ -70,9 +70,8 @@ final class KeyValueTest extends TestCase
     {
         $keyValue = new KeyValue(RSAKeyValue::fromXML(self::$rsaKeyValue->documentElement));
 
-        $rsaKeyValue = $keyValue->getRSAKeyValue();
+        $rsaKeyValue = $keyValue->getKeyValue();
         $this->assertInstanceOf(RSAKeyValue::class, $rsaKeyValue);
-        $this->assertEmpty($keyValue->getElements());
 
         $this->assertEquals($rsaKeyValue->getModulus()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg==');
         $this->assertEquals($rsaKeyValue->getExponent()->getContent(), 'dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
@@ -88,32 +87,15 @@ final class KeyValueTest extends TestCase
      */
     public function testMarshallingWithOtherElement(): void
     {
-        $keyValue = new KeyValue(null, EncryptionProperty::fromXML(self::$encryptionProperty->documentElement));
+        $keyValue = new KeyValue(EncryptionProperty::fromXML(self::$encryptionProperty->documentElement));
 
-        $elements = $keyValue->getElements();
-        $this->assertEmpty($keyValue->getRSAKeyValue());
-        $this->assertCount(1, $elements);
-
-        $element = reset($elements);
+        $element = $keyValue->getKeyValue();
         $this->assertInstanceOf(EncryptionProperty::class, $element);
 
         $document = self::$empty;
         $element->toXML($document->documentElement);
 
         $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
-    }
-
-
-    /**
-     */
-    public function testMarshallingEmpty(): void
-    {
-        $this->expectException(SchemaViolationException::class);
-        $this->expectExceptionMessage(
-            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
-        );
-
-        new KeyValue(null, null);
     }
 
 
@@ -128,11 +110,7 @@ final class KeyValueTest extends TestCase
 
         $keyValue = KeyValue::fromXML($document->documentElement);
 
-        $elements = $keyValue->getElements();
-        $this->assertNull($keyValue->getRSAKeyValue());
-        $this->assertCount(1, $elements);
-
-        $element = reset($elements);
+        $element = $keyValue->getKeyValue();
         $this->assertInstanceOf(EncryptionProperty::class, $element);
     }
 
@@ -145,7 +123,7 @@ final class KeyValueTest extends TestCase
 
         $this->expectException(SchemaViolationException::class);
         $this->expectExceptionMessage(
-            'A <ds:KeyValue> requires either a RSAKeyValue or an element in namespace ##other',
+            'A <ds:KeyValue> must contain exactly one child element',
         );
 
         KeyValue::fromXML($document->documentElement);
