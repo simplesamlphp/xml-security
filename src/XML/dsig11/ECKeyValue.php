@@ -6,11 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\IDValue;
 
 use function array_pop;
 
@@ -49,7 +47,7 @@ final class ECKeyValue extends AbstractECKeyValueType implements SchemaValidatab
 
         return new static(
             array_pop($publicKey),
-            self::getOptionalAttribute($xml, 'Id', null),
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
             array_pop($ecParameters),
             array_pop($namedCurve),
         );

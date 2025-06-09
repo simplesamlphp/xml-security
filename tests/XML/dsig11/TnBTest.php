@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCharTwoFieldParamsType;
-use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
-use SimpleSAML\XMLSecurity\XML\dsig11\AbstractTnBFieldParamsType;
-use SimpleSAML\XMLSecurity\XML\dsig11\K;
-use SimpleSAML\XMLSecurity\XML\dsig11\M;
-use SimpleSAML\XMLSecurity\XML\dsig11\TnB;
+use SimpleSAML\XML\Type\PositiveIntegerValue;
+use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractCharTwoFieldParamsType, AbstractDsig11Element};
+use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractTnBFieldParamsType, K, M, TnB};
 
 use function dirname;
 use function strval;
@@ -24,6 +21,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('dsig11')]
 #[CoversClass(AbstractDsig11Element::class)]
 #[CoversClass(AbstractCharTwoFieldParamsType::class)]
 #[CoversClass(AbstractTnBFieldParamsType::class)]
@@ -52,8 +50,8 @@ final class TnBTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $m = new M(1024);
-        $k = new K(64);
+        $m = new M(PositiveIntegerValue::fromInteger(1024));
+        $k = new K(PositiveIntegerValue::fromInteger(64));
         $tnb = new TnB($m, $k);
 
         $this->assertEquals(
@@ -67,8 +65,8 @@ final class TnBTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $m = new M(1024);
-        $k = new K(64);
+        $m = new M(PositiveIntegerValue::fromInteger(1024));
+        $k = new K(PositiveIntegerValue::fromInteger(64));
         $tnb = new TnB($m, $k);
 
         $tnbElement = $tnb->toXML();
