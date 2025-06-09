@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\Utils\XPath;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractDHKeyValueType;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\DHKeyValue;
-use SimpleSAML\XMLSecurity\XML\xenc\Generator;
-use SimpleSAML\XMLSecurity\XML\xenc\P;
-use SimpleSAML\XMLSecurity\XML\xenc\PgenCounter;
-use SimpleSAML\XMLSecurity\XML\xenc\Q;
-use SimpleSAML\XMLSecurity\XML\xenc\Seed;
-use SimpleSAML\XMLSecurity\XML\xenc\XencPublic;
+use SimpleSAML\XMLSecurity\XML\xenc\{
+    AbstractDHKeyValueType,
+    AbstractXencElement,
+    DHKeyValue,
+    Generator,
+    P,
+    PgenCounter,
+    Q,
+    Seed,
+    XencPublic,
+};
 
 use function dirname;
 use function strval;
@@ -32,6 +34,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractDHKeyValueType::class)]
 #[CoversClass(DHKeyValue::class)]
@@ -39,6 +42,8 @@ final class DHKeyValueTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
+    private static DHKeyValue $dhKeyValue;
 
     /**
      */
@@ -49,6 +54,27 @@ final class DHKeyValueTest extends TestCase
         self::$xmlRepresentation = DOMDocumentFactory::fromFile(
             dirname(__FILE__, 3) . '/resources/xml/xenc_DHKeyValue.xml',
         );
+
+        self::$dhKeyValue = new DHKeyValue(
+            new XencPublic(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+            new P(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+            new Q(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+            new Generator(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+            new Seed(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+            new PgenCounter(
+                CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
+        );
     }
 
 
@@ -56,35 +82,17 @@ final class DHKeyValueTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $xencPublic = new XencPublic('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $p = new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $q = new Q('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $generator = new Generator('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $seed = new Seed('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $pgenCounter = new PgenCounter('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-
-        $dhKeyValue = new DHKeyValue($xencPublic, $p, $q, $generator, $seed, $pgenCounter);
-
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($dhKeyValue),
+            strval(self::$dhKeyValue),
         );
     }
     /**
      */
     public function testMarshallingElementOrder(): void
     {
-        $xencPublic = new XencPublic('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $p = new P('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $q = new Q('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $generator = new Generator('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $seed = new Seed('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-        $pgenCounter = new PgenCounter('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
-
-        $dhKeyValue = new DHKeyValue($xencPublic, $p, $q, $generator, $seed, $pgenCounter);
-
         // Marshall it to a \DOMElement
-        $dhKeyValueElement = $dhKeyValue->toXML();
+        $dhKeyValueElement = self::$dhKeyValue->toXML();
 
         $xpCache = XPath::getXPath($dhKeyValueElement);
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SerializableElementTestTrait, SchemaValidationTestTrait};
+use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
@@ -26,6 +27,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractAgreementMethodType::class)]
 #[CoversClass(AgreementMethod::class)]
@@ -81,10 +83,12 @@ final class AgreementMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $kaNonce = new KANonce('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $kaNonce = new KANonce(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
 
         $digestMethod = new DigestMethod(
-            C::DIGEST_SHA256,
+            AnyURIValue::fromString(C::DIGEST_SHA256),
             [
                 new Chunk(DOMDocumentFactory::fromString(
                     '<some:Chunk xmlns:some="urn:x-simplesamlphp:namespace">some</some:Chunk>',
@@ -94,38 +98,50 @@ final class AgreementMethodTest extends TestCase
 
         $originatorKeyInfo = new OriginatorKeyInfo(
             [
-                new KeyName('testkey'),
+                new KeyName(
+                    StringValue::fromString('testkey'),
+                ),
                 new X509Data(
                     [
-                        new X509Certificate(self::$certificate),
-                        new X509SubjectName(self::$certData['name']),
+                        new X509Certificate(
+                            Base64BinaryValue::fromString(self::$certificate),
+                        ),
+                        new X509SubjectName(
+                            StringValue::fromString(self::$certData['name']),
+                        ),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">originator</ssp:Chunk>',
                 )->documentElement),
             ],
-            'fed123',
+            IDValue::fromString('fed123'),
         );
 
         $recipientKeyInfo = new RecipientKeyInfo(
             [
-                new KeyName('testkey'),
+                new KeyName(
+                    StringValue::fromString('testkey'),
+                ),
                 new X509Data(
                     [
-                        new X509Certificate(self::$certificate),
-                        new X509SubjectName(self::$certData['name']),
+                        new X509Certificate(
+                            Base64BinaryValue::fromString(self::$certificate),
+                        ),
+                        new X509SubjectName(
+                            StringValue::fromString(self::$certData['name']),
+                        ),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">recipient</ssp:Chunk>',
                 )->documentElement),
             ],
-            'fed654',
+            IDValue::fromString('fed654'),
         );
 
         $agreementMethod = new AgreementMethod(
-            C::XMLENC11_ECDH_ES,
+            AnyURIValue::fromString(C::KEY_AGREEMENT_ECDH_ES),
             $kaNonce,
             $originatorKeyInfo,
             $recipientKeyInfo,
@@ -141,10 +157,12 @@ final class AgreementMethodTest extends TestCase
 
     public function testMarshallingElementOrdering(): void
     {
-        $kaNonce = new KANonce('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $kaNonce = new KANonce(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
 
         $digestMethod = new DigestMethod(
-            C::DIGEST_SHA256,
+            AnyURIValue::fromString(C::DIGEST_SHA256),
             [
                 new Chunk(DOMDocumentFactory::fromString(
                     '<some:Chunk xmlns:some="urn:x-simplesamlphp:namespace">some</some:Chunk>',
@@ -154,38 +172,50 @@ final class AgreementMethodTest extends TestCase
 
         $originatorKeyInfo = new OriginatorKeyInfo(
             [
-                new KeyName('testkey'),
+                new KeyName(
+                    StringValue::fromString('testkey'),
+                ),
                 new X509Data(
                     [
-                        new X509Certificate(self::$certificate),
-                        new X509SubjectName(self::$certData['name']),
+                        new X509Certificate(
+                            Base64BinaryValue::fromString(self::$certificate),
+                        ),
+                        new X509SubjectName(
+                            StringValue::fromString(self::$certData['name']),
+                        ),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">originator</ssp:Chunk>',
                 )->documentElement),
             ],
-            'fed321',
+            IDValue::fromString('fed321'),
         );
 
         $recipientKeyInfo = new RecipientKeyInfo(
             [
-                new KeyName('testkey'),
+                new KeyName(
+                    StringValue::fromString('testkey'),
+                ),
                 new X509Data(
                     [
-                        new X509Certificate(self::$certificate),
-                        new X509SubjectName(self::$certData['name']),
+                        new X509Certificate(
+                            Base64BinaryValue::fromString(self::$certificate),
+                        ),
+                        new X509SubjectName(
+                            StringValue::fromString(self::$certData['name']),
+                        ),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">recipient</ssp:Chunk>',
                 )->documentElement),
             ],
-            'fed654',
+            IDValue::fromString('fed654'),
         );
 
         $agreementMethod = new AgreementMethod(
-            C::XMLENC11_ECDH_ES,
+            AnyURIValue::fromString(C::KEY_AGREEMENT_ECDH_ES),
             $kaNonce,
             $originatorKeyInfo,
             $recipientKeyInfo,

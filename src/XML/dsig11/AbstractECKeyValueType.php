@@ -7,6 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\XML\Assert\Assert;
 use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XML\Type\IDValue;
+
+use function strval;
 
 /**
  * Abstract class representing a dsig11:ECKeyValueType
@@ -19,17 +22,16 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
      * Initialize a FieldIDType element.
      *
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\PublicKey $publicKey
-     * @param string|null $id
+     * @param \SimpleSAML\XML\Type\IDValue|null $id
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\ECParameters|null $ecParameters
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\NamedCurve|null $namedCurve
      */
     public function __construct(
         protected PublicKey $publicKey,
-        protected ?string $id = null,
+        protected ?IDValue $id = null,
         protected ?ECParameters $ecParameters = null,
         protected ?NamedCurve $namedCurve = null,
     ) {
-        Assert::validNCName($id, SchemaViolationException::class);
         Assert::oneOf(
             null,
             [$ecParameters, $namedCurve],
@@ -75,9 +77,9 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
     /**
      * Collect the value of the id-property
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->id;
     }
@@ -94,7 +96,7 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         $this->getECParameters()?->toXML($e);

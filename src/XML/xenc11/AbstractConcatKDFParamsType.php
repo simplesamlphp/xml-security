@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\Exception\{
+    InvalidDOMElementException,
+    MissingElementException,
+    SchemaViolationException,
+    TooManyElementsException,
+};
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\Type\HexBinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
 use function array_pop;
+use function strval;
 
 /**
  * Class representing <xenc11:ConcatKDFParamsType>.
@@ -30,25 +33,20 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
      * ConcatKDFParams constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
-     * @param string|null $AlgorithmID
-     * @param string|null $PartyUInfo
-     * @param string|null $PartyVInfo
-     * @param string|null $SuppPubInfo
-     * @param string|null $SuppPrivInfo
+     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $AlgorithmID
+     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $PartyUInfo
+     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $PartyVInfo
+     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $SuppPubInfo
+     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $SuppPrivInfo
      */
     final public function __construct(
         protected DigestMethod $digestMethod,
-        protected ?string $AlgorithmID = null,
-        protected ?string $PartyUInfo = null,
-        protected ?string $PartyVInfo = null,
-        protected ?string $SuppPubInfo = null,
-        protected ?string $SuppPrivInfo = null,
+        protected ?HexBinaryValue $AlgorithmID = null,
+        protected ?HexBinaryValue $PartyUInfo = null,
+        protected ?HexBinaryValue $PartyVInfo = null,
+        protected ?HexBinaryValue $SuppPubInfo = null,
+        protected ?HexBinaryValue $SuppPrivInfo = null,
     ) {
-        Assert::validHexBinary($AlgorithmID, SchemaViolationException::class);
-        Assert::validHexBinary($PartyUInfo, SchemaViolationException::class);
-        Assert::validHexBinary($PartyVInfo, SchemaViolationException::class);
-        Assert::validHexBinary($SuppPubInfo, SchemaViolationException::class);
-        Assert::validHexBinary($SuppPrivInfo, SchemaViolationException::class);
     }
 
 
@@ -66,9 +64,9 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $AlgorithmID property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
      */
-    public function getAlgorithmID(): ?string
+    public function getAlgorithmID(): ?HexBinaryValue
     {
         return $this->AlgorithmID;
     }
@@ -77,9 +75,9 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyUInfo property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
      */
-    public function getPartyUInfo(): ?string
+    public function getPartyUInfo(): ?HexBinaryValue
     {
         return $this->PartyUInfo;
     }
@@ -88,9 +86,9 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyVInfo property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
      */
-    public function getPartyVInfo(): ?string
+    public function getPartyVInfo(): ?HexBinaryValue
     {
         return $this->PartyVInfo;
     }
@@ -99,9 +97,9 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPubInfo property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
      */
-    public function getSuppPubInfo(): ?string
+    public function getSuppPubInfo(): ?HexBinaryValue
     {
         return $this->SuppPubInfo;
     }
@@ -110,9 +108,9 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPrivInfo property.
      *
-     * @return string|null
+     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
      */
-    public function getSuppPrivInfo(): ?string
+    public function getSuppPrivInfo(): ?HexBinaryValue
     {
         return $this->SuppPrivInfo;
     }
@@ -135,11 +133,11 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
 
         return new static(
             array_pop($digestMethod),
-            self::getOptionalAttribute($xml, 'AlgorithmID', null),
-            self::getOptionalAttribute($xml, 'PartyUInfo', null),
-            self::getOptionalAttribute($xml, 'PartyVInfo', null),
-            self::getOptionalAttribute($xml, 'SuppPubInfo', null),
-            self::getOptionalAttribute($xml, 'SuppPrivInfo', null),
+            self::getOptionalAttribute($xml, 'AlgorithmID', HexBinaryValue::class, null),
+            self::getOptionalAttribute($xml, 'PartyUInfo', HexBinaryValue::class, null),
+            self::getOptionalAttribute($xml, 'PartyVInfo', HexBinaryValue::class, null),
+            self::getOptionalAttribute($xml, 'SuppPubInfo', HexBinaryValue::class, null),
+            self::getOptionalAttribute($xml, 'SuppPrivInfo', HexBinaryValue::class, null),
         );
     }
 
@@ -152,23 +150,23 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getAlgorithmID() !== null) {
-            $e->setAttribute('AlgorithmID', $this->getAlgorithmID());
+            $e->setAttribute('AlgorithmID', strval($this->getAlgorithmID()));
         }
 
         if ($this->getPartyUInfo() !== null) {
-            $e->setAttribute('PartyUInfo', $this->getPartyUInfo());
+            $e->setAttribute('PartyUInfo', strval($this->getPartyUInfo()));
         }
 
         if ($this->getPartyVInfo() !== null) {
-            $e->setAttribute('PartyVInfo', $this->getPartyVInfo());
+            $e->setAttribute('PartyVInfo', strval($this->getPartyVInfo()));
         }
 
         if ($this->getSuppPubInfo() !== null) {
-            $e->setAttribute('SuppPubInfo', $this->getSuppPubInfo());
+            $e->setAttribute('SuppPubInfo', strval($this->getSuppPubInfo()));
         }
 
         if ($this->getSuppPrivInfo() !== null) {
-            $e->setAttribute('SuppPrivInfo', $this->getSuppPrivInfo());
+            $e->setAttribute('SuppPrivInfo', strval($this->getSuppPrivInfo()));
         }
 
         $this->getDigestMethod()->toXML($e);

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XML\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, XPath};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(XPath::class)]
 class XPathTest extends TestCase
@@ -40,7 +41,9 @@ class XPathTest extends TestCase
 
     public function testMarshalling(): void
     {
-        $xpath = new XPath('self::xenc:CipherValue[@Id="example1"]');
+        $xpath = new XPath(
+            StringValue::fromString('self::xenc:CipherValue[@Id="example1"]'),
+        );
 
         $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
         $this->assertEquals(
