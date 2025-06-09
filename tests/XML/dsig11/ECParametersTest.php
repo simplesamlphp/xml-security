@@ -98,7 +98,7 @@ final class ECParametersTest extends TestCase
         $order = new Order('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build CoFactor
-        $coFactor = new CoFactor('128');
+        $coFactor = new CoFactor(128);
 
         // Build ValidationData
         $seed = new Seed('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');

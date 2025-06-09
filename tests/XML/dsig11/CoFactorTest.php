@@ -42,7 +42,7 @@ final class CoFactorTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $coFactor = new CoFactor('128');
+        $coFactor = new CoFactor(128);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
