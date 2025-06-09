@@ -10,7 +10,7 @@ use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 
 /**
- * Class representing a xenc:K1 element.
+ * Class representing a dsig11:K1 element.
  *
  * @package simplesaml/xml-security
  */
