@@ -15,6 +15,9 @@ final class Seed extends AbstractDsig11Element
 {
     use Base64ElementTrait;
 
+    /** @var string */
+    public const LOCALNAME = 'seed';
+
 
     /**
      * Initialize a Seed element.
