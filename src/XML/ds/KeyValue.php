@@ -67,10 +67,10 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the RSAKeyValue-property
      *
-     * @return \SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|
+     * @return (\SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue|
      *         \SimpleSAML\XMLSecurity\XML\ds\DSAKeyValue|
      *         \SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue|
-     *         \SimpeSAML\XML\SerializableElementInterface
+     *         \SimpleSAML\XML\SerializableElementInterface)
      */
     public function getKeyValue(): RSAKeyValue|DSAKeyValue|ECKeyValue|SerializableElementInterface
     {

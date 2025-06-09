@@ -77,7 +77,7 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
      *
      * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }

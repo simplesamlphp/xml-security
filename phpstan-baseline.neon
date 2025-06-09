@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined static method SimpleSAML\\\\XML\\\\SerializableElementInterface\\:\\:getNameSpaceURI\\(\\)\\.$#"
+			count: 1
+			path: src/XML/ds/KeyValue.php
+
+		-
+			message: "#^Call to an undefined static method SimpleSAML\\\\XML\\\\SerializableElementInterface\\:\\:getNameSpaceURI\\(\\)\\.$#"
+			count: 1
+			path: src/XML/dsig11/AbstractFieldIDType.php

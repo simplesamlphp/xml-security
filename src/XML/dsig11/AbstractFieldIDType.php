@@ -7,11 +7,11 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSecurity\Constants as C;
 
 /**
  * Abstract class representing a dsig11:FieldIDType
@@ -57,11 +57,11 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
     /**
      * Collect the value of the fieldId-property
      *
-     * @return \SimpleSAML\XMLSecurity\XML\dsig11\Prime
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\TnB
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\PnB
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\GnB
-     *         \SimpleSAML\XML\SerializableElementInterface
+     * @return (\SimpleSAML\XMLSecurity\XML\dsig11\Prime|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\TnB|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\PnB|
+     *         \SimpleSAML\XMLSecurity\XML\dsig11\GnB|
+     *         \SimpleSAML\XML\SerializableElementInterface)
      */
     public function getFieldId(): Prime|TnB|PnB|GnB|SerializableElementInterface
     {
