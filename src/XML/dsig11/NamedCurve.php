@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Type\AnyURIValue;
 
 /**
  * Class representing a dsig11:NamedCurve element.
@@ -30,7 +31,7 @@ final class NamedCurve extends AbstractNamedCurveType
         Assert::same($xml->namespaceURI, static::getNamespaceURI(), InvalidDOMElementException::class);
 
         return new static(
-            self::getAttribute($xml, 'URI'),
+            self::getAttribute($xml, 'URI', AnyURIValue::class),
         );
     }
 }
