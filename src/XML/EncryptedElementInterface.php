@@ -36,9 +36,9 @@ interface EncryptedElementInterface
     /**
      * Get the encrypted key used to encrypt the current element.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[]
      */
-    public function getEncryptedKey(): EncryptedKey;
+    public function getEncryptedKey(): array;
 
     /**
      * Get the EncryptedData object.

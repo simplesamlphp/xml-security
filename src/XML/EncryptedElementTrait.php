@@ -27,8 +27,8 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
  */
 trait EncryptedElementTrait
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey|null */
-    protected ?EncryptedKey $encryptedKey = null;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] */
+    protected array $encryptedKey = [];
 
 
     /**
@@ -46,7 +46,7 @@ trait EncryptedElementTrait
 
         foreach ($keyInfo->getInfo() as $info) {
             if ($info instanceof EncryptedKey) {
-                $this->encryptedKey = $info;
+                $this->encryptedKey[] = $info;
                 break;
             }
         }
@@ -60,16 +60,16 @@ trait EncryptedElementTrait
      */
     public function hasDecryptionKey(): bool
     {
-        return $this->encryptedKey !== null;
+        return !empty($this->encryptedKey);
     }
 
 
     /**
      * Get the encrypted key used to encrypt the current element.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[]
      */
-    public function getEncryptedKey(): EncryptedKey
+    public function getEncryptedKey(): array
     {
         return $this->encryptedKey;
     }
@@ -120,7 +120,7 @@ trait EncryptedElementTrait
 
         if (in_array($decryptor->getAlgorithmId(), C::$KEY_TRANSPORT_ALGORITHMS)) {
             // the decryptor uses a key transport algorithm, check if we have a session key
-            if ($this->hasDecryptionKey() === null) {
+            if (!$this->hasDecryptionKey()) {
                 throw new RuntimeException('Cannot use a key transport algorithm to decrypt an object.');
             }
 
@@ -129,7 +129,9 @@ trait EncryptedElementTrait
             }
 
             $encryptedKey = $this->getEncryptedKey();
-            $decryptionKey = $encryptedKey->decrypt($decryptor);
+            Assert::count($encryptedKey, 1, RuntimeException::class);
+
+            $decryptionKey = $encryptedKey[0]->decrypt($decryptor);
 
             $factory = new EncryptionAlgorithmFactory(
                 $this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST,
