@@ -6,7 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Exception\InvalidDOMElementException;
+use SimpleSAML\XML\Registry\ElementRegistry;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue;
 
@@ -45,7 +47,17 @@ final class KeyInfo extends AbstractKeyInfoType implements SchemaValidatableElem
         $spkiData = SPKIData::getChildrenOfClass($xml);
         $mgmtData = MgmtData::getChildrenOfClass($xml);
         $derEncodedKeyValue = DEREncodedKeyValue::getChildrenOfClass($xml);
-        $other = self::getChildElementsFromXML($xml);
+
+        $registry = ElementRegistry::getInstance();
+        $other = [];
+        foreach ($xml->childNodes as $node) {
+            if ($node instanceof DOMElement) {
+                if ($node->namespaceURI !== static::NS) {
+                    $handler = $registry->getElementHandler($node->namespaceURI, $node->localName);
+                    $other[] = ($handler === null) ? Chunk::fromXML($node) : $handler::fromXML($node);
+                }
+            }
+        }
 
         $info = array_merge(
             $keyName,
