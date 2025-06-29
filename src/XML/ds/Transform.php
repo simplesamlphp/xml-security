@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
@@ -27,7 +27,7 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Initialize the Transform element.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $xpath
      * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $inclusiveNamespaces
      */
@@ -64,7 +64,7 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Get the algorithm associated with this transform.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

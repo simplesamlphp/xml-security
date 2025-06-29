@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XMLSchema\Exception\{
     InvalidDOMElementException,
     MissingElementException,
     SchemaViolationException,
     TooManyElementsException,
 };
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\HexBinaryValue;
+use SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
@@ -33,11 +33,11 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
      * ConcatKDFParams constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
-     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $AlgorithmID
-     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $PartyUInfo
-     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $PartyVInfo
-     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $SuppPubInfo
-     * @param \SimpleSAML\XML\Type\HexBinaryValue|null $SuppPrivInfo
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $AlgorithmID
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $PartyUInfo
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $PartyVInfo
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $SuppPubInfo
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $SuppPrivInfo
      */
     final public function __construct(
         protected DigestMethod $digestMethod,
@@ -64,7 +64,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $AlgorithmID property.
      *
-     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
      */
     public function getAlgorithmID(): ?HexBinaryValue
     {
@@ -75,7 +75,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyUInfo property.
      *
-     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
      */
     public function getPartyUInfo(): ?HexBinaryValue
     {
@@ -86,7 +86,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyVInfo property.
      *
-     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
      */
     public function getPartyVInfo(): ?HexBinaryValue
     {
@@ -97,7 +97,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPubInfo property.
      *
-     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
      */
     public function getSuppPubInfo(): ?HexBinaryValue
     {
@@ -108,7 +108,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPrivInfo property.
      *
-     * @return \SimpleSAML\XML\Type\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
      */
     public function getSuppPrivInfo(): ?HexBinaryValue
     {
@@ -119,7 +119,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

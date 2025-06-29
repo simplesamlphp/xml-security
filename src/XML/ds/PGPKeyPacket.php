@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use SimpleSAML\XML\Type\Base64BinaryValue;
 use SimpleSAML\XML\TypedTextContentTrait;
+use SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue;
 
 /**
  * Class representing a ds:PGPKeyPacket element.

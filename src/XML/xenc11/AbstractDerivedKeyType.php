@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
@@ -27,9 +27,9 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * DerivedKey constructor.
      *
-     * @param \SimpleSAML\XML\Type\StringValue|null $recipient
-     * @param \SimpleSAML\XML\Type\IDValue|null $id
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $recipient
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $type
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod|null $keyDerivationMethod
      * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName|null $derivedKeyName
@@ -50,7 +50,7 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * Get the value of the $recipient property.
      *
-     * @return \SimpleSAML\XML\Type\StringValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null
      */
     public function getRecipient(): ?StringValue
     {
@@ -61,7 +61,7 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * Get the value of the $id property.
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -72,7 +72,7 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * Get the value of the $type property.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {
@@ -144,7 +144,7 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

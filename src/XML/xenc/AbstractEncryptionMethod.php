@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\Type\AnyURIValue;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 
 use function array_pop;
 use function strval;
@@ -24,13 +24,13 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     use ExtendableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
      * EncryptionMethod constructor.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $children
@@ -48,7 +48,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * Get the URI identifying the algorithm used by this encryption method.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -84,11 +84,11 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * @param \DOMElement $xml
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingAttributeException
+     * @throws \SimpleSAML\XMLSchema\Exception\MissingAttributeException
      *   if the supplied element is missing one of the mandatory attributes
-     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
+     * @throws \SimpleSAML\XMLSchema\Exception\TooManyElementsException
      *   if too many child-elements of a type are specified
      */
     public static function fromXML(DOMElement $xml): static

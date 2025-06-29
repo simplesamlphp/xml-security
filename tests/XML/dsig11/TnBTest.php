@@ -7,9 +7,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XML\Type\PositiveIntegerValue;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractCharTwoFieldParamsType, AbstractDsig11Element};
 use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractTnBFieldParamsType, K, M, TnB};
 

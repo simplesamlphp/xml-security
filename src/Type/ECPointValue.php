@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Type;
 
-use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 
@@ -17,7 +17,7 @@ class ECPointValue extends CryptoBinaryValue
      * Validate the value.
      *
      * @param string $value
-     * @throws \SimpleSAML\XML\Exception\SchemaViolationException on failure
+     * @throws \SimpleSAML\XMLSchema\Exception\SchemaViolationException on failure
      * @return void
      */
     protected function validateValue(string $value): void

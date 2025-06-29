@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
@@ -29,11 +29,16 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
      * EncryptedKey constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherData $cipherData The CipherData object of this EncryptedData.
-     * @param \SimpleSAML\XML\Type\IDValue|null $id The Id attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type The Type attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\StringValue|null $mimeType The MimeType attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $encoding The Encoding attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\StringValue|null $recipient The Recipient attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $id
+     *   The Id attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $type
+     *   The Type attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $mimeType
+     *   The MimeType attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $encoding
+     *   The Encoding attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $recipient
+     *   The Recipient attribute of this object. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
      *   The value of the CarriedKeyName element of this EncryptedData.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
@@ -72,7 +77,7 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
     /**
      * Get the value of the Recipient attribute.
      *
-     * @return \SimpleSAML\XML\Type\StringValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null
      */
     public function getRecipient(): ?StringValue
     {
@@ -124,18 +129,21 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
-     * @param \SimpleSAML\XML\Type\IDValue|null $id The Id attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $type The Type attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\StringValue|null $mimeType The MimeType attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $encoding The Encoding attribute of this object. Optional.
-     * @param \SimpleSAML\XML\Type\StringValue|null $recipient The Recipient attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $id The Id attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $type The Type attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $mimeType
+     *   The MimeType attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $encoding
+     *   The Encoding attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $recipient
+     *   The Recipient attribute of this object. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName|null $carriedKeyName
      *   The value of the CarriedKeyName element of this EncryptedData.
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo The KeyInfo object of this EncryptedData. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\ReferenceList|null $referenceList
      *   The ReferenceList object of this EncryptedData. Optional.
      *
-     * @return EncryptedKey The new EncryptedKey object.
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey The new EncryptedKey object.
      */
     public static function fromKey(
         KeyInterface $keyToEncrypt,
@@ -181,7 +189,7 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

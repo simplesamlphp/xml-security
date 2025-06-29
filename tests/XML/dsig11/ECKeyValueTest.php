@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue, IntegerValue, PositiveIntegerValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, IntegerValue, PositiveIntegerValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\{CryptoBinaryValue, ECPointValue};
 use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, AbstractECKeyValueType};

@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, SPKISexp};
 
 use function dirname;

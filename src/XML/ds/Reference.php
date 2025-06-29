@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function array_pop;
@@ -28,9 +28,9 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $Type
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $URI
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Type
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $URI
      */
     public function __construct(
         protected DigestMethod $digestMethod,
@@ -71,7 +71,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -80,7 +80,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XML\Type\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {
@@ -89,7 +89,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XML\Type\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
      */
     public function getURI(): ?AnyURIValue
     {
@@ -114,7 +114,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
-use SimpleSAML\XML\Type\PositiveIntegerValue;
 use SimpleSAML\XML\TypedTextContentTrait;
+use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
 
 /**
  * Class representing a dsig11:K3 element.

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
 
 use function strval;
 
@@ -19,7 +19,7 @@ abstract class AbstractAlgorithmIdentifierType extends AbstractXenc11Element
     /**
      * AlgorithmIdentifierType constructor.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc11\Parameters|null $parameters
      */
     public function __construct(
@@ -32,7 +32,7 @@ abstract class AbstractAlgorithmIdentifierType extends AbstractXenc11Element
     /**
      * Get the value of the $Algorithm property.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

@@ -6,11 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\AnyURIValue;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 
 use function strval;
 
@@ -26,13 +26,13 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Any;
 
 
     /**
      * KeyDerivationMethod constructor.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
      * @param \SimpleSAML\XML\SerializableElementInterface[] $children
      */
     final public function __construct(
@@ -46,7 +46,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
     /**
      * Get the value of the $Algorithm property.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -57,7 +57,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

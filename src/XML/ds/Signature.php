@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\IDValue;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 
@@ -30,7 +30,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
      * @param \SimpleSAML\XMLSecurity\XML\ds\DsObject[] $objects
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         protected SignedInfo $signedInfo,
@@ -47,7 +47,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
     /**
      * Get the Id used for this signature.
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -99,7 +99,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * @param \DOMElement $xml
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

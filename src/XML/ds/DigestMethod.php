@@ -6,11 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\AnyURIValue;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -27,12 +27,12 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
     /**
      * Initialize a DigestMethod element.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $elements
      */
     public function __construct(
@@ -53,7 +53,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -67,7 +67,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

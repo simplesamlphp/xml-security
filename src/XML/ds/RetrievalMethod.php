@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
 
 use function strval;
 
@@ -25,8 +25,8 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
      * Initialize a ds:RetrievalMethod
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     * @param \SimpleSAML\XML\Type\AnyURIValue $URI
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $Type
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $URI
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Type
      */
     final public function __construct(
         protected ?Transforms $transforms,
@@ -46,7 +46,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
 
 
     /**
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {
@@ -55,7 +55,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
 
 
     /**
-     * @return \SimpleSAML\XML\Type\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {
@@ -69,7 +69,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

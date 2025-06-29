@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XML\Type\{IntegerValue, StringValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{IntegerValue, StringValue};
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;

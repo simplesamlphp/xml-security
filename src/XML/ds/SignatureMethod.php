@@ -6,11 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\AnyURIValue;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -30,13 +30,13 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
      * Initialize a SignatureMethod element.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
      * @param \SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength|null $hmacOutputLength
      * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
      */
@@ -62,7 +62,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -87,7 +87,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

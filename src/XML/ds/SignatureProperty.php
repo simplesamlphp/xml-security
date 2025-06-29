@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue};
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -25,15 +25,15 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
      * Initialize a ds:SignatureProperty
      *
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Target
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Target
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         array $elements,
@@ -45,7 +45,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
 
 
     /**
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getTarget(): AnyURIValue
     {
@@ -54,7 +54,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
 
 
     /**
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -68,7 +68,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

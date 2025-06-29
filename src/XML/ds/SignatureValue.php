@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\Builtin\{Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -23,8 +23,8 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
 
 
     /**
-     * @param \SimpleSAML\XML\Type\Base64BinaryValue $value
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue $value
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         protected Base64BinaryValue $value,
@@ -36,7 +36,7 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Get the Id used for this signature value.
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -47,7 +47,7 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Get the content for this signature value.
      *
-     * @return \SimpleSAML\XML\Type\Base64BinaryValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue
      */
     public function getValue(): ?Base64BinaryValue
     {
@@ -61,7 +61,7 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
      * @param \DOMElement $xml
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

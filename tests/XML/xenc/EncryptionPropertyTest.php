@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\{Attribute as XMLAttribute, Chunk, Constants as C, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\xenc\{AbstractEncryptionPropertyType, AbstractXencElement, EncryptionProperty};
 
 use function dirname;

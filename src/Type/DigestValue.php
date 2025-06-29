@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Type;
 
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**
@@ -17,7 +17,7 @@ class DigestValue extends Base64BinaryValue
      * Validate the value.
      *
      * @param string $value
-     * @throws \SimpleSAML\XML\Exception\SchemaViolationException on failure
+     * @throws \SimpleSAML\XMLSchema\Exception\SchemaViolationException on failure
      * @return void
      */
     protected function validateValue(string $value): void

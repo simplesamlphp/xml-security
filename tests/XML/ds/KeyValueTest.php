@@ -8,8 +8,8 @@ use DOMDocument;
 use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\Exception\SchemaViolationException;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, KeyValue, RSAKeyValue};
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
 

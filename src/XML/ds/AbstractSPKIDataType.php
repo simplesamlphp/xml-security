@@ -7,9 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\Registry\ElementRegistry;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait, SerializableElementInterface};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
 /**
@@ -58,7 +58,7 @@ abstract class AbstractSPKIDataType extends AbstractDsElement implements SchemaV
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

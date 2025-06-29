@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\IDValue;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\{CanonicalizableElementInterface, CanonicalizableElementTrait};
@@ -40,7 +40,7 @@ final class SignedInfo extends AbstractDsElement implements
      * @param \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod $canonicalizationMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod $signatureMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         protected CanonicalizationMethod $canonicalizationMethod,
@@ -89,7 +89,7 @@ final class SignedInfo extends AbstractDsElement implements
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -116,7 +116,7 @@ final class SignedInfo extends AbstractDsElement implements
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

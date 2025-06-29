@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
 use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XML\Type\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, OtherSource, Parameters, Salt};
 
 use function dirname;

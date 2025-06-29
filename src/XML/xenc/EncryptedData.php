@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function array_pop;
@@ -27,11 +27,11 @@ final class EncryptedData extends AbstractEncryptedType implements SchemaValidat
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\MissingElementException
      *   If one of the mandatory child-elements is missing
-     * @throws \SimpleSAML\XML\Exception\TooManyElementsException
+     * @throws \SimpleSAML\XMLSchema\Exception\TooManyElementsException
      *   If too many child-elements of a type are specified
      */
     final public static function fromXML(DOMElement $xml): static

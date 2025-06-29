@@ -7,8 +7,8 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, TooManyElementsException};
-use SimpleSAML\XML\Type\IDValue;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\{EncryptableElementInterface, EncryptableElementTrait};
@@ -48,7 +48,7 @@ class CustomSignable extends AbstractElement implements
      * Constructor
      *
      * @param \DOMElement $xml
-     * @param \SimpleSAML\XML\Type\IDValue $id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue $id
      */
     final public function __construct(
         protected DOMElement $xml,
@@ -91,7 +91,7 @@ class CustomSignable extends AbstractElement implements
 
 
     /**
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -153,7 +153,7 @@ class CustomSignable extends AbstractElement implements
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

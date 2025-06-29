@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
 use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, PositiveIntegerValue, StringValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, PositiveIntegerValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\xenc11\{
     AbstractPBKDF2ParameterType,
     AbstractXenc11Element,

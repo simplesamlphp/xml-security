@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
-use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
 
 /**
  * Class representing <xenc11:AbstractPRFAlgorithmIdentifierType>.
@@ -16,7 +16,7 @@ abstract class AbstractPRFAlgorithmIdentifierType extends AbstractAlgorithmIdent
     /**
      * AlgorithmPRFIdentifierType constructor.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
      */
     public function __construct(
         AnyURIValue $Algorithm,

@@ -6,10 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\Type\AnyURIValue;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 
 use function strval;
 
@@ -23,13 +23,13 @@ abstract class AbstractReference extends AbstractXencElement
     use ExtendableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
      * AbstractReference constructor.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $uri
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $uri
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     final public function __construct(
@@ -43,7 +43,7 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * Get the value of the URI attribute of this reference.
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {
@@ -54,9 +54,9 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * @inheritDoc
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
-     * @throws \SimpleSAML\XML\Exception\MissingAttributeException
+     * @throws \SimpleSAML\XMLSchema\Exception\MissingAttributeException
      *   if the supplied element is missing one of the mandatory attributes
      */
     public static function fromXML(DOMElement $xml): static

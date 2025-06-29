@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\XML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\Builtin\{Base64BinaryValue, IDValue};
 use SimpleSAML\XML\TypedTextContentTrait;
 
 use function strval;
@@ -27,8 +27,8 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
     /**
      * Initialize a DEREncodedKeyValue element.
      *
-     * @param \SimpleSAML\XML\Type\Base64BinaryValue $value
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue $value
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         protected Base64BinaryValue $value,
@@ -40,7 +40,7 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
     /**
      * Get the content for this signature value.
      *
-     * @return \SimpleSAML\XML\Type\Base64BinaryValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue
      */
     public function getValue(): ?Base64BinaryValue
     {
@@ -51,7 +51,7 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -65,7 +65,7 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

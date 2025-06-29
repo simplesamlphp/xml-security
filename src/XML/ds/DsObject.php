@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue, StringValue};
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -27,16 +27,16 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /** @var string */
     public const LOCALNAME = 'Object';
 
-    /** @var \SimpleSAML\XML\XsNamespace */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    /** @var \SimpleSAML\XMLSchema\XML\xs\NamespaceEnum */
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Any;
 
 
     /**
      * Initialize a ds:Object element.
      *
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
-     * @param \SimpleSAML\XML\Type\StringValue|null $MimeType
-     * @param \SimpleSAML\XML\Type\AnyURIValue|null $Encoding
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $MimeType
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Encoding
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     public function __construct(
@@ -52,7 +52,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -63,7 +63,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the MimeType-property
      *
-     * @return \SimpleSAML\XML\Type\StringValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null
      */
     public function getMimeType(): ?StringValue
     {
@@ -74,7 +74,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the Encoding-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
      */
     public function getEncoding(): ?AnyURIValue
     {
@@ -102,7 +102,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

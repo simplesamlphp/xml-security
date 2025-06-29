@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Type;
 
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Type\IntegerValue;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Type\Builtin\IntegerValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**
@@ -17,7 +17,7 @@ class HMACOutputLengthValue extends IntegerValue
      * Validate the value.
      *
      * @param string $value
-     * @throws \SimpleSAML\XML\Exception\SchemaViolationException on failure
+     * @throws \SimpleSAML\XMLSchema\Exception\SchemaViolationException on failure
      * @throws \SimpleSAML\XMLSecurity\Exception\ProtocolViolationException when not devisible by 8
      * @return void
      */

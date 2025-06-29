@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use DOMElement;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\NMTokensValue;
+use SimpleSAML\XMLSchema\Type\Builtin\NMTokensValue;
 
 use function strval;
 
@@ -22,7 +22,7 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
     /**
      * Initialize the InclusiveNamespaces element.
      *
-     * @param \SimpleSAML\XML\Type\NMTokensValue|null $prefixes
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\NMTokensValue|null $prefixes
      */
     final public function __construct(
         protected ?NMTokensValue $prefixes,
@@ -33,7 +33,7 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
     /**
      * Get the prefixes specified by this element.
      *
-     * @return \SimpleSAML\XML\Type\NMTokensValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\NMTokensValue|null
      */
     public function getPrefixes(): ?NMTokensValue
     {

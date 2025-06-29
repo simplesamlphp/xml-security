@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**
@@ -22,8 +22,8 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Initialize a KeyInfoReference element.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $URI
-     * @param \SimpleSAML\XML\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $URI
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
      */
     public function __construct(
         protected AnyURIValue $URI,
@@ -35,7 +35,7 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Collect the value of the URI-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {
@@ -46,7 +46,7 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -60,7 +60,7 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

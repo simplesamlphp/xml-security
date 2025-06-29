@@ -6,8 +6,8 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\XML\Assert\Assert;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Type\IDValue;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
 
 use function strval;
 
@@ -22,7 +22,7 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
      * Initialize a FieldIDType element.
      *
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\PublicKey $publicKey
-     * @param \SimpleSAML\XML\Type\IDValue|null $id
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $id
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\ECParameters|null $ecParameters
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\NamedCurve|null $namedCurve
      */
@@ -77,7 +77,7 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
     /**
      * Collect the value of the id-property
      *
-     * @return \SimpleSAML\XML\Type\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
      */
     public function getId(): ?IDValue
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
-use SimpleSAML\XML\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
 
 use function strval;
 
@@ -19,7 +19,7 @@ abstract class AbstractNamedCurveType extends AbstractDsig11Element
     /**
      * Initialize a NamedCurveType element.
      *
-     * @param \SimpleSAML\XML\Type\AnyURIValue $URI
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $URI
      */
     public function __construct(
         protected AnyURIValue $URI,
@@ -30,7 +30,7 @@ abstract class AbstractNamedCurveType extends AbstractDsig11Element
     /**
      * Collect the value of the URI-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {

@@ -6,9 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, Base64BinaryValue};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, Base64BinaryValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -27,8 +27,8 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Initialize a X509Digest element.
      *
-     * @param \SimpleSAML\XML\Type\Base64BinaryValue $digest
-     * @param \SimpleSAML\XML\Type\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue $digest
+     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
      */
     public function __construct(
         protected Base64BinaryValue $digest,
@@ -46,7 +46,7 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Collect the value of the digest-property
      *
-     * @return \SimpleSAML\XML\Type\Base64BinaryValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue
      */
     public function getDigest(): Base64BinaryValue
     {
@@ -57,7 +57,7 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Collect the value of the algorithm-property
      *
-     * @return \SimpleSAML\XML\Type\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -71,7 +71,7 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

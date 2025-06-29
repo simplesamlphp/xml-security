@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XML\Type\{AnyURIValue, HexBinaryValue};
+use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, HexBinaryValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractConcatKDFParamsType, AbstractXenc11Element, ConcatKDFParams};

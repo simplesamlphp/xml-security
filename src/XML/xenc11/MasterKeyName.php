@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
-use SimpleSAML\XML\Type\StringValue;
 use SimpleSAML\XML\TypedTextContentTrait;
+use SimpleSAML\XMLSchema\Type\Builtin\StringValue;
 
 /**
  * Class representing a xenc11:MasterKeyName element.
