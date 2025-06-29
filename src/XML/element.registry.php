@@ -31,12 +31,12 @@ return [
     ],
     'http://www.w3.org/2009/xmldsig11#' => [
         'DEREncodedKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue',
-//        'ECKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue',
-//        'GnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\GnB',
+        'ECKeyValue' => '\SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue',
+        'GnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\GnB',
         'KeyInfoReference' => '\SimpleSAML\XMLSecurity\XML\dsig11\KeyInfoReference',
-//        'PnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\PnB',
-//        'Prime' => '\SimpleSAML\XMLSecurity\XML\dsig11\Prime',
-//        'TnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\TnB',
+        'PnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\PnB',
+        'Prime' => '\SimpleSAML\XMLSecurity\XML\dsig11\Prime',
+        'TnB' => '\SimpleSAML\XMLSecurity\XML\dsig11\TnB',
         'X509Digest' => '\SimpleSAML\XMLSecurity\XML\dsig11\X509Digest',
     ],
     'http://www.w3.org/2001/10/xml-exc-c14n#' => [
