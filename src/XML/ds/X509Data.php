@@ -36,12 +36,14 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Initialize a X509Data.
      *
-     * @param (\SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[] $data
+     * @param (
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
+     *   \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
+     * )[] $data
      * @param \SimpleSAML\XML\SerializableElementInterface[] $children
      */
     public function __construct(
@@ -74,12 +76,14 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the data-property
      *
-     * @return (\SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
-     *          \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[]
+     * @return (
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
+     *   \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
+     * )[]
      */
     public function getData(): array
     {

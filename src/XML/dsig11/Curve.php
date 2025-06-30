@@ -7,7 +7,6 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XMLSecurity\XML\dsig11\{A, B};
 
 use function array_pop;
 
