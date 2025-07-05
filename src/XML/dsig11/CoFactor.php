@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use SimpleSAML\XML\TypedTextContentTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\IntegerValue;
+use SimpleSAML\XMLSchema\Type\IntegerValue;
 
 /**
  * Class representing a dsig11:CoFactor element.

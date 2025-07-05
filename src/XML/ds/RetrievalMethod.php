@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
 
@@ -25,8 +25,8 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
      * Initialize a ds:RetrievalMethod
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $URI
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Type
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $URI
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $Type
      */
     final public function __construct(
         protected ?Transforms $transforms,
@@ -46,7 +46,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {
@@ -55,7 +55,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {

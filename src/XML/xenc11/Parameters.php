@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{ExtendableAttributesTrait, ExtendableElementTrait};
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 
 /**
  * Class representing xenc11:Parameters

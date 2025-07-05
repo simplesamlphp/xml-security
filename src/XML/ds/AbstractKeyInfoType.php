@@ -8,8 +8,8 @@ use DOMElement;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
-use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -27,7 +27,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
 {
     use ExtendableElementTrait;
 
-    /** @var \SimpleSAML\XMLSchema\XML\xs\NamespaceEnum */
+    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
     public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
@@ -45,7 +45,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
      *     \SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue|
      *     \SimpleSAML\XML\SerializableElementInterface
      * )[] $info
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     final public function __construct(
         protected array $info,
@@ -98,7 +98,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {

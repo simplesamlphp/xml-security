@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function array_pop;

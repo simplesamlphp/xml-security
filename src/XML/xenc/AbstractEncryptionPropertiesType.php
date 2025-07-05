@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -26,7 +26,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
      * EncryptionProperty constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty[] $encryptionProperty
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     final public function __construct(
         protected array $encryptionProperty,
@@ -50,7 +50,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
     /**
      * Get the value of the $Id property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {

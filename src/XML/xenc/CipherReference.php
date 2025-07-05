@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
 use function strval;
@@ -26,7 +26,7 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
     /**
      * AbstractReference constructor.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $uri
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $uri
      * @param \SimpleSAML\XMLSecurity\XML\xenc\Transforms[] $transforms
      */
     final public function __construct(
@@ -41,7 +41,7 @@ final class CipherReference extends AbstractXencElement implements SchemaValidat
     /**
      * Get the value of the URI attribute of this reference.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {

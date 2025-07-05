@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSecurity\Alg\Signature\{SignatureAlgorithmFactory, SignatureAlgorithmInterface};
 use SimpleSAML\XMLSecurity\Constants as C;

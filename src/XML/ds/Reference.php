@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function array_pop;
@@ -28,9 +28,9 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Type
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $URI
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $Type
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $URI
      */
     public function __construct(
         protected DigestMethod $digestMethod,
@@ -71,7 +71,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -80,7 +80,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {
@@ -89,7 +89,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getURI(): ?AnyURIValue
     {

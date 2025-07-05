@@ -8,8 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 
 use function strval;
 
@@ -29,7 +29,7 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * AbstractReference constructor.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $uri
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $uri
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     final public function __construct(
@@ -43,7 +43,7 @@ abstract class AbstractReference extends AbstractXencElement
     /**
      * Get the value of the URI attribute of this reference.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {

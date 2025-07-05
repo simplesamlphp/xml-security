@@ -7,8 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XPath\Constants as XPATH_C;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
@@ -27,7 +28,7 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Initialize the Transform element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\ds\XPath|null $xpath
      * @param \SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces|null $inclusiveNamespaces
      */
@@ -39,8 +40,8 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
         if ($xpath !== null) {
             Assert::nullOrEq(
                 $algorithm->getValue(),
-                C::XPATH10_URI,
-                sprintf('Transform algorithm "%s" required if XPath provided.', C::XPATH10_URI),
+                XPATH_C::XPATH10_URI,
+                sprintf('Transform algorithm "%s" required if XPath provided.', XPATH_C::XPATH10_URI),
             );
         }
 
@@ -64,7 +65,7 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Get the algorithm associated with this transform.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
@@ -136,7 +137,7 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
         $e->setAttribute('Algorithm', strval($this->getAlgorithm()));
 
         switch ($this->getAlgorithm()) {
-            case C::XPATH10_URI:
+            case XPATH_C::XPATH10_URI:
                 $this->getXPath()?->toXML($e);
                 break;
             case C::C14N_EXCLUSIVE_WITH_COMMENTS:

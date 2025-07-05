@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use SimpleSAML\XML\TypedTextContentTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 
 /**
  * Class representing a dsig11:K1 element.

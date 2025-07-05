@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Type;
 
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
-use SimpleSAML\XMLSchema\Type\Builtin\IntegerValue;
+use SimpleSAML\XMLSchema\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**

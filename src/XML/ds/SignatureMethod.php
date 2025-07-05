@@ -9,8 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -36,7 +36,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Initialize a SignatureMethod element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $Algorithm
      * @param \SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength|null $hmacOutputLength
      * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
      */
@@ -62,7 +62,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

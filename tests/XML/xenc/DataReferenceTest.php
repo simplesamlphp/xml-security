@@ -8,10 +8,11 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\{Transform, Transforms, XPath};
 use SimpleSAML\XMLSecurity\XML\xenc\{AbstractReference, AbstractXencElement, DataReference};
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -58,7 +59,7 @@ final class DataReferenceTest extends TestCase
                 new Transforms(
                     [
                         new Transform(
-                            AnyURIValue::fromString(C::XPATH10_URI),
+                            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
                             new XPath(
                                 StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
                             ),

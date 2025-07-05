@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XML\TypedTextContentTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\StringValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 
 /**
  * Class representing a ds:KeyName element.

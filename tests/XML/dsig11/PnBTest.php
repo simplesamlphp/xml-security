@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractCharTwoFieldParamsType, AbstractDsig11Element};
 use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractPnBFieldParamsType, K1, K2, K3, M, PnB};
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function strval;
@@ -23,11 +23,11 @@ abstract class AbstractEncryptedType extends AbstractXencElement
      * EncryptedData constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\CipherData $cipherData The CipherData object of this EncryptedData.
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $id The Id attribute of this object. Optional.
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $type The Type attribute of this object. Optional.
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue|null $mimeType
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $id The Id attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $type The Type attribute of this object. Optional.
+     * @param \SimpleSAML\XMLSchema\Type\StringValue|null $mimeType
      *   The MimeType attribute of this object. Optional.
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $encoding
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $encoding
      *   The Encoding attribute of this object. Optional.
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod|null $encryptionMethod
      *   The EncryptionMethod object of this EncryptedData. Optional.
@@ -59,7 +59,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     /**
      * Get the value of the Encoding attribute.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getEncoding(): ?AnyURIValue
     {
@@ -81,7 +81,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     /**
      * Get the value of the Id attribute.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue
+     * @return \SimpleSAML\XMLSchema\Type\IDValue
      */
     public function getID(): ?IDValue
     {
@@ -103,7 +103,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     /**
      * Get the value of the MimeType attribute.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\StringValue
+     * @return \SimpleSAML\XMLSchema\Type\StringValue
      */
     public function getMimeType(): ?StringValue
     {
@@ -114,7 +114,7 @@ abstract class AbstractEncryptedType extends AbstractXencElement
     /**
      * Get the value of the Type attribute.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getType(): ?AnyURIValue
     {

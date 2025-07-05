@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use SimpleSAML\XML\TypedTextContentTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 
 /**
  * Class representing a xenc:KA-Nonce element.

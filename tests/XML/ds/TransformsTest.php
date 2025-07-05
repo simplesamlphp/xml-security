@@ -8,9 +8,10 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, Transform, Transforms, XPath};
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -47,7 +48,7 @@ final class TransformsTest extends TestCase
         $transforms = new Transforms(
             [
                 new Transform(
-                    AnyURIValue::fromString(C::XPATH10_URI),
+                    AnyURIValue::fromString(XPATH_C::XPATH10_URI),
                     new XPath(
                         StringValue::fromString('count(//. | //@* | //namespace::*)'),
                     ),

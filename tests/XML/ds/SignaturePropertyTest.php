@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, SignatureProperty};
 
 use function dirname;

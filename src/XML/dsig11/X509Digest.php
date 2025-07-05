@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, Base64BinaryValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -27,8 +27,8 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Initialize a X509Digest element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue $digest
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\Base64BinaryValue $digest
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $algorithm
      */
     public function __construct(
         protected Base64BinaryValue $digest,
@@ -46,7 +46,7 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Collect the value of the digest-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue
+     * @return \SimpleSAML\XMLSchema\Type\Base64BinaryValue
      */
     public function getDigest(): Base64BinaryValue
     {
@@ -57,7 +57,7 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
     /**
      * Collect the value of the algorithm-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

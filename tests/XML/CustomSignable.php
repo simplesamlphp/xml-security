@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\{EncryptableElementInterface, EncryptableElementTrait};
@@ -48,7 +48,7 @@ class CustomSignable extends AbstractElement implements
      * Constructor
      *
      * @param \DOMElement $xml
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue $id
+     * @param \SimpleSAML\XMLSchema\Type\IDValue $id
      */
     final public function __construct(
         protected DOMElement $xml,
@@ -91,7 +91,7 @@ class CustomSignable extends AbstractElement implements
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {

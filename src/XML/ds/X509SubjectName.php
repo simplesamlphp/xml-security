@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use SimpleSAML\XML\TypedTextContentTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\StringValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 
 /**
  * Class representing a ds:X509SubjectName element.

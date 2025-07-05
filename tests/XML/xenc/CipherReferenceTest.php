@@ -8,10 +8,11 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\{Transform, XPath};
 use SimpleSAML\XMLSecurity\XML\xenc\{AbstractReference, AbstractXencElement, CipherReference, Transforms};
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -49,7 +50,7 @@ final class CipherReferenceTest extends TestCase
         );
 
         $transform = new Transform(
-            AnyURIValue::fromString(C::XPATH10_URI),
+            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
             new XPath(
                 StringValue::fromString('count(//. | //@* | //namespace::*)'),
             ),

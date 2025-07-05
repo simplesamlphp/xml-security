@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestMethod, DigestValue};

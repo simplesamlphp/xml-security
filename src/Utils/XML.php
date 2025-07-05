@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Utils;
 use DOMElement;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function array_map;
 use function is_null;
@@ -101,7 +102,7 @@ class XML
                         }
                     }
                     break;
-                case C::XPATH10_URI:
+                case XPATH_C::XPATH10_URI:
                     $xpath = $transform->getXPath();
                     if ($xpath !== null) {
                         $arXPath = [];

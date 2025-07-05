@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\NMTokensValue;
+use SimpleSAML\XMLSchema\Type\NMTokensValue;
 use SimpleSAML\XMLSecurity\XML\ec\{AbstractEcElement, InclusiveNamespaces};
 
 use function dirname;

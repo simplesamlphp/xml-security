@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
 
@@ -20,7 +20,7 @@ abstract class AbstractECValidationDataType extends AbstractDsig11Element
      * Initialize a ECValidationDataType element.
      *
      * @param \SimpleSAML\XMLSecurity\XML\dsig11\Seed $seed
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $hashAlgorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $hashAlgorithm
      */
     public function __construct(
         protected Seed $seed,
@@ -43,7 +43,7 @@ abstract class AbstractECValidationDataType extends AbstractDsig11Element
     /**
      * Collect the value of the hashAlgorithm-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getHashAlgorithm(): AnyURIValue
     {

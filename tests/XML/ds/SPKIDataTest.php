@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{Base64BinaryValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{Base64BinaryValue, StringValue};
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractSPKIDataType};
 use SimpleSAML\XMLSecurity\XML\ds\{SPKIData, SPKISexp};

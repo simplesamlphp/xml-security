@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function array_pop;
 

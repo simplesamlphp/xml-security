@@ -9,8 +9,8 @@ use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\{ExtendableAttributesTrait, ExtendableElementTrait};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -38,8 +38,8 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
      * EncryptionProperty constructor.
      *
      * @param \SimpleSAML\XML\SerializableElementInterface[] $children
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null $Target
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $Target
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      * @param \SimpleSAML\XML\Attribute[] $namespacedAttributes
      */
     final public function __construct(
@@ -58,7 +58,7 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
     /**
      * Get the value of the $Target property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
     public function getTarget(): ?AnyURIValue
     {
@@ -69,7 +69,7 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
     /**
      * Get the value of the $Id property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue
+     * @return \SimpleSAML\XMLSchema\Type\IDValue
      */
     public function getId(): ?IDValue
     {

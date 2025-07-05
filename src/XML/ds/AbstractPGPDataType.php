@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
 use function array_pop;
@@ -24,7 +24,7 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
 
-    /** @var \SimpleSAML\XMLSchema\XML\xs\NamespaceEnum */
+    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
     public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 

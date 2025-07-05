@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 
 use function strval;
 
@@ -19,7 +19,7 @@ use function strval;
 final class IterationCount extends AbstractXenc11Element
 {
     /**
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue $iterationCount
+     * @param \SimpleSAML\XMLSchema\Type\PositiveIntegerValue $iterationCount
      */
     public function __construct(
         protected PositiveIntegerValue $iterationCount,
@@ -28,7 +28,7 @@ final class IterationCount extends AbstractXenc11Element
 
 
     /**
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue
+     * @return \SimpleSAML\XMLSchema\Type\PositiveIntegerValue
      */
     public function getIterationCount(): PositiveIntegerValue
     {

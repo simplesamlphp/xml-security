@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Builtin\PositiveIntegerValue;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, KeyLength};
 
 use function dirname;

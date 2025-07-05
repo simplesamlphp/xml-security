@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\Type\Builtin\StringValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 
 use function strval;
 
@@ -21,7 +21,7 @@ class XPath extends AbstractDsElement
     /**
      * Construct an XPath element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\StringValue $expression The XPath expression itself.
+     * @param \SimpleSAML\XMLSchema\Type\StringValue $expression The XPath expression itself.
      */
     final public function __construct(
         protected StringValue $expression,
@@ -32,7 +32,7 @@ class XPath extends AbstractDsElement
     /**
      * Get the actual XPath expression.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\StringValue
+     * @return \SimpleSAML\XMLSchema\Type\StringValue
      */
     public function getExpression(): StringValue
     {

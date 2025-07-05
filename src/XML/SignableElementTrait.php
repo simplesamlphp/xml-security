@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\{RuntimeException, UnsupportedAlgorithmException};

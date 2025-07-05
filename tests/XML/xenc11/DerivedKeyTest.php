@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
@@ -22,6 +22,7 @@ use SimpleSAML\XMLSecurity\XML\xenc11\{
     MasterKeyName,
     KeyDerivationMethod,
 };
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -72,13 +73,13 @@ final class DerivedKeyTest extends TestCase
         );
 
         $transformData = new Transform(
-            AnyURIValue::fromString(C::XPATH10_URI),
+            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
             new XPath(
                 StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
             ),
         );
         $transformKey = new Transform(
-            AnyURIValue::fromString(C::XPATH10_URI),
+            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
             new XPath(
                 StringValue::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
             ),

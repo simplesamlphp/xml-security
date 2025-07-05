@@ -8,8 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{ExtendableElementTrait, SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 
 use function array_pop;
 use function strval;
@@ -31,7 +31,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     /**
      * AgreementMethodType constructor.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KANonce|null $kaNonce
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OriginatorKeyInfo|null $originatorKeyInfo
      * @param \SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo|null $recipientKeyInfo
@@ -51,7 +51,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     /**
      * Get the URI identifying the algorithm used by this agreement method.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

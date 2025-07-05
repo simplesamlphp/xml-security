@@ -9,8 +9,8 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -32,7 +32,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Initialize a DigestMethod element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $Algorithm
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $elements
      */
     public function __construct(
@@ -53,7 +53,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
-use SimpleSAML\XMLSchema\Type\Builtin\IntegerValue;
+use SimpleSAML\XMLSchema\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, X509SerialNumber};
 
 use function dirname;

@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\Type\Builtin\{Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -23,8 +23,8 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
 
 
     /**
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue $value
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\Base64BinaryValue $value
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     public function __construct(
         protected Base64BinaryValue $value,
@@ -36,7 +36,7 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Get the Id used for this signature value.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {
@@ -47,7 +47,7 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Get the content for this signature value.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\Base64BinaryValue
+     * @return \SimpleSAML\XMLSchema\Type\Base64BinaryValue
      */
     public function getValue(): ?Base64BinaryValue
     {

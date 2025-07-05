@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 use DOMElement;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\{AnyURIValue, IDValue};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**
@@ -22,8 +22,8 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Initialize a KeyInfoReference element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $URI
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $URI
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     public function __construct(
         protected AnyURIValue $URI,
@@ -35,7 +35,7 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Collect the value of the URI-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getURI(): AnyURIValue
     {
@@ -46,7 +46,7 @@ final class KeyInfoReference extends AbstractDsig11Element implements SchemaVali
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {

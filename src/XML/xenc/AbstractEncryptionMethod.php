@@ -8,8 +8,8 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\xs\NamespaceEnum;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 
 use function array_pop;
 use function strval;
@@ -30,7 +30,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * EncryptionMethod constructor.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $algorithm
      * @param \SimpleSAML\XMLSecurity\XML\xenc\KeySize|null $keySize
      * @param \SimpleSAML\XMLSecurity\XML\xenc\OAEPparams|null $oaepParams
      * @param list<\SimpleSAML\XML\SerializableElementInterface> $children
@@ -48,7 +48,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
     /**
      * Get the URI identifying the algorithm used by this encryption method.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {

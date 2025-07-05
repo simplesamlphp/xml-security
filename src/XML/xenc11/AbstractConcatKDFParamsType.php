@@ -12,7 +12,7 @@ use SimpleSAML\XMLSchema\Exception\{
     SchemaViolationException,
     TooManyElementsException,
 };
-use SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue;
+use SimpleSAML\XMLSchema\Type\HexBinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
@@ -33,11 +33,11 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
      * ConcatKDFParams constructor.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $AlgorithmID
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $PartyUInfo
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $PartyVInfo
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $SuppPubInfo
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null $SuppPrivInfo
+     * @param \SimpleSAML\XMLSchema\Type\HexBinaryValue|null $AlgorithmID
+     * @param \SimpleSAML\XMLSchema\Type\HexBinaryValue|null $PartyUInfo
+     * @param \SimpleSAML\XMLSchema\Type\HexBinaryValue|null $PartyVInfo
+     * @param \SimpleSAML\XMLSchema\Type\HexBinaryValue|null $SuppPubInfo
+     * @param \SimpleSAML\XMLSchema\Type\HexBinaryValue|null $SuppPrivInfo
      */
     final public function __construct(
         protected DigestMethod $digestMethod,
@@ -64,7 +64,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $AlgorithmID property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\HexBinaryValue|null
      */
     public function getAlgorithmID(): ?HexBinaryValue
     {
@@ -75,7 +75,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyUInfo property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\HexBinaryValue|null
      */
     public function getPartyUInfo(): ?HexBinaryValue
     {
@@ -86,7 +86,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $PartyVInfo property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\HexBinaryValue|null
      */
     public function getPartyVInfo(): ?HexBinaryValue
     {
@@ -97,7 +97,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPubInfo property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\HexBinaryValue|null
      */
     public function getSuppPubInfo(): ?HexBinaryValue
     {
@@ -108,7 +108,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     /**
      * Get the value of the $SuppPrivInfo property.
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\HexBinaryValue|null
+     * @return \SimpleSAML\XMLSchema\Type\HexBinaryValue|null
      */
     public function getSuppPrivInfo(): ?HexBinaryValue
     {

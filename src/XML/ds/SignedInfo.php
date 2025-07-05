@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\Builtin\IDValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\{CanonicalizableElementInterface, CanonicalizableElementTrait};
@@ -40,7 +40,7 @@ final class SignedInfo extends AbstractDsElement implements
      * @param \SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod $canonicalizationMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureMethod $signatureMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\Reference[] $references
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     public function __construct(
         protected CanonicalizationMethod $canonicalizationMethod,
@@ -89,7 +89,7 @@ final class SignedInfo extends AbstractDsElement implements
     /**
      * Collect the value of the Id-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\IDValue|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
     public function getId(): ?IDValue
     {

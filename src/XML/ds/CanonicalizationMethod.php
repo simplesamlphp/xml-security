@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -26,7 +26,7 @@ final class CanonicalizationMethod extends AbstractDsElement implements SchemaVa
     /**
      * Initialize a CanonicalizationMethod element.
      *
-     * @param \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue $Algorithm
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue $Algorithm
      */
     public function __construct(
         protected AnyURIValue $Algorithm,
@@ -48,7 +48,7 @@ final class CanonicalizationMethod extends AbstractDsElement implements SchemaVa
     /**
      * Collect the value of the Algorithm-property
      *
-     * @return \SimpleSAML\XMLSchema\Type\Builtin\AnyURIValue
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue
      */
     public function getAlgorithm(): AnyURIValue
     {
