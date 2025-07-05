@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\KeyLength;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, KeyLength};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(KeyLength::class)]
 final class KeyLengthTest extends TestCase
@@ -41,7 +42,9 @@ final class KeyLengthTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keyLength = new KeyLength(4096);
+        $keyLength = new KeyLength(
+            PositiveIntegerValue::fromString('4096'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

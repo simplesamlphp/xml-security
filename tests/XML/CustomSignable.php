@@ -7,16 +7,13 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
-use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
-use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
-use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
-use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
-use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
-use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
+use SimpleSAML\XMLSecurity\XML\{EncryptableElementInterface, EncryptableElementTrait};
+use SimpleSAML\XMLSecurity\XML\{SignableElementInterface, SignableElementTrait};
+use SimpleSAML\XMLSecurity\XML\{SignedElementInterface, SignedElementTrait};
 
 /**
  * This is an example class demonstrating an object that can be signed and encrypted.
@@ -51,10 +48,11 @@ class CustomSignable extends AbstractElement implements
      * Constructor
      *
      * @param \DOMElement $xml
+     * @param \SimpleSAML\XMLSchema\Type\IDValue $id
      */
     final public function __construct(
         protected DOMElement $xml,
-        protected ?string $id,
+        protected ?IDValue $id,
     ) {
     }
 
@@ -93,9 +91,9 @@ class CustomSignable extends AbstractElement implements
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->id;
     }
@@ -155,7 +153,7 @@ class CustomSignable extends AbstractElement implements
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
@@ -163,7 +161,7 @@ class CustomSignable extends AbstractElement implements
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
 
-        $id = self::getOptionalAttribute($xml, 'id', null);
+        $id = self::getOptionalAttribute($xml, 'id', IDValue::class, null);
         $signature = Signature::getChildrenOfClass($xml);
         Assert::maxCount($signature, 1, TooManyElementsException::class);
 

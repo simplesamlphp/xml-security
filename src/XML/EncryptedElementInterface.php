@@ -6,8 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey};
 
 /**
  * Interface for encrypted elements.

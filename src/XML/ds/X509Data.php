@@ -6,12 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait, SerializableElementInterface};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\{InvalidArgumentException, ProtocolViolationException};
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
 /**
@@ -21,37 +21,69 @@ use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
  */
 final class X509Data extends AbstractDsElement implements SchemaValidatableElementInterface
 {
+    use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
+    /** The namespace-attribute for the xs:any element */
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+
+    /** The exclusions for the xs:any element */
+    public const XS_ANY_ELT_EXCLUSIONS = [
+        [X509Digest::NS, 'X509Digest'],
+    ];
+
 
     /**
      * Initialize a X509Data.
      *
-     * @param (\SimpleSAML\XML\Chunk|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *         \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
-     *         \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[] $data
+     * @param (
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
+     *   \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
+     * )[] $data
+     * @param \SimpleSAML\XML\SerializableElementInterface[] $children
      */
     public function __construct(
         protected array $data,
+        protected array $children = [],
     ) {
+        /**
+         * At least one element from the dsig namespaces should be present and
+         * additional elements from an external namespace to accompany/complement them.
+         */
+        Assert::minCount($data, 1, ProtocolViolationException::class);
         Assert::maxCount($data, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOfAny(
             $data,
-            [Chunk::class, X509Certificate::class, X509IssuerSerial::class, X509SubjectName::class, X509Digest::class],
+            [
+                X509Certificate::class,
+                X509IssuerSerial::class,
+                X509SubjectName::class,
+                X509Digest::class,
+                X509SKI::class,
+                X509CRL::class,
+            ],
             InvalidArgumentException::class,
         );
+
+        $this->setElements($children);
     }
 
 
     /**
      * Collect the value of the data-property
      *
-     * @return (\SimpleSAML\XML\Chunk|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
-     *          \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
-     *          \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest)[]
+     * @return (
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509Certificate|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SubjectName|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509SKI|
+     *   \SimpleSAML\XMLSecurity\XML\ds\X509CRL|
+     *   \SimpleSAML\XMLSecurity\XML\dsig11\X509Digest
+     * )[]
      */
     public function getData(): array
     {
@@ -65,7 +97,7 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
@@ -73,30 +105,17 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
         Assert::same($xml->localName, 'X509Data', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509Data::NS, InvalidDOMElementException::class);
 
-        $data = [];
+        $x509Certificate = X509Certificate::getChildrenOfClass($xml);
+        $x509IssuerSerial = X509IssuerSerial::getChildrenOfClass($xml);
+        $x509SubjectName = X509SubjectName::getChildrenOfClass($xml);
+        $x509SKI = X509SKI::getChildrenOfClass($xml);
+        $x509CRL = X509CRL::getChildrenOfClass($xml);
+        $x509Digest = X509Digest::getChildrenOfClass($xml);
 
-        for ($n = $xml->firstChild; $n !== null; $n = $n->nextSibling) {
-            if (!($n instanceof DOMElement)) {
-                continue;
-            } elseif ($n->namespaceURI === self::NS) {
-                $data[] = match ($n->localName) {
-                    'X509Certificate' => X509Certificate::fromXML($n),
-                    'X509IssuerSerial' => X509IssuerSerial::fromXML($n),
-                    'X509SubjectName' => X509SubjectName::fromXML($n),
-                    default => new Chunk($n),
-                };
-            } elseif ($n->namespaceURI === C::NS_XDSIG11) {
-                $data[] = match ($n->localName) {
-                    'X509Digest' => X509Digest::fromXML($n),
-                    default => new Chunk($n),
-                };
-            } else {
-                $data[] = new Chunk($n);
-                continue;
-            }
-        }
+        $data = array_merge($x509Certificate, $x509IssuerSerial, $x509SubjectName, $x509SKI, $x509CRL, $x509Digest);
+        $children = self::getChildElementsFromXML($xml);
 
-        return new static($data);
+        return new static($data, $children);
     }
 
 
@@ -110,8 +129,12 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
     {
         $e = $this->instantiateParentElement($parent);
 
-        foreach ($this->getData() as $n) {
-            $n->toXML($e);
+        foreach ($this->getData() as $d) {
+            $d->toXML($e);
+        }
+
+        foreach ($this->getElements() as $c) {
+            $c->toXML($e);
         }
 
         return $e;

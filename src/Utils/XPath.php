@@ -8,9 +8,9 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMXPath;
-use SimpleSAML\XML\Utils\XPath as XPathUtils;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XPath\XPath as XPathUtils;
 
 /**
  * Compilation of utilities for XPath.

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
-use SimpleSAML\XMLSecurity\XML\dsig11\K;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
+use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, K};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('dsig11')]
 #[CoversClass(AbstractDsig11Element::class)]
 #[CoversClass(K::class)]
 final class KTest extends TestCase
@@ -42,7 +43,7 @@ final class KTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $k = new K(64);
+        $k = new K(PositiveIntegerValue::fromInteger(64));
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -6,10 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 
-use function intval;
 use function strval;
 
 /**
@@ -20,19 +19,18 @@ use function strval;
 final class IterationCount extends AbstractXenc11Element
 {
     /**
-     * @param int $iterationCount
+     * @param \SimpleSAML\XMLSchema\Type\PositiveIntegerValue $iterationCount
      */
     public function __construct(
-        protected int $iterationCount,
+        protected PositiveIntegerValue $iterationCount,
     ) {
-        Assert::positiveInteger($iterationCount, SchemaViolationException::class);
     }
 
 
     /**
-     * @return int
+     * @return \SimpleSAML\XMLSchema\Type\PositiveIntegerValue
      */
-    public function getIterationCount(): int
+    public function getIterationCount(): PositiveIntegerValue
     {
         return $this->iterationCount;
     }
@@ -44,16 +42,17 @@ final class IterationCount extends AbstractXenc11Element
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
-        Assert::numeric($xml->textContent);
 
-        return new static(intval($xml->textContent));
+        return new static(
+            PositiveIntegerValue::fromString($xml->textContent),
+        );
     }
 
 

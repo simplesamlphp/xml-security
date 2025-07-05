@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 
 use function array_pop;
+use function strval;
 
 /**
  * Class representing a ds:Signature element.
@@ -31,27 +30,26 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * @param \SimpleSAML\XMLSecurity\XML\ds\SignatureValue $signatureValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null $keyInfo
      * @param \SimpleSAML\XMLSecurity\XML\ds\DsObject[] $objects
-     * @param string|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
      */
     public function __construct(
         protected SignedInfo $signedInfo,
         protected SignatureValue $signatureValue,
-        protected ?KeyInfo $keyInfo,
+        protected ?KeyInfo $keyInfo = null,
         protected array $objects = [],
-        protected ?string $Id = null,
+        protected ?IDValue $Id = null,
     ) {
         Assert::maxCount($objects, C::UNBOUNDED_LIMIT);
         Assert::allIsInstanceOf($objects, DsObject::class);
-        Assert::nullOrValidNCName($Id);
     }
 
 
     /**
      * Get the Id used for this signature.
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
@@ -101,15 +99,13 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * @param \DOMElement $xml
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
     {
         Assert::same($xml->localName, 'Signature', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Signature::NS, InvalidDOMElementException::class);
-
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
 
         $signedInfo = SignedInfo::getChildrenOfClass($xml);
         Assert::minCount(
@@ -154,7 +150,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
             array_pop($signatureValue),
             empty($keyInfo) ? null : array_pop($keyInfo),
             $objects,
-            $Id,
+            self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
         );
     }
 
@@ -170,7 +166,7 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         $this->getSignedInfo()->toXML($e);

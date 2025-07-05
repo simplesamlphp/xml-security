@@ -6,15 +6,12 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
-use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
-use SimpleSAML\XMLSecurity\Backend\OpenSSL;
+use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
+use SimpleSAML\XMLSecurity\Backend\{EncryptionBackend, OpenSSL};
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
-use SimpleSAML\XMLSecurity\XML\EncryptedElementTrait;
+use SimpleSAML\XMLSecurity\XML\{EncryptedElementInterface, EncryptedElementTrait};
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 
 /**
@@ -151,7 +148,7 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
          * since this object can only be encrypted with them (which is the common scenario). Always remember to check
          * the supported algorithms.
          */
-        $algId = $this->getEncryptedData()->getEncryptionMethod()->getAlgorithm();
+        $algId = $this->getEncryptedData()->getEncryptionMethod()->getAlgorithm()->getValue();
         if (!isset(C::$BLOCK_CIPHER_ALGORITHMS[$algId])) {
             throw new RuntimeException('Unknown or unsupported encryption algorithm.');
         }
@@ -170,7 +167,7 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
 
         // finally, decrypt the element, create an XML document from it and then use that to create an object
         $xml = DOMDocumentFactory::fromString(
-            $alg->decrypt($this->getEncryptedData()->getCipherData()->getCipherValue()->getContent()),
+            $alg->decrypt($this->getEncryptedData()->getCipherData()->getCipherValue()->getContent()->getValue()),
         );
         return CustomSignable::fromXML($xml->documentElement);
     }

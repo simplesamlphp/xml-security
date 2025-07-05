@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, NMTokensValue, StringValue};
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, Transform, XPath};
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -23,6 +22,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(Transform::class)]
 final class TransformTest extends TestCase
@@ -48,8 +48,10 @@ final class TransformTest extends TestCase
     public function testMarshalling(): void
     {
         $transform = new Transform(
-            C::XPATH10_URI,
-            new XPath('count(//. | //@* | //namespace::*)'),
+            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('count(//. | //@* | //namespace::*)'),
+            ),
         );
 
         $this->assertEquals(
@@ -58,9 +60,11 @@ final class TransformTest extends TestCase
         );
 
         $transform = new Transform(
-            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+            AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
             null,
-            new InclusiveNamespaces(["dsig", "soap"]),
+            new InclusiveNamespaces(
+                NMTokensValue::fromString("dsig soap"),
+            ),
         );
 
 

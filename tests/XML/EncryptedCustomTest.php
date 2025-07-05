@@ -12,13 +12,10 @@ use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Key\PrivateKey;
-use SimpleSAML\XMLSecurity\Key\PublicKey;
-use SimpleSAML\XMLSecurity\Key\SymmetricKey;
+use SimpleSAML\XMLSecurity\Key\{PrivateKey, PublicKey, SymmetricKey};
 use SimpleSAML\XMLSecurity\Test\XML\EncryptedCustom;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
-use SimpleSAML\XMLSecurity\XML\EncryptedElementTrait;
+use SimpleSAML\XMLSecurity\XML\{EncryptableElementTrait, EncryptedElementTrait};
 
 use function dirname;
 
@@ -126,7 +123,7 @@ class EncryptedCustomTest extends TestCase
         // verify signature
         $publicKey = PEMCertificatesMock::getPublicKey(PEMCertificatesMock::SELFSIGNED_PUBLIC_KEY);
         $verifier = (new SignatureAlgorithmFactory())->getAlgorithm(
-            $decryptedCustom->getSignature()->getSignedInfo()->getSignatureMethod()->getAlgorithm(),
+            $decryptedCustom->getSignature()->getSignedInfo()->getSignatureMethod()->getAlgorithm()->getValue(),
             $publicKey,
         );
 

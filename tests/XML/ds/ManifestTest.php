@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue};
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
-use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
-use SimpleSAML\XMLSecurity\XML\ds\Manifest;
-use SimpleSAML\XMLSecurity\XML\ds\Reference;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestMethod, DigestValue};
+use SimpleSAML\XMLSecurity\XML\ds\{Manifest, Reference, Transform, Transforms};
 
 use function dirname;
 use function strval;
@@ -26,6 +22,7 @@ use function strval;
  *
  * @package simplesamlphp/saml2
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(Manifest::class)]
 final class ManifestTest extends TestCase
@@ -51,19 +48,31 @@ final class ManifestTest extends TestCase
     public function testMarshalling(): void
     {
         $reference = new Reference(
-            new DigestMethod(C::DIGEST_SHA256),
-            new DigestValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            new DigestMethod(
+                AnyURIValue::fromString(C::DIGEST_SHA256),
+            ),
+            new DigestValue(
+                DigestValueType::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            ),
             new Transforms(
                 [
-                    new Transform(C::XMLDSIG_ENVELOPED),
-                    new Transform(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+                    new Transform(
+                        AnyURIValue::fromString(C::XMLDSIG_ENVELOPED),
+                    ),
+                    new Transform(
+                        AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+                    ),
                 ],
             ),
-            'abc123',
-            C::XMLDSIG_MANIFEST,
-            '#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153',
+            IDValue::fromString('abc123'),
+            AnyURIValue::fromString(C::XMLDSIG_MANIFEST),
+            AnyURIValue::fromString('#_1e280ee704fb1d8d9dec4bd6c1889ec96942921153'),
         );
-        $manifest = new Manifest([$reference], 'def456');
+
+        $manifest = new Manifest(
+            [$reference],
+            IDValue::FromString('def456'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\{
+    AbstractEncryptedType,
+    AbstractXencElement,
+    CipherData,
+    CipherValue,
+    EncryptedData,
+    EncryptedKey,
+    EncryptionMethod,
+};
 
 use function dirname;
 use function strval;
@@ -31,6 +34,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractEncryptedType::class)]
 #[CoversClass(EncryptedData::class)]
@@ -59,23 +63,35 @@ final class EncryptedDataTest extends TestCase
     public function testMarshalling(): void
     {
         $encryptedData = new EncryptedData(
-            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
-            'MyID',
-            'http://www.w3.org/2001/04/xmlenc#Element',
-            'text/plain',
-            'urn:x-simplesamlphp:encoding',
-            new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#aes128-cbc'),
+            new CipherData(
+                new CipherValue(
+                    Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                ),
+            ),
+            IDValue::fromString('MyID'),
+            AnyURIValue::fromString(C::XMLENC_ELEMENT),
+            StringValue::fromString('text/plain'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::BLOCK_ENC_AES128),
+            ),
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+                        new CipherData(
+                            new CipherValue(
+                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                            ),
+                        ),
                         null,
                         null,
                         null,
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                        new EncryptionMethod(
+                            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+                        ),
                     ),
                 ],
             ),
@@ -93,23 +109,35 @@ final class EncryptedDataTest extends TestCase
     public function testMarshallingElementOrdering(): void
     {
         $encryptedData = new EncryptedData(
-            new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
-            'MyID',
-            'http://www.w3.org/2001/04/xmlenc#Element',
-            'text/plain',
-            'urn:x-simplesamlphp:encoding',
-            new EncryptionMethod('http://www.w3.org/2001/04/xmlenc#aes128-cbc'),
+            new CipherData(
+                new CipherValue(
+                    Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                ),
+            ),
+            IDValue::fromString('MyID'),
+            AnyURIValue::fromString(C::XMLENC_ELEMENT),
+            StringValue::fromString('text/plain'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
+            new EncryptionMethod(
+                AnyURIValue::fromString(C::BLOCK_ENC_AES128),
+            ),
             new KeyInfo(
                 [
                     new EncryptedKey(
-                        new CipherData(new CipherValue('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=')),
+                        new CipherData(
+                            new CipherValue(
+                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+                            ),
+                        ),
                         null,
                         null,
                         null,
                         null,
                         null,
                         null,
-                        new EncryptionMethod('http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
+                        new EncryptionMethod(
+                            AnyURIValue::fromString(C::SIG_RSA_SHA256),
+                        ),
                     ),
                 ],
             ),
