@@ -42,7 +42,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
         protected ?KANonce $kaNonce = null,
         protected ?OriginatorKeyInfo $originatorKeyInfo = null,
         protected ?RecipientKeyInfo $recipientKeyInfo = null,
-        protected array $children = [],
+        array $children = [],
     ) {
         $this->setElements($children);
     }
