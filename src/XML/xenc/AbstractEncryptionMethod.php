@@ -39,7 +39,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
         protected AnyURIValue $algorithm,
         protected ?KeySize $keySize = null,
         protected ?OAEPparams $oaepParams = null,
-        protected array $children = [],
+        array $children = [],
     ) {
         $this->setElements($children);
     }
