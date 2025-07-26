@@ -154,8 +154,8 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
         }
 
         // decrypt the encryption key with the decryptor we were provided
-        $encryptedKey = $this->getEncryptedKey();
-        $decryptionKey = $encryptedKey->decrypt($decryptor);
+        $encryptedKey = $this->getEncryptedKeys();
+        $decryptionKey = $encryptedKey[0]->decrypt($decryptor);
 
         /*
          * Instantiate a new decryptor with the blacklisted algorithms and encryption backend given. This decryptor
