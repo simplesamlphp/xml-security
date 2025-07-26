@@ -9,15 +9,14 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
-use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\{KeyInfo, X509Certificate, X509Data};
 
 use function array_pop;
 use function array_shift;
@@ -86,7 +85,9 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate(self::$certificate),
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
             ]),
         ]);
 
@@ -118,7 +119,9 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate(self::$certificate),
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
             ]),
         ]);
 
@@ -154,7 +157,9 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate(self::$certificate),
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
             ]),
         ]);
 
@@ -190,7 +195,9 @@ final class SignableElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate(self::$certificate),
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
             ]),
         ]);
 

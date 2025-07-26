@@ -7,18 +7,20 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
-use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\Exception\NoEncryptedDataException;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\{
+    InvalidArgumentException,
+    NoEncryptedDataException,
+    OpenSSLException,
+    RuntimeException,
+};
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey};
+
+use function strval;
 
 /**
  * Trait aggregating functionality for encrypted elements.
@@ -27,8 +29,8 @@ use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
  */
 trait EncryptedElementTrait
 {
-    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey|null */
-    protected ?EncryptedKey $encryptedKey = null;
+    /** @var \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[] */
+    protected array $encryptedKey = [];
 
 
     /**
@@ -46,7 +48,7 @@ trait EncryptedElementTrait
 
         foreach ($keyInfo->getInfo() as $info) {
             if ($info instanceof EncryptedKey) {
-                $this->encryptedKey = $info;
+                $this->encryptedKey = [$info];
                 break;
             }
         }
@@ -60,16 +62,16 @@ trait EncryptedElementTrait
      */
     public function hasDecryptionKey(): bool
     {
-        return $this->encryptedKey !== null;
+        return !empty($this->encryptedKey);
     }
 
 
     /**
      * Get the encrypted key used to encrypt the current element.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey|null
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[]
      */
-    public function getEncryptedKey(): ?EncryptedKey
+    public function getEncryptedKeys(): array
     {
         return $this->encryptedKey;
     }
@@ -89,7 +91,7 @@ trait EncryptedElementTrait
     /**
      * Decrypt the data in any given element.
      *
-     * Use this method to decrypt an EncryptedData XML elemento into a string. If the resulting plaintext represents
+     * Use this method to decrypt an EncryptedData XML element into a string. If the resulting plaintext represents
      * an XML document which has a corresponding implementation extending \SimpleSAML\XML\ElementInterface, you
      * can call this method to build an object from the resulting plaintext:
      *
@@ -128,21 +130,37 @@ trait EncryptedElementTrait
                 throw new RuntimeException('Cannot decrypt data with a session key and no EncryptionMethod.');
             }
 
-            $encryptedKey = $this->getEncryptedKey();
-            $decryptionKey = $encryptedKey->decrypt($decryptor);
-
             $factory = new EncryptionAlgorithmFactory(
                 $this->getBlacklistedAlgorithms() ?? EncryptionAlgorithmFactory::DEFAULT_BLACKLIST,
             );
-            $decryptor = $factory->getAlgorithm($encMethod->getAlgorithm(), new SymmetricKey($decryptionKey));
+
+            $decryptionKey = null;
+            foreach ($this->getEncryptedKeys() as $encryptedKey) {
+                try {
+                    $decryptionKey = $encryptedKey->decrypt($decryptor);
+                } catch (OpenSSLException $e) {
+                    continue;
+                }
+            }
+
+            if ($decryptionKey === null) {
+                throw new RuntimeException('Cannot decrypt the session key with any of the provided decryption keys.');
+            }
+
+            $decryptor = $factory->getAlgorithm(
+                $encMethod->getAlgorithm()->getValue(),
+                new SymmetricKey($decryptionKey),
+            );
             $decryptor->setBackend($this->getEncryptionBackend());
         }
 
-        if ($algId !== $decryptor->getAlgorithmId()) {
+        if ($algId->getValue() !== $decryptor->getAlgorithmId()) {
             throw new InvalidArgumentException('Decryption algorithm does not match EncryptionMethod.');
         }
 
-        return $decryptor->decrypt(base64_decode($encData->getCipherData()->getCipherValue()->getContent(), true));
+        return $decryptor->decrypt(
+            base64_decode(strval($encData->getCipherData()->getCipherValue()->getContent()), true),
+        );
     }
 
 

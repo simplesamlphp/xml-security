@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\Specified;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, Specified};
 
 use function dirname;
 use function strval;
@@ -19,6 +19,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(AbstractXenc11Element::class)]
 #[CoversClass(Specified::class)]
 final class SpecifiedTest extends TestCase
@@ -41,7 +42,9 @@ final class SpecifiedTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $specified = new Specified('GpM6');
+        $specified = new Specified(
+            Base64BinaryValue::fromString('GpM6'),
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

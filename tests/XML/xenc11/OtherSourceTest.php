@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
-use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
-use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
-use SimpleSAML\XMLSecurity\XML\xenc11\OtherSource;
-use SimpleSAML\XMLSecurity\XML\xenc11\Parameters;
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\xenc11\{
+    AbstractAlgorithmIdentifierType,
+    AbstractXenc11Element,
+    OtherSource,
+    Parameters,
+};
 
 use function dirname;
 use function strval;
@@ -23,6 +25,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc11')]
 #[CoversClass(OtherSource::class)]
 #[CoversClass(AbstractAlgorithmIdentifierType::class)]
 #[CoversClass(AbstractXenc11Element::class)]
@@ -64,10 +67,13 @@ XML
 
         $parameters = new Parameters(
             [$chunk],
-            [new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr1', 'testval1')],
+            [new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr1', StringValue::fromString('testval1'))],
         );
 
-        $otherSource = new OtherSource('urn:x-simplesamlphp:algorithm', $parameters);
+        $otherSource = new OtherSource(
+            AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
+            $parameters,
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

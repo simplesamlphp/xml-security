@@ -6,13 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
 use function array_pop;
@@ -27,8 +24,8 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
 
-    /** @var \SimpleSAML\XML\XsNamespace */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
@@ -37,7 +34,7 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
      * @param \SimpleSAML\XMLSecurity\XML\ds\PGPKeyID|null $pgpKeyId
      * @param \SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket|null $pgpKeyPacket
      * @param array<\SimpleSAML\XML\SerializableElementInterface> $children
-     * @throws \SimpleSAML\XML\Exception\SchemaViolationException
+     * @throws \SimpleSAML\XMLSchema\Exception\SchemaViolationException
      */
     final public function __construct(
         protected ?PGPKeyID $pgpKeyId = null,
@@ -80,7 +77,7 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

@@ -11,10 +11,8 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\RuntimeException;
-use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
-use SimpleSAML\XMLSecurity\Key\PublicKey;
-use SimpleSAML\XMLSecurity\Key\X509Certificate;
+use SimpleSAML\XMLSecurity\Exception\{RuntimeException, SignatureVerificationFailedException};
+use SimpleSAML\XMLSecurity\Key\{PublicKey, X509Certificate};
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
@@ -102,7 +100,7 @@ final class SignedElementTest extends TestCase
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
-        $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
+        $verifier = $factory->getAlgorithm($sigAlg->getValue(), $certificate->getPublicKey());
 
         $verified = $customSigned->verify($verifier);
         $this->assertInstanceOf(CustomSignable::class, $verified);
@@ -134,7 +132,7 @@ final class SignedElementTest extends TestCase
         foreach ([$this->wrong_certificate, $this->certificate] as $i => $key) {
             $factory = new SignatureAlgorithmFactory();
             $certificate = new X509Certificate($key);
-            $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
+            $verifier = $factory->getAlgorithm($sigAlg->getValue(), $certificate->getPublicKey());
 
             try {
                 $verified = $customSigned->verify($verifier);
@@ -194,7 +192,7 @@ final class SignedElementTest extends TestCase
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
         $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
-        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
+        $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg->getValue());
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed to verify signature.');
@@ -212,7 +210,7 @@ final class SignedElementTest extends TestCase
         $this->assertTrue($customSigned->isSigned());
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
-        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm()->getValue();
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);
@@ -238,7 +236,7 @@ final class SignedElementTest extends TestCase
         $this->assertTrue($customSigned->isSigned());
         $signature = $customSigned->getSignature();
         $this->assertInstanceOf(Signature::class, $signature);
-        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm();
+        $sigAlg = $signature->getSignedInfo()->getSignatureMethod()->getAlgorithm()->getValue();
         $this->assertEquals(C::SIG_RSA_SHA256, $sigAlg);
         $factory = new SignatureAlgorithmFactory();
         $certificate = new X509Certificate($this->certificate);

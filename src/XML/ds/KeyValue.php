@@ -7,14 +7,11 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\SchemaViolationException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XML\SerializableElementInterface;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue;
 
@@ -37,7 +34,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
 
 
     /**
@@ -85,7 +82,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static

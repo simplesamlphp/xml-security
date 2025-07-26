@@ -6,8 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML;
 
 use SimpleSAML\XML\ElementInterface;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
-use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey};
 
 /**
  * Interface for encrypted elements.
@@ -34,11 +33,11 @@ interface EncryptedElementInterface
 
 
     /**
-     * Get the encrypted key used to encrypt the current element.
+     * Get the encrypted keys used to encrypt the current element.
      *
-     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey|null
+     * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey[]
      */
-    public function getEncryptedKey(): ?EncryptedKey;
+    public function getEncryptedKeys(): array;
 
     /**
      * Get the EncryptedData object.

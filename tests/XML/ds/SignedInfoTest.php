@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMElement;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
-use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
-use SimpleSAML\XMLSecurity\XML\ds\Reference;
-use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
-use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
+use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, CanonicalizationMethod, Reference, SignatureMethod, SignedInfo};
 
 use function dirname;
 use function strval;
@@ -25,6 +21,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('ds')]
 #[CoversClass(AbstractDsElement::class)]
 #[CoversClass(SignedInfo::class)]
 final class SignedInfoTest extends TestCase
@@ -49,8 +46,12 @@ final class SignedInfoTest extends TestCase
     public function testMarshalling(): void
     {
         $signedInfo = new SignedInfo(
-            new CanonicalizationMethod(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
-            new SignatureMethod(C::SIG_RSA_SHA256),
+            new CanonicalizationMethod(
+                AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
+            ),
+            new SignatureMethod(
+                AnyURIValue::fromString(C::SIG_RSA_SHA256),
+            ),
             [
                 Reference::fromXML(
                     DOMDocumentFactory::fromFile(
@@ -58,7 +59,7 @@ final class SignedInfoTest extends TestCase
                     )->documentElement,
                 ),
             ],
-            'cba321',
+            IDValue::fromString('cba321'),
         );
 
         $this->assertEquals(

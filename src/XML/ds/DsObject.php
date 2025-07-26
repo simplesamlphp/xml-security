@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
-use SimpleSAML\XML\XsNamespace as NS;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
 use SimpleSAML\XMLSecurity\Assert\Assert;
+
+use function strval;
 
 /**
  * Class representing a ds:Object element.
@@ -25,27 +27,24 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /** @var string */
     public const LOCALNAME = 'Object';
 
-    /** @var \SimpleSAML\XML\XsNamespace */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
+    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Any;
 
 
     /**
      * Initialize a ds:Object element.
      *
-     * @param string|null $Id
-     * @param string|null $MimeType
-     * @param string|null $Encoding
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\StringValue|null $MimeType
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $Encoding
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elements
      */
     public function __construct(
-        protected ?string $Id = null,
-        protected ?string $MimeType = null,
-        protected ?string $Encoding = null,
+        protected ?IDValue $Id = null,
+        protected ?StringValue $MimeType = null,
+        protected ?AnyURIValue $Encoding = null,
         array $elements = [],
     ) {
-        Assert::nullOrValidNCName($Id);
-        Assert::nullOrValidURI($Encoding);
-
         $this->setElements($elements);
     }
 
@@ -53,9 +52,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the Id-property
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
@@ -64,9 +63,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the MimeType-property
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\StringValue|null
      */
-    public function getMimeType(): ?string
+    public function getMimeType(): ?StringValue
     {
         return $this->MimeType;
     }
@@ -75,9 +74,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Collect the value of the Encoding-property
      *
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
-    public function getEncoding(): ?string
+    public function getEncoding(): ?AnyURIValue
     {
         return $this->Encoding;
     }
@@ -90,10 +89,10 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
      */
     public function isEmptyElement(): bool
     {
-        return empty($this->elements)
-            && empty($this->Id)
-            && empty($this->MimeType)
-            && empty($this->Encoding);
+        return empty($this->getElements())
+            && empty($this->getId())
+            && empty($this->getMimeType())
+            && empty($this->getEncoding());
     }
 
 
@@ -103,7 +102,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
@@ -111,9 +110,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
 
-        $Id = DsObject::getOptionalAttribute($xml, 'Id', null);
-        $MimeType = DsObject::getOptionalAttribute($xml, 'MimeType', null);
-        $Encoding = DsObject::getOptionalAttribute($xml, 'Encoding', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', IDValue::class, null);
+        $MimeType = self::getOptionalAttribute($xml, 'MimeType', StringValue::class, null);
+        $Encoding = self::getOptionalAttribute($xml, 'Encoding', AnyURIValue::class, null);
         $elements = self::getChildElementsFromXML($xml);
 
         return new static($Id, $MimeType, $Encoding, $elements);
@@ -131,15 +130,15 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
         $e = $this->instantiateParentElement($parent);
 
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
 
         if ($this->getMimeType() !== null) {
-            $e->setAttribute('MimeType', $this->getMimeType());
+            $e->setAttribute('MimeType', strval($this->getMimeType()));
         }
 
         if ($this->getEncoding() !== null) {
-            $e->setAttribute('Encoding', $this->getEncoding());
+            $e->setAttribute('Encoding', strval($this->getEncoding()));
         }
 
         foreach ($this->getElements() as $elt) {

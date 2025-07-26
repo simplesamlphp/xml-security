@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
-use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\Transform;
-use SimpleSAML\XMLSecurity\XML\ds\XPath;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractReference;
-use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
-use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
-use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
+use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
+use SimpleSAML\XMLSecurity\XML\ds\{Transform, XPath};
+use SimpleSAML\XMLSecurity\XML\xenc\{AbstractReference, AbstractXencElement, CipherReference, Transforms};
+use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
 use function strval;
@@ -29,6 +25,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('xenc')]
 #[CoversClass(AbstractXencElement::class)]
 #[CoversClass(AbstractReference::class)]
 #[CoversClass(CipherReference::class)]
@@ -51,8 +48,12 @@ final class CipherReferenceTest extends TestCase
             dirname(__FILE__, 3) . '/resources/xml/xenc_CipherReference.xml',
         );
 
-        $xpath = new XPath('count(//. | //@* | //namespace::*)');
-        $transform = new Transform(C::XPATH10_URI, $xpath);
+        $transform = new Transform(
+            AnyURIValue::fromString(XPATH_C::XPATH10_URI),
+            new XPath(
+                StringValue::fromString('count(//. | //@* | //namespace::*)'),
+            ),
+        );
         self::$transforms = new Transforms([$transform]);
     }
 
@@ -64,7 +65,10 @@ final class CipherReferenceTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $cipherReference = new CipherReference('#Cipher_VALUE_ID', [self::$transforms]);
+        $cipherReference = new CipherReference(
+            AnyURIValue::fromString('#Cipher_VALUE_ID'),
+            [self::$transforms],
+        );
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

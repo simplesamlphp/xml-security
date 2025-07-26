@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\{CoversClass, Group};
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
-use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
-use SimpleSAML\XMLSecurity\XML\dsig11\Base;
+use SimpleSAML\XMLSecurity\Type\ECPointValue;
+use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, Base};
 
 use function dirname;
 use function strval;
@@ -20,6 +20,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('dsig11')]
 #[CoversClass(AbstractDsig11Element::class)]
 #[CoversClass(Base::class)]
 final class BaseTest extends TestCase
@@ -43,7 +44,9 @@ final class BaseTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $base = new Base('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
+        $base = new Base(
+            ECPointValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
+        );
 
         $this->assertEquals(
             XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),

@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\Exception\InvalidDOMElementException;
-use SimpleSAML\XML\Exception\MissingElementException;
-use SimpleSAML\XML\Exception\TooManyElementsException;
-use SimpleSAML\XML\SchemaValidatableElementInterface;
-use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function array_pop;
+use function strval;
 
 /**
  * Class representing a ds:Reference element.
@@ -29,21 +28,18 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestMethod $digestMethod
      * @param \SimpleSAML\XMLSecurity\XML\ds\DigestValue $digestValue
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms|null $transforms
-     * @param string|null $Id
-     * @param string|null $Type
-     * @param string|null $URI
+     * @param \SimpleSAML\XMLSchema\Type\IDValue|null $Id
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $Type
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $URI
      */
     public function __construct(
         protected DigestMethod $digestMethod,
         protected DigestValue $digestValue,
         protected ?Transforms $transforms = null,
-        protected ?string $Id = null,
-        protected ?string $Type = null,
-        protected ?string $URI = null,
+        protected ?IDValue $Id = null,
+        protected ?AnyURIValue $Type = null,
+        protected ?AnyURIValue $URI = null,
     ) {
-        Assert::nullOrValidNCName($Id);
-        Assert::nullOrValidURI($Type);
-        Assert::nullOrValidURI($URI);
     }
 
 
@@ -75,27 +71,27 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\IDValue|null
      */
-    public function getId(): ?string
+    public function getId(): ?IDValue
     {
         return $this->Id;
     }
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
-    public function getType(): ?string
+    public function getType(): ?AnyURIValue
     {
         return $this->Type;
     }
 
 
     /**
-     * @return string|null
+     * @return \SimpleSAML\XMLSchema\Type\AnyURIValue|null
      */
-    public function getURI(): ?string
+    public function getURI(): ?AnyURIValue
     {
         return $this->URI;
     }
@@ -108,7 +104,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      */
     public function isXPointer(): bool
     {
-        return !empty($this->URI) && str_starts_with($this->URI, '#xpointer');
+        return !is_null($this->getURI()) && str_starts_with(strval($this->getURI()), '#xpointer');
     }
 
 
@@ -118,7 +114,7 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * @param \DOMElement $xml The XML element we should load
      * @return static
      *
-     * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
     public static function fromXML(DOMElement $xml): static
@@ -126,9 +122,9 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
         Assert::same($xml->localName, 'Reference', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Reference::NS, InvalidDOMElementException::class);
 
-        $Id = self::getOptionalAttribute($xml, 'Id', null);
-        $Type = self::getOptionalAttribute($xml, 'Type', null);
-        $URI = self::getOptionalAttribute($xml, 'URI', null);
+        $Id = self::getOptionalAttribute($xml, 'Id', IDValue::class, null);
+        $Type = self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null);
+        $URI = self::getOptionalAttribute($xml, 'URI', AnyURIValue::class, null);
 
         $transforms = Transforms::getChildrenOfClass($xml);
         Assert::maxCount(
@@ -175,13 +171,13 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
     {
         $e = $this->instantiateParentElement($parent);
         if ($this->getId() !== null) {
-            $e->setAttribute('Id', $this->getId());
+            $e->setAttribute('Id', strval($this->getId()));
         }
         if ($this->getType() !== null) {
-            $e->setAttribute('Type', $this->getType());
+            $e->setAttribute('Type', strval($this->getType()));
         }
         if ($this->getURI() !== null) {
-            $e->setAttribute('URI', $this->getURI());
+            $e->setAttribute('URI', strval($this->getURI()));
         }
 
         $this->getTransforms()?->toXML($e);
