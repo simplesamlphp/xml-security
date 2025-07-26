@@ -16,7 +16,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
-class XPath extends AbstractDsElement
+final class XPath extends AbstractDsElement
 {
     /**
      * Construct an XPath element.
