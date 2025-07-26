@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Utils;
 
-use Random\RandomException;
+use Exception;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
@@ -43,7 +43,7 @@ class Random
             return random_bytes($length);
         } catch (ValueError) { // @phpstan-ignore-line
             throw new InvalidArgumentException('Invalid length received to generate random bytes.');
-        } catch (RandomException) {
+        } catch (Exception) {
             throw new RuntimeException(
                 'Cannot generate random bytes, no cryptographically secure random generator available.',
             );
