@@ -117,17 +117,6 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 16,
     ];
 
-    /** @var array<string, positive-int> */
-    public static array $BLOCK_CIPHER_KEY_SIZES = [
-        self::BLOCK_ENC_3DES => 24,
-        self::BLOCK_ENC_AES128 => 16,
-        self::BLOCK_ENC_AES192 => 24,
-        self::BLOCK_ENC_AES256 => 32,
-        self::BLOCK_ENC_AES128_GCM => 16,
-        self::BLOCK_ENC_AES192_GCM => 24,
-        self::BLOCK_ENC_AES256_GCM => 32,
-    ];
-
 
     /**
      * Key transport algorithms
