@@ -11,7 +11,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue;
 
@@ -34,7 +34,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

@@ -69,7 +69,7 @@ final class TnBTest extends TestCase
         $tnb = new TnB($m, $k);
 
         $tnbElement = $tnb->toXML();
-        /** @var \DOMElement[] $children */
+        /** @var \DOMNodeList<\DOMNode> $children */
         $children = $tnbElement->childNodes;
 
         $this->assertEquals('dsig11:M', $children[0]->tagName);

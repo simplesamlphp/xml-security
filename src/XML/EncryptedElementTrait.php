@@ -26,6 +26,7 @@ use function strval;
  * Trait aggregating functionality for encrypted elements.
  *
  * @package simplesamlphp/xml-security
+ * @phpstan-ignore trait.unused
  */
 trait EncryptedElementTrait
 {

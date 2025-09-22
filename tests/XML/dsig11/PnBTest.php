@@ -76,7 +76,7 @@ final class PnBTest extends TestCase
         $pnb = new PnB($m, $k1, $k2, $k3);
 
         $pnbElement = $pnb->toXML();
-        /** @var \DOMElement[] $children */
+        /** @var \DOMNodeList<\DOMNode> $children */
         $children = $pnbElement->childNodes;
 
         $this->assertEquals('dsig11:M', $children[0]->tagName);

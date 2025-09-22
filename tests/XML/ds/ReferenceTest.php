@@ -103,7 +103,7 @@ final class ReferenceTest extends TestCase
         );
 
         $referenceElement = $reference->toXML();
-        /** @var \DOMElement[] $children */
+        /** @var \DOMNodeList<\DOMNode> $children */
         $children = $referenceElement->childNodes;
 
         $this->assertEquals('ds:Transforms', $children[0]->tagName);

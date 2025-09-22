@@ -35,6 +35,7 @@ use function in_array;
  * Trait SignableElementTrait
  *
  * @package simplesamlphp/xml-security
+ * @phpstan-ignore trait.unused
  */
 trait SignableElementTrait
 {

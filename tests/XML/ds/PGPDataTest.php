@@ -90,7 +90,7 @@ final class PGPDataTest extends TestCase
         $pgpData = new PGPData(self::$pgpKeyId, self::$pgpKeyPacket, [self::$p]);
 
         $pgpDataElement = $pgpData->toXML();
-        /** @var \DOMElement[] $children */
+        /** @var \DOMNodeList<\DOMNode> $children */
         $children = $pgpDataElement->childNodes;
 
         $this->assertEquals('ds:PGPKeyID', $children[0]->tagName);

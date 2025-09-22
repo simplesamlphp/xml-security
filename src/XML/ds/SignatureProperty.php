@@ -9,7 +9,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
 use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -25,7 +25,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

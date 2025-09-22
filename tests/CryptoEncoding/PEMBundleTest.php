@@ -49,6 +49,7 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testAll(PEMBundle $bundle): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertContainsOnlyInstancesOf(PEM::class, $bundle->all());
     }
 
@@ -95,6 +96,7 @@ class PEMBundleTest extends TestCase
         foreach ($bundle as $pem) {
             $values[] = $pem;
         }
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertContainsOnlyInstancesOf(PEM::class, $values);
     }
 
@@ -105,6 +107,7 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testString(PEMBundle $bundle): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertIsString($bundle->string());
     }
 
@@ -115,6 +118,7 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testToString(PEMBundle $bundle): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertIsString(strval($bundle));
     }
 

@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait, SerializableElementInterface};
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\{InvalidArgumentException, ProtocolViolationException};
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
@@ -25,7 +25,7 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
     /** The exclusions for the xs:any element */
     public const XS_ANY_ELT_EXCLUSIONS = [

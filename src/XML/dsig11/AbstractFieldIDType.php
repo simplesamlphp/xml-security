@@ -8,7 +8,7 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{Chunk, ExtendableElementTrait, SerializableElementInterface};
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 
 /**
@@ -24,8 +24,8 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
         setElements as private;
     }
 
-    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    /** @var string */
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

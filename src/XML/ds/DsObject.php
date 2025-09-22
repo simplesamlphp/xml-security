@@ -9,7 +9,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -27,8 +27,8 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /** @var string */
     public const LOCALNAME = 'Object';
 
-    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Any;
+    /** @var string */
+    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
     /**

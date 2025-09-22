@@ -106,6 +106,7 @@ DATA;
     #[Depends('testFromFile')]
     public function testString(PEM $pem): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertIsString($pem->string());
     }
 
@@ -116,6 +117,7 @@ DATA;
     #[Depends('testFromFile')]
     public function testToString(PEM $pem): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertIsString(strval($pem));
     }
 }

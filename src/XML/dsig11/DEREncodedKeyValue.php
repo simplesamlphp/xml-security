@@ -42,7 +42,7 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
      *
      * @return \SimpleSAML\XMLSchema\Type\Base64BinaryValue
      */
-    public function getValue(): ?Base64BinaryValue
+    public function getValue(): Base64BinaryValue
     {
         return $this->value;
     }

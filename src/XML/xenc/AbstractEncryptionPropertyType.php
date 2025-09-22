@@ -10,7 +10,7 @@ use SimpleSAML\XML\{ExtendableAttributesTrait, ExtendableElementTrait};
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
 use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;
@@ -31,7 +31,7 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
     public const XS_ANY_ATTR_NAMESPACE = [C::NS_XML];
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

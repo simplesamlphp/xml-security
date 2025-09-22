@@ -9,7 +9,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Type\IDValue;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
@@ -27,8 +27,8 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
 {
     use ExtendableElementTrait;
 
-    /** @var \SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    /** @var string */
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

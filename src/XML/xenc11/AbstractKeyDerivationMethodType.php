@@ -10,7 +10,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 
 use function strval;
 
@@ -26,7 +26,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Any;
+    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
     /**

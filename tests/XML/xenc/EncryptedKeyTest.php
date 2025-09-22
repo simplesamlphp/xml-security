@@ -220,7 +220,7 @@ final class EncryptedKeyTest extends TestCase
     public function testPKCS1Encryption(): void
     {
         $factory = new KeyTransportAlgorithmFactory([]);
-        /** @var \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor */
+        /** @var \SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmInterface $encryptor */
         $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_RSA_1_5, self::$pubKey);
         $symmetricKey = SymmetricKey::generate(8);
         $encryptedKey = EncryptedKey::fromKey(

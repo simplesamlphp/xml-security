@@ -87,6 +87,7 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
      *
      * @return string[]|null An array with all algorithm identifiers that are blacklisted, or null to use this
      * libraries default.
+     * @phpstan-ignore return.unusedType
      */
     public function getBlacklistedAlgorithms(): ?array
     {

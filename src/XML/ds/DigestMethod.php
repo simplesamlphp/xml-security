@@ -10,7 +10,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
@@ -27,7 +27,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
     /**
      * Initialize a DigestMethod element.

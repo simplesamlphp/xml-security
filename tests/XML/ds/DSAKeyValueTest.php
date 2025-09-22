@@ -105,7 +105,7 @@ final class DSAKeyValueTest extends TestCase
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 
         $dsaKeyValueElement = $dsaKeyValue->toXML();
-        /** @var \DOMElement[] $children */
+        /** @var \DOMNodeList<\DOMNode> $children */
         $children = $dsaKeyValueElement->childNodes;
 
         $this->assertEquals('ds:P', $children[0]->tagName);

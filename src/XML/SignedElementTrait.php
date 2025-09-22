@@ -40,6 +40,7 @@ use function strval;
  * Helper trait for processing signed elements.
  *
  * @package simplesamlphp/xml-security
+ * @phpstan-ignore trait.unused
  */
 trait SignedElementTrait
 {

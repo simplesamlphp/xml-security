@@ -9,7 +9,7 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\{ExtendableElementTrait, SchemaValidatableElementInterface, SchemaValidatableElementTrait};
 use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\XML\Enumeration\NamespaceEnum;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
 
 use function array_pop;
 use function strval;
@@ -25,7 +25,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
     use SchemaValidatableElementTrait;
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NamespaceEnum::Other;
+    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

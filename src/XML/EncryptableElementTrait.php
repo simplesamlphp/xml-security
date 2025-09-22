@@ -17,6 +17,7 @@ use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey, EncryptionMeth
  * Trait aggregating functionality for elements that can be encrypted.
  *
  * @package simplesamlphp/xml-security
+ * @phpstan-ignore trait.unused
  */
 trait EncryptableElementTrait
 {
