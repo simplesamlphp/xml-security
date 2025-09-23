@@ -15,6 +15,7 @@ use SimpleSAML\XMLSecurity\Utils\Random;
 use function chr;
 use function mb_strlen;
 use function openssl_cipher_iv_length;
+use function openssl_cipher_key_length;
 use function openssl_decrypt;
 use function openssl_encrypt;
 use function openssl_sign;
@@ -252,7 +253,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             default:
                 $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
                 $this->blocksize = C::$BLOCK_SIZES[$cipher];
-                $this->keysize = C::$BLOCK_CIPHER_KEY_SIZES[$cipher];
+                $this->keysize = openssl_cipher_key_length(C::$BLOCK_CIPHER_ALGORITHMS[$cipher]);
         }
     }
 

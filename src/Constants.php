@@ -217,17 +217,6 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES256_GCM => 16,
     ];
 
-    /** @var array<string, positive-int> */
-    public static array $BLOCK_CIPHER_KEY_SIZES = [
-        self::BLOCK_ENC_3DES => 24,
-        self::BLOCK_ENC_AES128 => 16,
-        self::BLOCK_ENC_AES192 => 24,
-        self::BLOCK_ENC_AES256 => 32,
-        self::BLOCK_ENC_AES128_GCM => 16,
-        self::BLOCK_ENC_AES192_GCM => 24,
-        self::BLOCK_ENC_AES256_GCM => 32,
-    ];
-
     /** @var array<string, string> */
     public static array $RSA_DIGESTS = [
         self::SIG_RSA_SHA1 => self::DIGEST_SHA1,
@@ -261,7 +250,7 @@ class Constants extends \SimpleSAML\XML\Constants
         self::C14N_INCLUSIVE_WITHOUT_COMMENTS,
         self::C14N_EXCLUSIVE_WITH_COMMENTS,
         self::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
-//        self::C14N11_INCLUSIVE_WITH_COMMENTS,
-//        self::C14N11_INCLUSIVE_WITHOUT_COMMENTS,
+        self::C14N11_INCLUSIVE_WITH_COMMENTS,
+        self::C14N11_INCLUSIVE_WITHOUT_COMMENTS,
     ];
 }
