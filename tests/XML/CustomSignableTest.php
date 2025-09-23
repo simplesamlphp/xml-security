@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
@@ -18,7 +17,6 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
-#[CoversClass(CustomSignable::class)]
 final class CustomSignableTest extends TestCase
 {
     use SerializableElementTestTrait;
