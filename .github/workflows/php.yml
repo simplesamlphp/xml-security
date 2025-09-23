@@ -167,7 +167,7 @@ jobs:
         with:
           # Should be the higest supported version, so we can use the newest tools
           php-version: '8.4'
-          tools: composer, composer-require-checker, composer-unused, phpcs
+          tools: composer, composer-require-checker, composer-unused
           extensions: ctype, date, dom, filter, hash, mbstring, openssl, pcre, spl, xml
           coverage: none
 
@@ -199,7 +199,7 @@ jobs:
         run: composer-unused
 
       - name: PHP Code Sniffer
-        run: phpcs
+        run: vendor/bin/phpcs
 
       - name: PHPStan
         run: |
