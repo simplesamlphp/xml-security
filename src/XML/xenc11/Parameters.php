@@ -6,7 +6,8 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{ExtendableAttributesTrait, ExtendableElementTrait};
+use SimpleSAML\XML\ExtendableAttributesTrait;
+use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
@@ -19,6 +20,7 @@ final class Parameters extends AbstractXenc11Element
 {
     use ExtendableAttributesTrait;
     use ExtendableElementTrait;
+
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::ANY;
@@ -38,7 +40,6 @@ final class Parameters extends AbstractXenc11Element
         $this->setElements($elements);
         $this->setAttributesNS($attributes);
     }
-
 
 
     /**

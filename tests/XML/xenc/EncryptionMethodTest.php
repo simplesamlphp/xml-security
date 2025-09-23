@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\MissingAttributeException;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\Type\KeySizeValue;
-use SimpleSAML\XMLSecurity\XML\xenc\{
-    AbstractEncryptionMethod,
-    AbstractXencElement,
-    EncryptionMethod,
-    KeySize,
-    OAEPparams,
-};
+use SimpleSAML\XMLSecurity\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\KeySize;
+use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
 
 use function dirname;
 use function strval;
@@ -27,9 +28,6 @@ use function strval;
 /**
  * Tests for the xenc:EncryptionMethod element.
  *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionMethod
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod
  * @package simplesamlphp/xml-security
  */
 #[Group('xenc')]
@@ -39,6 +37,7 @@ use function strval;
 final class EncryptionMethodTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

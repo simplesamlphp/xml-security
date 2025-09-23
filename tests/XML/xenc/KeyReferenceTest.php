@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
-use SimpleSAML\XMLSecurity\XML\ds\{Transform, Transforms, XPath};
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractReference, AbstractXencElement, KeyReference};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractReference;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
 use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
@@ -18,10 +24,6 @@ use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\KeyReferenceTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\KeyReference
  *
  * @package simplesamlphp/xml-security
  */
@@ -32,6 +34,7 @@ use function strval;
 final class KeyReferenceTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

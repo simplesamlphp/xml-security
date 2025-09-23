@@ -6,7 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 
 use function strval;

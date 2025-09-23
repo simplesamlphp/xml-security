@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ec;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Type\NMTokensValue;
 
 use function strval;
@@ -18,6 +19,7 @@ use function strval;
 class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Initialize the InclusiveNamespaces element.
@@ -53,6 +55,7 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
             self::getOptionalAttribute($xml, 'PrefixList', NMTokensValue::class, null),
         );
     }
+
 
     /**
      * Convert this InclusiveNamespaces to XML.

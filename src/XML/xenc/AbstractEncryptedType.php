@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
 use function strval;

@@ -7,7 +7,8 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
@@ -22,6 +23,7 @@ use function strval;
 abstract class AbstractEncryptionMethod extends AbstractXencElement
 {
     use ExtendableElementTrait;
+
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

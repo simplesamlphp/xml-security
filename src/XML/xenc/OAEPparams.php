@@ -16,6 +16,7 @@ final class OAEPparams extends AbstractXencElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
 }

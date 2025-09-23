@@ -25,6 +25,7 @@ final class HMACSignatureTest extends TestCase
     /** @var string */
     protected const SECRET = 'de54fbd0f10c34df6e800b11043024fa';
 
+
     /** @var \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory */
     protected static SignatureAlgorithmFactory $factory;
 

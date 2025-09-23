@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestMethod, DigestValue};
-use SimpleSAML\XMLSecurity\XML\ds\{Reference, Transform, Transforms};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
+use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
+use SimpleSAML\XMLSecurity\XML\ds\Reference;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 use function dirname;
 use function strval;
@@ -29,6 +36,7 @@ final class ReferenceTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

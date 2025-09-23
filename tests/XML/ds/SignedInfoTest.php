@@ -5,13 +5,20 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
 use DOMElement;
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, CanonicalizationMethod, Reference, SignatureMethod, SignedInfo};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
+use SimpleSAML\XMLSecurity\XML\ds\Reference;
+use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
+use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
 
 use function dirname;
 use function strval;
@@ -28,6 +35,7 @@ final class SignedInfoTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

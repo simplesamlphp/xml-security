@@ -4,17 +4,28 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IntegerValue, StringValue};
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IntegerValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, X509Certificate, X509Data};
-use SimpleSAML\XMLSecurity\XML\ds\{X509IssuerName, X509IssuerSerial, X509SerialNumber, X509SubjectName};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerName;
+use SimpleSAML\XMLSecurity\XML\ds\X509IssuerSerial;
+use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
 use function base64_encode;
@@ -37,6 +48,7 @@ final class X509DataTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
+
     /** @var string */
     private static string $certificate;
 
@@ -45,6 +57,7 @@ final class X509DataTest extends TestCase
 
     /** @var string */
     private static string $digest;
+
 
     /**
      */

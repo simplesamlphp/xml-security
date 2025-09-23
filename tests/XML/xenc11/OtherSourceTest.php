@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Attribute as XMLAttribute;
-use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
-use SimpleSAML\XMLSecurity\XML\xenc11\{
-    AbstractAlgorithmIdentifierType,
-    AbstractXenc11Element,
-    OtherSource,
-    Parameters,
-};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\OtherSource;
+use SimpleSAML\XMLSecurity\XML\xenc11\Parameters;
 
 use function dirname;
 use function strval;
@@ -32,6 +33,7 @@ use function strval;
 final class OtherSourceTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

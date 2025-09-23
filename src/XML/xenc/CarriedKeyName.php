@@ -16,6 +16,7 @@ final class CarriedKeyName extends AbstractXencElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = StringValue::class;
 }

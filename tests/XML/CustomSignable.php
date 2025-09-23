@@ -7,13 +7,17 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
-use SimpleSAML\XMLSecurity\XML\{EncryptableElementInterface, EncryptableElementTrait};
-use SimpleSAML\XMLSecurity\XML\{SignableElementInterface, SignableElementTrait};
-use SimpleSAML\XMLSecurity\XML\{SignedElementInterface, SignedElementTrait};
+use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
+use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
+use SimpleSAML\XMLSecurity\XML\SignableElementInterface;
+use SimpleSAML\XMLSecurity\XML\SignableElementTrait;
+use SimpleSAML\XMLSecurity\XML\SignedElementInterface;
+use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
 
 /**
  * This is an example class demonstrating an object that can be signed and encrypted.
@@ -29,11 +33,13 @@ class CustomSignable extends AbstractElement implements
     use SignedElementTrait;
     use EncryptableElementTrait;
 
+
     /** @var string */
     public const NS = 'urn:x-simplesamlphp:namespace';
 
     /** @var string */
     public const NS_PREFIX = 'ssp';
+
 
     /** @var bool */
     protected bool $formatOutput = false;
@@ -43,6 +49,7 @@ class CustomSignable extends AbstractElement implements
 
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null */
     private ?EncryptionBackend $backend = null;
+
 
     /**
      * Constructor

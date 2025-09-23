@@ -7,8 +7,9 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
@@ -24,6 +25,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
 {
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::ANY;

@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
-use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractKeyDerivationMethodType, AbstractXenc11Element, KeyDerivationMethod};
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractKeyDerivationMethodType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod;
 
 use function dirname;
 use function strval;
@@ -19,9 +24,6 @@ use function strval;
 /**
  * Tests for the xenc:KeyDerivationMethod element.
  *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\AbstractKeyDerivationMethodType
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod
  * @package simplesamlphp/xml-security
  */
 #[Group('xenc11')]
@@ -32,6 +34,7 @@ final class KeyDerivationMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function array_pop;
@@ -21,6 +25,7 @@ use function strval;
 final class Reference extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Initialize a ds:Reference

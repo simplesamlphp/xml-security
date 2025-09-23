@@ -6,8 +6,10 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
@@ -20,6 +22,7 @@ use function strval;
 final class RetrievalMethod extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Initialize a ds:RetrievalMethod

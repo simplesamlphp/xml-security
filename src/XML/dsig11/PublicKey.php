@@ -16,6 +16,7 @@ final class PublicKey extends AbstractDsig11Element
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = ECPointValue::class;
 }

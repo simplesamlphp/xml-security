@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\TypedTextContentTrait;
 use SimpleSAML\XMLSchema\Type\StringValue;
 
@@ -17,6 +18,7 @@ final class KeyName extends AbstractDsElement implements SchemaValidatableElemen
 {
     use SchemaValidatableElementTrait;
     use TypedTextContentTrait;
+
 
     /** @var string */
     public const TEXTCONTENT_TYPE = StringValue::class;

@@ -19,23 +19,39 @@ use function trim;
 class PEMCertificatesMock
 {
     public const CERTS_DIR = 'resources/certificates';
+
     public const KEYS_DIR = 'resources/keys';
+
     public const PASSPHRASE = '1234';
 
     public const CERTIFICATE = 'signed.simplesamlphp.org.crt';
+
     public const PUBLIC_KEY = 'signed.simplesamlphp.org.pub';
+
     public const PRIVATE_KEY = 'signed.simplesamlphp.org.key';
+
     public const OTHER_CERTIFICATE = 'other.simplesamlphp.org.crt';
+
     public const OTHER_PUBLIC_KEY = 'other.simplesamlphp.org.pub';
+
     public const OTHER_PRIVATE_KEY = 'other.simplesamlphp.org.key';
+
     public const SELFSIGNED_CERTIFICATE = 'selfsigned.simplesamlphp.org.crt';
+
     public const SELFSIGNED_PUBLIC_KEY = 'selfsigned.simplesamlphp.org.pub';
+
     public const SELFSIGNED_PRIVATE_KEY = 'selfsigned.simplesamlphp.org.key';
+
     public const BROKEN_CERTIFICATE = 'broken.simplesamlphp.org.crt';
+
     public const BROKEN_PUBLIC_KEY = 'broken.simplesamlphp.org.pub';
+
     public const BROKEN_PRIVATE_KEY = 'broken.simplesamlphp.org.key';
+
     public const CORRUPTED_CERTIFICATE = 'corrupted.simplesamlphp.org.crt';
+
     public const CORRUPTED_PUBLIC_KEY = 'corrupted.simplesamlphp.org.pub';
+
     public const CORRUPTED_PRIVATE_KEY = 'corrupted.simplesamlphp.org.key';
 
 

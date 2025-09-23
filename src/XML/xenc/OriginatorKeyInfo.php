@@ -9,16 +9,14 @@ use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\XML\ds\{
-    AbstractKeyInfoType,
-    KeyName,
-    KeyValue,
-    MgmtData,
-    PGPData,
-    RetrievalMethod,
-    SPKIData,
-    X509Data,
-};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
+use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\KeyValue;
+use SimpleSAML\XMLSecurity\XML\ds\MgmtData;
+use SimpleSAML\XMLSecurity\XML\ds\PGPData;
+use SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod;
+use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 use function array_merge;
 

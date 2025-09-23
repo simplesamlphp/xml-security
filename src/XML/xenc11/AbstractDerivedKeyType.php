@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
@@ -23,6 +27,7 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
     SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * DerivedKey constructor.

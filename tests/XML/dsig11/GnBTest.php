@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
-use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractCharTwoFieldParamsType, AbstractDsig11Element, GnB, M};
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCharTwoFieldParamsType;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
+use SimpleSAML\XMLSecurity\XML\dsig11\GnB;
+use SimpleSAML\XMLSecurity\XML\dsig11\M;
 
 use function dirname;
 use function strval;

@@ -6,12 +6,16 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
-use SimpleSAML\XMLSecurity\XML\{CanonicalizableElementInterface, CanonicalizableElementTrait};
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 
 use function array_pop;
 use function strval;
@@ -27,6 +31,7 @@ final class SignedInfo extends AbstractDsElement implements
 {
     use CanonicalizableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /*
      * @var DOMElement

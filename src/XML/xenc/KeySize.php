@@ -16,6 +16,7 @@ final class KeySize extends AbstractXencElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = KeySizeValue::class;
 }

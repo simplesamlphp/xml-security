@@ -4,24 +4,33 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
-use SimpleSAML\XMLSecurity\XML\ds\{Exponent, Modulus, RSAKeyValue, Transform, Transforms, XPath};
-use SimpleSAML\XMLSecurity\XML\xenc\{DataReference, KeyReference, ReferenceList};
-use SimpleSAML\XMLSecurity\XML\xenc11\{
-    AbstractDerivedKeyType,
-    AbstractXenc11Element,
-    DerivedKey,
-    DerivedKeyName,
-    MasterKeyName,
-    KeyDerivationMethod,
-};
+use SimpleSAML\XMLSecurity\XML\ds\Exponent;
+use SimpleSAML\XMLSecurity\XML\ds\Modulus;
+use SimpleSAML\XMLSecurity\XML\ds\RSAKeyValue;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
+use SimpleSAML\XMLSecurity\XML\xenc\KeyReference;
+use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractDerivedKeyType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKey;
+use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName;
+use SimpleSAML\XMLSecurity\XML\xenc11\KeyDerivationMethod;
+use SimpleSAML\XMLSecurity\XML\xenc11\MasterKeyName;
 use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
@@ -29,10 +38,6 @@ use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc11\DerivedKeyTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\AbstractDerivedKeyType
- * @covers \SimpleSAML\XMLSecurity\XML\xenc11\DerivedKey
  *
  * @package simplesamlphp/xml-security
  */
@@ -45,8 +50,11 @@ final class DerivedKeyTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
+
     private static KeyDerivationMethod $keyDerivationMethod;
+
     private static ReferenceList $referenceList;
+
 
     /**
      */

@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, StringValue};
-use SimpleSAML\XMLSecurity\XML\ds\{Transform, XPath};
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractReference, AbstractXencElement, CipherReference, Transforms};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\XPath;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractReference;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherReference;
+use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 use SimpleSAML\XPath\Constants as XPATH_C;
 
 use function dirname;
@@ -18,10 +25,6 @@ use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CipherReferenceTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractReference
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\CipherReference
  *
  * @package simplesamlphp/xml-security
  */
@@ -33,6 +36,7 @@ final class CipherReferenceTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /** @var \SimpleSAML\XMLSecurity\XML\xenc\Transforms $transforms */
     private static Transforms $transforms;

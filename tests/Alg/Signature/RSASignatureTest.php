@@ -24,6 +24,7 @@ final class RSASignatureTest extends TestCase
     /** @var string */
     protected const PLAINTEXT = 'plaintext';
 
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected static PrivateKey $privateKey;
 

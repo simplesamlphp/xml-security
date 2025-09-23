@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{
-    InvalidDOMElementException,
-    MissingElementException,
-    SchemaViolationException,
-    TooManyElementsException,
-};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\HexBinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
@@ -28,6 +26,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
     SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * ConcatKDFParams constructor.

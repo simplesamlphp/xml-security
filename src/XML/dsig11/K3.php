@@ -16,6 +16,7 @@ final class K3 extends AbstractDsig11Element
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = PositiveIntegerValue::class;
 }

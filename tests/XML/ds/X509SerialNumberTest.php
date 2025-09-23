@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Type\IntegerValue;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, X509SerialNumber};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 
 use function dirname;
 use function strval;

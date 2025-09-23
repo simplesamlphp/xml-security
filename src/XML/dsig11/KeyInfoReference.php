@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 /**
@@ -18,6 +20,7 @@ use SimpleSAML\XMLSecurity\Assert\Assert;
 final class KeyInfoReference extends AbstractDsig11Element implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Initialize a KeyInfoReference element.

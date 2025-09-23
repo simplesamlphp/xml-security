@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractPGPDataType};
-use SimpleSAML\XMLSecurity\XML\ds\{PGPData, PGPKeyID, PGPKeyPacket};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractPGPDataType;
+use SimpleSAML\XMLSecurity\XML\ds\PGPData;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
 use SimpleSAML\XMLSecurity\XML\xenc\P;
 
 use function dirname;
@@ -32,9 +37,13 @@ final class PGPDataTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
+
     private static PGPKeyID $pgpKeyId;
+
     private static PGPKeyPacket $pgpKeyPacket;
+
     private static P $p;
+
 
     /**
      */

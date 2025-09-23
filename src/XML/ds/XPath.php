@@ -43,7 +43,7 @@ final class XPath extends AbstractDsElement
     /**
      * Convert XML into a class instance
      *
-     * @param DOMElement $xml
+     * @param \DOMElement $xml
      * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
@@ -59,8 +59,8 @@ final class XPath extends AbstractDsElement
 
 
     /**
-     * @param DOMElement|null $parent
-     * @return DOMElement
+     * @param \DOMElement|null $parent
+     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

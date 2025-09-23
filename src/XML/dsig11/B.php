@@ -16,6 +16,7 @@ final class B extends AbstractDsig11Element
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 }

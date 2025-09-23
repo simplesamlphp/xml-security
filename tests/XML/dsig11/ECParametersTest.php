@@ -4,16 +4,32 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IntegerValue, PositiveIntegerValue};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IntegerValue;
+use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\{CryptoBinaryValue, ECPointValue};
-use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, AbstractECParametersType};
-use SimpleSAML\XMLSecurity\XML\dsig11\{A, B, Base, CoFactor, Curve, ECParameters, FieldID};
-use SimpleSAML\XMLSecurity\XML\dsig11\{K, M, Order, Seed, TnB, ValidationData};
+use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
+use SimpleSAML\XMLSecurity\Type\ECPointValue;
+use SimpleSAML\XMLSecurity\XML\dsig11\A;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractECParametersType;
+use SimpleSAML\XMLSecurity\XML\dsig11\B;
+use SimpleSAML\XMLSecurity\XML\dsig11\Base;
+use SimpleSAML\XMLSecurity\XML\dsig11\CoFactor;
+use SimpleSAML\XMLSecurity\XML\dsig11\Curve;
+use SimpleSAML\XMLSecurity\XML\dsig11\ECParameters;
+use SimpleSAML\XMLSecurity\XML\dsig11\FieldID;
+use SimpleSAML\XMLSecurity\XML\dsig11\K;
+use SimpleSAML\XMLSecurity\XML\dsig11\M;
+use SimpleSAML\XMLSecurity\XML\dsig11\Order;
+use SimpleSAML\XMLSecurity\XML\dsig11\Seed;
+use SimpleSAML\XMLSecurity\XML\dsig11\TnB;
+use SimpleSAML\XMLSecurity\XML\dsig11\ValidationData;
 
 use function dirname;
 use function strval;

@@ -6,10 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\XML\Assert\Assert;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\Type\{Base64BinaryValue, IDValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\TypedTextContentTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 
 use function strval;
 

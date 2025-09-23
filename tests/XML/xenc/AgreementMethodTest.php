@@ -4,18 +4,31 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SerializableElementTestTrait, SchemaValidationTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
-use SimpleSAML\XMLSecurity\XML\ds\{DigestMethod, KeyName, X509Certificate, X509Data, X509SubjectName};
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractAgreementMethodType, AbstractXencElement};
-use SimpleSAML\XMLSecurity\XML\xenc\{AgreementMethod, KANonce, OriginatorKeyInfo, RecipientKeyInfo};
+use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
+use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractAgreementMethodType;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\AgreementMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\KANonce;
+use SimpleSAML\XMLSecurity\XML\xenc\OriginatorKeyInfo;
+use SimpleSAML\XMLSecurity\XML\xenc\RecipientKeyInfo;
 
 use function dirname;
 use function openssl_x509_parse;
@@ -35,6 +48,7 @@ final class AgreementMethodTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /** @var string */
     private static string $certificate;

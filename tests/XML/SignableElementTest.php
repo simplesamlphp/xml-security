@@ -16,7 +16,9 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XML\ds\{KeyInfo, X509Certificate, X509Data};
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 use function array_pop;
 use function array_shift;
@@ -35,6 +37,7 @@ use function trim;
 final class SignableElementTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /** @var string */
     private static string $certificate;

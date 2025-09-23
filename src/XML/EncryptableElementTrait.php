@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue};
-use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\{CipherData, CipherValue};
-use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey, EncryptionMethod};
+use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
 
 /**
  * Trait aggregating functionality for elements that can be encrypted.

@@ -20,6 +20,7 @@ abstract class AbstractKeyTransporter implements KeyTransportAlgorithmInterface
     /** @var string */
     protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
 
+
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend */
     protected EncryptionBackend $backend;
 

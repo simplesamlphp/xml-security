@@ -6,12 +6,15 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
-use SimpleSAML\XMLSecurity\Backend\{EncryptionBackend, OpenSSL};
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
+use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\XML\{EncryptedElementInterface, EncryptedElementTrait};
+use SimpleSAML\XMLSecurity\XML\EncryptedElementInterface;
+use SimpleSAML\XMLSecurity\XML\EncryptedElementTrait;
 use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
 
 /**
@@ -33,13 +36,15 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
         __construct as constructor;
     }
 
+
     /** @var string */
     public const NS = 'urn:ssp:custom';
 
     /** @var string */
     public const NS_PREFIX = 'ssp';
 
-    /** @var EncryptionBackend|null $backend */
+
+    /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null $backend */
     private ?EncryptionBackend $backend = null;
 
 
@@ -134,9 +139,10 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
      * should be blacklisted, so your encrypted object implementation should cater for this.
      *
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $decryptor The decryptor able to
-     * decrypt this object. In this particular example, this decryptor will be used to decrypt the session key inside
-     * the encrypted object, and therefore must implement a key transport algorithm.
-     * @return CustomSignable A CustomSignable object created from the decrypted element.
+     *   decrypt this object. In this particular example, this decryptor will be used to decrypt the session key
+     *   inside the encrypted object, and therefore must implement a key transport algorithm.
+     * @return \SimpleSAML\XMLSecurity\Test\XML\CustomSignable
+     *   A CustomSignable object created from the decrypted element.
      */
     public function decryptWithSessionKey(EncryptionAlgorithmInterface $decryptor): CustomSignable
     {

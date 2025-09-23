@@ -16,6 +16,7 @@ final class MasterKeyName extends AbstractXenc11Element
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = StringValue::class;
 }

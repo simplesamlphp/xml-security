@@ -16,6 +16,7 @@ final class P extends AbstractDsElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 }

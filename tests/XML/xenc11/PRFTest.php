@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSecurity\XML\xenc11\{
-    AbstractAlgorithmIdentifierType,
-    AbstractPRFAlgorithmIdentifierType,
-    AbstractXenc11Element,
-    PRF,
-};
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractPRFAlgorithmIdentifierType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\PRF;
 
 use function dirname;
 use function strval;
@@ -32,6 +31,7 @@ use function strval;
 final class PRFTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

@@ -6,9 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
@@ -23,6 +26,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
 {
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

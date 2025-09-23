@@ -36,6 +36,7 @@ final class PublicKeyTest extends TestCase
         self::$pubKey = openssl_pkey_get_details(openssl_pkey_get_public(self::$f));
     }
 
+
     /**
      * Cover basic creation and retrieval.
      */

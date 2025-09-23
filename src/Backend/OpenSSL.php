@@ -30,6 +30,10 @@ use function substr;
  */
 final class OpenSSL implements EncryptionBackend, SignatureBackend
 {
+    /** @var int */
+    public const AUTH_TAG_LEN = 16;
+
+
     // digital signature options
     /** @var string */
     protected string $digest;
@@ -50,9 +54,6 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
 
     /** @var bool */
     protected bool $useAuthTag = false;
-
-    /** @var int */
-    public const AUTH_TAG_LEN = 16;
 
 
     /**

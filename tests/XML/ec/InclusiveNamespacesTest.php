@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ec;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\NMTokensValue;
-use SimpleSAML\XMLSecurity\XML\ec\{AbstractEcElement, InclusiveNamespaces};
+use SimpleSAML\XMLSecurity\XML\ec\AbstractEcElement;
+use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 
 use function dirname;
 use function strval;
@@ -26,6 +29,7 @@ class InclusiveNamespacesTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\XMLSecurity\Assert;
 
-use PHPUnit\Framework\Attributes\{CoversClass, DataProvider};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\Assert\Assert;

@@ -16,6 +16,7 @@ final class X509CRL extends AbstractDsElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
 }

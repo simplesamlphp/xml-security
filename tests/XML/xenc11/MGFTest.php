@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\SAML2\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSecurity\XML\xenc11\{
-    AbstractAlgorithmIdentifierType,
-    AbstractMGFType,
-    AbstractXenc11Element,
-    MGF,
-};
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractAlgorithmIdentifierType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractMGFType;
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\MGF;
 
 use function dirname;
 use function strval;
@@ -33,6 +33,7 @@ final class MGFTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

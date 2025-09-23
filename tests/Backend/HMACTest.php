@@ -26,6 +26,7 @@ final class HMACTest extends TestCase
 
     public const SECRET = 'secret key';
 
+
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */
     protected static SymmetricKey $key;
 

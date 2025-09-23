@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
-use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, IterationCount};
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\IterationCount;
 
 use function dirname;
 use function strval;
@@ -25,6 +27,7 @@ use function strval;
 final class IterationCountTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

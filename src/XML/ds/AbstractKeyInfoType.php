@@ -27,6 +27,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
 {
     use ExtendableElementTrait;
 
+
     /** @var string */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
 

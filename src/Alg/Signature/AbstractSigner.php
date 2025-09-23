@@ -20,6 +20,7 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
     /** @var string */
     protected const DEFAULT_BACKEND = Backend\OpenSSL::class;
 
+
     /** @var \SimpleSAML\XMLSecurity\Backend\SignatureBackend */
     protected SignatureBackend $backend;
 

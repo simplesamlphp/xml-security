@@ -7,25 +7,26 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\{RuntimeException, UnsupportedAlgorithmException};
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\Utils\XML;
-use SimpleSAML\XMLSecurity\XML\ds\{
-    CanonicalizationMethod,
-    DigestMethod,
-    DigestValue,
-    KeyInfo,
-    Reference,
-    Signature,
-    SignatureMethod,
-    SignatureValue,
-    SignedInfo,
-    Transform,
-    Transforms,
-};
+use SimpleSAML\XMLSecurity\XML\ds\CanonicalizationMethod;
+use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
+use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\ds\Reference;
+use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\ds\SignatureMethod;
+use SimpleSAML\XMLSecurity\XML\ds\SignatureValue;
+use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
+use SimpleSAML\XMLSecurity\XML\ds\Transform;
+use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 
 use function base64_encode;
 use function hash;
@@ -40,6 +41,7 @@ use function in_array;
 trait SignableElementTrait
 {
     use CanonicalizableElementTrait;
+
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
     protected ?Signature $signature = null;
@@ -211,6 +213,7 @@ trait SignableElementTrait
         );
         return DOMDocumentFactory::fromString($canonicalDocument)->documentElement;
     }
+
 
     /**
      * Get the list of algorithms that are blacklisted for any signing operation.

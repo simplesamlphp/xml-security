@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 /**
@@ -16,6 +17,7 @@ abstract class AbstractMGFType extends AbstractAlgorithmIdentifierType implement
     SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * MGFType constructor.

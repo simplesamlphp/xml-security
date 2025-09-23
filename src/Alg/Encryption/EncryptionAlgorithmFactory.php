@@ -21,20 +21,6 @@ use function sprintf;
 final class EncryptionAlgorithmFactory
 {
     /**
-     * A cache of algorithm implementations indexed by algorithm ID.
-     *
-     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface>
-     */
-    protected static array $cache = [];
-
-    /**
-     * Whether the factory has been initialized or not.
-     *
-     * @var bool
-     */
-    protected static bool $initialized = false;
-
-    /**
      * An array of blacklisted algorithms.
      *
      * Defaults to 3DES.
@@ -54,6 +40,21 @@ final class EncryptionAlgorithmFactory
         TripleDES::class,
         AES::class,
     ];
+
+
+    /**
+     * A cache of algorithm implementations indexed by algorithm ID.
+     *
+     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface>
+     */
+    protected static array $cache = [];
+
+    /**
+     * Whether the factory has been initialized or not.
+     *
+     * @var bool
+     */
+    protected static bool $initialized = false;
 
 
     /**

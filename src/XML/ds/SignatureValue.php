@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\Type\{Base64BinaryValue, IDValue};
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
 use function strval;

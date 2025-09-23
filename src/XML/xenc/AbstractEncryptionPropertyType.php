@@ -6,10 +6,14 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\{ExtendableAttributesTrait, ExtendableElementTrait};
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue};
+use SimpleSAML\XML\ExtendableAttributesTrait;
+use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
@@ -26,6 +30,7 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
     use ExtendableAttributesTrait;
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** The namespace-attribute for the xs:anyAttribute element */
     public const XS_ANY_ATTR_NAMESPACE = [C::NS_XML];

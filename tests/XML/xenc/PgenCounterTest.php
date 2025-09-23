@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractXencElement, PgenCounter};
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\PgenCounter;
 
 use function dirname;
 use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\PgenCounterTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\PgenCounter
  *
  * @package simplesamlphp/xml-security
  */
@@ -29,6 +28,7 @@ use function strval;
 final class PgenCounterTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

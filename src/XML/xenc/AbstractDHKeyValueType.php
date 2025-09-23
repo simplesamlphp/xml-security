@@ -6,13 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSchema\Exception\{
-    InvalidDOMElementException,
-    MissingElementException,
-    SchemaViolationException,
-    TooManyElementsException,
-};
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
 use function array_pop;
 
@@ -24,6 +23,7 @@ use function array_pop;
 abstract class AbstractDHKeyValueType extends AbstractXencElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * DHKeyValueType constructor.

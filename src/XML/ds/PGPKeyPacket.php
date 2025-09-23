@@ -16,6 +16,7 @@ final class PGPKeyPacket extends AbstractDsElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
 }

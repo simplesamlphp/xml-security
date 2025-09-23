@@ -7,8 +7,11 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
@@ -23,6 +26,7 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
 {
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** @var string */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

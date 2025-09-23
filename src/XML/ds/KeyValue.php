@@ -8,9 +8,12 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue;
@@ -30,6 +33,8 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
         getElements as private;
         setElements as private;
     }
+
+
     use SchemaValidatableElementTrait;
 
 

@@ -8,8 +8,11 @@ use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\Registry\ElementRegistry;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait, SerializableElementInterface};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XML\SerializableElementInterface;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
 /**
@@ -20,6 +23,7 @@ use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 abstract class AbstractSPKIDataType extends AbstractDsElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Initialize a SPKIData element.

@@ -44,7 +44,7 @@ class XPath extends XPathUtils
      *
      * @return \DOMElement|false The element we are looking for, or false when not found.
      *
-     * @throws RuntimeException If no DOM document is available.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If no DOM document is available.
      */
     public static function findElement(DOMNode $ref, string $name): DOMElement|false
     {

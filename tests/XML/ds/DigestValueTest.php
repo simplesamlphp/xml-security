@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, DigestValue};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
 
 use function dirname;
 use function strval;
@@ -27,6 +30,7 @@ final class DigestValueTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

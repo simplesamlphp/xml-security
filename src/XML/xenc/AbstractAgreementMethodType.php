@@ -6,8 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{ExtendableElementTrait, SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException, TooManyElementsException};
+use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
@@ -23,6 +26,7 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
 {
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** The namespace-attribute for the xs:any element */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

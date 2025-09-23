@@ -4,13 +4,23 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDSAKeyValueType, AbstractDsElement, DSAKeyValue};
-use SimpleSAML\XMLSecurity\XML\ds\{G, J, P, PgenCounter, Q, Seed, Y};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDSAKeyValueType;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\DSAKeyValue;
+use SimpleSAML\XMLSecurity\XML\ds\G;
+use SimpleSAML\XMLSecurity\XML\ds\J;
+use SimpleSAML\XMLSecurity\XML\ds\P;
+use SimpleSAML\XMLSecurity\XML\ds\PgenCounter;
+use SimpleSAML\XMLSecurity\XML\ds\Q;
+use SimpleSAML\XMLSecurity\XML\ds\Seed;
+use SimpleSAML\XMLSecurity\XML\ds\Y;
 
 use function dirname;
 use function strval;
@@ -28,6 +38,7 @@ final class DSAKeyValueTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

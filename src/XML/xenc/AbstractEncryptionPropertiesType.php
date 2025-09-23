@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, SchemaViolationException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
@@ -21,6 +23,7 @@ abstract class AbstractEncryptionPropertiesType extends AbstractXencElement impl
     SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * EncryptionProperty constructor.

@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\StringValue;
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractXencElement, CarriedKeyName};
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
 
 use function dirname;
 use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\CarriedKeyNameTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName
  *
  * @package simplesamlphp/xml-security
  */
@@ -28,6 +27,7 @@ use function strval;
 final class CarriedKeyNameTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

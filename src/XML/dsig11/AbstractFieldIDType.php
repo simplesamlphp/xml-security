@@ -6,7 +6,9 @@ namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{Chunk, ExtendableElementTrait, SerializableElementInterface};
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\ExtendableElementTrait;
+use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -23,6 +25,7 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
         getElements as private;
         setElements as private;
     }
+
 
     /** @var string */
     public const XS_ANY_ELT_NAMESPACE = NS::OTHER;

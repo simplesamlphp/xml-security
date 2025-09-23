@@ -7,18 +7,19 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
-use SimpleSAML\XMLSecurity\Alg\Encryption\{EncryptionAlgorithmFactory, EncryptionAlgorithmInterface};
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Exception\{
-    InvalidArgumentException,
-    NoEncryptedDataException,
-    OpenSSLException,
-    RuntimeException,
-};
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\NoEncryptedDataException;
+use SimpleSAML\XMLSecurity\Exception\OpenSSLException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
-use SimpleSAML\XMLSecurity\XML\xenc\{EncryptedData, EncryptedKey};
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedData;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
 
 use function strval;
 

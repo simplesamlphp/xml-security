@@ -7,8 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, SchemaViolationException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\XML\xenc\Transforms;
 
@@ -22,6 +24,7 @@ use function strval;
 final class CipherReference extends AbstractXencElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * AbstractReference constructor.

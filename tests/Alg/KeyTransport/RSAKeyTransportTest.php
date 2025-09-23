@@ -21,6 +21,7 @@ class RSAKeyTransportTest extends TestCase
     /** @var string */
     public const PLAINTEXT = 'plaintext';
 
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected static PrivateKey $privateKey;
 

@@ -4,22 +4,27 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\{Attribute as XMLAttribute, Chunk, Constants as C, DOMDocumentFactory};
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
-use SimpleSAML\XMLSecurity\XML\xenc\{AbstractEncryptionPropertyType, AbstractXencElement, EncryptionProperty};
+use SimpleSAML\XML\Attribute as XMLAttribute;
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\Constants as C;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionPropertyType;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty;
 
 use function dirname;
 use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\EncryptionPropertyTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionPropertyType
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptionProperty
  *
  * @package simplesamlphp/xml-security
  */
@@ -31,6 +36,7 @@ final class EncryptionPropertyTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /**
      */

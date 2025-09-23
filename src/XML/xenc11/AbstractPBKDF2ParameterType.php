@@ -6,8 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException, TooManyElementsException};
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
 use function array_pop;
 
@@ -19,6 +22,7 @@ use function array_pop;
 abstract class AbstractPBKDF2ParameterType extends AbstractXenc11Element implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * PBKDF2ParameterType constructor.

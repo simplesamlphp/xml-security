@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
-use SimpleSAML\XMLSecurity\XML\xenc11\{AbstractXenc11Element, Specified};
+use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
+use SimpleSAML\XMLSecurity\XML\xenc11\Specified;
 
 use function dirname;
 use function strval;
@@ -25,6 +27,7 @@ use function strval;
 final class SpecifiedTest extends TestCase
 {
     use SerializableElementTestTrait;
+
 
     /**
      */

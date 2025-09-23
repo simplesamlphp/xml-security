@@ -7,8 +7,10 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, MissingElementException};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function array_merge;
@@ -21,6 +23,7 @@ use function array_merge;
 class ReferenceList extends AbstractXencElement implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * ReferenceList constructor.

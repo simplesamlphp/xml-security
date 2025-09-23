@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, AbstractECValidationDataType};
-use SimpleSAML\XMLSecurity\XML\dsig11\{Seed, ValidationData};
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractECValidationDataType;
+use SimpleSAML\XMLSecurity\XML\dsig11\Seed;
+use SimpleSAML\XMLSecurity\XML\dsig11\ValidationData;
 
 use function dirname;
 use function strval;

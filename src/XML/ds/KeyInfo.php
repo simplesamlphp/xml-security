@@ -6,10 +6,11 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue;
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue;
 
 use function array_merge;
 
@@ -21,6 +22,7 @@ use function array_merge;
 final class KeyInfo extends AbstractKeyInfoType implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * Convert XML into a KeyInfo

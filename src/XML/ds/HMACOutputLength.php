@@ -16,6 +16,7 @@ final class HMACOutputLength extends AbstractDsElement
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = HMACOutputLengthValue::class;
 }

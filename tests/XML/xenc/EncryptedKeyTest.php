@@ -4,28 +4,33 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\xenc;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Key\{PrivateKey, PublicKey, SymmetricKey};
+use SimpleSAML\XMLSecurity\Key\PrivateKey;
+use SimpleSAML\XMLSecurity\Key\PublicKey;
+use SimpleSAML\XMLSecurity\Key\SymmetricKey;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
-use SimpleSAML\XMLSecurity\XML\xenc\{
-    AbstractEncryptedType,
-    AbstractXencElement,
-    CarriedKeyName,
-    CipherData,
-    CipherValue,
-    DataReference,
-    EncryptedKey,
-    EncryptionMethod,
-    ReferenceList,
-};
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType;
+use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
+use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherData;
+use SimpleSAML\XMLSecurity\XML\xenc\CipherValue;
+use SimpleSAML\XMLSecurity\XML\xenc\DataReference;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey;
+use SimpleSAML\XMLSecurity\XML\xenc\EncryptionMethod;
+use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
 use function bin2hex;
 use function dirname;
@@ -33,10 +38,6 @@ use function strval;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\xenc\EncryptedKeyTest
- *
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptedType
- * @covers \SimpleSAML\XMLSecurity\XML\xenc\EncryptedKey
  *
  * @package simplesamlphp/xml-security
  */
@@ -49,11 +50,13 @@ final class EncryptedKeyTest extends TestCase
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
 
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected static PrivateKey $privKey;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
     protected static PublicKey $pubKey;
+
 
     /**
      */

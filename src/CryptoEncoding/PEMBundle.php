@@ -27,7 +27,7 @@ use function preg_replace;
  *
  * The order of PEMs shall be retained, eg. when read from a file.
  *
- * @phpstan-implements IteratorAggregate<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
+ * @phpstan-implements \IteratorAggregate<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
  */
 class PEMBundle implements Countable, IteratorAggregate
 {
@@ -42,7 +42,7 @@ class PEMBundle implements Countable, IteratorAggregate
     /**
      * Constructor.
      *
-     * @param PEM ...$pems
+     * @param \SimpleSAML\XMLSecurity\CryptoEncoding\PEM ...$pems
      */
     public function __construct(PEM ...$pems)
     {
@@ -195,7 +195,7 @@ class PEMBundle implements Countable, IteratorAggregate
      *
      * @see \IteratorAggregate::getIterator()
      *
-     * @return ArrayIterator<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
+     * @return \ArrayIterator<int, \SimpleSAML\XMLSecurity\CryptoEncoding\PEM>
      */
     public function getIterator(): ArrayIterator
     {

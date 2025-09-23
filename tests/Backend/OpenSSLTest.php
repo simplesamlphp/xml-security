@@ -34,6 +34,7 @@ final class OpenSSLTest extends TestCase
         'e0208ba93d86b505f32942f53bdab8e506ba227cc813cd26a0ba9a93c46f27dd0c2b7452fd8c79c7aa72b885d95ef6d1dc8' .
         '10829b0832abe290d';
 
+
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected static PrivateKey $privKey;
 
@@ -286,7 +287,6 @@ final class OpenSSLTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $backend->setDigestAlg('foo');
     }
-
 
 
     /**

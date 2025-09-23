@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractCurveType, AbstractDsig11Element};
-use SimpleSAML\XMLSecurity\XML\dsig11\{A, B, Curve};
+use SimpleSAML\XMLSecurity\XML\dsig11\A;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCurveType;
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
+use SimpleSAML\XMLSecurity\XML\dsig11\B;
+use SimpleSAML\XMLSecurity\XML\dsig11\Curve;
 
 use function dirname;
 use function strval;
@@ -20,6 +24,7 @@ use function strval;
  *
  * @package simplesamlphp/xml-security
  */
+#[Group('dsig11')]
 #[CoversClass(AbstractDsig11Element::class)]
 #[CoversClass(AbstractCurveType::class)]
 #[CoversClass(Curve::class)]

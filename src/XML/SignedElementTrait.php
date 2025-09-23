@@ -7,28 +7,26 @@ namespace SimpleSAML\XMLSecurity\XML;
 use DOMElement;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
-use SimpleSAML\XMLSecurity\Alg\Signature\{SignatureAlgorithmFactory, SignatureAlgorithmInterface};
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
-use SimpleSAML\XMLSecurity\Exception\{
-    InvalidArgumentException,
-    NoSignatureFoundException,
-    ReferenceValidationFailedException,
-    RuntimeException,
-    SignatureVerificationFailedException,
-};
+use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
+use SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException;
+use SimpleSAML\XMLSecurity\Exception\ReferenceValidationFailedException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
-use SimpleSAML\XMLSecurity\Utils\{XML, XPath};
-use SimpleSAML\XMLSecurity\XML\ds\{
-    Reference,
-    Signature,
-    SignedInfo,
-    X509Certificate,
-    X509Data,
-};
+use SimpleSAML\XMLSecurity\Utils\XML;
+use SimpleSAML\XMLSecurity\Utils\XPath;
+use SimpleSAML\XMLSecurity\XML\ds\Reference;
+use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\ds\SignedInfo;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
 use function base64_decode;
 use function hash;
@@ -45,6 +43,7 @@ use function strval;
 trait SignedElementTrait
 {
     use CanonicalizableElementTrait;
+
 
     /**
      * The signature of this element.

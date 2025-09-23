@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\dsig11;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue};
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\XML\dsig11\{AbstractDsig11Element, X509Digest};
+use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
+use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
 
 use function base64_encode;
 use function dirname;
@@ -33,6 +37,7 @@ final class X509DigestTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /** @var string */
     private static string $digest;

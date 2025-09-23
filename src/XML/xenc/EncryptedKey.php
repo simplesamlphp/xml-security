@@ -6,9 +6,14 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use DOMElement;
 use SimpleSAML\Assert\Assert;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
-use SimpleSAML\XMLSchema\Exception\{InvalidDOMElementException, TooManyElementsException};
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
@@ -24,6 +29,7 @@ use function strval;
 final class EncryptedKey extends AbstractEncryptedType implements SchemaValidatableElementInterface
 {
     use SchemaValidatableElementTrait;
+
 
     /**
      * EncryptedKey constructor.

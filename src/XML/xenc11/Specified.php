@@ -16,6 +16,7 @@ final class Specified extends AbstractXenc11Element
 {
     use TypedTextContentTrait;
 
+
     /** @var string */
     public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
 }

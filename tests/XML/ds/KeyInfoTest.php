@@ -4,19 +4,35 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use PHPUnit\Framework\Attributes\{CoversClass, Group};
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use SimpleSAML\XML\{Chunk, DOMDocumentFactory};
-use SimpleSAML\XML\TestUtils\{SchemaValidationTestTrait, SerializableElementTestTrait};
-use SimpleSAML\XMLSchema\Type\{Base64BinaryValue, IDValue, StringValue};
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\XML\ds\{AbstractDsElement, AbstractKeyInfoType, KeyInfo, KeyName, MgmtData};
-use SimpleSAML\XMLSecurity\XML\ds\{PGPData, PGPKeyID, PGPKeyPacket};
-use SimpleSAML\XMLSecurity\XML\ds\{SPKIData, SPKISexp};
-use SimpleSAML\XMLSecurity\XML\ds\{X509Certificate, X509Data, X509SubjectName};
-use SimpleSAML\XMLSecurity\XML\xenc\{CarriedKeyName, P, Seed};
+use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
+use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\ds\KeyName;
+use SimpleSAML\XMLSecurity\XML\ds\MgmtData;
+use SimpleSAML\XMLSecurity\XML\ds\PGPData;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
+use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
+use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
+use SimpleSAML\XMLSecurity\XML\ds\SPKISexp;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
+use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
+use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
+use SimpleSAML\XMLSecurity\XML\xenc\P;
+use SimpleSAML\XMLSecurity\XML\xenc\Seed;
 
 use function dirname;
 use function openssl_x509_parse;
@@ -36,6 +52,7 @@ final class KeyInfoTest extends TestCase
 {
     use SchemaValidationTestTrait;
     use SerializableElementTestTrait;
+
 
     /** @var string */
     private static string $certificate;

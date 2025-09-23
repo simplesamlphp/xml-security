@@ -6,9 +6,12 @@ namespace SimpleSAML\XMLSecurity\XML\ds;
 
 use DOMElement;
 use SimpleSAML\XML\ExtendableElementTrait;
-use SimpleSAML\XML\{SchemaValidatableElementInterface, SchemaValidatableElementTrait};
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
-use SimpleSAML\XMLSchema\Type\{AnyURIValue, IDValue, StringValue};
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\IDValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
@@ -23,6 +26,7 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
 {
     use ExtendableElementTrait;
     use SchemaValidatableElementTrait;
+
 
     /** @var string */
     public const LOCALNAME = 'Object';
