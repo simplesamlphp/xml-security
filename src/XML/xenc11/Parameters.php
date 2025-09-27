@@ -90,7 +90,6 @@ final class Parameters extends AbstractXenc11Element
         }
 
         foreach ($this->getElements() as $element) {
-            /** @psalm-var \SimpleSAML\XML\SerializableElementInterface $element */
             $element->toXML($e);
         }
 
