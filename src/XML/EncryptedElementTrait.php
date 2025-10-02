@@ -40,7 +40,7 @@ trait EncryptedElementTrait
      *
      * @param \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData $encryptedData The EncryptedData object.
      */
-    public function __construct(
+    final public function __construct(
         protected EncryptedData $encryptedData,
     ) {
         $keyInfo = $this->encryptedData->getKeyInfo();
