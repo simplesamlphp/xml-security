@@ -80,8 +80,12 @@ final class KeyValueTest extends TestCase
 
         $document = self::$empty;
         $document->documentElement->appendChild($document->importNode(self::$rsaKeyValue->documentElement, true));
+        $normalized = DOMDocumentFactory::normalizeDocument($document);
 
-        $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
+        $this->assertXmlStringEqualsXmlString(
+            $normalized->saveXML($normalized),
+            strval($keyValue),
+        );
     }
 
 
@@ -96,8 +100,12 @@ final class KeyValueTest extends TestCase
 
         $document = self::$empty;
         $element->toXML($document->documentElement);
+        $normalized = DOMDocumentFactory::normalizeDocument($document);
 
-        $this->assertXmlStringEqualsXmlString($document->saveXML($document->documentElement), strval($keyValue));
+        $this->assertXmlStringEqualsXmlString(
+            $normalized->saveXML($normalized),
+            strval($keyValue),
+        );
     }
 
 
