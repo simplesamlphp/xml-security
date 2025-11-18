@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Test\CryptoEncoding;
 
 use LogicException;
 use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
@@ -35,11 +36,10 @@ class PEMBundleTest extends TestCase
     /**
      * @return \SimpleSAML\XMLSecurity\CryptoEncoding\PEMBundle
      */
+    #[DoesNotPerformAssertions]
     public function testBundle(): PEMBundle
     {
-        $bundle = PEMBundle::fromFile(self::$baseDir . '/resources/certificates/cacert.pem');
-        $this->assertInstanceOf(PEMBundle::class, $bundle);
-        return $bundle;
+        return PEMBundle::fromFile(self::$baseDir . '/resources/certificates/cacert.pem');
     }
 
 
@@ -49,7 +49,6 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testAll(PEMBundle $bundle): void
     {
-        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertContainsOnlyInstancesOf(PEM::class, $bundle->all());
     }
 
@@ -60,7 +59,6 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testFirst(PEMBundle $bundle): void
     {
-        $this->assertInstanceOf(PEM::class, $bundle->first());
         $this->assertEquals($bundle->all()[0], $bundle->first());
     }
 
@@ -71,7 +69,6 @@ class PEMBundleTest extends TestCase
     #[Depends('testBundle')]
     public function testLast(PEMBundle $bundle): void
     {
-        $this->assertInstanceOf(PEM::class, $bundle->last());
         $this->assertEquals($bundle->all()[149], $bundle->last());
     }
 
@@ -96,7 +93,6 @@ class PEMBundleTest extends TestCase
         foreach ($bundle as $pem) {
             $values[] = $pem;
         }
-        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertContainsOnlyInstancesOf(PEM::class, $values);
     }
 

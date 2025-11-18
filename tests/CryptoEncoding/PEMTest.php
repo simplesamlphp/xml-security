@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\CryptoEncoding;
 
 use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -32,22 +33,21 @@ class PEMTest extends TestCase
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testFromString(): void
     {
         $str = file_get_contents(self::$baseDir . '/resources/keys/pubkey.pem');
-        $pem = PEM::fromString($str);
-        $this->assertInstanceOf(PEM::class, $pem);
+        PEM::fromString($str);
     }
 
 
     /**
      * @return \SimpleSAML\XMLSecurity\CryptoEncoding\PEM
      */
+    #[DoesNotPerformAssertions]
     public function testFromFile(): PEM
     {
-        $pem = PEM::fromFile(self::$baseDir . '/resources/keys/pubkey.pem');
-        $this->assertInstanceOf(PEM::class, $pem);
-        return $pem;
+        return PEM::fromFile(self::$baseDir . '/resources/keys/pubkey.pem');
     }
 
 
