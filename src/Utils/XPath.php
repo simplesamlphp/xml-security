@@ -50,7 +50,7 @@ class XPath extends XPathUtils
     {
         $doc = $ref instanceof DOMDocument ? $ref : $ref->ownerDocument;
         if ($doc === null) {
-            throw new RuntimeException('Cannot search, no DOM document available');
+            throw new RuntimeException('Cannot search, no DOMDocument available');
         }
 
         $nodeset = self::getXPath($doc)->query('./' . $name, $ref);
