@@ -27,9 +27,11 @@ class XPath extends XPathUtils
      */
     public static function getXPath(DOMNode $node, bool $autoregister = false): DOMXPath
     {
-        $xp = parent::getXPath($node);
+        $xp = parent::getXPath($node, $autoregister);
+
         $xp->registerNamespace('ds', C::NS_XDSIG);
         $xp->registerNamespace('xenc', C::NS_XENC);
+
         return $xp;
     }
 }
