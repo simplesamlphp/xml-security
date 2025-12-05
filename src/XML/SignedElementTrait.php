@@ -192,6 +192,7 @@ trait SignedElementTrait
      *
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The Signed element if it was verified.
      */
+    #[\NoDiscard]
     private function verifyInternal(SignatureAlgorithmInterface $verifier): SignedElementInterface
     {
         /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature $this->signature */
@@ -260,6 +261,7 @@ trait SignedElementTrait
      * in the signature.
      * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException if the signature fails to verify.
      */
+    #[\NoDiscard]
     public function verify(?SignatureAlgorithmInterface $verifier = null): SignedElementInterface
     {
         if (!$this->isSigned()) {

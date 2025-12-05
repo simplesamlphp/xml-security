@@ -104,6 +104,7 @@ trait SignableElementTrait
      * @param string $digestAlg The digest algorithm to use.
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms The transforms to apply to the object.
      */
+    #[\NoDiscard]
     private function getReference(
         string $digestAlg,
         Transforms $transforms,
@@ -167,6 +168,7 @@ trait SignableElementTrait
      * @param \DOMElement $xml The element to sign.
      * @return \DOMElement The signed element, without the signature attached to it just yet.
      */
+    #[\NoDiscard]
     protected function doSign(DOMElement $xml): DOMElement
     {
         Assert::notNull(

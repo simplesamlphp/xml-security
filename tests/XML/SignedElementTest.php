@@ -194,7 +194,9 @@ final class SignedElementTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed to verify signature.');
-        $customSigned->verify();
+
+        // Value cannot be ignored due to NoDiscard-attribute
+        $verified = $customSigned->verify();
     }
 
 
@@ -216,7 +218,9 @@ final class SignedElementTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed to verify signature.');
-        $customSigned->verify($verifier);
+
+        // Value cannot be ignored due to NoDiscard-attribute
+        $verified = $customSigned->verify($verifier);
     }
 
 

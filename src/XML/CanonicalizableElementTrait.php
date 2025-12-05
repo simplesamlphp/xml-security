@@ -39,6 +39,7 @@ trait CanonicalizableElementTrait
      * filters).
      * @return string
      */
+    #[\NoDiscard]
     public function canonicalize(string $method, ?array $xpaths = null, ?array $prefixes = null): string
     {
         return XML::canonicalizeData($this->getOriginalXML(), $method, $xpaths, $prefixes);
