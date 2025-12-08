@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\Utils;
 
 use DOMElement;
 use SimpleSAML\XMLSecurity\Constants as C;
+use SimpleSAML\XMLSecurity\Exception\CanonicalizationFailedException;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XPath\Constants as XPATH_C;
 
@@ -68,7 +69,12 @@ class XML
             }
         }
 
-        return $element->C14N($exclusive, $withComments, $xpaths, $prefixes);
+        $ret = $element->C14N($exclusive, $withComments, $xpaths, $prefixes);
+        if ($ret === false) {
+            // GHSA-h25p-2wxc-6584
+            throw new CanonicalizationFailedException();
+        }
+        return $ret;
     }
 
 
