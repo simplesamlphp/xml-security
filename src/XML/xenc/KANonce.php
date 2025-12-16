@@ -17,9 +17,7 @@ final class KANonce extends AbstractXencElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = Base64BinaryValue::class;
+    public const string TEXTCONTENT_TYPE = Base64BinaryValue::class;
 
-    /** @var string */
-    public const LOCALNAME = 'KA-Nonce';
+    public const string LOCALNAME = 'KA-Nonce';
 }

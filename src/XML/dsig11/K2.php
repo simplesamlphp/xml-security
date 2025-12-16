@@ -17,6 +17,5 @@ final class K2 extends AbstractDsig11Element
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = PositiveIntegerValue::class;
+    public const string TEXTCONTENT_TYPE = PositiveIntegerValue::class;
 }

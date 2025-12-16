@@ -21,8 +21,7 @@ use function hex2bin;
  */
 final class RSASignatureTest extends TestCase
 {
-    /** @var string */
-    protected const PLAINTEXT = 'plaintext';
+    protected const string PLAINTEXT = 'plaintext';
 
 
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */

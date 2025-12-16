@@ -27,18 +27,15 @@ use function array_merge;
  */
 final class RecipientKeyInfo extends AbstractKeyInfoType
 {
-    /** @var string */
-    public const NS = C::NS_XENC;
+    public const string NS = C::NS_XENC;
 
-    /** @var string */
-    public const NS_PREFIX = 'xenc';
+    public const string NS_PREFIX = 'xenc';
 
 
     /**
      * Convert XML into a RecipientKeyInfo
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong

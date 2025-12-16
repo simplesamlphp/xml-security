@@ -29,14 +29,13 @@ use function sprintf;
  * you are testing to the $testedClass property.
  *
  * @package simplesamlphp/xml-security
+ *
  * @phpstan-ignore trait.unused
  */
 trait SignedElementTestTrait
 {
     /**
      * A base document that we can reuse in our tests.
-     *
-     * @var \DOMDocument
      */
     protected static DOMDocument $xmlRepresentation;
 

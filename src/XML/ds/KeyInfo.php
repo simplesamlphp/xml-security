@@ -28,7 +28,6 @@ final class KeyInfo extends AbstractKeyInfoType implements SchemaValidatableElem
      * Convert XML into a KeyInfo
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong

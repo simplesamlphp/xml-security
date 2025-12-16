@@ -37,11 +37,9 @@ final class EncryptedCustom extends AbstractElement implements EncryptedElementI
     }
 
 
-    /** @var string */
-    public const NS = 'urn:ssp:custom';
+    public const string NS = 'urn:ssp:custom';
 
-    /** @var string */
-    public const NS_PREFIX = 'ssp';
+    public const string NS_PREFIX = 'ssp';
 
 
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend|null $backend */

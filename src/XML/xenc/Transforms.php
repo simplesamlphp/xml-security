@@ -42,8 +42,6 @@ final class Transforms extends AbstractXencElement
 
     /**
      * Test if an object, at the state it's in, would produce an empty XML-element
-     *
-     * @return bool
      */
     public function isEmptyElement(): bool
     {
@@ -55,7 +53,6 @@ final class Transforms extends AbstractXencElement
      * Convert XML into a Transforms element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -75,7 +72,6 @@ final class Transforms extends AbstractXencElement
      * Convert this Transforms element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Transforms element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

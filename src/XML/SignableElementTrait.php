@@ -46,7 +46,6 @@ trait SignableElementTrait
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
     protected ?Signature $signature = null;
 
-    /** @var string */
     private string $c14nAlg = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
 
     /** @var \SimpleSAML\XMLSecurity\XML\ds\KeyInfo|null */

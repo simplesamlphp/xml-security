@@ -20,6 +20,5 @@ final class MgmtData extends AbstractDsElement implements SchemaValidatableEleme
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = StringValue::class;
+    public const string TEXTCONTENT_TYPE = StringValue::class;
 }

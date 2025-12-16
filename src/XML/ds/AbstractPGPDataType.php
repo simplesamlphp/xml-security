@@ -28,8 +28,7 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
     use SchemaValidatableElementTrait;
 
 
-    /** @var string */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -107,7 +106,6 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
      * Convert this PGPData to XML.
      *
      * @param \DOMElement|null $parent The element we should append this PGPData to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

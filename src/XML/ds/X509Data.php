@@ -28,10 +28,10 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
     /** The exclusions for the xs:any element */
-    public const XS_ANY_ELT_EXCLUSIONS = [
+    public const array XS_ANY_ELT_EXCLUSIONS = [
         [X509Digest::NS, 'X509Digest'],
     ];
 
@@ -98,7 +98,6 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
      * Convert XML into a X509Data
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -126,7 +125,6 @@ final class X509Data extends AbstractDsElement implements SchemaValidatableEleme
      * Convert this X509Data element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this X509Data element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

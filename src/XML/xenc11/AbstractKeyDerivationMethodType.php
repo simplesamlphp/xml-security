@@ -28,7 +28,7 @@ abstract class AbstractKeyDerivationMethodType extends AbstractXenc11Element imp
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    public const string XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
     /**

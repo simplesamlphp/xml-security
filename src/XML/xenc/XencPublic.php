@@ -17,9 +17,7 @@ final class XencPublic extends AbstractXencElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
+    public const string TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 
-    /** @var string */
-    public const LOCALNAME = 'Public';
+    public const string LOCALNAME = 'Public';
 }

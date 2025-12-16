@@ -25,7 +25,7 @@ class KeyTransportAlgorithmFactory
      *
      * @var string[]
      */
-    public const DEFAULT_BLACKLIST = [
+    public const array DEFAULT_BLACKLIST = [
         C::KEY_TRANSPORT_RSA_1_5,
     ];
 
@@ -34,7 +34,7 @@ class KeyTransportAlgorithmFactory
      *
      * @var class-string[]
      */
-    private const SUPPORTED_DEFAULTS = [
+    private const array SUPPORTED_DEFAULTS = [
         RSA::class,
     ];
 
@@ -48,8 +48,6 @@ class KeyTransportAlgorithmFactory
 
     /**
      * Whether the factory has been initialized or not.
-     *
-     * @var bool
      */
     protected static bool $initialized = false;
 

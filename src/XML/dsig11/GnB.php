@@ -28,7 +28,6 @@ final class GnB extends AbstractCharTwoFieldParamsType implements SchemaValidata
      * Convert XML into a GnB element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong

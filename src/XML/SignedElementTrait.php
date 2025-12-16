@@ -38,6 +38,7 @@ use function strval;
  * Helper trait for processing signed elements.
  *
  * @package simplesamlphp/xml-security
+ *
  * @phpstan-ignore trait.unused
  */
 trait SignedElementTrait
@@ -237,8 +238,6 @@ trait SignedElementTrait
 
     /**
      * Whether this object is signed or not.
-     *
-     * @return bool
      */
     public function isSigned(): bool
     {
@@ -253,9 +252,10 @@ trait SignedElementTrait
      * but cannot be verified, an exception will be thrown.
      *
      * @param \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface|null $verifier The verifier to use to
-     * verify the signature. If null, attempt to verify it with the KeyInfo information in the signature.
+     *  verify the signature. If null, attempt to verify it with the KeyInfo information in the signature.
      * @return \SimpleSAML\XMLSecurity\XML\SignedElementInterface The object processed again from its canonicalised
-     * representation verified by the signature.
+     *  representation verified by the signature.
+     *
      * @throws \SimpleSAML\XMLSecurity\Exception\NoSignatureFoundException if the object is not signed.
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException if no key is passed and there is no KeyInfo
      * in the signature.

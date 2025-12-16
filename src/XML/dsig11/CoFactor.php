@@ -17,6 +17,5 @@ final class CoFactor extends AbstractDsig11Element
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = IntegerValue::class;
+    public const string TEXTCONTENT_TYPE = IntegerValue::class;
 }

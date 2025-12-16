@@ -17,6 +17,5 @@ final class X509SerialNumber extends AbstractDsElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = IntegerValue::class;
+    public const string TEXTCONTENT_TYPE = IntegerValue::class;
 }

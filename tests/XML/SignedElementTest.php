@@ -34,13 +34,10 @@ final class SignedElementTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $wrong_certificate;
 
-    /** @var \DOMElement */
     private DOMElement $signedDocumentWithComments;
 
-    /** @var \DOMElement */
     private DOMElement $signedDocument;
 
-    /** @var \DOMElement  */
     private DOMElement $tamperedDocument;
 
 

@@ -26,7 +26,6 @@ use function dirname;
  */
 class EncryptedCustomTest extends TestCase
 {
-    /** @var \DOMElement */
     private DOMElement $signableDocument;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */

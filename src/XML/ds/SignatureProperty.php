@@ -29,7 +29,7 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -70,7 +70,6 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
      * Convert XML into a SignatureProperty element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -100,7 +99,6 @@ final class SignatureProperty extends AbstractDsElement implements SchemaValidat
      * Convert this SignatureProperty element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this SignatureProperty element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

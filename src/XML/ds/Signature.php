@@ -101,7 +101,6 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * Convert XML into a Signature element
      *
      * @param \DOMElement $xml
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -163,7 +162,6 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
      * Convert this Signature element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Signature element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

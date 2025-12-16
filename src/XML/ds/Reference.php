@@ -104,8 +104,6 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
 
     /**
      * Determine whether this is an xpointer reference.
-     *
-     * @return bool
      */
     public function isXPointer(): bool
     {
@@ -117,7 +115,6 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * Convert XML into a Reference element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -170,7 +167,6 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
      * Convert this Reference element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Reference element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

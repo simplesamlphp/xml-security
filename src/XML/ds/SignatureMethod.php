@@ -33,7 +33,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -88,7 +88,6 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
      * Convert XML into a SignatureMethod
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -111,7 +110,6 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
      * Convert this SignatureMethod element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this SignatureMethod element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

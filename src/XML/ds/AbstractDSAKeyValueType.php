@@ -192,7 +192,6 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement implements Sche
      * Convert this DSAKeyValue object to XML.
      *
      * @param \DOMElement|null $parent The element we should append this DSAKeyValue to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

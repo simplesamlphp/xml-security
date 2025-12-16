@@ -61,7 +61,6 @@ final class RSAKeyValue extends AbstractDsElement implements SchemaValidatableEl
      * Convert XML into a RSAKeyValue
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -107,7 +106,6 @@ final class RSAKeyValue extends AbstractDsElement implements SchemaValidatableEl
      * Convert this RSAKeyValue element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this RSAKeyValue element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

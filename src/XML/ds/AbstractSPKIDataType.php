@@ -101,7 +101,6 @@ abstract class AbstractSPKIDataType extends AbstractDsElement implements SchemaV
      * Convert this SPKIData to XML.
      *
      * @param \DOMElement|null $parent The element we should append this SPKIData to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

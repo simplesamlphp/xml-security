@@ -17,6 +17,5 @@ final class Seed extends AbstractDsElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
+    public const string TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 }

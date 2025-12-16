@@ -27,7 +27,7 @@ final class SignatureAlgorithmFactory
      *
      * @var string[]
      */
-    public const DEFAULT_BLACKLIST = [
+    public const array DEFAULT_BLACKLIST = [
         C::SIG_RSA_SHA1,
         C::SIG_HMAC_SHA1,
     ];
@@ -37,7 +37,7 @@ final class SignatureAlgorithmFactory
      *
      * @var class-string[]
      */
-    private const SUPPORTED_DEFAULTS = [
+    private const array SUPPORTED_DEFAULTS = [
         RSA::class,
         HMAC::class,
     ];
@@ -52,8 +52,6 @@ final class SignatureAlgorithmFactory
 
     /**
      * Whether the factory has been initialized or not.
-     *
-     * @var bool
      */
     protected static bool $initialized = false;
 

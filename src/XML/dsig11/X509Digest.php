@@ -71,7 +71,6 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
      * Convert XML into a X509Digest
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -92,7 +91,6 @@ final class X509Digest extends AbstractDsig11Element implements SchemaValidatabl
      * Convert this X509Digest element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this X509Digest element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

@@ -27,7 +27,7 @@ final class EncryptionAlgorithmFactory
      *
      * @var string[]
      */
-    public const DEFAULT_BLACKLIST = [
+    public const array DEFAULT_BLACKLIST = [
         C::BLOCK_ENC_3DES,
     ];
 
@@ -36,7 +36,7 @@ final class EncryptionAlgorithmFactory
      *
      * @var class-string[]
      */
-    private const SUPPORTED_DEFAULTS = [
+    private const array SUPPORTED_DEFAULTS = [
         TripleDES::class,
         AES::class,
     ];
@@ -51,8 +51,6 @@ final class EncryptionAlgorithmFactory
 
     /**
      * Whether the factory has been initialized or not.
-     *
-     * @var bool
      */
     protected static bool $initialized = false;
 

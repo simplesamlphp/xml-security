@@ -63,7 +63,6 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
      * Convert XML into a SignatureProperties element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -92,7 +91,6 @@ final class SignatureProperties extends AbstractDsElement implements SchemaValid
      * Convert this SignatureProperties element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this SignatureProperties element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

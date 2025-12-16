@@ -28,8 +28,7 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
     use ExtendableElementTrait;
 
 
-    /** @var string */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -122,7 +121,6 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
      * Convert this KeyInfo to XML.
      *
      * @param \DOMElement|null $parent The element we should append this KeyInfo to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {
