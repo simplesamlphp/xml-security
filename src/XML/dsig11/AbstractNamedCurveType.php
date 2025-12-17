@@ -42,7 +42,6 @@ abstract class AbstractNamedCurveType extends AbstractDsig11Element
      * Convert this NamedCurveType element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this NamedCurveType element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

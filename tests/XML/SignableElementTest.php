@@ -37,13 +37,11 @@ final class SignableElementTest extends TestCase
     use SerializableElementTestTrait;
 
 
-    /** @var string */
     private static string $certificate;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     private static PrivateKey $key;
 
-    /** @var \DOMDocument */
     private static DOMDocument $signed;
 
 

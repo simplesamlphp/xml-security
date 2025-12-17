@@ -82,7 +82,6 @@ final class CanonicalizationMethod extends AbstractDsElement implements SchemaVa
      * Convert this CanonicalizationMethod element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this KeyName element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

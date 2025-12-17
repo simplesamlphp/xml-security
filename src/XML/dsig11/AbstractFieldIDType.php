@@ -27,8 +27,7 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
     }
 
 
-    /** @var string */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -75,7 +74,6 @@ abstract class AbstractFieldIDType extends AbstractDsig11Element
      * Convert this FieldIDType element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this FieldIDType element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

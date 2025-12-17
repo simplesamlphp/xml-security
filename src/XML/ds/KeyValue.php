@@ -39,7 +39,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -85,7 +85,6 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
      * Convert XML into a KeyValue
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -116,7 +115,6 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
      * Convert this KeyValue element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this KeyValue element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

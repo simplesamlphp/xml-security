@@ -23,10 +23,10 @@ final class Parameters extends AbstractXenc11Element
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    public const string XS_ANY_ELT_NAMESPACE = NS::ANY;
 
     /** The namespace-attribute for the xs:anyAttribute element */
-    public const XS_ANY_ATTR_NAMESPACE = NS::ANY;
+    public const string XS_ANY_ATTR_NAMESPACE = NS::ANY;
 
 
     /**
@@ -44,8 +44,6 @@ final class Parameters extends AbstractXenc11Element
 
     /**
      * Test if an object, at the state it's in, would produce an empty XML-element
-     *
-     * @return bool
      */
     public function isEmptyElement(): bool
     {
@@ -58,7 +56,6 @@ final class Parameters extends AbstractXenc11Element
      * Convert XML into a Parameters element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
@@ -79,7 +76,6 @@ final class Parameters extends AbstractXenc11Element
      * Convert this Parameters element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Parameters to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

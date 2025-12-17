@@ -17,6 +17,5 @@ final class X509IssuerName extends AbstractDsElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = StringValue::class;
+    public const string TEXTCONTENT_TYPE = StringValue::class;
 }

@@ -55,7 +55,6 @@ abstract class AbstractECValidationDataType extends AbstractDsig11Element
      * Convert this ECValidationDataType element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this ECValidationDataType element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

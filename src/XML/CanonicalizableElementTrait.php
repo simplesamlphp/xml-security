@@ -21,8 +21,6 @@ trait CanonicalizableElementTrait
      * Implement this method to return the DOMElement with the proper representation of this object. Whatever is
      * returned here will be used both to perform canonicalisation and to serialize the object, so that it can be
      * recovered later in its exact original state.
-     *
-     * @return \DOMElement
      */
     abstract protected function getOriginalXML(): DOMElement;
 
@@ -37,7 +35,6 @@ trait CanonicalizableElementTrait
      * @param string[]|null $xpaths An array of XPaths to filter the nodes by. Defaults to null (no filters).
      * @param string[]|null $prefixes An array of namespace prefixes to filter the nodes by. Defaults to null (no
      * filters).
-     * @return string
      */
     #[\NoDiscard]
     public function canonicalize(string $method, ?array $xpaths = null, ?array $prefixes = null): string

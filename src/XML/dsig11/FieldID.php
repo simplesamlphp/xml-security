@@ -25,7 +25,6 @@ final class FieldID extends AbstractFieldIDType implements SchemaValidatableElem
      * Convert XML into a FieldID element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong

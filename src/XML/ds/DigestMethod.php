@@ -29,7 +29,7 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -89,7 +89,6 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
      * Convert this DigestMethod element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this DigestMethod element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

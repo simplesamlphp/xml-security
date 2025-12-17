@@ -51,7 +51,6 @@ class PEMBundle implements Countable, IteratorAggregate
 
 
     /**
-     * @return string
      */
     public function __toString(): string
     {
@@ -62,11 +61,7 @@ class PEMBundle implements Countable, IteratorAggregate
     /**
      * Initialize from a string.
      *
-     * @param string $str
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromString(string $str): self
     {
@@ -97,11 +92,7 @@ class PEMBundle implements Countable, IteratorAggregate
     /**
      * Initialize from a file.
      *
-     * @param string $filename
-     *
      * @throws \RuntimeException If file reading fails
-     *
-     * @return self
      */
     public static function fromFile(string $filename): self
     {
@@ -181,8 +172,6 @@ class PEMBundle implements Countable, IteratorAggregate
 
     /**
      * @see \Countable::count()
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -205,8 +194,6 @@ class PEMBundle implements Countable, IteratorAggregate
 
     /**
      * Encode bundle to a string of contiguous PEM blocks.
-     *
-     * @return string
      */
     public function string(): string
     {

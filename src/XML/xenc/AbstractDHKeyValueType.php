@@ -127,7 +127,6 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
      * Initialize an DHKeyValue object from an existing XML.
      *
      * @param \DOMElement $xml
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
@@ -175,7 +174,6 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
      * Convert this DHKeyValue object to XML.
      *
      * @param \DOMElement|null $parent The element we should append this DHKeyValue to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

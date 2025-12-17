@@ -27,6 +27,7 @@ use function strval;
  * Trait aggregating functionality for encrypted elements.
  *
  * @package simplesamlphp/xml-security
+ *
  * @phpstan-ignore trait.unused
  */
 trait EncryptedElementTrait
@@ -59,8 +60,6 @@ trait EncryptedElementTrait
 
     /**
      * Whether the encrypted object is accompanied by the decryption key or not.
-     *
-     * @return bool
      */
     public function hasDecryptionKey(): bool
     {
@@ -214,7 +213,6 @@ trait EncryptedElementTrait
      * have this method out of the box.
      *
      * @param \DOMElement|null $parent The element we should append to.
-     * @return \DOMElement
      */
     abstract public function instantiateParentElement(?DOMElement $parent = null): DOMElement;
 

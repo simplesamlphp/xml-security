@@ -19,8 +19,6 @@ trait HMACOutputLengthTrait
      * The HMAC algorithm (RFC2104 [HMAC]) takes the output (truncation) length in bits as a parameter;
      * this specification REQUIRES that the truncation length be a multiple of 8 (i.e. fall on a byte boundary)
      * because Base64 encoding operates on full bytes
-     *
-     * @var string
      */
     private static string $HMACOutputLength_regex = '/^([1-9]\d*)$/D';
 

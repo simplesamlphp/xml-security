@@ -31,29 +31,22 @@ use function substr;
  */
 final class OpenSSL implements EncryptionBackend, SignatureBackend
 {
-    /** @var int */
-    public const AUTH_TAG_LEN = 16;
+    public const int AUTH_TAG_LEN = 16;
 
 
     // digital signature options
-    /** @var string */
     protected string $digest;
 
     // asymmetric encryption options
-    /** @var int */
     protected int $padding = OPENSSL_PKCS1_OAEP_PADDING;
 
     // symmetric encryption options
-    /** @var string */
     protected string $cipher;
 
-    /** @var int */
     protected int $blocksize;
 
-    /** @var int */
     protected int $keysize;
 
-    /** @var bool */
     protected bool $useAuthTag = false;
 
 

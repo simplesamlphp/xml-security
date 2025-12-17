@@ -23,7 +23,6 @@ final class Curve extends AbstractCurveType
      * Convert XML into a class instance
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong

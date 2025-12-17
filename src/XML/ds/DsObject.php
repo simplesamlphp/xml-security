@@ -28,11 +28,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     use SchemaValidatableElementTrait;
 
 
-    /** @var string */
-    public const LOCALNAME = 'Object';
+    public const string LOCALNAME = 'Object';
 
-    /** @var string */
-    public const XS_ANY_ELT_NAMESPACE = NS::ANY;
+    public const string XS_ANY_ELT_NAMESPACE = NS::ANY;
 
 
     /**
@@ -88,8 +86,6 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
 
     /**
      * Test if an object, at the state it's in, would produce an empty XML-element
-     *
-     * @return bool
      */
     public function isEmptyElement(): bool
     {
@@ -104,7 +100,6 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
      * Convert XML into a ds:Object
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -127,7 +122,6 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
      * Convert this ds:Object element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this ds:Object element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

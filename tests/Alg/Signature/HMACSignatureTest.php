@@ -19,11 +19,9 @@ use function hex2bin;
  */
 final class HMACSignatureTest extends TestCase
 {
-    /** @var string */
-    protected const PLAINTEXT = 'plaintext';
+    protected const string PLAINTEXT = 'plaintext';
 
-    /** @var string */
-    protected const SECRET = 'de54fbd0f10c34df6e800b11043024fa';
+    protected const string SECRET = 'de54fbd0f10c34df6e800b11043024fa';
 
 
     /** @var \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory */

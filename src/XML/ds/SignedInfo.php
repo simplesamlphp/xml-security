@@ -33,9 +33,6 @@ final class SignedInfo extends AbstractDsElement implements
     use SchemaValidatableElementTrait;
 
 
-    /*
-     * @var DOMElement
-     */
     protected ?DOMElement $xml = null;
 
 
@@ -119,7 +116,6 @@ final class SignedInfo extends AbstractDsElement implements
      * Convert XML into a SignedInfo instance
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -181,7 +177,6 @@ final class SignedInfo extends AbstractDsElement implements
      * Convert this SignedInfo element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this SignedInfo element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

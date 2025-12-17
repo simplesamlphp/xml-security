@@ -15,8 +15,6 @@ use function strval;
 /**
  * Abstract class representing encrypted data.
  *
- * Note: <xenc:EncryptionProperties> elements are not supported.
- *
  * @package simplesamlphp/xml-security
  */
 abstract class AbstractEncryptedType extends AbstractXencElement

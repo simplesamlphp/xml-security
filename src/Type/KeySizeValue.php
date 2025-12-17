@@ -16,9 +16,7 @@ class KeySizeValue extends IntegerValue
     /**
      * Validate the value.
      *
-     * @param string $value
      * @throws \SimpleSAML\XMLSchema\Exception\SchemaViolationException on failure
-     * @return void
      */
     protected function validateValue(string $value): void
     {

@@ -33,10 +33,10 @@ abstract class AbstractEncryptionPropertyType extends AbstractXencElement implem
 
 
     /** The namespace-attribute for the xs:anyAttribute element */
-    public const XS_ANY_ATTR_NAMESPACE = [C::NS_XML];
+    public const array XS_ANY_ATTR_NAMESPACE = [C::NS_XML];
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**

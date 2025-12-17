@@ -20,6 +20,5 @@ final class DigestValue extends AbstractDsElement implements SchemaValidatableEl
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = DigestValueType::class;
+    public const string TEXTCONTENT_TYPE = DigestValueType::class;
 }

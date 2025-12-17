@@ -20,11 +20,11 @@ use function hex2bin;
  */
 final class HMACTest extends TestCase
 {
-    public const PLAINTEXT = "plaintext";
+    public const string PLAINTEXT = "plaintext";
 
-    public const SIGNATURE = "61b85d9e800ed0eca556a304cc9e1ac7ae8eecb3";
+    public const string SIGNATURE = "61b85d9e800ed0eca556a304cc9e1ac7ae8eecb3";
 
-    public const SECRET = 'secret key';
+    public const string SECRET = 'secret key';
 
 
     /** @var \SimpleSAML\XMLSecurity\Key\SymmetricKey */

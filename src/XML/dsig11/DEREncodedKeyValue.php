@@ -65,7 +65,6 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
      * Convert XML into a DEREncodedKeyValue
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -86,7 +85,6 @@ final class DEREncodedKeyValue extends AbstractDsig11Element implements SchemaVa
      * Convert this DEREncodedKeyValue element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this DEREncodedKeyValue element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

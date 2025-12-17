@@ -14,8 +14,6 @@ trait KeySizeTrait
     /**
      * The size in bits of the key to be derived from the shared secret as the UTF-8 string for the corresponding
      * decimal integer with only digits in the string and no leading zeros.
-     *
-     * @var string
      */
     private static string $keySize_regex = '/^([1-9]\d*)$/D';
 

@@ -58,7 +58,6 @@ final class X509IssuerSerial extends AbstractDsElement
      * Convert XML into a X509IssuerSerial
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -88,7 +87,6 @@ final class X509IssuerSerial extends AbstractDsElement
      * Convert this X509IssuerSerial element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this X509IssuerSerial element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

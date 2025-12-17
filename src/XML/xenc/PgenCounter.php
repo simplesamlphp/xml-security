@@ -17,9 +17,7 @@ final class PgenCounter extends AbstractXencElement
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
+    public const string TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 
-    /** @var string */
-    public const LOCALNAME = 'pgenCounter';
+    public const string LOCALNAME = 'pgenCounter';
 }

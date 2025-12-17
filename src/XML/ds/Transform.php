@@ -102,7 +102,6 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
      * Convert XML into a Transform element.
      *
      * @param \DOMElement $xml The XML element we should load.
-     * @return static
      */
     public static function fromXML(DOMElement $xml): static
     {
@@ -132,7 +131,6 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
      * Convert this Transform element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Transform element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

@@ -89,7 +89,6 @@ abstract class AbstractECKeyValueType extends AbstractDsig11Element
      * Convert this ECKeyValueType element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this ECKeyValueType element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

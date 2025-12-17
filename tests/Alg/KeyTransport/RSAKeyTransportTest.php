@@ -18,8 +18,7 @@ use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
  */
 class RSAKeyTransportTest extends TestCase
 {
-    /** @var string */
-    public const PLAINTEXT = 'plaintext';
+    public const string PLAINTEXT = 'plaintext';
 
 
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */

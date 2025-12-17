@@ -47,7 +47,6 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
      * Convert XML into an InclusiveNamespaces element.
      *
      * @param \DOMElement $xml The XML element we should load.
-     * @return static
      */
     public static function fromXML(DOMElement $xml): static
     {
@@ -61,7 +60,6 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
      * Convert this InclusiveNamespaces to XML.
      *
      * @param \DOMElement|null $parent The element we should append this InclusiveNamespaces to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

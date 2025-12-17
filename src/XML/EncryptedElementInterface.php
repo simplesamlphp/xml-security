@@ -26,8 +26,6 @@ interface EncryptedElementInterface
 
     /**
      * Whether the encrypted object is accompanied by the decryption key or not.
-     *
-     * @return bool
      */
     public function hasDecryptionKey(): bool;
 

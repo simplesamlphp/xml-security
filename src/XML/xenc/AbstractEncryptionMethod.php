@@ -26,7 +26,7 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
 
     /** The namespace-attribute for the xs:any element */
-    public const XS_ANY_ELT_NAMESPACE = NS::OTHER;
+    public const string XS_ANY_ELT_NAMESPACE = NS::OTHER;
 
 
     /**
@@ -84,7 +84,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Initialize an EncryptionMethod object from an existing XML.
      *
      * @param \DOMElement $xml
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
@@ -117,7 +116,6 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
      * Convert this EncryptionMethod object to XML.
      *
      * @param \DOMElement|null $parent The element we should append this EncryptionMethod to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {

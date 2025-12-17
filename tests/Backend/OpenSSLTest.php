@@ -25,8 +25,7 @@ use function hex2bin;
  */
 final class OpenSSLTest extends TestCase
 {
-    /** @var string */
-    protected const VALIDSIG =
+    protected const string VALIDSIG =
         'cdd80e925e509f954807448217157367c00f7ff53c5eec74ea51ef5fee48a048283b37639c7f43400631fa2b9063a1ed057' .
         '104721887a10ad62f128c26e01f363538a84ad261f40b80df86de9cc920d1dce2c27058da81d9c7aa0e68e459ab94995e27' .
         'e57d183ff08188b338f7975681ad67b1b6f8d174b57b666f787b801df9511d7a90e90e9af2386f4051669a4763ce5e9720f' .

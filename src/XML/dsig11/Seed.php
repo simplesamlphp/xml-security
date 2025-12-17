@@ -17,9 +17,7 @@ final class Seed extends AbstractDsig11Element
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
+    public const string TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 
-    /** @var string */
-    public const LOCALNAME = 'seed';
+    public const string LOCALNAME = 'seed';
 }

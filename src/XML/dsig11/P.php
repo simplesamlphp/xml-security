@@ -17,6 +17,5 @@ final class P extends AbstractDsig11Element
     use TypedTextContentTrait;
 
 
-    /** @var string */
-    public const TEXTCONTENT_TYPE = CryptoBinaryValue::class;
+    public const string TEXTCONTENT_TYPE = CryptoBinaryValue::class;
 }

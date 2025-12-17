@@ -35,7 +35,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-dom": "*",
         "ext-hash": "*",
         "ext-mbstring": "*",
@@ -47,7 +47,7 @@
         "simplesamlphp/xml-common": "~2.4"
     },
     "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "~1.10"
+        "simplesamlphp/simplesamlphp-test-framework": "~1.11"
     },
     "config": {
         "allow-plugins": {

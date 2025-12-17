@@ -62,7 +62,6 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
      * Convert XML into a Manifest element
      *
      * @param \DOMElement $xml The XML element we should load
-     * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
@@ -93,7 +92,6 @@ final class Manifest extends AbstractDsElement implements SchemaValidatableEleme
      * Convert this Manifest element to XML.
      *
      * @param \DOMElement|null $parent The element we should append this Manifest element to.
-     * @return \DOMElement
      */
     public function toXML(?DOMElement $parent = null): DOMElement
     {
