@@ -65,7 +65,7 @@ class PublicKey extends AsymmetricKey
     {
         switch ($type) {
             case self::ASN1_TYPE_INTEGER:
-                if (ord($string) > self::ASN1_SIZE_128 - 1) {
+                if (ord($string[0]) > self::ASN1_SIZE_128 - 1) {
                     $string = chr(0) . $string;
                 }
                 break;
