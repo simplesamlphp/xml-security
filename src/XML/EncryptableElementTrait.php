@@ -48,10 +48,11 @@ trait EncryptableElementTrait
      * @param \SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface $encryptor The encryptor to use,
      * either to encrypt the object itself, or to encrypt a session key (if the encryptor implements a key transport
      * algorithm).
+     * @param \SimpleSAML\XMLSchema\Type\AnyURIValue|null $type
      *
      * @return \SimpleSAML\XMLSecurity\XML\xenc\EncryptedData
      */
-    public function encrypt(EncryptionAlgorithmInterface $encryptor): EncryptedData
+    public function encrypt(EncryptionAlgorithmInterface $encryptor, ?AnyURIValue $type = null): EncryptedData
     {
         $keyInfo = null;
         if (in_array($encryptor->getAlgorithmId(), C::$KEY_TRANSPORT_ALGORITHMS)) {
@@ -88,7 +89,7 @@ trait EncryptableElementTrait
                 ),
             ),
             null,
-            AnyURIValue::fromString(C::XMLENC_ELEMENT),
+            $type,
             null,
             null,
             new EncryptionMethod(

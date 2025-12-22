@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -60,7 +61,9 @@ class EncryptedCustomTest extends TestCase
         // encrypt
         $factory = new EncryptionAlgorithmFactory();
         $encryptor = $factory->getAlgorithm(C::BLOCK_ENC_AES128, $sharedKey);
-        $encryptedCustom = new EncryptedCustom($customSigned->encrypt($encryptor));
+        $encryptedCustom = new EncryptedCustom(
+            $customSigned->encrypt($encryptor, AnyURIValue::fromString(C::XMLENC_ELEMENT)),
+        );
 
         // decrypt
         $decryptedCustom = $encryptedCustom->decrypt($encryptor);
@@ -80,7 +83,9 @@ class EncryptedCustomTest extends TestCase
         // encrypt
         $factory = new KeyTransportAlgorithmFactory();
         $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
-        $encryptedCustom = new EncryptedCustom($customSigned->encrypt($encryptor));
+        $encryptedCustom = new EncryptedCustom(
+            $customSigned->encrypt($encryptor, AnyURIValue::fromString(C::XMLENC_ELEMENT)),
+        );
 
         // decrypt
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
@@ -110,7 +115,9 @@ class EncryptedCustomTest extends TestCase
         // encrypt
         $factory = new KeyTransportAlgorithmFactory();
         $encryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->pubKey);
-        $encryptedCustom = new EncryptedCustom($customSigned->encrypt($encryptor));
+        $encryptedCustom = new EncryptedCustom(
+            $customSigned->encrypt($encryptor, AnyURIValue::fromString(C::XMLENC_ELEMENT)),
+        );
 
         // decrypt
         $decryptor = $factory->getAlgorithm(C::KEY_TRANSPORT_OAEP_MGF1P, $this->privKey);
