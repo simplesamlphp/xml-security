@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\CoFactor;
 
@@ -45,9 +44,7 @@ final class CoFactorTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $coFactor = new CoFactor(
-            IntegerValue::fromInteger(128),
-        );
+        $coFactor = CoFactor::fromString('128');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

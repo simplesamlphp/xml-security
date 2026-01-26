@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
 use SimpleSAML\XMLSecurity\XML\xenc11\IterationCount;
 
@@ -45,9 +44,7 @@ final class IterationCountTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $iterationCount = new IterationCount(
-            PositiveIntegerValue::fromString('3'),
-        );
+        $iterationCount = IterationCount::fromString('3');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

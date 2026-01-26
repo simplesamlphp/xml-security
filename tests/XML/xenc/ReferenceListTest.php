@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
@@ -59,15 +58,11 @@ final class ReferenceListTest extends TestCase
     {
         $transformData = new Transform(
             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-            new XPath(
-                StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
-            ),
+            XPath::fromString('self::xenc:EncryptedData[@Id="example1"]'),
         );
         $transformKey = new Transform(
             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-            new XPath(
-                StringValue::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
-            ),
+            XPath::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
         );
 
         $referenceList = new ReferenceList(

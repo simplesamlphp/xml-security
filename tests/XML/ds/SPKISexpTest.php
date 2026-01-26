@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\SPKISexp;
 
@@ -45,9 +44,7 @@ final class SPKISexpTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $SPKISexp = new SPKISexp(
-            Base64BinaryValue::fromString('GpM6'),
-        );
+        $SPKISexp = SPKISexp::fromString('GpM6');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

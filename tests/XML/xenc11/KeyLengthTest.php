@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
 use SimpleSAML\XMLSecurity\XML\xenc11\KeyLength;
 
@@ -45,9 +44,7 @@ final class KeyLengthTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keyLength = new KeyLength(
-            PositiveIntegerValue::fromString('4096'),
-        );
+        $keyLength = KeyLength::fromString('4096');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

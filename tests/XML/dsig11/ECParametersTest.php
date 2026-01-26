@@ -10,11 +10,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\Type\ECPointValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\A;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractECParametersType;
@@ -66,38 +62,28 @@ final class ECParametersTest extends TestCase
     public function testMarshalling(): void
     {
         // Build FieldID
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k = new K(PositiveIntegerValue::fromInteger(64));
+        $m = M::fromString('1024');
+        $k = K::fromString('64');
         $tnb = new TnB($m, $k);
 
         $fieldId = new FieldID($tnb);
 
         // Build Curve
-        $a = new A(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
-        $b = new B(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $a = A::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
+        $b = B::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $curve = new Curve($a, $b);
 
         // Build Base
-        $base = new Base(
-            ECPointValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $base = Base::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build Order
-        $order = new Order(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $order = Order::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build CoFactor
-        $coFactor = new CoFactor(IntegerValue::fromInteger(128));
+        $coFactor = CoFactor::fromString('128');
 
         // Build ValidationData
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $seed = Seed::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $validationData = new ValidationData(
             $seed,
             AnyURIValue::fromString(C::DIGEST_SHA1),

@@ -9,8 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
@@ -61,12 +59,8 @@ final class X509IssuerSerialTest extends TestCase
 
         /** @var string[] $details */
         $details = self::$key->getCertificateDetails();
-        self::$issuer = new X509IssuerName(
-            StringValue::fromString(CertificateUtils::parseIssuer($details['issuer'])),
-        );
-        self::$serial = new X509SerialNumber(
-            IntegerValue::fromString($details['serialNumber']),
-        );
+        self::$issuer = X509IssuerName::fromString(CertificateUtils::parseIssuer($details['issuer']));
+        self::$serial = X509SerialNumber::fromString($details['serialNumber']);
     }
 
 

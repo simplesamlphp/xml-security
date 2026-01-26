@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\RetrievalMethod;
@@ -56,9 +55,7 @@ final class RetrievalMethodTest extends TestCase
         $transforms = new Transforms([
             new Transform(
                 AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-                new XPath(
-                    StringValue::fromString('self::xenc:CipherValue[@Id="example1"]'),
-                ),
+                XPath::fromString('self::xenc:CipherValue[@Id="example1"]'),
             ),
         ]);
 

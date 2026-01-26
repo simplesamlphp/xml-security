@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Type\HMACOutputLengthValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength;
 
@@ -45,9 +44,7 @@ final class HMACOutputLengthTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $hmacOutputLength = new HMACOutputLength(
-            HMACOutputLengthValue::fromString('128'),
-        );
+        $hmacOutputLength = HMACOutputLength::fromString('128');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

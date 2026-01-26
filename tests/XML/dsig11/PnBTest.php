@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCharTwoFieldParamsType;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractPnBFieldParamsType;
@@ -59,10 +58,10 @@ final class PnBTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k1 = new K1(PositiveIntegerValue::fromInteger(128));
-        $k2 = new K2(PositiveIntegerValue::fromInteger(256));
-        $k3 = new K3(PositiveIntegerValue::fromInteger(512));
+        $m = M::fromString('1024');
+        $k1 = K1::fromString('128');
+        $k2 = K2::fromString('256');
+        $k3 = K3::fromString('512');
         $pnb = new PnB($m, $k1, $k2, $k3);
 
         $this->assertEquals(
@@ -76,10 +75,10 @@ final class PnBTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k1 = new K1(PositiveIntegerValue::fromInteger(128));
-        $k2 = new K2(PositiveIntegerValue::fromInteger(256));
-        $k3 = new K3(PositiveIntegerValue::fromInteger(512));
+        $m = M::fromString('1024');
+        $k1 = K1::fromString('128');
+        $k2 = K2::fromString('256');
+        $k3 = K3::fromString('512');
         $pnb = new PnB($m, $k1, $k2, $k3);
 
         $pnbElement = $pnb->toXML();

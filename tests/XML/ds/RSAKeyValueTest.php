@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
@@ -48,12 +47,8 @@ final class RSAKeyValueTest extends TestCase
         );
 
         self::$rsaKeyValue = new RSAKeyValue(
-            new Modulus(
-                CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
-            ),
-            new Exponent(
-                CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
-            ),
+            Modulus::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+            Exponent::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
         );
     }
 

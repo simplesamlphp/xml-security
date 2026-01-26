@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractFieldIDType;
 use SimpleSAML\XMLSecurity\XML\dsig11\FieldID;
@@ -49,9 +48,7 @@ final class FieldIDTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $p = new P(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $p = P::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $prime = new Prime($p);
 
         $fieldId = new FieldID($prime);

@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\MgmtData;
 
@@ -47,9 +46,7 @@ final class MgmtDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $mgmtData = new MgmtData(
-            StringValue::fromString('ManagementData'),
-        );
+        $mgmtData = MgmtData::fromString('ManagementData');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

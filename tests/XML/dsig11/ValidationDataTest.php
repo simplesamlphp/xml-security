@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractECValidationDataType;
 use SimpleSAML\XMLSecurity\XML\dsig11\Seed;
@@ -50,9 +49,7 @@ final class ValidationDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $seed = Seed::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $validationData = new ValidationData(
             $seed,
             AnyURIValue::fromString(C::DIGEST_SHA1),

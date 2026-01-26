@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
 use SimpleSAML\XMLSecurity\XML\xenc11\Specified;
 
@@ -45,9 +44,7 @@ final class SpecifiedTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $specified = new Specified(
-            Base64BinaryValue::fromString('GpM6'),
-        );
+        $specified = Specified::fromString('GpM6');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

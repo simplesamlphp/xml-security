@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\X509SubjectName;
 
@@ -45,9 +44,7 @@ final class X509SubjectNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $subjectName = new X509SubjectName(
-            StringValue::fromString('some name'),
-        );
+        $subjectName = X509SubjectName::fromString('some name');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

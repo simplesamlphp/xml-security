@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 
@@ -43,11 +42,9 @@ class XPathTest extends TestCase
 
     public function testMarshalling(): void
     {
-        $xpath = new XPath(
-            StringValue::fromString('self::xenc:CipherValue[@Id="example1"]'),
-        );
+        $xpath = XPath::fromString('self::xenc:CipherValue[@Id="example1"]');
 
-        $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getExpression());
+        $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getContent()->getValue());
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($xpath),

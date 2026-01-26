@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDSAKeyValueType;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\DSAKeyValue;
@@ -56,27 +55,13 @@ final class DSAKeyValueTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $p = new P(
-            CryptoBinaryValue::fromString('GpM1'),
-        );
-        $q = new Q(
-            CryptoBinaryValue::fromString('GpM2'),
-        );
-        $g = new G(
-            CryptoBinaryValue::fromString('GpM3'),
-        );
-        $y = new Y(
-            CryptoBinaryValue::fromString('GpM4'),
-        );
-        $j = new J(
-            CryptoBinaryValue::fromString('GpM5'),
-        );
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('GpM6'),
-        );
-        $pgenCounter = new PgenCounter(
-            CryptoBinaryValue::fromString('GpM7'),
-        );
+        $p = P::fromString('GpM1');
+        $q = Q::fromString('GpM2');
+        $g = G::fromString('GpM3');
+        $y = Y::fromString('GpM4');
+        $j = J::fromString('GpM5');
+        $seed = Seed::fromString('GpM6');
+        $pgenCounter = PgenCounter::fromString('GpM7');
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 
@@ -91,27 +76,13 @@ final class DSAKeyValueTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $p = new P(
-            CryptoBinaryValue::fromString('GpM1'),
-        );
-        $q = new Q(
-            CryptoBinaryValue::fromString('GpM2'),
-        );
-        $g = new G(
-            CryptoBinaryValue::fromString('GpM3'),
-        );
-        $y = new Y(
-            CryptoBinaryValue::fromString('GpM4'),
-        );
-        $j = new J(
-            CryptoBinaryValue::fromString('GpM5'),
-        );
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('GpM6'),
-        );
-        $pgenCounter = new PgenCounter(
-            CryptoBinaryValue::fromString('GpM7'),
-        );
+        $p = P::fromString('GpM1');
+        $q = Q::fromString('GpM2');
+        $g = G::fromString('GpM3');
+        $y = Y::fromString('GpM4');
+        $j = J::fromString('GpM5');
+        $seed = Seed::fromString('GpM6');
+        $pgenCounter = PgenCounter::fromString('GpM7');
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 

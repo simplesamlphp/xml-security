@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractKeyDerivationMethodType;
@@ -59,7 +58,7 @@ final class KeyDerivationMethodTest extends TestCase
         $kdm = new KeyDerivationMethod(
             AnyURIValue::fromString(C::KEY_DERIVATION_CONCATKDF),
             [
-                new KeyName(StringValue::fromString('testkey')),
+                KeyName::fromString('testkey'),
             ],
         );
 

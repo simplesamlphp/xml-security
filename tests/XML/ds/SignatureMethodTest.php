@@ -13,7 +13,6 @@ use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\HMACOutputLengthValue;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\HMACOutputLength;
@@ -54,9 +53,7 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $hmacOutputLength = new HMACOutputLength(
-            HMACOutputLengthValue::fromString('128'),
-        );
+        $hmacOutputLength = HMACOutputLength::fromString('128');
 
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
@@ -79,9 +76,7 @@ final class SignatureMethodTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $hmacOutputLength = new HMACOutputLength(
-            HMACOutputLengthValue::fromString('128'),
-        );
+        $hmacOutputLength = HMACOutputLength::fromString('128');
 
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',

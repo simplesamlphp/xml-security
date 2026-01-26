@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -64,9 +63,7 @@ final class EncryptedDataTest extends TestCase
     {
         $encryptedData = new EncryptedData(
             new CipherData(
-                new CipherValue(
-                    Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                ),
+                CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             ),
             IDValue::fromString('MyID'),
             AnyURIValue::fromString(C::XMLENC_ELEMENT),
@@ -79,9 +76,7 @@ final class EncryptedDataTest extends TestCase
                 [
                     new EncryptedKey(
                         new CipherData(
-                            new CipherValue(
-                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                            ),
+                            CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                         ),
                         null,
                         null,
@@ -110,9 +105,7 @@ final class EncryptedDataTest extends TestCase
     {
         $encryptedData = new EncryptedData(
             new CipherData(
-                new CipherValue(
-                    Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                ),
+                CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             ),
             IDValue::fromString('MyID'),
             AnyURIValue::fromString(C::XMLENC_ELEMENT),
@@ -125,9 +118,7 @@ final class EncryptedDataTest extends TestCase
                 [
                     new EncryptedKey(
                         new CipherData(
-                            new CipherValue(
-                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                            ),
+                            CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                         ),
                         null,
                         null,

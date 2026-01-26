@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\X509SerialNumber;
 
@@ -46,9 +45,7 @@ final class X509SerialNumberTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $serialNumber = new X509SerialNumber(
-            IntegerValue::fromString('123456'),
-        );
+        $serialNumber = X509SerialNumber::fromString('123456');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

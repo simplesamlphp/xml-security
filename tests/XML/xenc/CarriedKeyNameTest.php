@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\CarriedKeyName;
 
@@ -45,9 +44,7 @@ final class CarriedKeyNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keyName = new CarriedKeyName(
-            StringValue::fromString('Some label'),
-        );
+        $keyName = CarriedKeyName::fromString('Some label');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

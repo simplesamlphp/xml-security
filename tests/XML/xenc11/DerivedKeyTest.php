@@ -14,7 +14,6 @@ use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\Utils\XPath as XPathUtils;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 use SimpleSAML\XMLSecurity\XML\ds\Modulus;
@@ -70,27 +69,19 @@ final class DerivedKeyTest extends TestCase
             AnyURIValue::fromString(C::KEY_DERIVATION_CONCATKDF),
             [
                 new RSAKeyValue(
-                    new Modulus(
-                        CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
-                    ),
-                    new Exponent(
-                        CryptoBinaryValue::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
-                    ),
+                    Modulus::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBtb2R1bHVzCg=='),
+                    Exponent::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo='),
                 ),
             ],
         );
 
         $transformData = new Transform(
             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-            new XPath(
-                StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
-            ),
+            XPath::fromString('self::xenc:EncryptedData[@Id="example1"]'),
         );
         $transformKey = new Transform(
             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-            new XPath(
-                StringValue::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
-            ),
+            XPath::fromString('self::xenc:EncryptedKey[@Id="example1"]'),
         );
 
         self::$referenceList = new ReferenceList(
@@ -117,12 +108,8 @@ final class DerivedKeyTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $derivedKeyName = new DerivedKeyName(
-            StringValue::fromString('phpunit'),
-        );
-        $masterKeyName = new MasterKeyName(
-            StringValue::fromString('phpunit'),
-        );
+        $derivedKeyName = DerivedKeyName::fromString('phpunit');
+        $masterKeyName = MasterKeyName::fromString('phpunit');
 
         $derivedKey = new DerivedKey(
             StringValue::fromString('phpunit'),
@@ -145,12 +132,8 @@ final class DerivedKeyTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $derivedKeyName = new DerivedKeyName(
-            StringValue::fromString('phpunit'),
-        );
-        $masterKeyName = new MasterKeyName(
-            StringValue::fromString('phpunit'),
-        );
+        $derivedKeyName = DerivedKeyName::fromString('phpunit');
+        $masterKeyName = MasterKeyName::fromString('phpunit');
 
         $derivedKey = new DerivedKey(
             StringValue::fromString('phpunit'),

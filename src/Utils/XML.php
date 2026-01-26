@@ -112,7 +112,9 @@ class XML
                     $xpath = $transform->getXPath();
                     if ($xpath !== null) {
                         $arXPath = [];
-                        $arXPath['query'] = '(.//. | .//@* | .//namespace::*)[' . $xpath->getExpression() . ']';
+                        $xpathValue = $xpath->getContent()->getValue();
+                        $arXPath['query'] = '(.//. | .//@* | .//namespace::*)[' . $xpathValue . ']';
+
 //                        $arXpath['namespaces'] = $xpath->getNamespaces();
                         // TODO: review if $nsnode->localName is equivalent to the keys in getNamespaces()
 //                        $nslist = $xp->query('./namespace::*', $node);

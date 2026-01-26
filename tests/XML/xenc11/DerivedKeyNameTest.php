@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
 use SimpleSAML\XMLSecurity\XML\xenc11\DerivedKeyName;
 
@@ -45,9 +44,7 @@ final class DerivedKeyNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $derivedKeyName = new DerivedKeyName(
-            StringValue::fromString('phpunit'),
-        );
+        $derivedKeyName = DerivedKeyName::fromString('phpunit');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

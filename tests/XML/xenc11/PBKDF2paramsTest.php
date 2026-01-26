@@ -13,7 +13,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractPBKDF2ParameterType;
 use SimpleSAML\XMLSecurity\XML\xenc11\AbstractXenc11Element;
@@ -77,12 +76,8 @@ final class PBKDF2paramsTest extends TestCase
         );
 
         $salt = new Salt($otherSource);
-        $iterationCount = new IterationCount(
-            PositiveIntegerValue::fromString('3'),
-        );
-        $keyLength = new KeyLength(
-            PositiveIntegerValue::fromString('4096'),
-        );
+        $iterationCount = IterationCount::fromString('3');
+        $keyLength = KeyLength::fromString('4096');
         $prf = new PRF(
             AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
         );

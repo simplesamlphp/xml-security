@@ -10,9 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractSPKIDataType;
 use SimpleSAML\XMLSecurity\XML\ds\SPKIData;
@@ -54,24 +51,12 @@ final class SPKIDataTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $SPKISexp1 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM6'),
-        );
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-        );
-        $SPKISexp2 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM7'),
-        );
-        $SPKISexp3 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM8'),
-        );
-        $carriedKeyName = new CarriedKeyName(
-            StringValue::fromString('Some label'),
-        );
-        $SPKISexp4 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM9'),
-        );
+        $SPKISexp1 = SPKISexp::fromString('GpM6');
+        $seed = Seed::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $SPKISexp2 = SPKISexp::fromString('GpM7');
+        $SPKISexp3 = SPKISexp::fromString('GpM8');
+        $carriedKeyName = CarriedKeyName::fromString('Some label');
+        $SPKISexp4 = SPKISexp::fromString('GpM9');
 
         $SPKIData = new SPKIData([
             [$SPKISexp1, $seed],

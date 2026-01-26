@@ -13,7 +13,6 @@ use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\DigestValue as DigestValueType;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\DigestValue;
@@ -59,9 +58,7 @@ final class ManifestTest extends TestCase
             new DigestMethod(
                 AnyURIValue::fromString(C::DIGEST_SHA256),
             ),
-            new DigestValue(
-                DigestValueType::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-            ),
+            DigestValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
             new Transforms(
                 [
                     new Transform(
@@ -79,7 +76,7 @@ final class ManifestTest extends TestCase
 
         $manifest = new Manifest(
             [$reference],
-            IDValue::FromString('def456'),
+            IDValue::fromString('def456'),
         );
 
         $this->assertEquals(

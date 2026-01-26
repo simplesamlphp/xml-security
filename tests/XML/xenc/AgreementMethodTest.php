@@ -12,9 +12,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\Utils\XPath;
@@ -97,9 +95,7 @@ final class AgreementMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $kaNonce = new KANonce(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-        );
+        $kaNonce = KANonce::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $digestMethod = new DigestMethod(
             AnyURIValue::fromString(C::DIGEST_SHA256),
@@ -112,17 +108,11 @@ final class AgreementMethodTest extends TestCase
 
         $originatorKeyInfo = new OriginatorKeyInfo(
             [
-                new KeyName(
-                    StringValue::fromString('testkey'),
-                ),
+                KeyName::fromString('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate(
-                            Base64BinaryValue::fromString(self::$certificate),
-                        ),
-                        new X509SubjectName(
-                            StringValue::fromString(self::$certData['name']),
-                        ),
+                        X509Certificate::fromString(self::$certificate),
+                        X509SubjectName::fromString(self::$certData['name']),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
@@ -134,17 +124,11 @@ final class AgreementMethodTest extends TestCase
 
         $recipientKeyInfo = new RecipientKeyInfo(
             [
-                new KeyName(
-                    StringValue::fromString('testkey'),
-                ),
+                KeyName::fromString('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate(
-                            Base64BinaryValue::fromString(self::$certificate),
-                        ),
-                        new X509SubjectName(
-                            StringValue::fromString(self::$certData['name']),
-                        ),
+                        X509Certificate::fromString(self::$certificate),
+                        X509SubjectName::fromString(self::$certData['name']),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
@@ -171,9 +155,7 @@ final class AgreementMethodTest extends TestCase
 
     public function testMarshallingElementOrdering(): void
     {
-        $kaNonce = new KANonce(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-        );
+        $kaNonce = KANonce::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
         $digestMethod = new DigestMethod(
             AnyURIValue::fromString(C::DIGEST_SHA256),
@@ -186,17 +168,11 @@ final class AgreementMethodTest extends TestCase
 
         $originatorKeyInfo = new OriginatorKeyInfo(
             [
-                new KeyName(
-                    StringValue::fromString('testkey'),
-                ),
+                KeyName::fromString('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate(
-                            Base64BinaryValue::fromString(self::$certificate),
-                        ),
-                        new X509SubjectName(
-                            StringValue::fromString(self::$certData['name']),
-                        ),
+                        X509Certificate::fromString(self::$certificate),
+                        X509SubjectName::fromString(self::$certData['name']),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(
@@ -208,17 +184,11 @@ final class AgreementMethodTest extends TestCase
 
         $recipientKeyInfo = new RecipientKeyInfo(
             [
-                new KeyName(
-                    StringValue::fromString('testkey'),
-                ),
+                KeyName::fromString('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate(
-                            Base64BinaryValue::fromString(self::$certificate),
-                        ),
-                        new X509SubjectName(
-                            StringValue::fromString(self::$certData['name']),
-                        ),
+                        X509Certificate::fromString(self::$certificate),
+                        X509SubjectName::fromString(self::$certData['name']),
                     ],
                 ),
                 new Chunk(DOMDocumentFactory::fromString(

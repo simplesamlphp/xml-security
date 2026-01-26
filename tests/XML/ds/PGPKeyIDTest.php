@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyID;
 
@@ -45,9 +44,7 @@ final class PGPKeyIDTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $pgpKeyId = new PGPKeyID(
-            Base64BinaryValue::fromString('GpM7'),
-        );
+        $pgpKeyId = PGPKeyID::fromString('GpM7');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -13,8 +13,6 @@ use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
@@ -106,28 +104,20 @@ final class X509DataTest extends TestCase
     {
         $x509data = new X509Data(
             [
-                new X509Certificate(
-                    Base64BinaryValue::fromString(self::$certificate),
-                ),
+                X509Certificate::fromString(self::$certificate),
                 new X509IssuerSerial(
-                    new X509IssuerName(
-                        StringValue::fromString(sprintf(
-                            'C=%s,ST=%s,L=%s,O=%s,CN=%s,emailAddress=%s',
-                            'US',
-                            'Hawaii',
-                            'Honolulu',
-                            'SimpleSAMLphp HQ',
-                            'SimpleSAMLphp Testing CA',
-                            'noreply@simplesamlphp.org',
-                        )),
-                    ),
-                    new X509SerialNumber(
-                        IntegerValue::fromString('2'),
-                    ),
+                    X509IssuerName::fromString(sprintf(
+                        'C=%s,ST=%s,L=%s,O=%s,CN=%s,emailAddress=%s',
+                        'US',
+                        'Hawaii',
+                        'Honolulu',
+                        'SimpleSAMLphp HQ',
+                        'SimpleSAMLphp Testing CA',
+                        'noreply@simplesamlphp.org',
+                    )),
+                    X509SerialNumber::fromString('2'),
                 ),
-                new X509SubjectName(
-                    StringValue::fromString(self::$certData['name']),
-                ),
+                X509SubjectName::fromString(self::$certData['name']),
                 new X509Digest(
                     Base64BinaryValue::fromString(self::$digest),
                     AnyURIValue::fromString(C::DIGEST_SHA256),

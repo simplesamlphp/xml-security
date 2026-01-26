@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
 use SimpleSAML\XMLSecurity\XML\xenc\OAEPparams;
 
@@ -45,9 +44,7 @@ final class OAEPparamsTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $params = new OAEPparams(
-            Base64BinaryValue::fromString('9lWu3Q=='),
-        );
+        $params = OAEPparams::fromString('9lWu3Q==');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -10,12 +10,9 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractKeyInfoType;
 use SimpleSAML\XMLSecurity\XML\ds\KeyName;
@@ -99,48 +96,26 @@ final class RecipientKeyInfoTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $SPKISexp1 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM6'),
-        );
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-        );
-        $SPKISexp2 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM7'),
-        );
-        $SPKISexp3 = new SPKISexp(
-            Base64BinaryValue::fromString('GpM8'),
-        );
-        $carriedKeyName = new CarriedKeyName(
-            StringValue::fromString('Some label'),
-        );
+        $SPKISexp1 = SPKISexp::fromString('GpM6');
+        $seed = Seed::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
+        $SPKISexp2 = SPKISexp::fromString('GpM7');
+        $SPKISexp3 = SPKISexp::fromString('GpM8');
+        $carriedKeyName = CarriedKeyName::fromString('Some label');
 
         $recipientKeyInfo = new RecipientKeyInfo(
             [
-                new KeyName(
-                    StringValue::fromString('testkey'),
-                ),
+                KeyName::fromString('testkey'),
                 new X509Data(
                     [
-                        new X509Certificate(
-                            Base64BinaryValue::fromString(self::$certificate),
-                        ),
-                        new X509SubjectName(
-                            StringValue::fromString(self::$certData['name']),
-                        ),
+                        X509Certificate::fromString(self::$certificate),
+                        X509SubjectName::fromString(self::$certData['name']),
                     ],
                 ),
                 new PGPData(
-                    new PGPKeyID(
-                        Base64BinaryValue::fromString('GpM7'),
-                    ),
-                    new PGPKeyPacket(
-                        Base64BinaryValue::fromString('GpM8'),
-                    ),
+                    PGPKeyID::fromString('GpM7'),
+                    PGPKeyPacket::fromString('GpM8'),
                     [
-                        new P(
-                            CryptoBinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                        ),
+                        P::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                     ],
                 ),
                 new SPKIData([
@@ -148,9 +123,7 @@ final class RecipientKeyInfoTest extends TestCase
                     [$SPKISexp2, null],
                     [$SPKISexp3, $carriedKeyName],
                 ]),
-                new MgmtData(
-                    StringValue::fromString('ManagementData'),
-                ),
+                MgmtData::fromString('ManagementData'),
                 new Chunk(DOMDocumentFactory::fromString(
                     '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
                 )->documentElement),

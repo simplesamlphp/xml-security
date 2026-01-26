@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\A;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCurveType;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
@@ -49,12 +48,8 @@ final class CurveTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $a = new A(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
-        $b = new B(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $a = A::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
+        $b = B::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $curve = new Curve($a, $b);
 
         $this->assertEquals(

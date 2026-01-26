@@ -11,7 +11,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
@@ -82,15 +81,13 @@ final class EncryptedKeyTest extends TestCase
     {
         $encryptedKey = new EncryptedKey(
             new CipherData(
-                new CipherValue(
-                    Base64BinaryValue::fromString(
-                        '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
-                        '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
-                        'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
-                        'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
-                        'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
-                        'Cn66P/Zt7I9Q==',
-                    ),
+                CipherValue::fromString(
+                    '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
+                    '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
+                    'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
+                    'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
+                    'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
+                    'Cn66P/Zt7I9Q==',
                 ),
             ),
             IDValue::fromString('Encrypted_KEY_ID'),
@@ -98,9 +95,7 @@ final class EncryptedKeyTest extends TestCase
             StringValue::fromString('text/plain'),
             AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
             StringValue::fromString('some_ENTITY_ID'),
-            new CarriedKeyName(
-                StringValue::fromString('Name of the key'),
-            ),
+            CarriedKeyName::fromString('Name of the key'),
             new EncryptionMethod(
                 AnyURIValue::fromString(C::KEY_TRANSPORT_RSA_1_5),
             ),
@@ -108,9 +103,7 @@ final class EncryptedKeyTest extends TestCase
                 [
                     new EncryptedKey(
                         new CipherData(
-                            new CipherValue(
-                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                            ),
+                            CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                         ),
                         null,
                         null,
@@ -144,15 +137,13 @@ final class EncryptedKeyTest extends TestCase
     {
         $encryptedKey = new EncryptedKey(
             new CipherData(
-                new CipherValue(
-                    Base64BinaryValue::fromString(
-                        '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
-                        '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
-                        'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
-                        'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
-                        'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
-                        'Cn66P/Zt7I9Q==',
-                    ),
+                CipherValue::fromString(
+                    '3W3C4UoWshi02yrqsLC2z8Qr1FjdTz7LV9CvpunilOX4teGKsjKqNbS92DKcXLwS8s' .
+                    '4eHBdHejiL1bySDQT5diN/TVo8zz0AmPwX3/eHPQE91NWzceB+yaoEDauMPvi7twUd' .
+                    'oipbLZa7cyT4QR+RO9w5P5wf4wDoTPUoQV6dF9YSJqehuRFCqVJprIDZNfrKnm7Wfw' .
+                    'MiaMLvaLVdLWgXjuVdiH0lT/F4KJrhJwAnjp57KGn9mhAcwkFe+qDIMSi8Ond6I0FO' .
+                    'V3SOx8NxpSTHYfZ4qE1Xn/dvUUXqgRnEFPHAw4JFmJPjgTSCPU6BdwBLzqVjh1pCLo' .
+                    'Cn66P/Zt7I9Q==',
                 ),
             ),
             IDValue::fromString('Encrypted_KEY_ID'),
@@ -160,9 +151,7 @@ final class EncryptedKeyTest extends TestCase
             StringValue::fromString('text/plain'),
             AnyURIValue::fromString('urn:x-simplesamlphp:encoding'),
             StringValue::fromString('some_ENTITY_ID'),
-            new CarriedKeyName(
-                StringValue::fromString('Name of the key'),
-            ),
+            CarriedKeyName::fromString('Name of the key'),
             new EncryptionMethod(
                 AnyURIValue::fromString(C::KEY_TRANSPORT_RSA_1_5),
             ),
@@ -170,9 +159,7 @@ final class EncryptedKeyTest extends TestCase
                 [
                     new EncryptedKey(
                         new CipherData(
-                            new CipherValue(
-                                Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-                            ),
+                            CipherValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
                         ),
                         null,
                         null,

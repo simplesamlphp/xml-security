@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
@@ -53,9 +52,7 @@ final class TransformsTest extends TestCase
             [
                 new Transform(
                     AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-                    new XPath(
-                        StringValue::fromString('count(//. | //@* | //namespace::*)'),
-                    ),
+                    XPath::fromString('count(//. | //@* | //namespace::*)'),
                 ),
             ],
         );

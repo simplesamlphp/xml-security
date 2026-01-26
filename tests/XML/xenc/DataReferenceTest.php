@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\Transform;
 use SimpleSAML\XMLSecurity\XML\ds\Transforms;
 use SimpleSAML\XMLSecurity\XML\ds\XPath;
@@ -61,9 +60,7 @@ final class DataReferenceTest extends TestCase
                     [
                         new Transform(
                             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
-                            new XPath(
-                                StringValue::fromString('self::xenc:EncryptedData[@Id="example1"]'),
-                            ),
+                            XPath::fromString('self::xenc:EncryptedData[@Id="example1"]'),
                         ),
                     ],
                 ),

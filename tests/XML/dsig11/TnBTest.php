@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCharTwoFieldParamsType;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractTnBFieldParamsType;
@@ -55,8 +54,8 @@ final class TnBTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k = new K(PositiveIntegerValue::fromInteger(64));
+        $m = M::fromString('1024');
+        $k = K::fromString('64');
         $tnb = new TnB($m, $k);
 
         $this->assertEquals(
@@ -70,8 +69,8 @@ final class TnBTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k = new K(PositiveIntegerValue::fromInteger(64));
+        $m = M::fromString('1024');
+        $k = K::fromString('64');
         $tnb = new TnB($m, $k);
 
         $tnbElement = $tnb->toXML();

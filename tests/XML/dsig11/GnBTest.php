@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractCharTwoFieldParamsType;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\GnB;
@@ -51,7 +50,7 @@ final class GnBTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
+        $m = M::fromString('1024');
         $gnb = new GnB($m);
 
         $this->assertEquals(

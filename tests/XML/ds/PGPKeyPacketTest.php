@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\PGPKeyPacket;
 
@@ -45,9 +44,7 @@ final class PGPKeyPacketTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $pgpKeyPacket = new PGPKeyPacket(
-            Base64BinaryValue::fromString('GpM7'),
-        );
+        $pgpKeyPacket = PGPKeyPacket::fromString('GpM7');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

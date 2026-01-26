@@ -12,11 +12,7 @@ use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
-use SimpleSAML\XMLSchema\Type\IntegerValue;
-use SimpleSAML\XMLSchema\Type\PositiveIntegerValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\CryptoBinaryValue;
-use SimpleSAML\XMLSecurity\Type\ECPointValue;
 use SimpleSAML\XMLSecurity\XML\dsig11\A;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractECKeyValueType;
@@ -72,40 +68,30 @@ final class ECKeyValueTest extends TestCase
     public function testMarshalling(): void
     {
         // Build FieldID
-        $m = new M(PositiveIntegerValue::fromInteger(1024));
-        $k1 = new K1(PositiveIntegerValue::fromInteger(128));
-        $k2 = new K2(PositiveIntegerValue::fromInteger(256));
-        $k3 = new K3(PositiveIntegerValue::fromInteger(512));
+        $m = M::fromString('1024');
+        $k1 = K1::fromString('128');
+        $k2 = K2::fromString('256');
+        $k3 = K3::fromString('512');
         $pnb = new PnB($m, $k1, $k2, $k3);
 
         $fieldId = new FieldID($pnb);
 
         // Build Curve
-        $a = new A(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
-        $b = new B(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $a = A::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
+        $b = B::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $curve = new Curve($a, $b);
 
         // Build Base
-        $base = new Base(
-            ECPointValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $base = Base::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build Order
-        $order = new Order(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $order = Order::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build CoFactor
-        $coFactor = new CoFactor(IntegerValue::fromInteger(128));
+        $coFactor = CoFactor::fromString('128');
 
         // Build ValidationData
-        $seed = new Seed(
-            CryptoBinaryValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $seed = Seed::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $validationData = new ValidationData(
             $seed,
             AnyURIValue::fromString(C::DIGEST_SHA1),
@@ -115,9 +101,7 @@ final class ECKeyValueTest extends TestCase
         $ecParameters = new ECParameters($fieldId, $curve, $base, $order, $coFactor, $validationData);
 
         // Build PublicKey
-        $publicKey = new PublicKey(
-            ECPointValue::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE='),
-        );
+        $publicKey = PublicKey::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
         // Build ECKeyValue
         $ecKeyValue = new ECKeyValue(

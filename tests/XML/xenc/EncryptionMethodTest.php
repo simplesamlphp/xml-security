@@ -12,9 +12,7 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Exception\MissingAttributeException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Constants as C;
-use SimpleSAML\XMLSecurity\Type\KeySizeValue;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\xenc\AbstractEncryptionMethod;
 use SimpleSAML\XMLSecurity\XML\xenc\AbstractXencElement;
@@ -66,12 +64,8 @@ final class EncryptionMethodTest extends TestCase
 
         $em = new EncryptionMethod(
             AnyURIValue::fromString(C::KEY_TRANSPORT_OAEP_MGF1P),
-            new KeySize(
-                KeySizeValue::fromString('10'),
-            ),
-            new OAEPparams(
-                Base64BinaryValue::fromString('9lWu3Q=='),
-            ),
+            KeySize::fromString('10'),
+            OAEPparams::fromString('9lWu3Q=='),
             [$chunk],
         );
 
@@ -114,12 +108,8 @@ final class EncryptionMethodTest extends TestCase
 
         $em = new EncryptionMethod(
             AnyURIValue::fromString(C::KEY_TRANSPORT_OAEP_MGF1P),
-            new KeySize(
-                KeySizeValue::fromString('10'),
-            ),
-            new OAEPparams(
-                Base64BinaryValue::fromString('9lWu3Q=='),
-            ),
+            KeySize::fromString('10'),
+            OAEPparams::fromString('9lWu3Q=='),
             [$chunk],
         );
 
