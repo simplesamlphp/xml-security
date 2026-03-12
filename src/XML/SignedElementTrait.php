@@ -20,7 +20,6 @@ use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\SignatureVerificationFailedException;
 use SimpleSAML\XMLSecurity\Key;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
-use SimpleSAML\XMLSecurity\Utils\XML;
 use SimpleSAML\XMLSecurity\Utils\XPath;
 use SimpleSAML\XMLSecurity\XML\ds\Reference;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
@@ -157,7 +156,7 @@ trait SignedElementTrait
         Assert::maxCount($sigNode, 1, 'More than one signature found in object.', TooManyElementsException::class);
 
         $doc->documentElement->removeChild($sigNode[0]);
-        $data = XML::processTransforms($reference->getTransforms(), $doc->documentElement);
+        $data = $this->processTransforms($reference->getTransforms(), $doc->documentElement);
         $algo = $reference->getDigestMethod()->getAlgorithm()->getValue();
         Assert::keyExists(
             C::$DIGEST_ALGORITHMS,
