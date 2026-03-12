@@ -201,10 +201,8 @@ trait SignedElementTrait
 
         // the canonicalized ds:SignedInfo element (plaintext)
         $c14nSignedInfo = $signedInfo->canonicalize($c14nAlg->getValue());
-        $ref = $this->validateReference(
-            SignedInfo::fromXML(DOMDocumentFactory::fromString($c14nSignedInfo)->documentElement),
-        );
 
+        // verify the c14n signed info has correct signature
         if (
             $verifier?->verify(
                 $c14nSignedInfo, // the canonicalized ds:SignedInfo element (plaintext)
@@ -212,6 +210,11 @@ trait SignedElementTrait
                 base64_decode(strval($this->getSignature()->getSignatureValue()->getValue()), true),
             )
         ) {
+            // uses the trusted c14nsignedinfo and only the c14nsignedinfo to validate references
+            $ref = $this->validateReference(
+                SignedInfo::fromXML(DOMDocumentFactory::fromString($c14nSignedInfo)->documentElement),
+            );
+
             /*
              * validateReference() returns an object of the same class using this trait. This means the validatingKey
              * property is available, and we can set it on the newly created object because we are in the same class,
@@ -220,6 +223,7 @@ trait SignedElementTrait
             $ref->validatingKey = $verifier->getKey();
             return $ref;
         }
+
         throw new SignatureVerificationFailedException('Failed to verify signature.');
     }
 
