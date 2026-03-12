@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\XML;
 
 use DOMElement;
+use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\CanonicalizationFailedException;
 use SimpleSAML\XMLSecurity\Exception\ReferenceValidationFailedException;
@@ -120,6 +121,13 @@ trait CanonicalizableElementTrait
         Transforms $transforms,
         DOMElement $data,
     ): string {
+        Assert::maxCount(
+            $transforms->getTransform(),
+            C::MAX_TRANSFORMS,
+            ReferenceValidationFailedException::class,
+            'Too many transforms.',
+        );
+
         $canonicalMethod = C::C14N_EXCLUSIVE_WITHOUT_COMMENTS;
         $arXPath = null;
         $prefixList = null;

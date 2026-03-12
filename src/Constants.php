@@ -163,6 +163,13 @@ class Constants extends \SimpleSAML\XML\Constants
 
     public const string XMLENC_EXI = 'http://www.w3.org/2009/xmlenc11#EXI';
 
+    /**
+     * Library default limits
+     */
+    public const int MAX_TRANSFORMS = 2;
+
+    public const int MAX_XPATH_NAMESPACES = 20;
+
 
     /** @var string[] */
     public static array $KEY_WRAP_ALGORITHMS = [
