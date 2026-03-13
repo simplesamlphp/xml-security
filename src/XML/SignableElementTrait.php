@@ -39,9 +39,6 @@ use function in_array;
  */
 trait SignableElementTrait
 {
-    use CanonicalizableElementTrait;
-
-
     /** @var \SimpleSAML\XMLSecurity\XML\ds\Signature|null */
     protected ?Signature $signature = null;
 

@@ -11,6 +11,8 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
+use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\EncryptableElementInterface;
 use SimpleSAML\XMLSecurity\XML\EncryptableElementTrait;
@@ -25,10 +27,12 @@ use SimpleSAML\XMLSecurity\XML\SignedElementTrait;
  * @package simplesamlphp/xml-security
  */
 class CustomSignable extends AbstractElement implements
+    CanonicalizableElementInterface,
     SignableElementInterface,
     SignedElementInterface,
     EncryptableElementInterface
 {
+    use CanonicalizableElementTrait;
     use SignableElementTrait;
     use SignedElementTrait;
     use EncryptableElementTrait;

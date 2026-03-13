@@ -42,9 +42,6 @@ use function strval;
  */
 trait SignedElementTrait
 {
-    use CanonicalizableElementTrait;
-
-
     /**
      * The signature of this element.
      *
