@@ -83,8 +83,8 @@ final class EncryptionMethodTest extends TestCase
     public function testMarshallingWithoutOptionalParameters(): void
     {
         $document = DOMDocumentFactory::fromString(
-            '<xenc:EncryptionMethod ' .
-            'Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" xmlns:xenc="' . C::NS_XENC . '"/>',
+            '<xenc:EncryptionMethod xmlns:xenc="' . C::NS_XENC .
+            '" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>',
         );
 
         $em = new EncryptionMethod(
@@ -170,7 +170,7 @@ final class EncryptionMethodTest extends TestCase
         $xencns = C::NS_XENC;
         $document = DOMDocumentFactory::fromString(
             <<<XML
-<xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" xmlns:xenc="{$xencns}"/>
+<xenc:EncryptionMethod xmlns:xenc="{$xencns}" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
 XML
             ,
         );
