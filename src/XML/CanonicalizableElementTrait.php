@@ -163,7 +163,7 @@ trait CanonicalizableElementTrait
 
                         foreach ($nslist as $nsnode) {
                             if ($nsnode instanceof Dom\Element) {
-                                if ($nsnode->localName != "xml") {
+                                if ($nsnode->localName !== "xml") {
                                     $arXPath['namespaces'][$nsnode->localName] = $nsnode->nodeValue;
                                 }
                             }
