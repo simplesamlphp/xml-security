@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use DOMDocument;
+use Dom;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -34,14 +34,14 @@ final class KeyValueTest extends TestCase
     use SerializableElementTestTrait;
 
 
-    /** @var \DOMDocument $empty */
-    protected static DOMDocument $empty;
+    /** @var \Dom\XMLDocument $empty */
+    protected static Dom\XMLDocument $empty;
 
-    /** @var \DOMDocument $rsaKeyValue */
-    protected static DOMDocument $rsaKeyValue;
+    /** @var \Dom\XMLDocument $rsaKeyValue */
+    protected static Dom\XMLDocument $rsaKeyValue;
 
-    /** @var \DOMDocument $encryptionProperty */
-    protected static DOMDocument $encryptionProperty;
+    /** @var \Dom\XMLDocument $encryptionProperty */
+    protected static Dom\XMLDocument $encryptionProperty;
 
 
     /**
@@ -83,7 +83,7 @@ final class KeyValueTest extends TestCase
         $normalized = DOMDocumentFactory::normalizeDocument($document);
 
         $this->assertXmlStringEqualsXmlString(
-            $normalized->saveXML($normalized),
+            $normalized->saveXml($normalized),
             strval($keyValue),
         );
     }
@@ -103,7 +103,7 @@ final class KeyValueTest extends TestCase
         $normalized = DOMDocumentFactory::normalizeDocument($document);
 
         $this->assertXmlStringEqualsXmlString(
-            $normalized->saveXML($normalized),
+            $normalized->saveXml($normalized),
             strval($keyValue),
         );
     }

@@ -46,9 +46,10 @@ final class MasterKeyNameTest extends TestCase
     {
         $masterKeyName = MasterKeyName::fromString('phpunit');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($masterKeyName),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($masterKeyName);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

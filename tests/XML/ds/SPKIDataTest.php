@@ -65,9 +65,10 @@ final class SPKIDataTest extends TestCase
             [$SPKISexp4, null],
         ]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($SPKIData),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($SPKIData);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

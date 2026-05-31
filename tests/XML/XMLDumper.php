@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMDocument;
+use Dom;
 
 use function preg_replace;
 
@@ -15,7 +15,7 @@ use function preg_replace;
  */
 final class XMLDumper
 {
-    public static function dumpDOMDocumentXMLWithBase64Content(DOMDocument $document): string
+    public static function dumpDOMDocumentXMLWithBase64Content(Dom\XMLDocument $document): string
     {
         $dump = $document->saveXML($document->documentElement);
         return preg_replace('/ *[\\r\\n] */', '', $dump);

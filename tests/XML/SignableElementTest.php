@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMDocument;
+use Dom;
+use DOMException;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
@@ -24,7 +25,6 @@ use function array_shift;
 use function dirname;
 use function explode;
 use function join;
-use function strval;
 use function trim;
 
 /**
@@ -42,7 +42,7 @@ final class SignableElementTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     private static PrivateKey $key;
 
-    private static DOMDocument $signed;
+    private static Dom\XMLDocument $signed;
 
 
     /**
@@ -91,11 +91,10 @@ final class SignableElementTest extends TestCase
         ]);
 
         $customSignable->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
+        $expectedXml = self::$signed->documentElement->C14N();
+        $actualXml = $customSignable->toXML()->C14N();
 
-        $this->assertEquals(
-            self::$signed->saveXML(self::$signed->documentElement),
-            strval($customSignable),
-        );
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -129,10 +128,10 @@ final class SignableElementTest extends TestCase
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithId.xml',
         );
 
-        $this->assertEquals(
-            $signed->saveXML($signed->documentElement),
-            strval($customSignable),
-        );
+        $expectedXml = $signed->documentElement->C14N();
+        $actualXml = $customSignable->toXML()->C14N();
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -167,10 +166,10 @@ final class SignableElementTest extends TestCase
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithComments.xml',
         );
 
-        $this->assertEquals(
-            $signed->saveXML($signed->documentElement),
-            strval($customSignable),
-        );
+        $expectedXml = $signed->documentElement->C14N();
+        $actualXml = $customSignable->toXML()->C14N();
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -205,10 +204,10 @@ final class SignableElementTest extends TestCase
             dirname(__FILE__, 2) . '/resources/xml/custom_CustomSignableSignedWithCommentsAndId.xml',
         );
 
-        $this->assertEquals(
-            $signed->saveXML($signed->documentElement),
-            strval($customSignable),
-        );
+        $expectedXml = $signed->documentElement->C14N();
+        $actualXml = $customSignable->toXML()->C14N();
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -221,16 +220,16 @@ final class SignableElementTest extends TestCase
      */
     public function testSigningDocumentWithoutRoot(): void
     {
-        $doc = new DOMDocument('1.0', 'UTF-8');
-        /** @var \DOMElement $node */
+        $doc = DOMDocumentFactory::create();
+        /** @var \Dom\Element $node */
         $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
         $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);
         $customSignable->sign($signer);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Cannot create a document reference without a root element in the document.');
+        $this->expectException(DOMException::class);
+        $this->expectExceptionMessage('Canonicalization can only happen on nodes attached to a document.');
         $customSignable->toXML();
     }
 
@@ -245,10 +244,13 @@ final class SignableElementTest extends TestCase
      */
     public function testSigningWithDifferentRoot(): void
     {
-        $doc = DOMDocumentFactory::fromString('<ns:Root><ns:foo>bar</ns:foo></ns:Root>');
-        /** @var \DOMElement $node */
+        $doc = DOMDocumentFactory::fromString(
+            '<ns:Root xmlns:ns="urn:x-simplesamlphp:namespace"><ns:foo>bar</ns:foo></ns:Root>',
+        );
+
+        /** @var \Dom\Element $node */
         $node = $doc->importNode(self::$xmlRepresentation->documentElement, true);
-        $doc->appendChild($node);
+        $doc->firstChild->appendChild($node);
         $customSignable = CustomSignable::fromXML($node);
         $factory = new SignatureAlgorithmFactory();
         $signer = $factory->getAlgorithm(C::SIG_RSA_SHA256, self::$key);

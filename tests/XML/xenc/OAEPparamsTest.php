@@ -46,9 +46,10 @@ final class OAEPparamsTest extends TestCase
     {
         $params = OAEPparams::fromString('9lWu3Q==');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($params),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($params);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

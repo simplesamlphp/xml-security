@@ -71,9 +71,10 @@ final class CipherReferenceTest extends TestCase
             [self::$transforms],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($cipherReference),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($cipherReference);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

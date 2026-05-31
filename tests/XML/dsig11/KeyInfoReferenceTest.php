@@ -48,14 +48,15 @@ final class KeyInfoReferenceTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $KeyInfoReference = new KeyInfoReference(
+        $keyInfoReference = new KeyInfoReference(
             AnyURIValue::fromString('#_e395489e5f8444f1aabb4b2ca98a23b793d211ddf0'),
             IDValue::fromString('abc123'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($KeyInfoReference),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyInfoReference);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

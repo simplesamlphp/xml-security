@@ -110,9 +110,10 @@ final class ECKeyValueTest extends TestCase
             $ecParameters,
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($ecKeyValue),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($ecKeyValue);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

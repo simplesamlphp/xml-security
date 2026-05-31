@@ -36,4 +36,6 @@ $keyInfo = new KeyInfo([
 
 $unsignedElement = CustomSignable::fromXML($document->documentElement);
 $unsignedElement->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
-echo str_replace('Some', 'TAMPERED', $unsignedElement->toXML()->ownerDocument->saveXML());
+/** @var \Dom\XMLDocument $ownerDocument */
+$ownerDocument = $unsignedElement->toXML()->ownerDocument;
+echo str_replace('Some', 'TAMPERED', $ownerDocument->saveXML());

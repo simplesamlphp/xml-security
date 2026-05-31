@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML\ds;
 
-use DOMElement;
+use Dom;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -70,17 +70,18 @@ final class SignedInfoTest extends TestCase
             IDValue::fromString('cba321'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signedInfo),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signedInfo);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
     /**
      *
      */
-    private function canonicalization(DOMElement $xml, SignedInfo $signedInfo): void
+    private function canonicalization(Dom\Element $xml, SignedInfo $signedInfo): void
     {
         $this->assertEquals(
             $xml->C14N(true, false),

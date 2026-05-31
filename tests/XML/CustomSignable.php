@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -55,11 +55,11 @@ class CustomSignable extends AbstractElement implements
     /**
      * Constructor
      *
-     * @param \DOMElement $xml
+     * @param \Dom\Element $xml
      * @param \SimpleSAML\XMLSchema\Type\IDValue $id
      */
     final public function __construct(
-        protected DOMElement $xml,
+        protected Dom\Element $xml,
         protected ?IDValue $id,
     ) {
     }
@@ -90,9 +90,9 @@ class CustomSignable extends AbstractElement implements
     /**
      * Get the XML element.
      *
-     * @return \DOMElement
+     * @return \Dom\Element
      */
-    public function getXML(): DOMElement
+    public function getXML(): Dom\Element
     {
         return $this->xml;
     }
@@ -110,7 +110,7 @@ class CustomSignable extends AbstractElement implements
     /**
      * @inheritDoc
      */
-    protected function getOriginalXML(): DOMElement
+    protected function getOriginalXML(): Dom\Element
     {
         return $this->xml;
     }
@@ -158,13 +158,13 @@ class CustomSignable extends AbstractElement implements
     /**
      * Convert XML into a CustomSignable
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'CustomSignable', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -184,11 +184,11 @@ class CustomSignable extends AbstractElement implements
     /**
      * Convert this CustomSignable to XML.
      *
-     * @param \DOMElement|null $parent The parent element to append this CustomSignable to.
-     * @return \DOMElement The XML element after adding the data corresponding to this CustomSignable.
+     * @param \Dom\Element|null $parent The parent element to append this CustomSignable to.
+     * @return \Dom\Element The XML element after adding the data corresponding to this CustomSignable.
      * @throws \Exception
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         if ($this->signer !== null) {
             $signedXML = $this->doSign($this->xml);

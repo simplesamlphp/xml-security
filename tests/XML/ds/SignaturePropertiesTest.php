@@ -65,9 +65,10 @@ final class SignaturePropertiesTest extends TestCase
             IDValue::fromString('def456'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signatureProperties),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signatureProperties);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

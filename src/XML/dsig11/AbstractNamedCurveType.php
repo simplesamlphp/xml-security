@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
@@ -41,9 +41,9 @@ abstract class AbstractNamedCurveType extends AbstractDsig11Element
     /**
      * Convert this NamedCurveType element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this NamedCurveType element to.
+     * @param \Dom\Element|null $parent The element we should append this NamedCurveType element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('URI', strval($this->getURI()));

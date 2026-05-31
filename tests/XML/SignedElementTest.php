@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMElement;
+use Dom;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
@@ -34,11 +34,11 @@ final class SignedElementTest extends TestCase
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $wrong_certificate;
 
-    private DOMElement $signedDocumentWithComments;
+    private Dom\Element $signedDocumentWithComments;
 
-    private DOMElement $signedDocument;
+    private Dom\Element $signedDocument;
 
-    private DOMElement $tamperedDocument;
+    private Dom\Element $tamperedDocument;
 
 
     /**
@@ -74,9 +74,12 @@ final class SignedElementTest extends TestCase
     {
         $customSigned = CustomSignable::fromXML($this->signedDocument);
 
-        $this->assertEquals(
-            $this->signedDocument->ownerDocument->saveXML($this->signedDocument),
-            strval($customSigned),
+        $expectedXml = $this->signedDocument;
+        $actualXml = $customSigned->toXML();
+
+        $this->assertXmlStringEqualsXmlString(
+            $expectedXml->C14N(),
+            $actualXml->C14N(),
         );
     }
 
@@ -240,12 +243,37 @@ final class SignedElementTest extends TestCase
         $certificate = new X509Certificate($this->certificate);
         $verifier = $factory->getAlgorithm($sigAlg, $certificate->getPublicKey());
 
+        /** @var \Dom\XMLDocument $ownerDocument */
+        $ownerDocument = $this->signedDocumentWithComments->ownerDocument;
+
         // verify first that our dumb object normally retains comments
-        $this->assertEquals(
-            $this->signedDocumentWithComments->ownerDocument->saveXML($this->signedDocumentWithComments),
-            strval($customSigned),
+        $representationRoot = $this->signedDocumentWithComments;
+
+        /** @var \Dom\XMLDocument $ownerDocument */
+        $ownerDocument = $this->signedDocumentWithComments->ownerDocument;
+        $expectedXml = $ownerDocument->saveXml($representationRoot);
+        $this->assertNotSame('', $expectedXml);
+        /** @var non-empty-string $expectedXml */
+
+        $actualXml = strval($customSigned);
+        $this->assertNotSame('', $actualXml);
+        /** @var non-empty-string $actualXml */
+
+        $expectedDoc = DOMDocumentFactory::fromString($expectedXml);
+        $actualDoc = DOMDocumentFactory::fromString($actualXml);
+
+        $expectedRoot = $expectedDoc->documentElement;
+        $this->assertInstanceOf(Dom\Element::class, $expectedRoot);
+
+        $actualRoot = $actualDoc->documentElement;
+        $this->assertInstanceOf(Dom\Element::class, $actualRoot);
+
+        $this->assertSame(
+            $expectedRoot->C14N(),
+            $actualRoot->C14N(),
         );
 
+        // Verify the signature
         $verified = $customSigned->verify($verifier);
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());

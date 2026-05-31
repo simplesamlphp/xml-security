@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
@@ -88,7 +88,7 @@ class ReferenceList extends AbstractXencElement implements SchemaValidatableElem
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'ReferenceList', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, ReferenceList::NS, InvalidDOMElementException::class);
@@ -103,7 +103,7 @@ class ReferenceList extends AbstractXencElement implements SchemaValidatableElem
     /**
      * @inheritDoc
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

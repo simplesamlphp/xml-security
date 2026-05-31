@@ -58,10 +58,11 @@ final class TnBTest extends TestCase
         $k = K::fromString('64');
         $tnb = new TnB($m, $k);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($tnb),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($tnb);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -74,7 +75,7 @@ final class TnBTest extends TestCase
         $tnb = new TnB($m, $k);
 
         $tnbElement = $tnb->toXML();
-        /** @var \DOMNodeList<\DOMNode> $children */
+        /** @var \Dom\NodeList<\Dom\Node> $children */
         $children = $tnbElement->childNodes;
 
         $this->assertEquals('dsig11:M', $children[0]->tagName);

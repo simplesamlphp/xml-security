@@ -52,9 +52,10 @@ final class CurveTest extends TestCase
         $b = B::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $curve = new Curve($a, $b);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($curve),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($curve);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

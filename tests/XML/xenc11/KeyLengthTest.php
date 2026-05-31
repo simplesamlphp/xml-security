@@ -46,9 +46,10 @@ final class KeyLengthTest extends TestCase
     {
         $keyLength = KeyLength::fromString('4096');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyLength),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyLength);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

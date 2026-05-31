@@ -46,9 +46,10 @@ final class MTest extends TestCase
     {
         $m = M::fromString('1024');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($m),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($m);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

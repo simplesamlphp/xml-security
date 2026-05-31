@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
-use DOMElement;
+use Dom;
 
 /**
  * Abstract class representing a dsig11:PnBFieldParamsType
@@ -67,9 +67,9 @@ abstract class AbstractPnBFieldParamsType extends AbstractCharTwoFieldParamsType
     /**
      * Convert this PnBFieldParamsType element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this PnBFieldParamsType element to.
+     * @param \Dom\Element|null $parent The element we should append this PnBFieldParamsType element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = parent::toXML($parent);
         $this->getK1()->toXML($e);

@@ -46,9 +46,10 @@ final class CarriedKeyNameTest extends TestCase
     {
         $keyName = CarriedKeyName::fromString('Some label');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyName),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyName);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

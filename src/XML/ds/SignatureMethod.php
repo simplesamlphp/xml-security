@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
@@ -87,12 +87,12 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Convert XML into a SignatureMethod
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'SignatureMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureMethod::NS, InvalidDOMElementException::class);
@@ -109,9 +109,9 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
     /**
      * Convert this SignatureMethod element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this SignatureMethod element to.
+     * @param \Dom\Element|null $parent The element we should append this SignatureMethod element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', strval($this->getAlgorithm()));

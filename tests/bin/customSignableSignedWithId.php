@@ -36,4 +36,7 @@ $keyInfo = new KeyInfo([
 
 $unsignedElement = CustomSignable::fromXML($document->documentElement);
 $unsignedElement->sign($signer, C::C14N_EXCLUSIVE_WITHOUT_COMMENTS, $keyInfo);
-echo $unsignedElement->toXML()->ownerDocument->saveXML();
+
+/** @var \Dom\XMLDocument $ownerDocument */
+$ownerDocument = $unsignedElement->toXML()->ownerDocument;
+echo $ownerDocument->saveXML();

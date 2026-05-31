@@ -53,9 +53,10 @@ final class FieldIDTest extends TestCase
 
         $fieldId = new FieldID($prime);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($fieldId),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($fieldId);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

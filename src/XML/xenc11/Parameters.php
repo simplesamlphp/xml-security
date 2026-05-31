@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XML\ExtendableElementTrait;
@@ -55,12 +55,12 @@ final class Parameters extends AbstractXenc11Element
     /**
      * Convert XML into a Parameters element
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'Parameters', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Parameters::NS, InvalidDOMElementException::class);
@@ -75,9 +75,9 @@ final class Parameters extends AbstractXenc11Element
     /**
      * Convert this Parameters element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this Parameters to.
+     * @param \Dom\Element|null $parent The element we should append this Parameters to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

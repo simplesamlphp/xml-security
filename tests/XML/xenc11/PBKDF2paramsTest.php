@@ -84,9 +84,10 @@ final class PBKDF2paramsTest extends TestCase
 
         $PBKDF2params = new PBKDF2params($salt, $iterationCount, $keyLength, $prf);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($PBKDF2params),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($PBKDF2params);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

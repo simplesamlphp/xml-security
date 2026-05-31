@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
@@ -57,12 +57,12 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * Convert XML into a X509IssuerSerial
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'X509IssuerSerial', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, X509IssuerSerial::NS, InvalidDOMElementException::class);
@@ -86,9 +86,9 @@ final class X509IssuerSerial extends AbstractDsElement
     /**
      * Convert this X509IssuerSerial element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this X509IssuerSerial element to.
+     * @param \Dom\Element|null $parent The element we should append this X509IssuerSerial element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

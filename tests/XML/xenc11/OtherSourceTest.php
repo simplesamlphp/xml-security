@@ -77,9 +77,10 @@ XML
             $parameters,
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($otherSource),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($otherSource);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

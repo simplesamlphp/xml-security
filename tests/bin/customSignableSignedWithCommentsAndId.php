@@ -21,8 +21,11 @@ $document->documentElement->setAttribute('id', '_1234');
 $chunks = $document->documentElement->getElementsByTagNameNS("urn:x-simplesamlphp:namespace", "Chunk");
 $chunk = $chunks->item(0);
 $chunkContent = $chunk->firstChild;
-$chunk->insertBefore(new DOMComment('comment'), $chunkContent);
-$chunk->appendChild(new DOMComment('comment'));
+$comment1 = $document->createComment('comment');
+$comment2 = $document->createComment('comment');
+
+$chunk->insertBefore($comment1, $chunkContent);
+$chunk->appendChild($comment2);
 
 $signer = (new SignatureAlgorithmFactory())->getAlgorithm(
     C::SIG_RSA_SHA256,
@@ -44,4 +47,6 @@ $keyInfo = new KeyInfo([
 $unsignedElement = CustomSignable::fromXML($document->documentElement);
 $unsignedElement->sign($signer, C::C14N_EXCLUSIVE_WITH_COMMENTS, $keyInfo);
 
-echo $unsignedElement->toXML()->ownerDocument->saveXML();
+/** @var \Dom\XMLDocument $ownerDocument */
+$ownerDocument = $unsignedElement->toXML()->ownerDocument;
+echo $ownerDocument->saveXML();

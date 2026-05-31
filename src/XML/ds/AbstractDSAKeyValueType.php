@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -139,7 +139,7 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement implements Sche
     /**
      * Initialize an DSAKeyValue object from an existing XML.
      *
-     * @param \DOMElement $xml
+     * @param \Dom\Element $xml
      * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
@@ -149,7 +149,7 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement implements Sche
      * @throws \SimpleSAML\XMLSchema\Exception\TooManyElementsException
      *   if too many child-elements of a type are specified
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'DSAKeyValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -191,9 +191,9 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement implements Sche
     /**
      * Convert this DSAKeyValue object to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this DSAKeyValue to.
+     * @param \Dom\Element|null $parent The element we should append this DSAKeyValue to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

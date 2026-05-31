@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -40,7 +40,7 @@ final class EncryptedData extends AbstractEncryptedType implements SchemaValidat
      * @throws \SimpleSAML\XMLSchema\Exception\TooManyElementsException
      *   If too many child-elements of a type are specified
      */
-    final public static function fromXML(DOMElement $xml): static
+    final public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'EncryptedData', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, EncryptedData::NS, InvalidDOMElementException::class);

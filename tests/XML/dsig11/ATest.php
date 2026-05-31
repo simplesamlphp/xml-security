@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\dsig11\A;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 
@@ -47,9 +46,10 @@ final class ATest extends TestCase
     {
         $a = A::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
 
-        $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
-            strval($a),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($a);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\ExtendableElementTrait;
@@ -84,12 +84,12 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Convert XML into a KeyValue
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'KeyValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, KeyValue::NS, InvalidDOMElementException::class);
@@ -114,9 +114,9 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Convert this KeyValue element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this KeyValue element to.
+     * @param \Dom\Element|null $parent The element we should append this KeyValue element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 use SimpleSAML\XMLSecurity\XML\ds\Exponent;
 
@@ -47,9 +46,10 @@ final class ExponentTest extends TestCase
     {
         $exponent = Exponent::fromString('dGhpcyBpcyBzb21lIHJhbmRvbSBleHBvbmVudAo=');
 
-        $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
-            strval($exponent),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($exponent);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

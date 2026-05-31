@@ -55,16 +55,17 @@ final class KeyDerivationMethodTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $kdm = new KeyDerivationMethod(
+        $keyDerivationMethod = new KeyDerivationMethod(
             AnyURIValue::fromString(C::KEY_DERIVATION_CONCATKDF),
             [
                 KeyName::fromString('testkey'),
             ],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($kdm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyDerivationMethod);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

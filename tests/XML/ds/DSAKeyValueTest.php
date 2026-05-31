@@ -65,10 +65,11 @@ final class DSAKeyValueTest extends TestCase
 
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($dsaKeyValue),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($dsaKeyValue);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -87,7 +88,7 @@ final class DSAKeyValueTest extends TestCase
         $dsaKeyValue = new DSAKeyValue($y, $g, $j, $p, $q, $seed, $pgenCounter);
 
         $dsaKeyValueElement = $dsaKeyValue->toXML();
-        /** @var \DOMNodeList<\DOMNode> $children */
+        /** @var \Dom\NodeList<\Dom\Node> $children */
         $children = $dsaKeyValueElement->childNodes;
 
         $this->assertEquals('ds:P', $children[0]->tagName);

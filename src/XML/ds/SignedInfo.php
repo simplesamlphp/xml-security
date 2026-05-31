@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XML\Constants as C;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -33,7 +33,7 @@ final class SignedInfo extends AbstractDsElement implements
     use SchemaValidatableElementTrait;
 
 
-    protected ?DOMElement $xml = null;
+    protected ?Dom\Element $xml = null;
 
 
     /**
@@ -102,7 +102,7 @@ final class SignedInfo extends AbstractDsElement implements
     /**
      * @inheritDoc
      */
-    protected function getOriginalXML(): DOMElement
+    protected function getOriginalXML(): Dom\Element
     {
         if ($this->xml !== null) {
             return $this->xml;
@@ -115,12 +115,12 @@ final class SignedInfo extends AbstractDsElement implements
     /**
      * Convert XML into a SignedInfo instance
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'SignedInfo', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignedInfo::NS, InvalidDOMElementException::class);
@@ -176,9 +176,9 @@ final class SignedInfo extends AbstractDsElement implements
     /**
      * Convert this SignedInfo element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this SignedInfo element to.
+     * @param \Dom\Element|null $parent The element we should append this SignedInfo element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

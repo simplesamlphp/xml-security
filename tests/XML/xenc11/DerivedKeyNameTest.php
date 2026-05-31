@@ -46,9 +46,10 @@ final class DerivedKeyNameTest extends TestCase
     {
         $derivedKeyName = DerivedKeyName::fromString('phpunit');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($derivedKeyName),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($derivedKeyName);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

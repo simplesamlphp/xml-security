@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
+use SimpleSAML\XML\Attribute as XMLAttribute;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -100,12 +102,12 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
     /**
      * Convert XML into a Signature element
      *
-     * @param \DOMElement $xml
+     * @param \Dom\Element $xml
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'Signature', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Signature::NS, InvalidDOMElementException::class);
@@ -161,9 +163,9 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
     /**
      * Convert this Signature element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this Signature element to.
+     * @param \Dom\Element|null $parent The element we should append this Signature element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 
@@ -173,6 +175,17 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
 
         $this->getSignedInfo()->toXML($e);
         $this->getSignatureValue()->toXML($e);
+
+        if ($parent !== null && !$parent->lookupPrefix('ds')) {
+            $namespace = new XMLAttribute(
+                C::NS_XMLNS,
+                'xmlns',
+                'ds',
+                AnyURIValue::fromString(C::NS_XDSIG),
+            );
+            $namespace->toXML($parent);
+        }
+
         $this->getKeyInfo()?->toXML($e);
 
         foreach ($this->getObjects() as $o) {

@@ -53,9 +53,10 @@ final class PrimeTest extends TestCase
         $p = P::fromString('6tN39Q9d6IevlAWLeM7lQGazUnVlJOe1wCk3sro2rfE=');
         $prime = new Prime($p);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($prime),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($prime);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

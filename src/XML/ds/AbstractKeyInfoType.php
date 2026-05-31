@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SerializableElementInterface;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
@@ -120,9 +120,9 @@ abstract class AbstractKeyInfoType extends AbstractDsElement
     /**
      * Convert this KeyInfo to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this KeyInfo to.
+     * @param \Dom\Element|null $parent The element we should append this KeyInfo to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

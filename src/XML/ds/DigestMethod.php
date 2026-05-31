@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
@@ -67,13 +67,13 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Convert XML into a DigestMethod
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      * @return static
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'DigestMethod', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DigestMethod::NS, InvalidDOMElementException::class);
@@ -88,9 +88,9 @@ final class DigestMethod extends AbstractDsElement implements SchemaValidatableE
     /**
      * Convert this DigestMethod element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this DigestMethod element to.
+     * @param \Dom\Element|null $parent The element we should append this DigestMethod element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', strval($this->getAlgorithm()));

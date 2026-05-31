@@ -46,9 +46,10 @@ final class CoFactorTest extends TestCase
     {
         $coFactor = CoFactor::fromString('128');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($coFactor),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($coFactor);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
