@@ -195,6 +195,11 @@ final class OpenSSLTest extends TestCase
 
     /**
      * Test that encrypting with RSA-OAEP* and decrypting with RSA 1.5 fails.
+     *
+     * Decrypting OAEP ciphertext using RSAES-PKCS1-v1_5 is expected to fail.
+     * Depending on the OpenSSL/PHP backend, this may either throw (padding check failure)
+     * or return non-sensical bytes. Do not rely on a specific failure mode here; the only
+     * requirement is that the original plaintext is not recovered.
      */
     #[RequiresOperatingSystem('Linux')]
     public function testEncryptOAEPDecryptRSA15Unix(): void
