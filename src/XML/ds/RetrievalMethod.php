@@ -12,6 +12,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
+use function array_last;
 use function strval;
 
 /**
@@ -91,7 +92,7 @@ final class RetrievalMethod extends AbstractDsElement implements SchemaValidatab
         );
 
         return new static(
-            array_pop($transforms),
+            array_last($transforms),
             $URI,
             $Type,
         );

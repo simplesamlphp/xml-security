@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\IDValue;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a dsig11:ECKeyValue element.
@@ -49,10 +49,10 @@ final class ECKeyValue extends AbstractECKeyValueType implements SchemaValidatab
         Assert::maxCount($namedCurve, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($publicKey),
+            array_last($publicKey),
             self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
-            array_pop($ecParameters),
-            array_pop($namedCurve),
+            array_last($ecParameters),
+            array_last($namedCurve),
         );
     }
 }

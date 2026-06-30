@@ -10,7 +10,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a dsig11:Curve element.
@@ -41,8 +41,8 @@ final class Curve extends AbstractCurveType
         Assert::maxCount($b, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($a),
-            array_pop($b),
+            array_last($a),
+            array_last($b),
         );
     }
 }

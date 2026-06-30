@@ -15,7 +15,7 @@ use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\XML\ds\AbstractDsElement;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Abstract class representing the PGPDataType.
@@ -95,8 +95,8 @@ abstract class AbstractPGPDataType extends AbstractDsElement implements SchemaVa
         Assert::maxCount($pgpKeyPacket, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($pgpKeyId),
-            array_pop($pgpKeyPacket),
+            array_last($pgpKeyId),
+            array_last($pgpKeyPacket),
             self::getChildElementsFromXML($xml),
         );
     }

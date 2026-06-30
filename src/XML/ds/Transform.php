@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\ec\InclusiveNamespaces;
 use SimpleSAML\XPath\Constants as XPATH_C;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -121,8 +121,8 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
 
         return new static(
             self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
-            array_pop($xpath),
-            array_pop($prefixes),
+            array_last($xpath),
+            array_last($prefixes),
         );
     }
 

@@ -12,6 +12,8 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
+use function array_last;
+
 /**
  * Class representing a ds:RSAKeyValue element.
  *
@@ -98,7 +100,7 @@ final class RSAKeyValue extends AbstractDsElement implements SchemaValidatableEl
             TooManyElementsException::class,
         );
 
-        return new static(array_pop($modulus), array_pop($exponent));
+        return new static(array_last($modulus), array_last($exponent));
     }
 
 

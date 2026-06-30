@@ -17,7 +17,7 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\XML\CanonicalizableElementInterface;
 use SimpleSAML\XMLSecurity\XML\CanonicalizableElementTrait;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -162,8 +162,8 @@ final class SignedInfo extends AbstractDsElement implements
         );
 
         $signedInfo = new static(
-            array_pop($canonicalizationMethod),
-            array_pop($signatureMethod),
+            array_last($canonicalizationMethod),
+            array_last($signatureMethod),
             $references,
             self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
         );

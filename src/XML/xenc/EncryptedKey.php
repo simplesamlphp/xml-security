@@ -19,6 +19,7 @@ use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
+use function array_last;
 use function strval;
 
 /**
@@ -250,10 +251,10 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
             self::getOptionalAttribute($xml, 'MimeType', StringValue::class, null),
             self::getOptionalAttribute($xml, 'Encoding', AnyURIValue::class, null),
             self::getOptionalAttribute($xml, 'Recipient', StringValue::class, null),
-            array_pop($carriedKeyNames),
-            array_pop($encryptionMethod),
-            array_pop($keyInfo),
-            array_pop($referenceLists),
+            array_last($carriedKeyNames),
+            array_last($encryptionMethod),
+            array_last($keyInfo),
+            array_last($referenceLists),
         );
     }
 

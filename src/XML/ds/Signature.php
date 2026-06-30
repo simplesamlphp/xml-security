@@ -16,7 +16,7 @@ use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -151,9 +151,9 @@ final class Signature extends AbstractDsElement implements SchemaValidatableElem
         $objects = DsObject::getChildrenOfClass($xml);
 
         return new static(
-            array_pop($signedInfo),
-            array_pop($signatureValue),
-            empty($keyInfo) ? null : array_pop($keyInfo),
+            array_last($signedInfo),
+            array_last($signatureValue),
+            empty($keyInfo) ? null : array_last($keyInfo),
             $objects,
             self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
         );

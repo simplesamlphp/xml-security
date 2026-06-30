@@ -10,7 +10,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
-use function array_pop;
+use function array_last;
 
 /**
  * A class implementing the xenc11:OtherSource element.
@@ -35,7 +35,7 @@ final class OtherSource extends AbstractAlgorithmIdentifierType
 
         return new static(
             self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
-            array_pop($parameter),
+            array_last($parameter),
         );
     }
 }

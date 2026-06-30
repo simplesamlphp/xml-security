@@ -17,8 +17,8 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 
 use function array_keys;
+use function array_last;
 use function array_merge;
-use function array_pop;
 use function strval;
 
 /**
@@ -102,7 +102,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
         $hmacOutputLength = HMACOutputLength::getChildrenOfClass($xml);
         Assert::maxCount($hmacOutputLength, 1, TooManyElementsException::class);
 
-        return new static($Algorithm, array_pop($hmacOutputLength), self::getChildElementsFromXML($xml));
+        return new static($Algorithm, array_last($hmacOutputLength), self::getChildElementsFromXML($xml));
     }
 
 

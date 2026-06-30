@@ -14,7 +14,7 @@ use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -126,9 +126,9 @@ abstract class AbstractAgreementMethodType extends AbstractXencElement implement
 
         return new static(
             self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
-            array_pop($kaNonce),
-            array_pop($originatorKeyInfo),
-            array_pop($recipientKeyInfo),
+            array_last($kaNonce),
+            array_last($originatorKeyInfo),
+            array_last($recipientKeyInfo),
             $children,
         );
     }

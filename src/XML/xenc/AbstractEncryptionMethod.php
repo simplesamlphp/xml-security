@@ -12,7 +12,7 @@ use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -105,8 +105,8 @@ abstract class AbstractEncryptionMethod extends AbstractXencElement
 
         return new static(
             self::getAttribute($xml, 'Algorithm', AnyURIValue::class),
-            array_pop($keySize),
-            array_pop($oaepParams),
+            array_last($keySize),
+            array_last($oaepParams),
             self::getChildElementsFromXML($xml),
         );
     }

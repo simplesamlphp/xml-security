@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * A class implementing the ds:AbstractDSAKeyValueType element.
@@ -177,13 +177,13 @@ abstract class AbstractDSAKeyValueType extends AbstractDsElement implements Sche
         Assert::maxCount($pgenCounter, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($y),
-            array_pop($g),
-            array_pop($j),
-            array_pop($p),
-            array_pop($q),
-            array_pop($seed),
-            array_pop($pgenCounter),
+            array_last($y),
+            array_last($g),
+            array_last($j),
+            array_last($p),
+            array_last($q),
+            array_last($seed),
+            array_last($pgenCounter),
         );
     }
 

@@ -12,7 +12,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a dsig11:TnB element.
@@ -46,8 +46,8 @@ final class TnB extends AbstractTnBFieldParamsType implements SchemaValidatableE
         Assert::maxCount($m, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($m),
-            array_pop($k),
+            array_last($m),
+            array_last($k),
         );
     }
 }

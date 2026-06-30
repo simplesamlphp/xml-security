@@ -10,7 +10,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a dsig11:ECParameters element.
@@ -55,12 +55,12 @@ final class ECParameters extends AbstractECParametersType
         Assert::maxCount($validationData, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($fieldId),
-            array_pop($curve),
-            array_pop($base),
-            array_pop($order),
-            array_pop($coFactor),
-            array_pop($validationData),
+            array_last($fieldId),
+            array_last($curve),
+            array_last($base),
+            array_last($order),
+            array_last($coFactor),
+            array_last($validationData),
         );
     }
 }

@@ -11,7 +11,7 @@ use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing <xenc:CipherData>.
@@ -96,8 +96,8 @@ class CipherData extends AbstractXencElement implements SchemaValidatableElement
         );
 
         return new static(
-            empty($cv) ? null : array_pop($cv),
-            empty($cr) ? null : array_pop($cr),
+            empty($cv) ? null : array_last($cv),
+            empty($cr) ? null : array_last($cr),
         );
     }
 

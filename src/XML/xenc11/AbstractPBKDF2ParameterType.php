@@ -12,7 +12,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing <xenc11:PBKDF2ParameterType>.
@@ -113,10 +113,10 @@ abstract class AbstractPBKDF2ParameterType extends AbstractXenc11Element impleme
         Assert::maxCount($prf, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($salt),
-            array_pop($iterationCount),
-            array_pop($keyLength),
-            array_pop($prf),
+            array_last($salt),
+            array_last($iterationCount),
+            array_last($keyLength),
+            array_last($prf),
         );
     }
 

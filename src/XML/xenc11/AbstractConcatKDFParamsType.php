@@ -14,7 +14,7 @@ use SimpleSAML\XMLSchema\Type\HexBinaryValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -131,7 +131,7 @@ abstract class AbstractConcatKDFParamsType extends AbstractXenc11Element impleme
         Assert::maxCount($digestMethod, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($digestMethod),
+            array_last($digestMethod),
             self::getOptionalAttribute($xml, 'AlgorithmID', HexBinaryValue::class, null),
             self::getOptionalAttribute($xml, 'PartyUInfo', HexBinaryValue::class, null),
             self::getOptionalAttribute($xml, 'PartyVInfo', HexBinaryValue::class, null),

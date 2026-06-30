@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a dsig11:ValidationData element.
@@ -43,7 +43,7 @@ final class ValidationData extends AbstractECValidationDataType implements Schem
         Assert::maxCount($seed, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($seed),
+            array_last($seed),
             self::getAttribute($xml, 'hashAlgorithm', AnyURIValue::class),
         );
     }
