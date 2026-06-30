@@ -20,7 +20,7 @@ use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
-use function array_pop;
+use function array_last;
 use function array_shift;
 use function dirname;
 use function explode;
@@ -61,7 +61,7 @@ final class SignableElementTest extends TestCase
 
         $certificate = PEMCertificatesMock::loadPlainCertificateFile(PEMCertificatesMock::SELFSIGNED_CERTIFICATE);
         $certificateLines = explode("\n", trim($certificate));
-        array_pop($certificateLines);
+        array_last($certificateLines);
         array_shift($certificateLines);
         self::$certificate = join("\n", $certificateLines);
 
