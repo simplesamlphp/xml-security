@@ -11,6 +11,8 @@ use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
+use function array_last;
+
 /**
  * Class representing a dsig11:FieldID element.
  *
@@ -50,7 +52,7 @@ final class FieldID extends AbstractFieldIDType implements SchemaValidatableElem
         );
 
         return new static(
-            array_pop($fieldId),
+            array_last($fieldId),
         );
     }
 }

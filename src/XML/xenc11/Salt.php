@@ -10,8 +10,8 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
+use function array_last;
 use function array_merge;
-use function array_pop;
 
 /**
  * Class representing <xenc11:Salt>.
@@ -60,7 +60,7 @@ final class Salt extends AbstractXenc11Element
         Assert::minCount($content, 1, MissingElementException::class);
         Assert::maxCount($content, 1, TooManyElementsException::class);
 
-        return new static(array_pop($content));
+        return new static(array_last($content));
     }
 
 

@@ -10,7 +10,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class representing a ds:X509IssuerSerial element.
@@ -77,8 +77,8 @@ final class X509IssuerSerial extends AbstractDsElement
         Assert::maxCount($serial, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($issuer),
-            array_pop($serial),
+            array_last($issuer),
+            array_last($serial),
         );
     }
 

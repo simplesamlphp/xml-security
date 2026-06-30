@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
-use function array_pop;
+use function array_last;
 
 /**
  * A class implementing the xenc:AbstractDHKeyValueType element.
@@ -160,12 +160,12 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
         Assert::maxCount($pgenCounter, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($xencPublic),
-            array_pop($p),
-            array_pop($q),
-            array_pop($generator),
-            array_pop($seed),
-            array_pop($pgenCounter),
+            array_last($xencPublic),
+            array_last($p),
+            array_last($q),
+            array_last($generator),
+            array_last($seed),
+            array_last($pgenCounter),
         );
     }
 

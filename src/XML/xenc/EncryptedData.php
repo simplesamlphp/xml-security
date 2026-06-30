@@ -16,7 +16,7 @@ use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class containing encrypted data.
@@ -81,8 +81,8 @@ final class EncryptedData extends AbstractEncryptedType implements SchemaValidat
             self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null),
             self::getOptionalAttribute($xml, 'MimeType', StringValue::class, null),
             self::getOptionalAttribute($xml, 'Encoding', AnyURIValue::class, null),
-            array_pop($encryptionMethod),
-            array_pop($keyInfo),
+            array_last($encryptionMethod),
+            array_last($keyInfo),
         );
     }
 }
