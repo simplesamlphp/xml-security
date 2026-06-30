@@ -14,7 +14,7 @@ use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -153,9 +153,9 @@ final class Reference extends AbstractDsElement implements SchemaValidatableElem
         );
 
         return new static(
-            array_pop($digestMethod),
-            array_pop($digestValue),
-            empty($transforms) ? null : array_pop($transforms),
+            array_last($digestMethod),
+            array_last($digestValue),
+            empty($transforms) ? null : array_last($transforms),
             $Id,
             $Type,
             $URI,

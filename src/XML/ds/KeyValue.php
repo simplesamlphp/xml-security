@@ -18,8 +18,8 @@ use SimpleSAML\XMLSchema\XML\Constants\NS;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\XML\dsig11\ECKeyValue;
 
+use function array_last;
 use function array_merge;
-use function array_pop;
 
 /**
  * Class representing a ds:KeyValue element.
@@ -107,7 +107,7 @@ final class KeyValue extends AbstractDsElement implements SchemaValidatableEleme
             TooManyElementsException::class,
         );
 
-        return new static(array_pop($keyValue));
+        return new static(array_last($keyValue));
     }
 
 

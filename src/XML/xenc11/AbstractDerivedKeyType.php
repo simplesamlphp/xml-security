@@ -15,7 +15,7 @@ use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\XML\xenc\ReferenceList;
 
-use function array_pop;
+use function array_last;
 use function strval;
 
 /**
@@ -171,10 +171,10 @@ abstract class AbstractDerivedKeyType extends AbstractXenc11Element implements
             self::getOptionalAttribute($xml, 'Recipient', StringValue::class, null),
             self::getOptionalAttribute($xml, 'Id', IDValue::class, null),
             self::getOptionalAttribute($xml, 'Type', AnyURIValue::class, null),
-            array_pop($keyDerivationMethod),
-            array_pop($referenceList),
-            array_pop($derivedKeyName),
-            array_pop($masterKeyName),
+            array_last($keyDerivationMethod),
+            array_last($referenceList),
+            array_last($derivedKeyName),
+            array_last($masterKeyName),
         );
     }
 
