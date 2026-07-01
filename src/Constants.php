@@ -75,7 +75,7 @@ class Constants extends \SimpleSAML\XML\Constants
 
     public const string BLOCK_ENC_AES192_GCM = 'http://www.w3.org/2009/xmlenc11#aes192-gcm';
 
-    public const string BLOCK_ENC_AES256_GCM = 'http://www.w3.org/2009xmlenc11#aes256-gcm';
+    public const string BLOCK_ENC_AES256_GCM = 'http://www.w3.org/2009/xmlenc11#aes256-gcm';
 
     /**
      * Key transport algorithms
