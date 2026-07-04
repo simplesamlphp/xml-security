@@ -23,12 +23,13 @@ final class SignatureAlgorithmFactory
     /**
      * An array of blacklisted algorithms.
      *
-     * Defaults to RSA-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
+     * Defaults to RSA-SHA1, RSAPSS-SHA1 & HMAC-SHA1 due to the weakness of SHA1.
      *
      * @var string[]
      */
     public const array DEFAULT_BLACKLIST = [
         C::SIG_RSA_SHA1,
+        C::SIG_RSA_PSS_SHA1,
         C::SIG_HMAC_SHA1,
     ];
 

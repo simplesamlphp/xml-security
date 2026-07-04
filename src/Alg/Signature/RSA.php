@@ -23,7 +23,7 @@ final class RSA extends AbstractSigner implements SignatureAlgorithmInterface
     public function __construct(
         #[\SensitiveParameter]
         AsymmetricKey $key,
-        string $algId = C::SIG_RSA_SHA256,
+        string $algId,
     ) {
         parent::__construct($key, $algId, C::$RSA_DIGESTS[$algId]);
     }
