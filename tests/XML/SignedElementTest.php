@@ -256,4 +256,116 @@ final class SignedElementTest extends TestCase
         );
         $this->assertEquals($certificate->getPublicKey(), $verified->getVerifyingKey());
     }
+
+
+    /**
+     * Verify an RSA-PSS signature
+     */
+    public function testSuccessfulVerifyingRsaPssSignature(): void
+    {
+        // sign using RSAPSS_SHA256
+        $customSignable = $this->sign(C::SIG_RSA_PSA_SHA256);
+        $customSignable = $object->getSignature();
+
+        $this->assertEquals(
+            C::SIG_RSA_PSS_SHA256,
+            $signature
+                ->getSignedInfo()
+                ->getSignatureMethod()
+                ->getAlgorithm()
+                ->getValue(),
+        );
+
+        $certificate = new X509Certificate($this->certificate);
+
+        $verifier = $factory->getAlgorithm(
+            C::SIG_RSA_PSS_SHA256,
+            $certificate->getPublicKey(),
+        );
+
+        $verified = $customSignable->verify($verifier);
+
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+    }
+
+
+    /**
+     * Negative: verify a RSA-PSS signature using PKCS#1 v1.5
+     */
+    public function testPssSignatureCannotBeVerifiedUsingPkcs1(): void
+    {
+        // sign using RSAPSS_SHA256
+        $customSignable = $this->sign(C::SIG_RSA_PSA_SHA256);
+
+        $certificate = new X509Certificate($this->certificate);
+
+        $verifier = $factory->getAlgorithm(
+            C::SIG_RSA_SHA256,
+            $certificate->getPublicKey(),
+        );
+
+        $this->expectException(SignatureVerificationFailedException::class);
+
+        $customSignable->verify($verifier);
+    }
+
+
+    /**
+     * Negative: verify a PKCS#1 v1.5 signature using RSA-PSS
+     */
+    public function testPkcs1SignatureCannotBeVerifiedUsingPss(): void
+    {
+        // sign using RSA_SHA256
+        $customSignable = $this->sign(C::SIG_RSA_SHA256);
+
+        $verifier = $factory->getAlgorithm(
+            C::SIG_RSA_PSS_SHA256,
+            $certificate->getPublicKey(),
+        );
+
+        $this->expectException(SignatureVerificationFailedException::class);
+
+        $customSignable->verify($verifier);
+    }
+
+
+    /**
+     * Helper method to create a signed CustomSignable
+     */
+    private function sign(string $algorithm): CustomSignable
+    {
+        $xml = DOMDocumentFactory::fromString(
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace">'
+            . '<ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>',
+        );
+
+        $customSignable = CustomSignable::fromXML($xml->documentElement);
+
+        $factory = new SignatureAlgorithmFactory();
+
+        $private = PEMCertificatesMock::getPrivateKey(
+            PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
+        );
+
+        $signer = $factory->getAlgorithm(
+            $algorithm,
+            $private,
+        );
+
+        $keyInfo = new KeyInfo([
+            new X509Data([
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
+            ]),
+        ]);
+
+        $customSignable->sign(
+            $signer,
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+            $keyInfo,
+        );
+
+        return $customSignable;
+    }
 }

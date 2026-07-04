@@ -261,4 +261,58 @@ final class SignableElementTest extends TestCase
         );
         $customSignable->toXML($doc->documentElement);
     }
+
+
+    /**
+     * This test ensures we can sign using RSA-PSS algorithms and verify the signed element again.
+     */
+    public function testSigningAndVerifyingRsaPssSha256(): void
+    {
+        $customSignable = CustomSignable::fromXML(
+            self::$xmlRepresentation->documentElement,
+        );
+
+        $factory = new SignatureAlgorithmFactory();
+
+        $signer = $factory->getAlgorithm(
+            C::SIG_RSA_PSS_SHA256,
+            self::$key,
+        );
+
+        $keyInfo = new KeyInfo([
+            new X509Data([
+                new X509Certificate(
+                    Base64BinaryValue::fromString(self::$certificate),
+                ),
+            ]),
+        ]);
+
+        $customSignable->sign(
+            $signer,
+            C::C14N_EXCLUSIVE_WITHOUT_COMMENTS,
+            $keyInfo,
+        );
+
+        $signature = $customSignable->getSignature();
+
+        $this->assertEquals(
+            C::SIG_RSA_PSS_SHA256,
+            $signature
+                ->getSignedInfo()
+                ->getSignatureMethod()
+                ->getAlgorithm()
+                ->getValue(),
+        );
+
+        $verified = $customSignable->verify();
+
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+        $this->assertFalse($verified->isSigned());
+
+        $this->assertEquals(
+            '<ssp:CustomSignable xmlns:ssp="urn:x-simplesamlphp:namespace">'
+            . '<ssp:Chunk>Some</ssp:Chunk></ssp:CustomSignable>',
+            strval($verified),
+        );
+    }
 }
