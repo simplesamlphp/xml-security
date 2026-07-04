@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Test\XML;
 use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
@@ -16,10 +17,16 @@ use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
 use SimpleSAML\XMLSecurity\Test\XML\CustomSignable;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
+use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
 use SimpleSAML\XMLSecurity\XML\ds\Signature;
+use SimpleSAML\XMLSecurity\XML\ds\X509Certificate as X509;
+use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
+use function base64_encode;
+use function chunk_split;
 use function dirname;
 use function strval;
+use function trim;
 
 /**
  * Class \SimpleSAML\XMLSecurity\Test\XML\SignedElementTest
@@ -264,8 +271,11 @@ final class SignedElementTest extends TestCase
     public function testSuccessfulVerifyingRsaPssSignature(): void
     {
         // sign using RSAPSS_SHA256
-        $customSignable = $this->sign(C::SIG_RSA_PSA_SHA256);
-        $customSignable = $object->getSignature();
+        $customSignable = $this->sign(C::SIG_RSA_PSS_SHA256);
+        // No-op to _actually_ sign the element and set the signature-property.
+        $customSignable = CustomSignable::fromXML($customSignable->toXML());
+
+        $signature = $customSignable->getSignature();
 
         $this->assertEquals(
             C::SIG_RSA_PSS_SHA256,
@@ -278,6 +288,7 @@ final class SignedElementTest extends TestCase
 
         $certificate = new X509Certificate($this->certificate);
 
+        $factory = new SignatureAlgorithmFactory();
         $verifier = $factory->getAlgorithm(
             C::SIG_RSA_PSS_SHA256,
             $certificate->getPublicKey(),
@@ -295,10 +306,11 @@ final class SignedElementTest extends TestCase
     public function testPssSignatureCannotBeVerifiedUsingPkcs1(): void
     {
         // sign using RSAPSS_SHA256
-        $customSignable = $this->sign(C::SIG_RSA_PSA_SHA256);
+        $customSignable = $this->sign(C::SIG_RSA_PSS_SHA256);
 
         $certificate = new X509Certificate($this->certificate);
 
+        $factory = new SignatureAlgorithmFactory();
         $verifier = $factory->getAlgorithm(
             C::SIG_RSA_SHA256,
             $certificate->getPublicKey(),
@@ -306,7 +318,7 @@ final class SignedElementTest extends TestCase
 
         $this->expectException(SignatureVerificationFailedException::class);
 
-        $customSignable->verify($verifier);
+        $verified = $customSignable->verify($verifier);
     }
 
 
@@ -317,15 +329,16 @@ final class SignedElementTest extends TestCase
     {
         // sign using RSA_SHA256
         $customSignable = $this->sign(C::SIG_RSA_SHA256);
+        $certificate = new X509Certificate($this->certificate);
 
+        $factory = new SignatureAlgorithmFactory();
         $verifier = $factory->getAlgorithm(
             C::SIG_RSA_PSS_SHA256,
             $certificate->getPublicKey(),
         );
 
         $this->expectException(SignatureVerificationFailedException::class);
-
-        $customSignable->verify($verifier);
+        $result = $customSignable->verify($verifier);
     }
 
 
@@ -341,12 +354,11 @@ final class SignedElementTest extends TestCase
 
         $customSignable = CustomSignable::fromXML($xml->documentElement);
 
-        $factory = new SignatureAlgorithmFactory();
-
         $private = PEMCertificatesMock::getPrivateKey(
             PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
         );
 
+        $factory = new SignatureAlgorithmFactory();
         $signer = $factory->getAlgorithm(
             $algorithm,
             $private,
@@ -354,8 +366,10 @@ final class SignedElementTest extends TestCase
 
         $keyInfo = new KeyInfo([
             new X509Data([
-                new X509Certificate(
-                    Base64BinaryValue::fromString(self::$certificate),
+                new X509(
+                    Base64BinaryValue::fromString(
+                        trim(chunk_split(base64_encode($this->certificate->data()), 64, "\n")),
+                    ),
                 ),
             ]),
         ]);

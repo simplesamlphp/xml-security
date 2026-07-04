@@ -293,8 +293,9 @@ final class SignableElementTest extends TestCase
             $keyInfo,
         );
 
-        $signature = $customSignable->getSignature();
+        $verified = CustomSignable::fromXML($customSignable->toXML())->verify();
 
+        $signature = $customSignable->getSignature();
         $this->assertEquals(
             C::SIG_RSA_PSS_SHA256,
             $signature
@@ -303,8 +304,6 @@ final class SignableElementTest extends TestCase
                 ->getAlgorithm()
                 ->getValue(),
         );
-
-        $verified = $customSignable->verify();
 
         $this->assertInstanceOf(CustomSignable::class, $verified);
         $this->assertFalse($verified->isSigned());

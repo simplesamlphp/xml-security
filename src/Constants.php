@@ -102,7 +102,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const string C14N11_INCLUSIVE_WITHOUT_COMMENTS = 'http://www.w3.org/2006/12/xml-c14n11#WithComments';
 
     /**
-     * Signature algorithms
+     * RSA Signature algorithms
      */
     public const string SIG_RSA_SHA1 = 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
 
@@ -116,6 +116,9 @@ class Constants extends \SimpleSAML\XML\Constants
 
     public const string SIG_RSA_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160';
 
+    /**
+     * HMAC Signature algorithms
+     */
     public const string SIG_HMAC_SHA1 = 'http://www.w3.org/2000/09/xmldsig#hmac-sha1';
 
     public const string SIG_HMAC_SHA224 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha224';
@@ -133,7 +136,7 @@ class Constants extends \SimpleSAML\XML\Constants
      */
     public const string SIG_RSA_PSS_SHA1 = 'http://www.w3.org/2007/05/xmldsig-more#sha1-rsa-MGF1';
 
-    public const string SIG_RSA_PSS_SHA256 = 'http://www.w3.org/2007/05/xmldsig-more#sha224-rsa-MGF1';
+    public const string SIG_RSA_PSS_SHA224 = 'http://www.w3.org/2007/05/xmldsig-more#sha224-rsa-MGF1';
 
     public const string SIG_RSA_PSS_SHA256 = 'http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1';
 

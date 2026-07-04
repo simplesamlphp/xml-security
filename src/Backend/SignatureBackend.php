@@ -24,6 +24,14 @@ interface SignatureBackend
 
 
     /**
+     * Set the padding method to be used by this backend.
+     *
+     * @param string $algId The identifier of the signature algorithm.
+     */
+    public function setSignaturePadding(string $algId): void;
+
+
+    /**
      * Sign a given plaintext with this cipher and a given key.
      *
      * @param \SimpleSAML\XMLSecurity\Key\KeyInterface $key The key to use to sign.

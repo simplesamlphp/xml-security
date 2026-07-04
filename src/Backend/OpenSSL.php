@@ -38,8 +38,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
     // digital signature options
     protected string $digest;
 
+    // signature padding method
+    protected int $sig_padding = OPENSSL_PKCS1_PADDING;
+
     // asymmetric encryption options
-    protected int $padding = OPENSSL_PKCS1_OAEP_PADDING;
+    protected int $enc_padding = OPENSSL_PKCS1_OAEP_PADDING;
 
     // symmetric encryption options
     protected string $cipher;
@@ -83,7 +86,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             }
 
             $ciphertext = '';
-            if (!$fn($plaintext, $ciphertext, $key->getMaterial(), $this->padding)) {
+            if (!$fn($plaintext, $ciphertext, $key->getMaterial(), $this->enc_padding)) {
                 throw new OpenSSLException('Cannot encrypt data');
             }
             return $ciphertext;
@@ -139,7 +142,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
             }
 
             $plaintext = '';
-            if (!$fn($ciphertext, $plaintext, $key->getMaterial(), $this->padding)) {
+            if (!$fn($ciphertext, $plaintext, $key->getMaterial(), $this->enc_padding)) {
                 throw new OpenSSLException('Cannot decrypt data');
             }
             return $plaintext;
@@ -192,7 +195,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         KeyInterface $key,
         string $plaintext,
     ): string {
-        if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest)) {
+        if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding)) {
             throw new OpenSSLException('Cannot sign data');
         }
         return $signature;
@@ -214,7 +217,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         string $plaintext,
         string $signature,
     ): bool {
-        return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest) === 1;
+        return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding) === 1;
     }
 
 
@@ -236,11 +239,11 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
         $this->cipher = $cipher;
         switch ($cipher) {
             case C::KEY_TRANSPORT_RSA_1_5:
-                $this->padding = OPENSSL_PKCS1_PADDING;
+                $this->enc_padding = OPENSSL_PKCS1_PADDING;
                 break;
             case C::KEY_TRANSPORT_OAEP:
             case C::KEY_TRANSPORT_OAEP_MGF1P:
-                $this->padding = OPENSSL_PKCS1_OAEP_PADDING;
+                $this->enc_padding = OPENSSL_PKCS1_OAEP_PADDING;
                 break;
             case C::BLOCK_ENC_AES128_GCM:
             case C::BLOCK_ENC_AES192_GCM:
@@ -252,6 +255,27 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend
                 $this->blocksize = C::$BLOCK_SIZES[$cipher];
                 $this->keysize = openssl_cipher_key_length(C::$BLOCK_CIPHER_ALGORITHMS[$cipher]);
         }
+    }
+
+
+    /**
+     * Set the padding method to be used by this backend.
+     *
+     * @param string $algId The identifier of the signature algorithm.
+     */
+    public function setSignaturePadding(string $algId): void
+    {
+        $padding = match ($algId) {
+            C::SIG_RSA_PSS_SHA1 => OPENSSL_PKCS1_PSS_PADDING,
+            C::SIG_RSA_PSS_SHA224 => OPENSSL_PKCS1_PSS_PADDING,
+            C::SIG_RSA_PSS_SHA256 => OPENSSL_PKCS1_PSS_PADDING,
+            C::SIG_RSA_PSS_SHA384 => OPENSSL_PKCS1_PSS_PADDING,
+            C::SIG_RSA_PSS_SHA512 => OPENSSL_PKCS1_PSS_PADDING,
+
+            default => OPENSSL_PKCS1_PADDING,
+        };
+
+        $this->sig_padding = $padding;
     }
 
 

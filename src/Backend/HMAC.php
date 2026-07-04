@@ -32,6 +32,17 @@ final class HMAC implements SignatureBackend
 
 
     /**
+     * Set the padding method to be used by this backend.
+     *
+     * @param string $algId The identifier of the signature algorithm.
+     */
+    public function setSignaturePadding(string $algId): void
+    {
+        // No-op for HMAC
+    }
+
+
+    /**
      * Set the digest algorithm to be used by this backend.
      *
      * @param string $digest The identifier of the digest algorithm.

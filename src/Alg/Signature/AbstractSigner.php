@@ -52,6 +52,7 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
         $backend = new (static::DEFAULT_BACKEND)();
         $this->setBackend($backend);
         $this->backend->setDigestAlg($digest);
+        $this->backend->setSignaturePadding($algId);
     }
 
 
