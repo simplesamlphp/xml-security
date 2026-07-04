@@ -20,7 +20,7 @@ use function openssl_x509_parse;
  *
  * @package simplesamlphp/xml-security
  */
-class X509Certificate
+class X509Certificate implements KeyInterface
 {
     /** @var \SimpleSAML\XMLSecurity\Key\PublicKey */
     protected PublicKey $publicKey;
