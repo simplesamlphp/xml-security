@@ -100,6 +100,7 @@ final class KeyValueTest extends TestCase
 
         $document = self::$empty;
         $element->toXML($document->documentElement);
+        $document = Dom\XMLDocument::createFromString($document->saveXml($document->documentElement));
         $normalized = DOMDocumentFactory::normalizeDocument($document);
 
         $this->assertXmlStringEqualsXmlString(
