@@ -30,7 +30,7 @@ use function substr;
  *
  * @package SimpleSAML\XMLSecurity\Backend
  */
-final class OpenSSL implements EncryptionBackend, SignatureBackend
+final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePadding
 {
     public const int AUTH_TAG_LEN = 16;
 

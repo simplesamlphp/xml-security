@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Backend\SignatureBackend;
+use SimpleSAML\XMLSecurity\Backend\SignaturePadding;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
@@ -52,7 +53,10 @@ abstract class AbstractSigner implements SignatureAlgorithmInterface
         $backend = new (static::DEFAULT_BACKEND)();
         $this->setBackend($backend);
         $this->backend->setDigestAlg($digest);
-        $this->backend->setSignaturePadding($algId);
+
+        if ($this->backend instanceof SignaturePadding) {
+            $this->backend->setSignaturePadding($algId);
+        }
     }
 
 
