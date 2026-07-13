@@ -181,7 +181,7 @@ final class EncryptedKeyTest extends TestCase
             ]),
         );
 
-        // Marshall it to a \DOMElement
+        // Marshall it to a \Dom\Element
         $encryptedKeyElement = $encryptedKey->toXML();
 
         $xpCache = XPath::getXPath($encryptedKeyElement);
@@ -194,7 +194,7 @@ final class EncryptedKeyTest extends TestCase
         $this->assertCount(1, $encryptedKeyElements);
 
         // Test ordering of EncryptedKey contents
-        /** @var \DOMElement[] $encryptedKeyElements */
+        /** @var \Dom\Element[] $encryptedKeyElements */
         $encryptedKeyElements = XPath::xpQuery(
             $encryptedKeyElement,
             './xenc:ReferenceList/following-sibling::*',

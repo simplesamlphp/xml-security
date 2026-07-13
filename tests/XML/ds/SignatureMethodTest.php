@@ -96,7 +96,7 @@ final class SignatureMethodTest extends TestCase
         $hmacOutputLength = XPath::xpQuery($signatureMethodElement, './ds:HMACOutputLength', $xpCache);
         $this->assertCount(1, $hmacOutputLength);
 
-        /** @var \DOMElement[] $signatureMethodElements */
+        /** @var \Dom\Element[] $signatureMethodElements */
         $signatureMethodElements = XPath::xpQuery(
             $signatureMethodElement,
             './ds:HMACOutputLength/following-sibling::*',

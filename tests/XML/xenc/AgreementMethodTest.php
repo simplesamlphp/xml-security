@@ -207,18 +207,18 @@ final class AgreementMethodTest extends TestCase
             [$digestMethod],
         );
 
-        // Marshall it to a \DOMElement
+        // Marshall it to a \Dom\Element
         $agreementMethodElement = $agreementMethod->toXML();
 
         $xpCache = XPath::getXPath($agreementMethodElement);
 
         // Test for an KA-Nonce
-        /** @var \DOMElement[] $kaNonceElements */
+        /** @var \Dom\Element[] $kaNonceElements */
         $kaNonceElements = XPath::xpQuery($agreementMethodElement, './xenc:KA-Nonce', $xpCache);
         $this->assertCount(1, $kaNonceElements);
 
         // Test ordering of AgreementMethod contents
-        /** @var \DOMElement[] $agreementMethodElements */
+        /** @var \Dom\Element[] $agreementMethodElements */
         $agreementMethodElements = XPath::xpQuery(
             $agreementMethodElement,
             './xenc:KA-Nonce/following-sibling::*',
