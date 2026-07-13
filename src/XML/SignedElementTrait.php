@@ -281,6 +281,7 @@ trait SignedElementTrait
                 $verifier->getAlgorithmId(),
                 $algId,
                 'Algorithm provided in key does not match algorithm used in signature.',
+                SignatureVerificationFailedException::class,
             );
 
             return $this->verifyInternal($verifier);
@@ -303,7 +304,6 @@ trait SignedElementTrait
                     "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----",
                     strval($data->getContent()),
                 );
-
                 $cert = new Key\X509Certificate(PEM::fromString($cert));
                 $verifier = $factory->getAlgorithm($algId->getValue(), $cert->getPublicKey());
 

@@ -27,7 +27,7 @@ final class HMAC extends AbstractSigner implements SignatureAlgorithmInterface
     public function __construct(
         #[\SensitiveParameter]
         SymmetricKey $key,
-        string $algId = C::SIG_HMAC_SHA256,
+        string $algId,
     ) {
         parent::__construct($key, $algId, C::$HMAC_DIGESTS[$algId]);
     }

@@ -102,7 +102,7 @@ class Constants extends \SimpleSAML\XML\Constants
     public const string C14N11_INCLUSIVE_WITHOUT_COMMENTS = 'http://www.w3.org/2006/12/xml-c14n11#WithComments';
 
     /**
-     * Signature algorithms
+     * RSA Signature algorithms
      */
     public const string SIG_RSA_SHA1 = 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
 
@@ -116,6 +116,9 @@ class Constants extends \SimpleSAML\XML\Constants
 
     public const string SIG_RSA_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160';
 
+    /**
+     * HMAC Signature algorithms
+     */
     public const string SIG_HMAC_SHA1 = 'http://www.w3.org/2000/09/xmldsig#hmac-sha1';
 
     public const string SIG_HMAC_SHA224 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha224';
@@ -127,6 +130,19 @@ class Constants extends \SimpleSAML\XML\Constants
     public const string SIG_HMAC_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-sha512';
 
     public const string SIG_HMAC_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#hmac-ripemd160';
+
+    /**
+     * RSA-PSS Signature algorithms
+     */
+    public const string SIG_RSA_PSS_SHA1 = 'http://www.w3.org/2007/05/xmldsig-more#sha1-rsa-MGF1';
+
+    public const string SIG_RSA_PSS_SHA224 = 'http://www.w3.org/2007/05/xmldsig-more#sha224-rsa-MGF1';
+
+    public const string SIG_RSA_PSS_SHA256 = 'http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1';
+
+    public const string SIG_RSA_PSS_SHA384 = 'http://www.w3.org/2007/05/xmldsig-more#sha384-rsa-MGF1';
+
+    public const string SIG_RSA_PSS_SHA512 = 'http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1';
 
     /**
      * Encoding algorithms
@@ -232,6 +248,11 @@ class Constants extends \SimpleSAML\XML\Constants
         self::SIG_RSA_SHA384 => self::DIGEST_SHA384,
         self::SIG_RSA_SHA512 => self::DIGEST_SHA512,
         self::SIG_RSA_RIPEMD160 => self::DIGEST_RIPEMD160,
+        self::SIG_RSA_PSS_SHA1 => self::DIGEST_SHA1,
+        self::SIG_RSA_PSS_SHA224 => self::DIGEST_SHA224,
+        self::SIG_RSA_PSS_SHA256 => self::DIGEST_SHA256,
+        self::SIG_RSA_PSS_SHA384 => self::DIGEST_SHA384,
+        self::SIG_RSA_PSS_SHA512 => self::DIGEST_SHA512,
     ];
 
     /** @var array<string, string> */
