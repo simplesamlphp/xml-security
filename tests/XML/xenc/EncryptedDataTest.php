@@ -143,7 +143,7 @@ final class EncryptedDataTest extends TestCase
         $this->assertCount(1, $encryptedDataElements);
 
         // Test ordering of EncryptedData contents
-        /** @var \DOMElement[] $encryptedDataElements */
+        /** @var \Dom\Element[] $encryptedDataElements */
         $encryptedDataElements = XPath::xpQuery(
             $encryptedDataElement,
             './xenc:EncryptionMethod/following-sibling::*',

@@ -79,18 +79,18 @@ final class DHKeyValueTest extends TestCase
      */
     public function testMarshallingElementOrder(): void
     {
-        // Marshall it to a \DOMElement
+        // Marshall it to a \Dom\Element
         $dhKeyValueElement = self::$dhKeyValue->toXML();
 
         $xpCache = XPath::getXPath($dhKeyValueElement);
 
         // Test for an P
-        /** @var \DOMElement[] $pElements */
+        /** @var \Dom\Element[] $pElements */
         $pElements = XPath::xpQuery($dhKeyValueElement, './xenc:P', $xpCache);
         $this->assertCount(1, $pElements);
 
         // Test ordering of DHKeyValue contents
-        /** @var \DOMElement[] $dhKeyValueElements */
+        /** @var \Dom\Element[] $dhKeyValueElements */
         $dhKeyValueElements = XPath::xpQuery(
             $dhKeyValueElement,
             './xenc:P/following-sibling::*',

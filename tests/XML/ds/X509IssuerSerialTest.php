@@ -90,7 +90,7 @@ final class X509IssuerSerialTest extends TestCase
         $issuerName = XPath::xpQuery($x509IssuerSerialElement, './ds:X509IssuerName', $xpCache);
         $this->assertCount(1, $issuerName);
 
-        /** @var \DOMElement[] $x509IssuerSerialElements */
+        /** @var \Dom\Element[] $x509IssuerSerialElements */
         $x509IssuerSerialElements = XPath::xpQuery(
             $x509IssuerSerialElement,
             './ds:X509IssuerName/following-sibling::*',
