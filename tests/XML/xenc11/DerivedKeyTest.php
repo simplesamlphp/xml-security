@@ -150,12 +150,12 @@ final class DerivedKeyTest extends TestCase
         $xpCache = XPathUtils::getXPath($dkElement);
 
         // Test for a KeyDerivationMethod
-        /** @var \DOMElement[] $keyDerivationMethodElements */
+        /** @var \Dom\Element[] $keyDerivationMethodElements */
         $keyDerivationMethodElements = XPathUtils::xpQuery($dkElement, './xenc11:KeyDerivationMethod', $xpCache);
         $this->assertCount(1, $keyDerivationMethodElements);
 
         // Test ordering of DerivedKey contents
-        /** @var \DOMElement[] $dkElements */
+        /** @var \Dom\Element[] $dkElements */
         $dkElements = XPathUtils::xpQuery($dkElement, './xenc11:KeyDerivationMethod/following-sibling::*', $xpCache);
 
         $this->assertCount(3, $dkElements);
