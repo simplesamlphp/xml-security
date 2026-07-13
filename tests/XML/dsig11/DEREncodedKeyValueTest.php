@@ -12,7 +12,6 @@ use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
-use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\DEREncodedKeyValue;
 
@@ -58,9 +57,10 @@ final class DEREncodedKeyValueTest extends TestCase
             IDValue::fromString('phpunit'),
         );
 
-        $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
-            strval($derEncodedKeyValue),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($derEncodedKeyValue);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -60,12 +60,12 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Convert XML into a SignatureValue element
      *
-     * @param \DOMElement $xml
+     * @param \Dom\Element $xml
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'SignatureValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, SignatureValue::NS, InvalidDOMElementException::class);
@@ -79,9 +79,9 @@ final class SignatureValue extends AbstractDsElement implements SchemaValidatabl
     /**
      * Convert this SignatureValue element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this SignatureValue element to.
+     * @param \Dom\Element|null $parent The element we should append this SignatureValue element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->textContent = strval($this->getValue());

@@ -68,12 +68,13 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $X509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
+        $x509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($X509IssuerSerial),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($x509IssuerSerial);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -81,23 +82,23 @@ final class X509IssuerSerialTest extends TestCase
      */
     public function testMarshallingElementOrdering(): void
     {
-        $X509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
-        $X509IssuerSerialElement = $X509IssuerSerial->toXML();
+        $x509IssuerSerial = new X509IssuerSerial(self::$issuer, self::$serial);
+        $x509IssuerSerialElement = $x509IssuerSerial->toXML();
 
-        $xpCache = XPath::getXPath($X509IssuerSerialElement);
+        $xpCache = XPath::getXPath($x509IssuerSerialElement);
 
-        $issuerName = XPath::xpQuery($X509IssuerSerialElement, './ds:X509IssuerName', $xpCache);
+        $issuerName = XPath::xpQuery($x509IssuerSerialElement, './ds:X509IssuerName', $xpCache);
         $this->assertCount(1, $issuerName);
 
-        /** @var \DOMElement[] $X509IssuerSerialElements */
-        $X509IssuerSerialElements = XPath::xpQuery(
-            $X509IssuerSerialElement,
+        /** @var \DOMElement[] $x509IssuerSerialElements */
+        $x509IssuerSerialElements = XPath::xpQuery(
+            $x509IssuerSerialElement,
             './ds:X509IssuerName/following-sibling::*',
             $xpCache,
         );
 
         // Test ordering of X509IssuerSerial contents
-        $this->assertCount(1, $X509IssuerSerialElements);
-        $this->assertEquals('ds:X509SerialNumber', $X509IssuerSerialElements[0]->tagName);
+        $this->assertCount(1, $x509IssuerSerialElements);
+        $this->assertEquals('ds:X509SerialNumber', $x509IssuerSerialElements[0]->tagName);
     }
 }

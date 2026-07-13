@@ -46,9 +46,10 @@ final class PGPKeyIDTest extends TestCase
     {
         $pgpKeyId = PGPKeyID::fromString('GpM7');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($pgpKeyId),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($pgpKeyId);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

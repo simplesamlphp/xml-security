@@ -58,7 +58,7 @@ final class EncryptionMethodTest extends TestCase
     public function testMarshalling(): void
     {
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
-        /** @var \DOMElement $chunkElt */
+        /** @var \Dom\Element $chunkElt */
         $chunkElt = $chunkXml->documentElement;
         $chunk = Chunk::fromXML($chunkElt);
 
@@ -69,10 +69,11 @@ final class EncryptionMethodTest extends TestCase
             [$chunk],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($em),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($em);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -92,9 +93,17 @@ final class EncryptionMethodTest extends TestCase
         $this->assertNull($em->getKeySize());
         $this->assertNull($em->getOAEPParams());
         $this->assertEmpty($em->getElements());
+
+        $document->documentElement->C14N();
+        $actualDoc = $em->toXML();
+        $actualDoc->C14N();
+
+        /** @var \Dom\XMLDocument $ownerDocument */
+        $ownerDocument = $actualDoc->ownerDocument;
+
         $this->assertEquals(
             $document->saveXML($document->documentElement),
-            strval($em),
+            $ownerDocument->saveXml($actualDoc),
         );
     }
 
@@ -102,7 +111,7 @@ final class EncryptionMethodTest extends TestCase
     public function testMarshallingElementOrdering(): void
     {
         $chunkXml = DOMDocumentFactory::fromString('<other:Element xmlns:other="urn:other:enc">Value</other:Element>');
-        /** @var \DOMElement $chunkElt */
+        /** @var \Dom\Element $chunkElt */
         $chunkElt = $chunkXml->documentElement;
         $chunk = Chunk::fromXML($chunkElt);
 
@@ -113,19 +122,19 @@ final class EncryptionMethodTest extends TestCase
             [$chunk],
         );
 
-        // Marshall it to a \DOMElement
+        // Marshall it to a \Dom\Element
         $emElement = $em->toXML();
 
         $xpCache = XPath::getXPath($emElement);
 
         // Test for a KeySize
-        /** @var \DOMElement[] $keySizeElements */
+        /** @var \Dom\Element[] $keySizeElements */
         $keySizeElements = XPath::xpQuery($emElement, './xenc:KeySize', $xpCache);
         $this->assertCount(1, $keySizeElements);
         $this->assertEquals('10', $keySizeElements[0]->textContent);
 
         // Test ordering of EncryptionMethod contents
-        /** @var \DOMElement[] $emElements */
+        /** @var \Dom\Element[] $emElements */
         $emElements = XPath::xpQuery($emElement, './xenc:KeySize/following-sibling::*', $xpCache);
 
         $this->assertCount(2, $emElements);
@@ -143,7 +152,7 @@ final class EncryptionMethodTest extends TestCase
     public function testUnmarshallingWithoutAlgorithm(): void
     {
         $xmlRepresentation = clone self::$xmlRepresentation;
-        /** @var \DOMElement $xmlRepresentation */
+        /** @var \Dom\Element $xmlRepresentation */
         $xmlRepresentation = $xmlRepresentation->documentElement;
         $xmlRepresentation->removeAttribute('Algorithm');
 
@@ -166,15 +175,24 @@ XML
             ,
         );
 
-        /** @var \DOMElement @element */
+        /** @var \Dom\Element @element */
         $element = $document->documentElement;
         $em = EncryptionMethod::fromXML($element);
+
         $this->assertNull($em->getKeySize());
         $this->assertNull($em->getOAEPParams());
         $this->assertEmpty($em->getElements());
+
+        $document->documentElement->C14N();
+        $actualDoc = $em->toXML();
+        $actualDoc->C14N();
+
+        /** @var \Dom\XMLDocument $ownerDocument */
+        $ownerDocument = $actualDoc->ownerDocument;
+
         $this->assertEquals(
             $document->saveXML($document->documentElement),
-            strval($em),
+            $ownerDocument->saveXml($actualDoc),
         );
     }
 }

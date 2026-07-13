@@ -92,9 +92,10 @@ final class ECParametersTest extends TestCase
         // Build ECParameters
         $ecParameters = new ECParameters($fieldId, $curve, $base, $order, $coFactor, $validationData);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($ecParameters),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($ecParameters);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

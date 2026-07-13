@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\AbstractElement;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -171,7 +171,7 @@ trait EncryptedElementTrait
      * @throws \SimpleSAML\XML\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same(
             $xml->localName,
@@ -198,7 +198,7 @@ trait EncryptedElementTrait
     /**
      * @inheritDoc
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $this->encryptedData->toXML($e);
@@ -212,9 +212,9 @@ trait EncryptedElementTrait
      * The AbstractElement class implements this method. If your object inherits from that class, you will already
      * have this method out of the box.
      *
-     * @param \DOMElement|null $parent The element we should append to.
+     * @param \Dom\Element|null $parent The element we should append to.
      */
-    abstract public function instantiateParentElement(?DOMElement $parent = null): DOMElement;
+    abstract public function instantiateParentElement(?Dom\Element $parent = null): Dom\Element;
 
 
     /**

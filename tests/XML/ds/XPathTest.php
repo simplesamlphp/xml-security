@@ -45,9 +45,11 @@ class XPathTest extends TestCase
         $xpath = XPath::fromString('self::xenc:CipherValue[@Id="example1"]');
 
         $this->assertEquals('self::xenc:CipherValue[@Id="example1"]', $xpath->getContent()->getValue());
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($xpath),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($xpath);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

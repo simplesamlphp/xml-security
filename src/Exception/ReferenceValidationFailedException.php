@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Exception;
 /**
  * Class ReferenceValidationFailedException
  *
- * This exception is thrown when we can't validate the signature against the referenced DOMDocument or DOMElement.
+ * This exception is thrown when we can't validate the signature against the referenced Dom\XMLDocument or Dom\Element.
  *
  * @package simplesamlphp/xml-security
  */

@@ -46,9 +46,10 @@ final class SPKISexpTest extends TestCase
     {
         $SPKISexp = SPKISexp::fromString('GpM6');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($SPKISexp),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($SPKISexp);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

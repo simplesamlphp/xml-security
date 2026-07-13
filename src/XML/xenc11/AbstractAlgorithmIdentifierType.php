@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc11;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
@@ -54,7 +54,7 @@ abstract class AbstractAlgorithmIdentifierType extends AbstractXenc11Element
     /**
      * @inheritDoc
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', strval($this->getAlgorithm()));

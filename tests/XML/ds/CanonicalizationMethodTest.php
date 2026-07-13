@@ -51,9 +51,10 @@ final class CanonicalizationMethodTest extends TestCase
             AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($canonicalizationMethod),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($canonicalizationMethod);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

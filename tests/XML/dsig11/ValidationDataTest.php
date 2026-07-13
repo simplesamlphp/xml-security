@@ -55,9 +55,10 @@ final class ValidationDataTest extends TestCase
             AnyURIValue::fromString(C::DIGEST_SHA1),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($validationData),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($validationData);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -56,9 +56,10 @@ final class PRFTest extends TestCase
             AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($prf),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($prf);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

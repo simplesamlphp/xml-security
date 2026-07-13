@@ -46,9 +46,10 @@ final class K1Test extends TestCase
     {
         $k1 = K1::fromString('128');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($k1),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($k1);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

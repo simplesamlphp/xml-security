@@ -7,7 +7,7 @@ namespace SimpleSAML\XMLSecurity\Exception;
 /**
  * Class SignatureVerificationFailedException
  *
- * This exception is thrown when we can't verify the signature for a given DOMDocument or DOMElement.
+ * This exception is thrown when we can't verify the signature for a given Dom\XMLDocument or Dom\Element.
  *
  * @package simplesamlphp/xml-security
  */

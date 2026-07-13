@@ -67,10 +67,11 @@ final class PGPDataTest extends TestCase
     {
         $pgpData = new PGPData(self::$pgpKeyId, self::$pgpKeyPacket, [self::$p]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($pgpData),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($pgpData);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -91,7 +92,7 @@ final class PGPDataTest extends TestCase
         $pgpData = new PGPData(self::$pgpKeyId, self::$pgpKeyPacket, [self::$p]);
 
         $pgpDataElement = $pgpData->toXML();
-        /** @var \DOMNodeList<\DOMNode> $children */
+        /** @var \Dom\NodeList<\Dom\Node> $children */
         $children = $pgpDataElement->childNodes;
 
         $this->assertEquals('ds:PGPKeyID', $children[0]->tagName);

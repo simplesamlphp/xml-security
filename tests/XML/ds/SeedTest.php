@@ -46,9 +46,10 @@ final class SeedTest extends TestCase
     {
         $seed = Seed::fromString('GpM6');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($seed),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($seed);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

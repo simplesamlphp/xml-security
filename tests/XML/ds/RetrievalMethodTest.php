@@ -65,9 +65,10 @@ final class RetrievalMethodTest extends TestCase
             AnyURIValue::fromString(C::XMLENC_ENCRYPTEDKEY),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($retrievalMethod),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($retrievalMethod);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

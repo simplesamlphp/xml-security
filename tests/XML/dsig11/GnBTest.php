@@ -53,9 +53,10 @@ final class GnBTest extends TestCase
         $m = M::fromString('1024');
         $gnb = new GnB($m);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($gnb),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($gnb);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

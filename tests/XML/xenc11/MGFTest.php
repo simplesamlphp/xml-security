@@ -58,9 +58,10 @@ final class MGFTest extends TestCase
             AnyURIValue::fromString('urn:x-simplesamlphp:algorithm'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($mgf),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($mgf);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

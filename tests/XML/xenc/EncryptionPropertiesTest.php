@@ -65,9 +65,9 @@ final class EncryptionPropertiesTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Other</ssp:Chunk>',
         );
 
-        /** @var \DOMElement $someElt */
+        /** @var \Dom\Element $someElt */
         $someElt = $someDoc->documentElement;
-        /** @var \DOMElement $otherElt */
+        /** @var \Dom\Element $otherElt */
         $otherElt = $otherDoc->documentElement;
 
         $attr1 = new XMLAttribute(
@@ -101,9 +101,10 @@ final class EncryptionPropertiesTest extends TestCase
             IDValue::fromString('outer'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptionProperties),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptionProperties);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

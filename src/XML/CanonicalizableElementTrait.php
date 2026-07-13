@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XMLSecurity\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\CanonicalizationFailedException;
@@ -21,20 +21,20 @@ use SimpleSAML\XPath\Constants as XPATH_C;
 trait CanonicalizableElementTrait
 {
     /**
-     * This trait uses the php DOM extension. As such, it requires you to keep track (or produce) the DOMElement
+     * This trait uses the php DOM extension. As such, it requires you to keep track (or produce) the Dom\Element
      * necessary to perform the canonicalisation.
      *
-     * Implement this method to return the DOMElement with the proper representation of this object. Whatever is
+     * Implement this method to return the Dom\Element with the proper representation of this object. Whatever is
      * returned here will be used both to perform canonicalisation and to serialize the object, so that it can be
      * recovered later in its exact original state.
      */
-    abstract protected function getOriginalXML(): DOMElement;
+    abstract protected function getOriginalXML(): Dom\Element;
 
 
     /**
      * Canonicalize any given node.
      *
-     * @param \DOMElement $element The DOM element that needs canonicalization.
+     * @param \Dom\Element $element The DOM element that needs canonicalization.
      * @param string $c14nMethod The identifier of the canonicalization algorithm to use.
      *   See \SimpleSAML\XMLSecurity\Constants.
      * @param array<mixed>|null $xpaths An array of xpaths to filter the nodes by. Defaults to null (no filters).
@@ -44,7 +44,7 @@ trait CanonicalizableElementTrait
      * @return string The canonical representation of the given DOM node, according to the algorithm requested.
      */
     public function canonicalizeData(
-        DOMElement $element,
+        Dom\Element $element,
         string $c14nMethod,
         ?array $xpaths = null,
         ?array $prefixes = null,
@@ -111,7 +111,7 @@ trait CanonicalizableElementTrait
      * Process all transforms specified by a given Reference element.
      *
      * @param \SimpleSAML\XMLSecurity\XML\ds\Transforms $transforms The transforms to apply.
-     * @param \DOMElement $data The data referenced.
+     * @param \Dom\Element $data The data referenced.
      *
      * @return string The canonicalized data after applying all transforms specified by $ref.
      *
@@ -119,7 +119,7 @@ trait CanonicalizableElementTrait
      */
     public function processTransforms(
         Transforms $transforms,
-        DOMElement $data,
+        Dom\Element $data,
     ): string {
         Assert::maxCount(
             $transforms->getTransform(),
@@ -162,8 +162,10 @@ trait CanonicalizableElementTrait
                         );
 
                         foreach ($nslist as $nsnode) {
-                            if ($nsnode->localName != "xml") {
-                                $arXPath['namespaces'][$nsnode->localName] = $nsnode->nodeValue;
+                            if ($nsnode instanceof Dom\Element) {
+                                if ($nsnode->localName !== "xml") {
+                                    $arXPath['namespaces'][$nsnode->localName] = $nsnode->nodeValue;
+                                }
                             }
                         }
                     }
@@ -183,6 +185,8 @@ trait CanonicalizableElementTrait
     public function __serialize(): array
     {
         $xml = $this->getOriginalXML();
-        return [$xml->ownerDocument->saveXML($xml)];
+        /** @var \Dom\XMLDocument $ownerDocument */
+        $ownerDocument = $xml->ownerDocument;
+        return [$ownerDocument->saveXML($xml)];
     }
 }

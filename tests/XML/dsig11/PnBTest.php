@@ -64,10 +64,11 @@ final class PnBTest extends TestCase
         $k3 = K3::fromString('512');
         $pnb = new PnB($m, $k1, $k2, $k3);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($pnb),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($pnb);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -82,7 +83,7 @@ final class PnBTest extends TestCase
         $pnb = new PnB($m, $k1, $k2, $k3);
 
         $pnbElement = $pnb->toXML();
-        /** @var \DOMNodeList<\DOMNode> $children */
+        /** @var \Dom\NodeList<\Dom\Node> $children */
         $children = $pnbElement->childNodes;
 
         $this->assertEquals('dsig11:M', $children[0]->tagName);

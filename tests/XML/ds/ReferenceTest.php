@@ -74,10 +74,12 @@ final class ReferenceTest extends TestCase
         );
 
         $this->assertFalse($reference->isXPointer());
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($reference),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($reference);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -106,7 +108,7 @@ final class ReferenceTest extends TestCase
         );
 
         $referenceElement = $reference->toXML();
-        /** @var \DOMNodeList<\DOMNode> $children */
+        /** @var \Dom\NodeList<\Dom\Node> $children */
         $children = $referenceElement->childNodes;
 
         $this->assertEquals('ds:Transforms', $children[0]->tagName);

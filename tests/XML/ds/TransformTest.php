@@ -52,16 +52,19 @@ final class TransformTest extends TestCase
      */
     public function testMarshalling(): void
     {
+        // With XPath
         $transform = new Transform(
             AnyURIValue::fromString(XPATH_C::XPATH10_URI),
             XPath::fromString('count(//. | //@* | //namespace::*)'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($transform),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($transform);
 
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+
+        // Same test with InclusiveNamespaces
         $transform = new Transform(
             AnyURIValue::fromString(C::C14N_EXCLUSIVE_WITHOUT_COMMENTS),
             null,
@@ -78,9 +81,10 @@ final class TransformTest extends TestCase
             dirname(__FILE__, 3) . '/resources/xml/ds_Transform_InclusiveNamespaces.xml',
         );
 
-        $this->assertEquals(
-            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($transform),
-        );
+        $expectedXml = $xmlRepresentation->saveXml($xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($transform);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

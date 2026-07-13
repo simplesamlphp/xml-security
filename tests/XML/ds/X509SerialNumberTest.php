@@ -47,10 +47,11 @@ final class X509SerialNumberTest extends TestCase
     {
         $serialNumber = X509SerialNumber::fromString('123456');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($serialNumber),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($serialNumber);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -59,7 +60,7 @@ final class X509SerialNumberTest extends TestCase
     public function testUnmarshallingIncorrectTypeThrowsException(): void
     {
         $document = clone self::$xmlRepresentation;
-        /** @var \DOMElement $docElement */
+        /** @var \Dom\Element $docElement */
         $docElement = $document->documentElement;
         $docElement->textContent = 'Not an integer';
 

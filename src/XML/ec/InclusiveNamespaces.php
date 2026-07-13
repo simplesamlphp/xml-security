@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ec;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Type\NMTokensValue;
@@ -46,9 +46,9 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
     /**
      * Convert XML into an InclusiveNamespaces element.
      *
-     * @param \DOMElement $xml The XML element we should load.
+     * @param \Dom\Element $xml The XML element we should load.
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         return new static(
             self::getOptionalAttribute($xml, 'PrefixList', NMTokensValue::class, null),
@@ -59,9 +59,9 @@ class InclusiveNamespaces extends AbstractEcElement implements SchemaValidatable
     /**
      * Convert this InclusiveNamespaces to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this InclusiveNamespaces to.
+     * @param \Dom\Element|null $parent The element we should append this InclusiveNamespaces to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

@@ -46,9 +46,10 @@ final class SpecifiedTest extends TestCase
     {
         $specified = Specified::fromString('GpM6');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($specified),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($specified);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

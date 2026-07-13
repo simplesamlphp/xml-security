@@ -46,9 +46,10 @@ final class HMACOutputLengthTest extends TestCase
     {
         $hmacOutputLength = HMACOutputLength::fromString('128');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($hmacOutputLength),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($hmacOutputLength);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

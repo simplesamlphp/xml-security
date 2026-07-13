@@ -51,9 +51,10 @@ class InclusiveNamespacesTest extends TestCase
 
         $this->assertEquals("dsig soap", strval($inclusiveNamespaces->getPrefixes()));
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($inclusiveNamespaces),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($inclusiveNamespaces);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

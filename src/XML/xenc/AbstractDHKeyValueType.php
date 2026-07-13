@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\xenc;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -126,7 +126,7 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
     /**
      * Initialize an DHKeyValue object from an existing XML.
      *
-     * @param \DOMElement $xml
+     * @param \Dom\Element $xml
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
@@ -135,7 +135,7 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
      * @throws \SimpleSAML\XMLSchema\Exception\TooManyElementsException
      *   if too many child-elements of a type are specified
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'DHKeyValue', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -173,9 +173,9 @@ abstract class AbstractDHKeyValueType extends AbstractXencElement implements Sch
     /**
      * Convert this DHKeyValue object to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this DHKeyValue to.
+     * @param \Dom\Element|null $parent The element we should append this DHKeyValue to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

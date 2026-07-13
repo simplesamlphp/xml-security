@@ -46,9 +46,10 @@ final class YTest extends TestCase
     {
         $y = Y::fromString('GpM6');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($y),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($y);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

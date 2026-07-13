@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
@@ -87,7 +87,7 @@ trait SignedElementTrait
     /**
      * Make sure the given Reference points to the original XML given.
      */
-    private function validateReferenceUri(Reference $reference, DOMElement $xml): void
+    private function validateReferenceUri(Reference $reference, Dom\Element $xml): void
     {
         if (
             in_array(
@@ -142,7 +142,7 @@ trait SignedElementTrait
             $this->validateReferenceUri($reference, $xml);
         }
 
-        // Clone the document so we don't mess up the original DOMDocument
+        // Clone the document so we don't mess up the original Dom\XMLDocument
         $doc = DOMDocumentFactory::create();
         $node = $doc->importNode($xml->ownerDocument->documentElement, true);
         $doc->appendChild($node);

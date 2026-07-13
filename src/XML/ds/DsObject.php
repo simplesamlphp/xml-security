@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -99,12 +99,12 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Convert XML into a ds:Object
      *
-     * @param \DOMElement $xml The XML element we should load
+     * @param \Dom\Element $xml The XML element we should load
      *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'Object', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, DsObject::NS, InvalidDOMElementException::class);
@@ -121,9 +121,9 @@ final class DsObject extends AbstractDsElement implements SchemaValidatableEleme
     /**
      * Convert this ds:Object element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this ds:Object element to.
+     * @param \Dom\Element|null $parent The element we should append this ds:Object element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

@@ -46,9 +46,10 @@ final class IterationCountTest extends TestCase
     {
         $iterationCount = IterationCount::fromString('3');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($iterationCount),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($iterationCount);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

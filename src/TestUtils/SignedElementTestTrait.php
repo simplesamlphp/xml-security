@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\TestUtils;
 
-use DOMDocument;
+use Dom;
 use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\Constants as C;
@@ -37,7 +37,7 @@ trait SignedElementTestTrait
     /**
      * A base document that we can reuse in our tests.
      */
-    protected static DOMDocument $xmlRepresentation;
+    protected static Dom\XMLDocument $xmlRepresentation;
 
     /**
      * The name of the class we are testing.
@@ -60,7 +60,7 @@ trait SignedElementTestTrait
         } elseif (empty(self::$xmlRepresentation)) {
             $this->markTestSkipped(
                 'Unable to run ' . self::class . '::testSignatures(). Please set ' . self::class
-                . ':$xmlRepresentation to a DOMDocument representing the XML-class being tested',
+                . ':$xmlRepresentation to a Dom\XMLDocument representing the XML-class being tested',
             );
         } else {
             $algorithms = array_keys(C::$RSA_DIGESTS);

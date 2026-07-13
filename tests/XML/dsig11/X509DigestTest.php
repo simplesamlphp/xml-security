@@ -15,7 +15,6 @@ use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Key;
-use SimpleSAML\XMLSecurity\Test\XML\XMLDumper;
 use SimpleSAML\XMLSecurity\TestUtils\PEMCertificatesMock;
 use SimpleSAML\XMLSecurity\XML\dsig11\AbstractDsig11Element;
 use SimpleSAML\XMLSecurity\XML\dsig11\X509Digest;
@@ -69,9 +68,10 @@ final class X509DigestTest extends TestCase
             AnyURIValue::fromString(C::DIGEST_SHA256),
         );
 
-        $this->assertEquals(
-            XMLDumper::dumpDOMDocumentXMLWithBase64Content(self::$xmlRepresentation),
-            strval($x509digest),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($x509digest);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -46,9 +46,10 @@ final class PgenCounterTest extends TestCase
     {
         $pgenCounter = PgenCounter::fromString('GpM6');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($pgenCounter),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($pgenCounter);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

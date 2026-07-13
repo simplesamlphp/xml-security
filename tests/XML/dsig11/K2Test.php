@@ -46,9 +46,10 @@ final class K2Test extends TestCase
     {
         $k2 = K2::fromString('256');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($k2),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($k2);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

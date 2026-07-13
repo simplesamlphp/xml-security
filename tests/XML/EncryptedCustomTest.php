@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\Test\XML;
 
-use DOMElement;
+use Dom;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
@@ -27,7 +27,7 @@ use function dirname;
  */
 class EncryptedCustomTest extends TestCase
 {
-    private DOMElement $signableDocument;
+    private Dom\Element $signableDocument;
 
     /** @var \SimpleSAML\XMLSecurity\Key\PrivateKey */
     protected PrivateKey $privKey;

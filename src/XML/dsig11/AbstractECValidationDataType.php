@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\dsig11;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function strval;
@@ -54,9 +54,9 @@ abstract class AbstractECValidationDataType extends AbstractDsig11Element
     /**
      * Convert this ECValidationDataType element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this ECValidationDataType element to.
+     * @param \Dom\Element|null $parent The element we should append this ECValidationDataType element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('hashAlgorithm', strval($this->getHashAlgorithm()));

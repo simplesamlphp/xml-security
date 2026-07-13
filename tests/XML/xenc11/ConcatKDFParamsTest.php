@@ -71,9 +71,10 @@ final class ConcatKDFParamsTest extends TestCase
             HexBinaryValue::fromString('e5f6'),
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($concatKdfParams),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($concatKdfParams);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

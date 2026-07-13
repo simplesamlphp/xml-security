@@ -48,9 +48,10 @@ final class MgmtDataTest extends TestCase
     {
         $mgmtData = MgmtData::fromString('ManagementData');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($mgmtData),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($mgmtData);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

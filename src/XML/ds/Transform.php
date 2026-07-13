@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML\ds;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
@@ -101,9 +101,9 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Convert XML into a Transform element.
      *
-     * @param \DOMElement $xml The XML element we should load.
+     * @param \Dom\Element $xml The XML element we should load.
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, 'Transform', InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, Transform::NS, InvalidDOMElementException::class);
@@ -130,9 +130,9 @@ class Transform extends AbstractDsElement implements SchemaValidatableElementInt
     /**
      * Convert this Transform element to XML.
      *
-     * @param \DOMElement|null $parent The element we should append this Transform element to.
+     * @param \Dom\Element|null $parent The element we should append this Transform element to.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->setAttribute('Algorithm', strval($this->getAlgorithm()));

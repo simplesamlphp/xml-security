@@ -60,7 +60,7 @@ final class EncryptionPropertyTest extends TestCase
         $doc = DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
         );
-        /** @var \DOMElement $elt */
+        /** @var \Dom\Element $elt */
         $elt = $doc->documentElement;
 
         $attr = new XMLAttribute(
@@ -77,9 +77,10 @@ final class EncryptionPropertyTest extends TestCase
             [$attr],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptionProperty),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptionProperty);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
