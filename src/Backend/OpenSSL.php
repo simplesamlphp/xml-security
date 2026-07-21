@@ -8,6 +8,7 @@ use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\OpenSSLException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
@@ -31,7 +32,7 @@ use function substr;
  *
  * @package SimpleSAML\XMLSecurity\Backend
  */
-final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePadding
+final class OpenSSL implements EncryptionBackend, OAEPParametersAware, SignatureBackend, SignaturePadding
 {
     public const int AUTH_TAG_LEN = 16;
 
@@ -53,6 +54,9 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
     protected int $keysize;
 
     protected bool $useAuthTag = false;
+
+    /** Tracks whether a cipher has been set (required before setOAEPParams()). */
+    private bool $cipherConfigured = false;
 
 
     /**
@@ -239,6 +243,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
         // configure the backend depending on the actual algorithm to use
         $this->useAuthTag = false;
         $this->cipher = $cipher;
+        $this->cipherConfigured = true;
         switch ($cipher) {
             case C::KEY_TRANSPORT_RSA_1_5:
                 $this->enc_padding = OPENSSL_PKCS1_PADDING;
@@ -256,6 +261,41 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
                 $this->cipher = C::$BLOCK_CIPHER_ALGORITHMS[$cipher];
                 $this->blocksize = C::$BLOCK_SIZES[$cipher];
                 $this->keysize = openssl_cipher_key_length(C::$BLOCK_CIPHER_ALGORITHMS[$cipher]);
+        }
+    }
+
+
+    /**
+     * Configure OAEP digest and MGF parameters.
+     *
+     * Only SHA-1 digest and MGF1-SHA-1 are supported locally. Any other value throws
+     * UnsupportedAlgorithmException on all PHP versions, use the PrivateKeyAgent backend
+     * for other OAEP digest/MGF combinations.
+     *
+     * @param string|null $digestAlg Digest algorithm URI. Null or xmldsig#sha1 accepted.
+     * @param string|null $mgf MGF URI. Null or xmlenc11#mgf1sha1 accepted.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException For any non-SHA-1 value.
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException If called before setCipher().
+     */
+    public function setOAEPParams(?string $digestAlg = null, ?string $mgf = null): void
+    {
+        if (!$this->cipherConfigured) {
+            throw new RuntimeException('setOAEPParams() must be called after setCipher().');
+        }
+
+        $mgf1Sha1 = 'http://www.w3.org/2009/xmlenc11#mgf1sha1';
+
+        if ($digestAlg !== null && $digestAlg !== C::DIGEST_SHA1) {
+            throw new UnsupportedAlgorithmException(
+                'OpenSSL backend only supports SHA-1 OAEP; use the PrivateKeyAgent backend for other digests.',
+            );
+        }
+
+        if ($mgf !== null && $mgf !== $mgf1Sha1) {
+            throw new UnsupportedAlgorithmException(
+                'OpenSSL backend only supports MGF1-SHA-1; use the PrivateKeyAgent backend for other MGF values.',
+            );
         }
     }
 
