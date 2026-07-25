@@ -23,6 +23,7 @@ use function openssl_sign;
 use function openssl_verify;
 use function ord;
 use function str_repeat;
+use function strlen;
 use function substr;
 
 /**
@@ -176,6 +177,7 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
         if ($plaintext === false) {
             throw new OpenSSLException('Cannot decrypt data');
         }
+
         return $this->useAuthTag ? $plaintext : $this->unpad($plaintext);
     }
 
@@ -299,11 +301,16 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
      * Pad a plaintext using ISO 10126 padding.
      *
      * @param string $plaintext The plaintext to pad.
-     *
      * @return string The padded plaintext.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\RuntimeException in case padding failed
      */
     public function pad(string $plaintext): string
     {
+        if ($this->blocksize > 256) {
+            throw new RuntimeException('Block size higher than 256 not allowed');
+        }
+
         $padchr = $this->blocksize - (mb_strlen($plaintext) % $this->blocksize);
         $pattern = chr($padchr);
         return $plaintext . str_repeat($pattern, $padchr);
@@ -314,11 +321,29 @@ final class OpenSSL implements EncryptionBackend, SignatureBackend, SignaturePad
      * Remove an existing ISO 10126 padding from a given plaintext.
      *
      * @param string $plaintext The padded plaintext.
-     *
      * @return string The plaintext without the padding.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\OpenSSLException in case unpadding failed
      */
     public function unpad(string $plaintext): string
     {
-        return substr($plaintext, 0, -ord(substr($plaintext, -1)));
+        $len = mb_strlen($plaintext);
+        if ($len === 0) {
+            /*
+             * Use a single, generic error for every decryption failure. Do not
+             * reveal whether the padding (as opposed to the ciphertext) was the
+             * cause: distinguishable padding errors turn unauthenticated CBC
+             * decryption into a padding oracle (plaintext recovery).
+             */
+            throw new OpenSSLException('Cannot decrypt data');
+        }
+
+        $padLen = ord($plaintext[$len - 1]);
+        $blocksize = $this->blocksize ?? 16;
+        if ($padLen < 1 || $padLen > $blocksize || $padLen > $len) {
+            throw new OpenSSLException('Cannot decrypt data');
+        }
+
+        return substr($plaintext, 0, -$padLen);
     }
 }
