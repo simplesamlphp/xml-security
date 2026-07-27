@@ -7,10 +7,12 @@ namespace SimpleSAML\XMLSecurity\Alg\Signature;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\BlacklistedAlgorithmException;
+use SimpleSAML\XMLSecurity\Exception\RuntimeException;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
 use function array_key_exists;
+use function get_debug_type;
 use function sprintf;
 
 /**
@@ -47,9 +49,16 @@ final class SignatureAlgorithmFactory
     /**
      * A cache of algorithm implementations indexed by algorithm ID.
      *
-     * @var array<string, \SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface>
+     * @var array<string, class-string<\SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmInterface>>
      */
     protected static array $cache = [];
+
+    /**
+     * Closure factories registered via registerAlgorithmFactory(), keyed by algorithm ID.
+     *
+     * @var array<string, \Closure>
+     */
+    protected static array $closureMap = [];
 
     /**
      * Whether the factory has been initialized or not.
@@ -107,6 +116,22 @@ final class SignatureAlgorithmFactory
             sprintf('Blacklisted algorithm: \'%s\'.', $algId),
             BlacklistedAlgorithmException::class,
         );
+
+        if (array_key_exists($algId, self::$closureMap)) {
+            $instance = (self::$closureMap[$algId])($key, $algId);
+            if (!($instance instanceof SignatureAlgorithmInterface)) {
+                throw new RuntimeException(
+                    sprintf(
+                        'Registered factory for \'%s\' returned %s instead of %s.',
+                        $algId,
+                        get_debug_type($instance),
+                        SignatureAlgorithmInterface::class,
+                    ),
+                );
+            }
+            return $instance;
+        }
+
         Assert::keyExists(
             self::$cache,
             $algId,
@@ -138,5 +163,54 @@ final class SignatureAlgorithmFactory
         foreach ($className::getSupportedAlgorithms() as $algId) {
             self::$cache[$algId] = $className;
         }
+    }
+
+
+    /**
+     * Register a closure factory for a specific algorithm ID.
+     *
+     * The closure is invoked by getAlgorithm() when the given algorithm is requested,
+     * taking priority over any class-string registered via registerAlgorithm(). The
+     * blacklist check still runs before the closure is invoked. The returned value must
+     * implement SignatureAlgorithmInterface; a wrong return type throws RuntimeException.
+     *
+     * Lifetime: registration is process-global and is not scoped to a factory instance or to a
+     * request. It lives until unregisterAlgorithmFactory()/clearAlgorithmFactories() is called or
+     * the process ends, which matters under worker SAPIs (FrankenPHP, RoadRunner, Swoole) where the
+     * process is reused across requests. Everything the closure captures -- backend, token provider,
+     * key-name resolver -- is shared by every subsequent caller of that algorithm URI.
+     *
+     * @param string   $algId   The algorithm URI to register the factory for.
+     * @param \Closure $factory Callable with signature (KeyInterface $key, string $algId): SignatureAlgorithmInterface.
+     */
+    public static function registerAlgorithmFactory(string $algId, \Closure $factory): void
+    {
+        self::$closureMap[$algId] = $factory;
+    }
+
+
+    /**
+     * Remove the closure factory registered for a specific algorithm ID.
+     *
+     * Removing a factory that was never registered is a no-op. Any class-string registered via
+     * registerAlgorithm() for the same algorithm remains in place and takes over again.
+     *
+     * @param string $algId The algorithm URI to unregister the factory for.
+     */
+    public static function unregisterAlgorithmFactory(string $algId): void
+    {
+        unset(self::$closureMap[$algId]);
+    }
+
+
+    /**
+     * Remove all closure factories registered via registerAlgorithmFactory().
+     *
+     * Only the closure registrations are cleared; the built-in algorithm registry populated from
+     * registerAlgorithm() is left untouched.
+     */
+    public static function clearAlgorithmFactories(): void
+    {
+        self::$closureMap = [];
     }
 }
