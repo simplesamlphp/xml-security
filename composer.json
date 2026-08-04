@@ -44,7 +44,7 @@
         "ext-spl": "*",
 
         "simplesamlphp/assert": "~3.0",
-        "simplesamlphp/xml-common": "3.0"
+        "simplesamlphp/xml-common": "3.0.1"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "~2.0"
