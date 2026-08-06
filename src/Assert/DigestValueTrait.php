@@ -22,5 +22,10 @@ trait DigestValueTrait
             $message ?: '%s is not a valid xs:DigestValue',
             InvalidArgumentException::class,
         );
+        parent::stringNotEmpty(
+            $value,
+            $message ?: '%s is not a valid xs:DigestValue',
+            InvalidArgumentException::class,
+        );
     }
 }
