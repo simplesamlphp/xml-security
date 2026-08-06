@@ -40,6 +40,7 @@ final class CryptoBinaryTest extends TestCase
     public static function provideCryptoBinary(): array
     {
         return [
+            // While empty is not strictly denied, it is also never useful for CryptoBinary
             'empty' => [false, ''],
             'valid' => [true, 'U2ltcGxlU0FNTHBocA=='],
             'illegal characters' => [false, '&*$(#&^@!(^%$'],

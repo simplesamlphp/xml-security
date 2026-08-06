@@ -40,6 +40,7 @@ final class ECPointTest extends TestCase
     public static function provideECPoint(): array
     {
         return [
+            // While empty is not strictly denied, it is also never useful for ECPoint
             'empty' => [false, ''],
             'valid' => [true, 'U2ltcGxlU0FNTHBocA=='],
             'illegal characters' => [false, '&*$(#&^@!(^%$'],

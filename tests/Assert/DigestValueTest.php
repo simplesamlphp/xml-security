@@ -40,6 +40,7 @@ final class DigestValueTest extends TestCase
     public static function provideDigestValue(): array
     {
         return [
+            // While empty is not strictly denied, it is also never useful for DigestValue
             'empty' => [false, ''],
             'valid' => [true, 'U2ltcGxlU0FNTHBocA=='],
             'illegal characters' => [false, '&*$(#&^@!(^%$'],
