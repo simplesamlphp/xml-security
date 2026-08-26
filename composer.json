@@ -47,6 +47,7 @@
         "simplesamlphp/xml-common": "~3.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^13.3",
         "simplesamlphp/simplesamlphp-test-framework": "~2.0"
     },
     "extra": {
