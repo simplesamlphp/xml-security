@@ -19,6 +19,7 @@ interface SignatureBackend
      * @param string $digest The identifier of the digest algorithm.
      *
      * @throws \SimpleSAML\XMLSecurity\Exception\InvalidArgumentException If the given digest is not valid.
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If the digest is not supported.
      */
     public function setDigestAlg(string $digest): void;
 

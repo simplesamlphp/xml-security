@@ -653,6 +653,156 @@ supported here, you will have to implement the `encrypt()` method yourself.
 
 Not available yet.
 
+## Private Key Agent backends
+
+This library can perform RSA signing and RSA key-transport decryption through a
+remote [Private Key Agent (PKA)](https://github.com/OpenConext/OpenConext-private-key-agent),
+so that private keys are never loaded into the PHP process on those paths.
+Signature verification and public-key encryption keep running locally.
+
+The building blocks live under `SimpleSAML\XMLSecurity\Backend\PrivateKeyAgent\`.
+You provide two small contracts and wire the backends through the algorithm
+factories at boot:
+
+- A `TokenProvider` (`getToken(string $keyName): string`) that returns the bearer
+  token for a key. This is secret-/config-dependent, so the library ships only the
+  contract, you implement it.
+- A `KeyNameResolver` that maps an `X509Certificate` to the agent key name. Two
+  strategies are provided: `FingerprintKeyNameResolver` (an explicit
+  `[fingerprint => key_name]` map) and `StaticKeyNameResolver` (one fixed name).
+  **Use `FingerprintKeyNameResolver`, also when you have only one key** — a
+  one-entry map costs one line of configuration and is what binds the certificate
+  you were given to the key the agent uses. See
+  [Caller obligations](#caller-obligations).
+
+The backends require a PSR-18 HTTP client and PSR-17 request/stream factories
+(injected explicitly, there is no auto-discovery). Retries, timeouts and circuit
+breaking are the responsibility of the client you inject.
+
+```php
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\PrivateKeyAgentRSA;
+use SimpleSAML\XMLSecurity\Backend\PrivateKeyAgent\FingerprintKeyNameResolver;
+use SimpleSAML\XMLSecurity\Backend\PrivateKeyAgent\PrivateKeyAgentEncryptionBackend;
+use SimpleSAML\XMLSecurity\Constants as C;
+
+// $httpClient, $requestFactory, $streamFactory are your PSR-18/PSR-17 instances;
+// $tokenProvider implements TokenProvider.
+$backend = new PrivateKeyAgentEncryptionBackend(
+    $httpClient,
+    $requestFactory,
+    $streamFactory,
+    'https://agent.internal/',           // must be https:// (or pass allowInsecureHttp: true)
+    $tokenProvider,
+    new FingerprintKeyNameResolver([
+        // hex SHA-256 fingerprint of the certificate => agent key name
+        '3b7f...c1a9' => 'my-key-name',
+    ]),
+);
+
+// Register a factory closure once, at boot. The blacklist still applies.
+KeyTransportAlgorithmFactory::registerAlgorithmFactory(
+    C::KEY_TRANSPORT_OAEP,
+    fn ($key, $algId) => new PrivateKeyAgentRSA($key, $algId, $backend),
+);
+```
+
+Once registered, calling `KeyTransportAlgorithmFactory::getAlgorithm($algId, $cert)`
+with an `X509Certificate` routes the operation to the agent, while an
+`AsymmetricKey` keeps using the local `OpenSSL` backend, enabling phased
+migration. The signing side works the same way with
+`SignatureAlgorithmFactory::registerAlgorithmFactory()` and
+`Alg\Signature\PrivateKeyAgentRSA`.
+
+The backend passed to the closure acts as a **prototype**: every `PrivateKeyAgentRSA`
+instance clones it and configures its own copy. One backend registered at boot can
+therefore serve any number of concurrent algorithm instances, each with its own digest
+or cipher, without them interfering with each other. The HTTP client, token provider
+and key name resolver stay shared, so connection reuse is unaffected.
+
+SHA-1 signing (`SIG_RSA_SHA1`) and RSA v1.5 key transport
+(`KEY_TRANSPORT_RSA_1_5`) are blocked by each factory's `DEFAULT_BLACKLIST` and
+can only be enabled through an explicit, operator-configured blacklist.
+
+### Caller obligations
+
+Delegating the private key to an agent moves part of the security boundary out of
+this library. Three properties cannot be enforced here and are requirements on the
+code that wires the backends up.
+
+**1. The certificate you pass in decides which private key is used. Never derive it
+from an incoming message.** `getAlgorithm($algId, $cert)` routes to the agent based
+on the certificate you hand it, and the `KeyNameResolver` turns that certificate
+into the agent key name. The certificate must come from local configuration or from
+metadata you have already validated. A certificate taken from the message being
+processed hands the choice of key to the sender.
+
+How much the resolver protects you differs:
+
+- `FingerprintKeyNameResolver` fails closed: a certificate that is not in the map
+  raises `UnknownKeyException`, so an unexpected certificate cannot reach the agent.
+- `StaticKeyNameResolver` performs **no binding at all**, it ignores the
+  certificate and returns its fixed name for anything. Every certificate that
+  reaches it is signed or decrypted with the configured key. Use it only where the
+  certificate is a fixed local constant (test harnesses, single-key sidecars).
+
+**2. Signing is verified locally; decryption cannot be.** After the agent returns a
+signature, `PrivateKeyAgentSignatureBackend` verifies it against the public key of the
+certificate it was given and throws `AgentSignatureMismatchException` if it does not
+match, so a wrong key name, a substituted key on the agent, or an intercepted response
+fails closed. **There is no equivalent check on the decrypt path**: the agent's
+plaintext cannot be validated against the certificate, so obligation 1 is the only
+control there. Treat the decrypt path as the stricter of the two.
+
+**3. Scope bearer tokens to the key.** `TokenProvider::getToken()` receives the
+resolved key name so that it can return a token scoped to that key. Returning one
+token for every key satisfies the interface but leaves agent-side authorisation as
+the only thing standing between a caller and every key the agent holds.
+
+### Operational requirements and limitations
+
+**TLS verification is your client's responsibility.** This library only checks the
+scheme of the agent base URL; certificate and hostname verification happen entirely
+inside the PSR-18 client you inject, which **must** be configured to verify peers.
+An `https://` URL on a client with verification disabled is fully interceptable, and
+an interceptor sees both the bearer token and every ciphertext. Plain `http://`
+requires the explicit `allowInsecureHttp: true` flag and is then accepted only for
+loopback hosts (`localhost`, `127.0.0.0/8`, `::1`), so it cannot leave the machine.
+
+**The blacklist is enforced by the factories, not by the backends.** Constructing
+`PrivateKeyAgentEncryptionBackend` or `PrivateKeyAgentSignatureBackend` and calling
+them directly bypasses `DEFAULT_BLACKLIST` entirely, the backends will happily map
+`KEY_TRANSPORT_RSA_1_5` or SHA-1 signing to an agent algorithm. Always go through
+`getAlgorithm()`.
+
+**A backend instance serves one operation at a time.** `setDigestAlg()`, `setCipher()`
+and `setOAEPParams()` mutate the backend, so a single instance cannot be used for two
+operations with different parameters at once. Going through `getAlgorithm()` handles
+this for you (each algorithm instance clones the backend), but code that drives a
+backend directly must give each concurrent operation its own instance or `clone`.
+
+**OAEP parameters must form a matched pair.** The agent's algorithms couple the
+digest and the MGF1 hash one-to-one, so only matching combinations are supported;
+anything else fails closed with `UnsupportedAlgorithmException`. Two consequences
+are worth knowing before you deploy:
+
+- `xmlenc11#rsa-oaep` with **both** `DigestMethod` and `MGF` absent is mapped to
+  SHA-256/MGF1-SHA-256. This is a deliberate policy choice and it **deviates from
+  the W3C XML Encryption 1.1 default of SHA-1/MGF1-SHA-1**. A peer that omits both
+  elements and relies on the W3C default produces ciphertext this path cannot
+  decrypt.
+- `xmlenc#rsa-oaep-mgf1p` accepts only an absent or SHA-1 `DigestMethod`. The
+  combination of a SHA-256 digest with the fixed MGF1-SHA-1 is legal per the W3C
+  specification and is emitted by some SAML stacks, but no agent algorithm
+  implements it, so it is rejected rather than silently mapped to something else.
+
+**Do not let peers observe decryption failures.** A failed decryption at the agent
+surfaces as `InvalidRequestException`, which is distinguishable from authentication
+and availability errors. Callers must ensure this distinction never reaches a remote
+party, whether through error responses or timing, otherwise it becomes a padding
+oracle. The standard mitigation (continuing with a random session key on failure)
+belongs in the layer above this library.
+
 ## Keys for testing purposes
 
 All encrypted keys use '1234' as passphrase.

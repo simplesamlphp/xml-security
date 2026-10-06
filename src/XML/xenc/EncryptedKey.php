@@ -6,6 +6,7 @@ namespace SimpleSAML\XMLSecurity\XML\xenc;
 
 use Dom;
 use SimpleSAML\Assert\Assert;
+use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\SchemaValidatableElementInterface;
 use SimpleSAML\XML\SchemaValidatableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -15,9 +16,13 @@ use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 use SimpleSAML\XMLSchema\Type\IDValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 use SimpleSAML\XMLSecurity\Alg\Encryption\EncryptionAlgorithmInterface;
+use SimpleSAML\XMLSecurity\Backend\OAEPParametersAware;
+use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
+use SimpleSAML\XMLSecurity\XML\ds\DigestMethod;
 use SimpleSAML\XMLSecurity\XML\ds\KeyInfo;
+use SimpleSAML\XMLSecurity\XML\xenc11\MGF;
 
 use function array_last;
 use function strval;
@@ -125,7 +130,43 @@ final class EncryptedKey extends AbstractEncryptedType implements SchemaValidata
             InvalidArgumentException::class,
         );
 
+        if ($decryptor instanceof OAEPParametersAware) {
+            $encryptionMethod = $this->getEncryptionMethod();
+            $digestAlg = null;
+            $mgf = null;
+
+            if ($encryptionMethod !== null) {
+                foreach ($encryptionMethod->getElements() as $child) {
+                    if ($child instanceof DigestMethod) {
+                        $digestAlg = $child->getAlgorithm()->getValue();
+                    } elseif ($child instanceof MGF) {
+                        $mgf = $child->getAlgorithm()->getValue();
+                    } elseif ($child instanceof Chunk) {
+                        if ($child->getNamespaceURI() === C::NS_XDSIG && $child->getLocalName() === 'DigestMethod') {
+                            $digestAlg = self::getChunkAlgorithm($child);
+                        } elseif ($child->getNamespaceURI() === C::NS_XENC11 && $child->getLocalName() === 'MGF') {
+                            $mgf = self::getChunkAlgorithm($child);
+                        }
+                    }
+                }
+            }
+
+            $decryptor->setOAEPParams($digestAlg, $mgf);
+        }
+
         return $decryptor->decrypt(base64_decode($cipherValue->getContent()->getValue(), true));
+    }
+
+
+    /**
+     * Read the 'Algorithm' attribute directly off an unregistered DigestMethod/MGF Chunk,
+     * so XML-declared OAEP parameters are honoured even when the xml-common element
+     * registry has not registered the typed ds\DigestMethod / xenc11\MGF classes.
+     */
+    private static function getChunkAlgorithm(Chunk $chunk): ?string
+    {
+        $xml = $chunk->getXML();
+        return $xml->hasAttribute('Algorithm') ? $xml->getAttribute('Algorithm') : null;
     }
 
 

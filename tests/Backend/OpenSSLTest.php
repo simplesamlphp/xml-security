@@ -10,6 +10,7 @@ use SimpleSAML\XMLSecurity\Backend\OpenSSL;
 use SimpleSAML\XMLSecurity\Constants as C;
 use SimpleSAML\XMLSecurity\Exception\InvalidArgumentException;
 use SimpleSAML\XMLSecurity\Exception\RuntimeException;
+use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\PrivateKey;
 use SimpleSAML\XMLSecurity\Key\PublicKey;
 use SimpleSAML\XMLSecurity\Key\SymmetricKey;
@@ -327,5 +328,90 @@ final class OpenSSLTest extends TestCase
         $backend = new OpenSSL();
         $this->expectException(InvalidArgumentException::class);
         $backend->setCipher('foo');
+    }
+
+
+    /**
+     * Test that no setOAEPParams() call keeps the default SHA-1 OAEP round-trip.
+     */
+    public function testOAEPDefaultNoParamsRoundTrip(): void
+    {
+        $backend = new OpenSSL();
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $ciphertext = $backend->encrypt(self::$pubKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $backend->decrypt(self::$privKey, $ciphertext));
+    }
+
+
+    /**
+     * Test that explicit SHA-1 digest and MGF1-SHA-1 are accepted and leave behaviour unchanged.
+     */
+    public function testOAEPExplicitSha1Accepted(): void
+    {
+        $backend = new OpenSSL();
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $backend->setOAEPParams(
+            'http://www.w3.org/2000/09/xmldsig#sha1',
+            'http://www.w3.org/2009/xmlenc11#mgf1sha1',
+        );
+        $ciphertext = $backend->encrypt(self::$pubKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $backend->decrypt(self::$privKey, $ciphertext));
+    }
+
+
+    /**
+     * Test that a non-SHA-1 digest throws UnsupportedAlgorithmException.
+     */
+    public function testOAEPNonSha1DigestThrows(): void
+    {
+        $backend = new OpenSSL();
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $backend->setOAEPParams('http://www.w3.org/2001/04/xmlenc#sha256');
+    }
+
+
+    /**
+     * Test that a non-MGF1-SHA-1 MGF throws UnsupportedAlgorithmException.
+     */
+    public function testOAEPNonMgf1Sha1Throws(): void
+    {
+        $backend = new OpenSSL();
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $backend->setOAEPParams(null, 'http://www.w3.org/2009/xmlenc11#mgf1sha256');
+    }
+
+
+    /**
+     * Test that setCipher() after setOAEPParams() resets parameters (next encrypt uses defaults).
+     */
+    public function testOAEPResetByCipher(): void
+    {
+        $backend = new OpenSSL();
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP_MGF1P);
+        $backend->setOAEPParams(
+            'http://www.w3.org/2000/09/xmldsig#sha1',
+            'http://www.w3.org/2009/xmlenc11#mgf1sha1',
+        );
+        // Reset by calling setCipher again; subsequent encrypt/decrypt should still work with SHA-1 defaults.
+        $backend->setCipher(C::KEY_TRANSPORT_OAEP);
+        $ciphertext = $backend->encrypt(self::$pubKey, 'Plaintext');
+        $this->assertEquals('Plaintext', $backend->decrypt(self::$privKey, $ciphertext));
+    }
+
+
+    /**
+     * Test that setOAEPParams() before setCipher() throws RuntimeException.
+     */
+    public function testOAEPBeforeCipherThrows(): void
+    {
+        $backend = new OpenSSL();
+        // Re-create without going through constructor's setCipher call by reflection
+        $r = new \ReflectionProperty(OpenSSL::class, 'cipherConfigured');
+        $r->setValue($backend, false);
+
+        $this->expectException(RuntimeException::class);
+        $backend->setOAEPParams(null, null);
     }
 }

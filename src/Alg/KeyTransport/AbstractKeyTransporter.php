@@ -7,6 +7,7 @@ namespace SimpleSAML\XMLSecurity\Alg\KeyTransport;
 use SimpleSAML\Assert\Assert;
 use SimpleSAML\XMLSecurity\Backend;
 use SimpleSAML\XMLSecurity\Backend\EncryptionBackend;
+use SimpleSAML\XMLSecurity\Backend\OAEPParametersAware;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\KeyInterface;
 
@@ -15,13 +16,19 @@ use SimpleSAML\XMLSecurity\Key\KeyInterface;
  *
  * @package simplesamlphp/xml-security
  */
-abstract class AbstractKeyTransporter implements KeyTransportAlgorithmInterface
+abstract class AbstractKeyTransporter implements KeyTransportAlgorithmInterface, OAEPParametersAware
 {
     protected const string DEFAULT_BACKEND = Backend\OpenSSL::class;
 
 
     /** @var \SimpleSAML\XMLSecurity\Backend\EncryptionBackend */
     protected EncryptionBackend $backend;
+
+    /** Stored OAEP digest algorithm URI, or null for algorithm default. */
+    private ?string $oaepDigestAlg = null;
+
+    /** Stored MGF URI, or null for algorithm default. */
+    private ?string $oaepMgf = null;
 
 
     /**
@@ -78,8 +85,52 @@ abstract class AbstractKeyTransporter implements KeyTransportAlgorithmInterface
             return;
         }
 
+        // Fail-closed: if we already have non-null OAEP params and the new backend doesn't support them, refuse.
+        if (
+            ($this->oaepDigestAlg !== null || $this->oaepMgf !== null)
+            && !($backend instanceof OAEPParametersAware)
+        ) {
+            throw new UnsupportedAlgorithmException(
+                'OAEP parameters are set but the backend does not implement OAEPParametersAware.',
+            );
+        }
+
         $this->backend = $backend;
         $this->backend->setCipher($this->algId);
+
+        // Forward stored OAEP params to the new backend if it supports them.
+        if ($backend instanceof OAEPParametersAware) {
+            $backend->setOAEPParams($this->oaepDigestAlg, $this->oaepMgf);
+        }
+    }
+
+
+    /**
+     * Store OAEP digest/MGF parameters and forward them to the backend when one is set.
+     *
+     * Fail-closed: if non-null params are given and the current backend does not implement
+     * OAEPParametersAware, throws UnsupportedAlgorithmException.
+     *
+     * @param string|null $digestAlg OAEP digest algorithm URI, or null for algorithm default.
+     * @param string|null $mgf       MGF URI, or null for algorithm default.
+     *
+     * @throws \SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException If the backend does not support
+     *   OAEP parameters.
+     */
+    public function setOAEPParams(?string $digestAlg = null, ?string $mgf = null): void
+    {
+        if (($digestAlg !== null || $mgf !== null) && !($this->backend instanceof OAEPParametersAware)) {
+            throw new UnsupportedAlgorithmException(
+                'OAEP parameters are set but the backend does not implement OAEPParametersAware.',
+            );
+        }
+
+        $this->oaepDigestAlg = $digestAlg;
+        $this->oaepMgf = $mgf;
+
+        if ($this->backend instanceof OAEPParametersAware) {
+            $this->backend->setOAEPParams($digestAlg, $mgf);
+        }
     }
 
 

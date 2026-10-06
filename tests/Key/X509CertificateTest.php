@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SimpleSAML\XMLSecurity\Test\Key;
 
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\XMLSecurity\Alg\KeyTransport\KeyTransportAlgorithmFactory;
+use SimpleSAML\XMLSecurity\Alg\Signature\SignatureAlgorithmFactory;
 use SimpleSAML\XMLSecurity\CryptoEncoding\PEM;
 use SimpleSAML\XMLSecurity\Exception\UnsupportedAlgorithmException;
 use SimpleSAML\XMLSecurity\Key\X509Certificate;
@@ -100,5 +102,39 @@ final class X509CertificateTest extends TestCase
         $c = PEMCertificatesMock::getCertificate(PEMCertificatesMock::CERTIFICATE);
         $pubDetails = openssl_pkey_get_details(openssl_pkey_get_public($c->getMaterial()));
         $this->assertEquals(self::$cert['key'], $pubDetails['key']);
+    }
+
+
+    /**
+     * Test that X509Certificate implements KeyInterface by calling getMaterial(),
+     * which is defined on that interface.
+     */
+    public function testImplementsKeyInterface(): void
+    {
+        $this->assertNotEmpty(self::$c->getMaterial());
+    }
+
+
+    /**
+     * Test that passing an X509Certificate to SignatureAlgorithmFactory::getAlgorithm()
+     * is accepted by the KeyInterface type hint (no TypeError is thrown).
+     */
+    public function testSignatureAlgorithmFactoryAcceptsCertificate(): void
+    {
+        $factory = new SignatureAlgorithmFactory([]);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $factory->getAlgorithm('unknown-algorithm', self::$c);
+    }
+
+
+    /**
+     * Test that passing an X509Certificate to KeyTransportAlgorithmFactory::getAlgorithm()
+     * is accepted by the KeyInterface type hint (no TypeError is thrown).
+     */
+    public function testKeyTransportAlgorithmFactoryAcceptsCertificate(): void
+    {
+        $factory = new KeyTransportAlgorithmFactory([]);
+        $this->expectException(UnsupportedAlgorithmException::class);
+        $factory->getAlgorithm('unknown-algorithm', self::$c);
     }
 }
