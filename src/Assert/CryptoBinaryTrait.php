@@ -22,5 +22,10 @@ trait CryptoBinaryTrait
             $message ?: '%s is not a valid xs:CryptoBinary',
             InvalidArgumentException::class,
         );
+        parent::stringNotEmpty(
+            $value,
+            $message ?: '%s is not a valid xs:CryptoBinary',
+            InvalidArgumentException::class,
+        );
     }
 }

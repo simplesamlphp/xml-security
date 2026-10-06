@@ -22,5 +22,10 @@ trait ECPointTrait
             $message ?: '%s is not a valid dsig11:ECPointType',
             InvalidArgumentException::class,
         );
+        Assert::stringNotEmpty(
+            $value,
+            $message ?: '%s is not a valid dsig11:ECPointType',
+            InvalidArgumentException::class,
+        );
     }
 }
