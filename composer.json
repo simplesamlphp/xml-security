@@ -46,12 +46,12 @@
 
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
-        "psr/http-message": "^1.0|^2.0",
         "simplesamlphp/assert": "~3.0",
         "simplesamlphp/xml-common": "~3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^13.3",
+        "psr/http-message": "^1.0|^2.0",
         "simplesamlphp/simplesamlphp-test-framework": "~2.0"
     },
     "extra": {
