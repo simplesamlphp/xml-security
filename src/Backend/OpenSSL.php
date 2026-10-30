@@ -41,7 +41,7 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
     protected string $digest;
 
     // signature padding method
-    protected int $sig_padding = OPENSSL_PKCS1_PADDING;
+    protected ?int $sig_padding = OPENSSL_PKCS1_PADDING;
 
     // asymmetric encryption options
     protected int $enc_padding = OPENSSL_PKCS1_OAEP_PADDING;
@@ -201,9 +201,16 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
         KeyInterface $key,
         string $plaintext,
     ): string {
-        if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding)) {
-            throw new OpenSSLException('Cannot sign data');
+        if ($this->sig_padding === null) {
+            if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest)) {
+                throw new OpenSSLException('Cannot sign data');
+            }
+        } else {
+            if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding)) {
+                throw new OpenSSLException('Cannot sign data');
+            }
         }
+
         return $signature;
     }
 
@@ -223,7 +230,11 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
         string $plaintext,
         string $signature,
     ): bool {
-        return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding) === 1;
+        if ($this->sig_padding === null) {
+            return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest) === 1;
+        } else {
+            return openssl_verify($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding) === 1;
+        }
     }
 
 
@@ -308,6 +319,12 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
     public function setSignaturePadding(string $algId): void
     {
         $padding = match ($algId) {
+            C::SIG_ECDSA_SHA1 => null,
+            C::SIG_ECDSA_SHA224 => null,
+            C::SIG_ECDSA_SHA256 => null,
+            C::SIG_ECDSA_SHA384 => null,
+            C::SIG_ECDSA_SHA512 => null,
+
             C::SIG_RSA_PSS_SHA1 => OPENSSL_PKCS1_PSS_PADDING,
             C::SIG_RSA_PSS_SHA224 => OPENSSL_PKCS1_PSS_PADDING,
             C::SIG_RSA_PSS_SHA256 => OPENSSL_PKCS1_PSS_PADDING,
