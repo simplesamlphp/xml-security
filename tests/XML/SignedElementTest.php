@@ -329,6 +329,41 @@ final class SignedElementTest extends TestCase
 
 
     /**
+     * Verify an ECDSA signature
+     */
+    public function testSuccessfulVerifyingEcdsaSignature(): void
+    {
+        // sign using ECDSA_SHA256
+        $customSignable = $this->sign(C::SIG_ECDSA_SHA256);
+        // No-op to _actually_ sign the element and set the signature-property.
+        $customSignable = CustomSignable::fromXML($customSignable->toXML());
+
+        $signature = $customSignable->getSignature();
+
+        $this->assertEquals(
+            C::SIG_ECDSA_SHA256,
+            $signature
+                ->getSignedInfo()
+                ->getSignatureMethod()
+                ->getAlgorithm()
+                ->getValue(),
+        );
+
+        $certificate = new X509Certificate($this->certificate);
+
+        $factory = new SignatureAlgorithmFactory();
+        $verifier = $factory->getAlgorithm(
+            C::SIG_ECDSA_SHA256,
+            $certificate->getPublicKey(),
+        );
+
+        $verified = $customSignable->verify($verifier);
+
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+    }
+
+
+    /**
      * Negative: verify a RSA-PSS signature using PKCS#1 v1.5
      */
     public function testPssSignatureCannotBeVerifiedUsingPkcs1(): void
