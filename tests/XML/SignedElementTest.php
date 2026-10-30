@@ -41,6 +41,9 @@ final class SignedElementTest extends TestCase
     private PEM $certificate;
 
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    private PEM $ecdsa_certificate;
+
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $wrong_certificate;
 
     private Dom\Element $signedDocumentWithComments;
@@ -68,6 +71,10 @@ final class SignedElementTest extends TestCase
 
         $this->certificate = PEM::fromString(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
+        );
+
+        $this->ecdsa_certificate = PEM::fromString(
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::ECDSA_CERTIFICATE),
         );
 
         $this->wrong_certificate = PEM::fromString(
@@ -351,7 +358,7 @@ final class SignedElementTest extends TestCase
                 ->getValue(),
         );
 
-        $certificate = new X509Certificate($this->certificate);
+        $certificate = new X509Certificate($this->ecdsa_certificate);
 
         $factory = new SignatureAlgorithmFactory();
         $verifier = $factory->getAlgorithm(
