@@ -117,6 +117,19 @@ class Constants extends \SimpleSAML\XML\Constants
     public const string SIG_RSA_RIPEMD160 = 'http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160';
 
     /**
+     * ECDSA Signature algorithms
+     */
+    public const string SIG_ECDSA_SHA1 = 'http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha1';
+
+    public const string SIG_ECDSA_SHA224 = 'http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha224';
+
+    public const string SIG_ECDSA_SHA256 = 'http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256';
+
+    public const string SIG_ECDSA_SHA384 = 'http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384';
+
+    public const string SIG_ECDSA_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512';
+
+    /**
      * HMAC Signature algorithms
      */
     public const string SIG_HMAC_SHA1 = 'http://www.w3.org/2000/09/xmldsig#hmac-sha1';
@@ -238,6 +251,15 @@ class Constants extends \SimpleSAML\XML\Constants
         self::BLOCK_ENC_AES128_GCM => 16,
         self::BLOCK_ENC_AES192_GCM => 16,
         self::BLOCK_ENC_AES256_GCM => 16,
+    ];
+
+    /** @var array<string, string> */
+    public static array $ECDSA_DIGESTS = [
+        self::SIG_ECDSA_SHA1 => self::DIGEST_SHA1,
+        self::SIG_ECDSA_SHA224 => self::DIGEST_SHA224,
+        self::SIG_ECDSA_SHA256 => self::DIGEST_SHA256,
+        self::SIG_ECDSA_SHA384 => self::DIGEST_SHA384,
+        self::SIG_ECDSA_SHA512 => self::DIGEST_SHA512,
     ];
 
     /** @var array<string, string> */

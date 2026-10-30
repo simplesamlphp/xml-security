@@ -42,6 +42,12 @@ class PEMCertificatesMock
 
     public const string SELFSIGNED_PRIVATE_KEY = 'selfsigned.simplesamlphp.org.key';
 
+    public const string ECDSA_CERTIFICATE = 'ecdsa_p256.crt';
+
+    public const string ECDSA_PUBLIC_KEY = 'ecdsa_p256.pub';
+
+    public const string ECDSA_PRIVATE_KEY = 'ecdsa_p256.key';
+
     public const string BROKEN_CERTIFICATE = 'broken.simplesamlphp.org.crt';
 
     public const string BROKEN_PUBLIC_KEY = 'broken.simplesamlphp.org.pub';

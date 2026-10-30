@@ -51,6 +51,7 @@ final class SignatureMethod extends AbstractDsElement implements SchemaValidatab
         Assert::oneOf(
             $Algorithm->getValue(),
             array_merge(
+                array_keys(C::$ECDSA_DIGESTS),
                 array_keys(C::$RSA_DIGESTS),
                 array_keys(C::$HMAC_DIGESTS),
             ),
