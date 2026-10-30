@@ -22,9 +22,11 @@ use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate as X509;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
+use function array_keys;
 use function base64_encode;
 use function chunk_split;
 use function dirname;
+use function in_array;
 use function strval;
 use function trim;
 
@@ -417,9 +419,15 @@ final class SignedElementTest extends TestCase
 
         $customSignable = CustomSignable::fromXML($xml->documentElement);
 
-        $private = PEMCertificatesMock::getPrivateKey(
-            PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
-        );
+        if (in_array($algorithm, array_keys(C::$ECDSA_DIGESTS))) {
+            $private = PEMCertificatesMock::getPrivateKey(
+                PEMCertificatesMock::ECDSA_PRIVATE_KEY,
+            );
+        } else {
+            $private = PEMCertificatesMock::getPrivateKey(
+                PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
+            );
+        }
 
         $factory = new SignatureAlgorithmFactory();
         $signer = $factory->getAlgorithm(
