@@ -15,7 +15,7 @@ use SimpleSAML\XMLSecurity\Key\AsymmetricKey;
 final class ECDSA extends AbstractSigner implements SignatureAlgorithmInterface
 {
     /**
-     * RSA constructor.
+     * ECDSA constructor.
      *
      * @param \SimpleSAML\XMLSecurity\Key\AsymmetricKey $key The asymmetric key (either public or private) to use.
      * @param string $algId The identifier of this algorithm.
