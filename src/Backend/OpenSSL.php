@@ -204,6 +204,7 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
         if (!openssl_sign($plaintext, $signature, $key->getMaterial(), $this->digest, $this->sig_padding)) {
             throw new OpenSSLException('Cannot sign data');
         }
+
         return $signature;
     }
 
@@ -308,6 +309,12 @@ final class OpenSSL implements EncryptionBackend, OAEPParametersAware, Signature
     public function setSignaturePadding(string $algId): void
     {
         $padding = match ($algId) {
+            C::SIG_ECDSA_SHA1 => 0,
+            C::SIG_ECDSA_SHA224 => 0,
+            C::SIG_ECDSA_SHA256 => 0,
+            C::SIG_ECDSA_SHA384 => 0,
+            C::SIG_ECDSA_SHA512 => 0,
+
             C::SIG_RSA_PSS_SHA1 => OPENSSL_PKCS1_PSS_PADDING,
             C::SIG_RSA_PSS_SHA224 => OPENSSL_PKCS1_PSS_PADDING,
             C::SIG_RSA_PSS_SHA256 => OPENSSL_PKCS1_PSS_PADDING,
