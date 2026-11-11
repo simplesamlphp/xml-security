@@ -22,9 +22,11 @@ use SimpleSAML\XMLSecurity\XML\ds\Signature;
 use SimpleSAML\XMLSecurity\XML\ds\X509Certificate as X509;
 use SimpleSAML\XMLSecurity\XML\ds\X509Data;
 
+use function array_keys;
 use function base64_encode;
 use function chunk_split;
 use function dirname;
+use function in_array;
 use function strval;
 use function trim;
 
@@ -37,6 +39,9 @@ final class SignedElementTest extends TestCase
 {
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $certificate;
+
+    /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
+    private PEM $ecdsa_certificate;
 
     /** @var \SimpleSAML\XMLSecurity\CryptoEncoding\PEM */
     private PEM $wrong_certificate;
@@ -66,6 +71,10 @@ final class SignedElementTest extends TestCase
 
         $this->certificate = PEM::fromString(
             PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::SELFSIGNED_CERTIFICATE),
+        );
+
+        $this->ecdsa_certificate = PEM::fromString(
+            PEMCertificatesMock::getPlainCertificate(PEMCertificatesMock::ECDSA_CERTIFICATE),
         );
 
         $this->wrong_certificate = PEM::fromString(
@@ -329,6 +338,41 @@ final class SignedElementTest extends TestCase
 
 
     /**
+     * Verify an ECDSA signature
+     */
+    public function testSuccessfulVerifyingEcdsaSignature(): void
+    {
+        // sign using ECDSA_SHA256
+        $customSignable = $this->sign(C::SIG_ECDSA_SHA256);
+        // No-op to _actually_ sign the element and set the signature-property.
+        $customSignable = CustomSignable::fromXML($customSignable->toXML());
+
+        $signature = $customSignable->getSignature();
+
+        $this->assertEquals(
+            C::SIG_ECDSA_SHA256,
+            $signature
+                ->getSignedInfo()
+                ->getSignatureMethod()
+                ->getAlgorithm()
+                ->getValue(),
+        );
+
+        $certificate = new X509Certificate($this->ecdsa_certificate);
+
+        $factory = new SignatureAlgorithmFactory();
+        $verifier = $factory->getAlgorithm(
+            C::SIG_ECDSA_SHA256,
+            $certificate->getPublicKey(),
+        );
+
+        $verified = $customSignable->verify($verifier);
+
+        $this->assertInstanceOf(CustomSignable::class, $verified);
+    }
+
+
+    /**
      * Negative: verify a RSA-PSS signature using PKCS#1 v1.5
      */
     public function testPssSignatureCannotBeVerifiedUsingPkcs1(): void
@@ -382,9 +426,15 @@ final class SignedElementTest extends TestCase
 
         $customSignable = CustomSignable::fromXML($xml->documentElement);
 
-        $private = PEMCertificatesMock::getPrivateKey(
-            PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
-        );
+        if (in_array($algorithm, array_keys(C::$ECDSA_DIGESTS))) {
+            $private = PEMCertificatesMock::getPrivateKey(
+                PEMCertificatesMock::ECDSA_PRIVATE_KEY,
+            );
+        } else {
+            $private = PEMCertificatesMock::getPrivateKey(
+                PEMCertificatesMock::SELFSIGNED_PRIVATE_KEY,
+            );
+        }
 
         $factory = new SignatureAlgorithmFactory();
         $signer = $factory->getAlgorithm(
