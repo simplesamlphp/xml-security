@@ -41,7 +41,19 @@ class PEMCertificatesMock
     public const string SELFSIGNED_PUBLIC_KEY = 'selfsigned.simplesamlphp.org.pub';
 
     public const string SELFSIGNED_PRIVATE_KEY = 'selfsigned.simplesamlphp.org.key';
+    
+    public const string MLDSA_CERTIFICATE = 'mldsa_87.crt';
 
+    public const string MLDSA_PUBLIC_KEY = 'mldsa_87.pub';
+
+    public const string MLDSA_PRIVATE_KEY = 'mldsa_87.key';
+        
+    public const string SLHDSA_CERTIFICATE = 'slhdsa_256s.crt';
+
+    public const string SLHDSA_PUBLIC_KEY = 'slhdsa_256s.pub';
+
+    public const string SLHDSA_PRIVATE_KEY = 'slhdsa_256s.key';
+    
     public const string BROKEN_CERTIFICATE = 'broken.simplesamlphp.org.crt';
 
     public const string BROKEN_PUBLIC_KEY = 'broken.simplesamlphp.org.pub';
