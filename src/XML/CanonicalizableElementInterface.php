@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\XMLSecurity\XML;
 
-use SimpleSAML\XML\ElementInterface;
+use SimpleSAML\XML\SerializableElementInterface;
 
 /**
  * An interface for objects that can be canonicalized.
@@ -18,7 +18,7 @@ use SimpleSAML\XML\ElementInterface;
  *
  * @package simplesamlphp/xml-security
  */
-interface CanonicalizableElementInterface extends ElementInterface
+interface CanonicalizableElementInterface extends SerializableElementInterface
 {
     /**
      * Get the canonical (string) representation of this object.
