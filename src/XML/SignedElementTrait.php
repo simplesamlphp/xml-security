@@ -143,9 +143,7 @@ trait SignedElementTrait
         }
 
         // Clone the document so we don't mess up the original DOMDocument
-        $doc = DOMDocumentFactory::create();
-        $node = $doc->importNode($xml->ownerDocument->documentElement, true);
-        $doc->appendChild($node);
+        $doc = DOMDocumentFactory::fromString($xml->ownerDocument->saveXML($xml->ownerDocument->documentElement));
 
         $xp = XPath::getXPath($doc);
         $sigNode = XPath::xpQuery($doc->documentElement, 'child::ds:Signature', $xp);
