@@ -68,6 +68,7 @@ class XML
             }
         }
 
+        /** @var string|false $ret */
         $ret = $element->C14N($exclusive, $withComments, $xpaths, $prefixes);
         if ($ret === false) {
             // GHSA-h25p-2wxc-6584
