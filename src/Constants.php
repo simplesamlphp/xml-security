@@ -159,4 +159,9 @@ class Constants extends \SimpleSAML\XML\Constants
 
     // The namespace for the Elliptic Curve Diffie-Hellman Ephemeral Static (ECDH-ES) algorithm
     public const XMLENC11_ECDH_ES = 'http://www.w3.org/2009/xmlenc11#ECDH-ES';
+
+    /**
+     * Library default limits
+     */
+    public const int MAX_TRANSFORMS = 2;
 }
